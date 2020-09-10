@@ -1,10 +1,19 @@
 const express = require('express');
+const ejs = require('ejs');
+const path = require('path');
+const expressLayouts = require('express-ejs-layouts');
 
 const app = express();
 const port = 3000; //env.process.PORT
 
+//middelware
+app.use(express.static(path.join(__dirname, "public")));
+app.use(expressLayouts);
+app.set('view engine', 'ejs');
+app.set('views', 'views');
+
 app.get('', (req, res)=> {
-    res.send('Ksa rooyghem');
+    res.render('index');
 });
 
 const kabbies = require('./router/kabbies');
