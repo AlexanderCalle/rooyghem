@@ -22,18 +22,21 @@ app.get('', (req, res)=> {
 });
 
 // Routers
-//Route /Bannen
-const bannen = require('./router/bannen');
-app.use('/bannen', bannen);
-// Route /lieding
-const leiding = require('./router/leiding');
-app.use('/leiding', leiding);
-// Route /oc
-const oc = require('./router/oc');
-app.use('/oc', oc);
-// Route login
+// Route office
 const office = require('./router/office');
 app.use('/office', office);
+
+//Route users
+const users = require('./router/users');
+app.use('/users', users);
+
+// Route groups
+const groups = require('./router/groups');
+app.use('/groups', groups);
+
+// Route activities
+const activities = require('./router/activities');
+app.use('/activities', activities);
 
 app.listen(port, ()=> {
     console.log('Server running on port ' + port);
