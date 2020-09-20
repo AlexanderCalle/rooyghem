@@ -46,7 +46,7 @@ router.post('/', (req, res, next)=> {
     con.query('INSERT INTO users SET ?', user, (err, use) =>{
         if(err) return res.json({message: 'Name most be unique'});
 
-        res.json(user);
+        res.send('User: ' + user.name + ' is gemaakt');
     });
 });
 
