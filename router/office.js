@@ -16,22 +16,26 @@ con.connect((err)=> {
     console.log('Connected to Mysql');
 });
 
-// Router GET * users
-router.get('/users', (req, res)=> {
-    con.query('SELECT * FROM users', (err, rows)=> {
-        if(err) throw err;
-        res.json(rows);
-    });
-});
-
 router.get('/', (req, res)=> {
     res.render('office');
 });
 
+// Router GET * users
+router.get('/users', (req, res)=> {
+    con.query('SELECT * FROM users', (err, rows)=> {
+        if(err) throw err;
+        res.render('users', {
+            users: rows
+        })
+    });
+});
+
 // router GET a single user
 router.get('/:id', (req, res)=> {
+    const id = req.params.id;
     con.query('SELECT * FROM users WHERE id = ?', id, (err, user)=> {
         if(err) return res.json({message: 'Failed'});
+        res.json(user);
     });
 });
 
@@ -58,7 +62,7 @@ router.delete('/:id', (req, res)=> {
 
         res.json({
             "message": "deleted " + result.affectedRows + "row(s)",
-        })
+        });
     });
 });
 
