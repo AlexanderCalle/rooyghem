@@ -2,9 +2,10 @@ const express = require('express');
 const ejs = require('ejs');
 const path = require('path');
 const expressLayouts = require('express-ejs-layouts');
+const bodyParser = require('body-parser');
 
 const app = express();
-const port = 3000; //env.process.PORT
+const port = 3000 || procces.env.PORT;
 
 //middelware
 app.use(express.static(path.join(__dirname, "public")));
@@ -12,37 +13,31 @@ app.use(expressLayouts);
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
+// BodyParser middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.get('', (req, res)=> {
     res.render('index');
 });
 
-const kabbies = require('./router/kabbies');
-app.use('/kabouters', kabbies);
+// Routers
+// Route office
+const office = require('./router/office');
+app.use('/office', office);
 
-const paggies = require('./router/paggies');
-app.use('/pagaders', paggies);
+//Route users
+const users = require('./router/users');
+app.use('/users', users);
 
-const jkn = require('./router/jkn');
-app.use('/jongknapen', jkn);
+// Route groups
+const groups = require('./router/groups');
+app.use('/groups', groups);
 
-const kn = require('./router/kn');
-app.use('/knapen', kn);
-
-const jhn = require('./router/jhn');
-app.use('/jonghernieuwers', jhn);
-
-const aspi = require('./router/apsi');
-app.use('/aspiranten', aspi);
-
-const leiding = require('./router/leiding');
-app.use('/leiding', leiding);
-
-const hn = require('./router/hn');
-app.use('/hernieuwers', hn);
-
-const oc = require('./router/oc');
-app.use('/oc', oc);
+// Route activities
+const activities = require('./router/activities');
+app.use('/activities', activities);
 
 app.listen(port, ()=> {
-    console.log('Server running on port '+port);
+    console.log('Server running on port ' + port);
 });
