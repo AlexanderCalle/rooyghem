@@ -1,5 +1,26 @@
-<h1>All Users</h1>
+<h1>Create users</h1>
+
+<form action="/users/create" method="POST">
+    <input type="text" name="firstname">
+    <input type="text" name="lastname">
+    <input type="email" name="email">
+    <input type="text" name="username">
+    <input type="password" name="password">
+    <input type="text" name="phone">
+    <select name="is_admin">
+        <option>0</option>
+        <option>1</option>
+    </select>
+    <select name="group_name">
+        <% groups.forEach(function(group) { %>
+            <option><%= group.name %></option>
+        <% }) %>
+    </select>
+    <input type="submit" value="Create User">
+</form>
+
+<h1>All users</h1>
 
 <% users.forEach(function(user) { %>
-    <p><%= user.name %>, <%= user.ban %></p>
-<% }); %>
+    <p><%= user.user_id %>, <%= user.username %></p>
+<% }) %>
