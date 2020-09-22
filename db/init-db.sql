@@ -4,40 +4,40 @@ DROP TABLE locations;
 DROP TABLE activities;
 
 CREATE TABLE users (
-	user_id INT,
-	firstname VARCHAR(45),
-	lastname VARCHAR(45),
-	email VARCHAR(50),
-	is_admin TINYINT,
-	username VARCHAR(45),
-	passhash VARCHAR(45),
-	phone VARCHAR(45),
-	FOREIGN KEY (group_id) REFERENCES groups(group_id)
+	PRIMARY KEY user_id INT,
+	firstname VARCHAR(45) NOT NULL,
+	lastname VARCHAR(45) NOT NULL,
+	email VARCHAR(50) NOT NULL,
+	is_admin TINYINT(1) DEFAULT 0,
+	username VARCHAR(45) NOT NULL,
+	passhash VARCHAR(45) NOT NULL,
+	phone VARCHAR(45) NOT NULL,
+	FOREIGN KEY (group_id) REFERENCES groups(group_id) NOT NULL
 );
 
 CREATE TABLE groups (
-	group_id INT,
-	name VARCHAR(45),
+	PRIMARY KEY group_id INT,
+	name VARCHAR(45) NOT NULL,
 	story LONGTEXT,
-	logo VARCHAR(50),
-	location_id TINYINT,
+	logo VARCHAR(50) NOT NULL,
+	FOREIGN KEY (location_id) REFERENCES locations(location_id) NOT NULL
 );
 
 CREATE TABLE locations (
-	location_id INT,
-	name VARCHAR(45),
-	adress VARCHAR(45),
-	picture VARCHAR(45),
+	PRIMARY KEY location_id INT,
+	name VARCHAR(45) NOT NULL,
+	adress VARCHAR(45) NOT NULL,
+	picture VARCHAR(45) NOT NULL,
 	iframe VARCHAR(45),
 );
 
 CREATE TABLE activities (
-	activity_id INT,
-	start_date DATETIME,
-	end_date DATETIME,
-	meetingpoint VARCHAR(45),
-	description VARCHAR(45),
+	PRIMARY KEY activity_id INT,
+	start_date DATETIME NOT NULL,
+	end_date DATETIME NOT NULL,
+	meetingpoint VARCHAR(45) NOT NULL,
+	description VARCHAR(45) NOT NULL,
 	start_publication DATE,
 	end_publication DATE,
-	group_id INT
+	FOREIGN KEY (group_id) REFERENCES groups(group_id) NOT NULL
 );
