@@ -1,0 +1,8 @@
+<h1>Ksa Rooyghem</h1>
+
+<ul>
+    <% groups.forEach(function(group){ %>
+        <li><a href="/groups/<%= group.name %>/info"><%= group.name %></a></li>
+    <% }); %>
+    <li><a href="/groups/leiding">leiding</a></li>
+</ul>

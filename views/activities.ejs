@@ -1,0 +1,9 @@
+<%- include("./particals/group_nav.ejs") -%>
+
+<h1>Activiteiten Pagina</h1>
+
+<ul>
+    <% activities.forEach(function(activity){ %>
+        <li><%= activity.start_date %></li>
+    <% }) %>
+</ul>
