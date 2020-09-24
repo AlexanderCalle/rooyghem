@@ -33,6 +33,7 @@ CREATE TABLE users (
 
 CREATE TABLE activities (
 	activity_id INT NOT NULL AUTO_INCREMENT,
+	title VARCHAR(45) NOT NULL,
 	PRIMARY KEY (activity_id),
 	start_date DATETIME NOT NULL,
 	end_date DATETIME NOT NULL,
