@@ -14,6 +14,7 @@
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0",
     "express-layout": "^0.1.0",
+    "method-override": "^3.0.0",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1"
   }

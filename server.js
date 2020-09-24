@@ -5,6 +5,7 @@ const expressLayouts = require('express-ejs-layouts');
 const bodyParser = require('body-parser');
 const con = require('./connect');
 const morgan = require('morgan');
+const methodOverride = require('method-override');
 
 const app = express();
 const port = 3000 || procces.env.PORT;
@@ -17,6 +18,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 app.set('views', 'views');
+app.use(methodOverride('_method'));
 
 // BodyParser middleware
 app.use(bodyParser.json());
