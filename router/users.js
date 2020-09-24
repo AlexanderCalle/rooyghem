@@ -42,13 +42,14 @@ router.post('/create', (req, res)=> {
             passhash: req.body.password,
             phone: req.body.phone,
             is_admin: req.body.is_admin,
+            bondsteam: req.body.bondsteam,
             group_id: group_id[0].group_id
         }
 
         if(user != null) {
             con.query('INSERT INTO users SET ?', user, (err, user)=> {
                 if(err) return res.json({message: err});
-                res.send(`User: ${user.username} has been created`);
+                res.redirect('/users');
             });
         }
     });
@@ -69,6 +70,10 @@ router.get('/delete/single/:id', (req, res)=> {
         if(err) return res.json({err: err});
         res.send(`user ${user} is deleted`);
     });
+});
+
+router.get('/login', (req, res)=> {
+    res.send('Login Page')
 });
 
 module.exports = router;

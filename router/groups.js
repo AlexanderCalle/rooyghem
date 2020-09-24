@@ -8,30 +8,26 @@ router.get('/', (req, res)=>{
 
 router.get('/:group_name/info', (req, res)=> {
     con.query('SELECT * FROM groups WHERE name = ?', req.params.group_name, (err, group)=> {
-        if(err) return res.json({err: 'Failid to laod group'});
-        res.render('info', {group: group[0]});
+        if(err) return res.json({err: 'Failid to load group'});
+        res.render('./group_pages/info', {group: group[0]});
     });
 });
 
 router.get('/:group_name/vk', (req, res)=> {
     con.query('SELECT * FROM groups WHERE name = ?', req.params.group_name, (err,group)=>{
         if(err) return res.json({err: 'Failed to load story'});
-        res.render('vk', {group: group[0]});
+        res.render('./group_pages/vk', {group: group[0]});
     });
 });
 
 router.get('/:group_name/leiding', (req, res)=> {
     con.query('SELECT * FROM groups WHERE name = ?', req.params.group_name, (err,group)=>{
-        if(err) return res.json({err: 'Failed to load story'});
+        if(err) return res.json({err: 'Failed to load members'});
         con.query('SELECT * from users WHERE group_id = ?', group[0].group_id, (err, users)=> {
             if(err) return res.json({err: 'Failed to load users'});
-            res.render('leiding', {group: group[0], users: users});
+            res.render('./group_pages/leiding', {group: group[0], users: users});
         });
     });
-});
-
-router.get('/leiding', (req, res)=> {
-    res.send('Leiding')
 });
 
 module.exports = router;

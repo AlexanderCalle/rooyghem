@@ -11,7 +11,7 @@ router.get('/:group_name', (req, res)=>{
         if(err) return res.json({err: 'Failed to get group_id'});
         con.query('SELECT * FROM locations WHERE location_id = ?', group[0].location_id, (err, locations)=> {
             if(err) return res.json({err: 'Failed to load activities'});
-            res.render('location', {
+            res.render('./group_pages/location', {
                 location: locations[0],
                 group: group[0]
             })
