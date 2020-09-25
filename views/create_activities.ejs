@@ -2,7 +2,7 @@
 
 <h1>Create activity</h1>
 
-<form action="/activities/create" method="POST">
+<form ac action="/activities/create" method="POST">
     <input type="text" name="title" placeholder="Title...">
     <br>
     <label for="start_time">Start of activity: </label>
@@ -34,7 +34,7 @@
 
 <ul>
     <% activities.forEach(function(activity){ %>
-        <li><%= activity.title %>, <%= activity.start_date %> - <%= activity.end_date %></li>
+        <li><a href="/activities/update/<%= activity.activity_id %>"><%= activity.title %></a>, <%= activity.start_date %> - <%= activity.end_date %></li>
         <form action="/activities/delete/<%= activity.activity_id %>?_method=DELETE" method="POST"><input type="submit" value="Delete"></form>
     <% }) %>
 </ul>

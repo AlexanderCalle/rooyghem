@@ -59,4 +59,40 @@ router.delete('/delete/:id', (req, res)=>{
     });
 });
 
+// Router GET update activity
+router.get('/update/:id', (req, res)=>{
+    con.query('SELECT * from activities WHERE activity_id = ?', req.params.id, (err, activity)=>{
+        if(err) return res.json({err: 'Failed to load activity'});
+        con.query('SELECT name FROM groups WHERE group_id = ?', activity[0].group_id, (err, group_name)=>{
+            if(err) return res.json({err: 'Failed to get group'});
+            res.render('update_activity', {
+                activity: activity[0],
+                group_name: group_name[0].name
+            })
+        });
+    });
+});
+
+
+// Route UPDATE One activity
+// router.put('/update/:id', (req, res)=>{
+//     const data = req.body;
+//     con.query('SELECT group_id FROM groups WHERE name = ?', data.group_name, (err, group)=>{
+//         const updated_activity = {
+//             title: data.title,
+//             start_date: data.start_date,
+//             end_date: data.end_date,
+//             meetingpoint: data.meetingpoint,
+//             description: data.description,
+//             start_publication: data.start_publication,
+//             end_publication: data.end_publication,
+//             group_id: group[0].group_id
+//         }
+//         con.query(`UPDATE activities SET ? WHERE activity_id = ?`, updated_activity, req.params.id, (err, activity)=>{
+//             if(err) return res.json({err: 'Failed to update activity'});
+//             res.redirect('/activities');
+//         });
+//     });
+// });
+
 module.exports = router;
