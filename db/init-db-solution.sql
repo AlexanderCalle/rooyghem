@@ -18,13 +18,13 @@ CREATE TABLE groups (
 );
 
 CREATE TABLE users (
-	user_id INT NOT NULL AUTO_INCREMENT,
+	user_id VARCHAR(256) NOT NULL AUTO_INCREMENT,
 	firstname VARCHAR(45) NOT NULL,
 	lastname VARCHAR(45) NOT NULL,
 	email VARCHAR(50) NOT NULL,
 	is_admin TINYINT(1) DEFAULT 0,
 	username VARCHAR(45) NOT NULL,
-	passhash VARCHAR(45) NOT NULL,
+	passhash VARCHAR(256) NOT NULL,
 	phone VARCHAR(45) NOT NULL,
     group_id INT NOT NULL,
     PRIMARY KEY (user_id),
