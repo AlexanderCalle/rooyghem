@@ -3,9 +3,12 @@ const router = express.Router();
 const con = require('../connect');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+const authCheck = require('../middleware/authCheck');
+require('dotenv').config();
 
 
-router.get('/', (req, res)=>{
+router.get('/', authCheck,(req, res)=>{
     con.query('SELECT * FROM groups', (err, groups)=> {
         if(err) return res.json({err: err});
         con.query('SELECT * FROM users', (err, users)=>{
@@ -16,7 +19,7 @@ router.get('/', (req, res)=>{
 });
 
 // FIND ALL USERS
-router.get('/all', (req, res)=> {
+router.get('/all', authCheck,(req, res)=> {
     con.query('SELECT * FROM users', (err, users)=>{
         if(err) return res.json({message: 'Failed to load'});
         res.json(users);
@@ -24,7 +27,7 @@ router.get('/all', (req, res)=> {
 });
 
 // FIND SINGLE USER BY ID
-router.get('/single/:id', (req, res)=> {
+router.get('/single/:id', authCheck,(req, res)=> {
     
     con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, user)=>{
         if(err) return res.json({message: 'Failed to find user'});
@@ -33,11 +36,14 @@ router.get('/single/:id', (req, res)=> {
 });
 
 // CREATE USER
-router.post('/create', (req, res)=> {
+router.post('/create', authCheck,(req, res)=> {
+    const generated_id = crypto.randomBytes(11).toString('hex');
+    console.log(generated_id);
     con.query('SELECT group_id FROM groups WHERE name = ?', req.body.group_name, (err, group)=> {
         const group_id = JSON.parse(JSON.stringify(group));
         bcrypt.hash(req.body.password, 11, (err, hash)=>{
             const user = {
+                user_id: generated_id,
                 firstname: req.body.firstname,
                 lastname: req.body.lastname,
                 email: req.body.email,
@@ -54,8 +60,6 @@ router.post('/create', (req, res)=> {
             });
         });
     });
-    // const generated_id = crypto.randomBytes(11);
-    // console.log(generated_id.toString('hex'));
 });
 
 // LOGIN USER + check password with hash
@@ -65,11 +69,16 @@ router.post('/login', (req, res)=>{
         con.query('SELECT * FROM users WHERE username = ?', data.username, (err, user)=> {
             if(err) return res.json({err: 'Username does not exists'});
             if(user[0] == null) return res.json({err: 'Username doesnot exists'});
-            console.log(user[0])
             bcrypt.compare(data.password, user[0].passhash, (err, isMatch)=>{
                 if(err) return res.json({err: 'Failed to login'});
                 if(isMatch) {
-                    res.redirect('/activities');
+                    const payload = {
+                        user_id: user[0].user_id,
+                        username: user[0].username,
+                        is_admin: user[0].is_admin
+                    }
+                    const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '12h' });
+                    res.cookie('auth', token).redirect('/activities');
                 } else {
                     res.json({err: 'Password incorrect'});
                 }
@@ -84,8 +93,18 @@ router.post('/login', (req, res)=>{
     }
 });
 
+router.get('/logout', authCheck,(req, res)=> {
+    try {
+        res.clearCookie('auth').redirect('/');
+    } catch (error) {
+        res.json({
+            message: error
+        })
+    }
+});
+
 // DELETE ALL USERS
-router.get('/delete/all', (req, res)=> {
+router.get('/delete/all', authCheck,(req, res)=> {
     con.query('DELETE FROM users', (err, users)=>{
         if(err) return res.json({err: err});
         res.send(`All users are deleted`);
@@ -93,7 +112,7 @@ router.get('/delete/all', (req, res)=> {
 });
 
 // DELTE SINGLE USER
-router.get('/delete/single/:id', (req, res)=> {
+router.get('/delete/single/:id', authCheck,(req, res)=> {
     con.query('DELETE FROM users WHERE user_id = ?', req.params.id, (err, user)=>{
         if(err) return res.json({err: err});
         res.send(`user ${user} is deleted`);

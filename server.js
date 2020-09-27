@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const con = require('./connect');
 const morgan = require('morgan');
 const methodOverride = require('method-override');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const port = 3000 || procces.env.PORT;
@@ -19,6 +20,7 @@ app.use(expressLayouts);
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.use(methodOverride('_method'));
+app.use(cookieParser());
 
 // BodyParser middleware
 app.use(bodyParser.json());

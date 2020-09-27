@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const con = require('../connect');
+const authCheck = require('../middleware/authCheck');
 
 // Route GET all activities + form
-router.get('/', (req, res)=>{
+router.get('/', authCheck,(req, res)=>{
     con.query('SELECT * FROM groups', (err, groups)=>{
         if(err) return res.json({err: 'Feilid to get group'});
         con.query('SELECT * FROM activities', (err, activities)=>{
@@ -14,7 +15,7 @@ router.get('/', (req, res)=>{
 });
 
 // Route POST create activity
-router.post('/create', (req, res)=>{
+router.post('/create', authCheck,(req, res)=>{
     con.query('SELECT group_id, name FROM groups WHERE name = ?', req.body.group_name,(err, group)=>{
         const group_id = JSON.parse(JSON.stringify(group));
         const activity = {
@@ -52,7 +53,7 @@ router.get('/:group_name', (req, res)=>{
 });
 
 // Route DELETE One activity
-router.delete('/delete/:id', (req, res)=>{
+router.delete('/delete/:id', authCheck,(req, res)=>{
     con.query('DELETE FROM activities WHERE activity_id = ?', req.params.id, (err, activity)=>{
         if(err) return res.json({err: 'Failed to delete activity'});
         res.redirect('/activities');
@@ -60,7 +61,7 @@ router.delete('/delete/:id', (req, res)=>{
 });
 
 // Router GET update activity
-router.get('/update/:id', (req, res)=>{
+router.get('/update/:id', authCheck,(req, res)=>{
     con.query('SELECT * from activities WHERE activity_id = ?', req.params.id, (err, activity)=>{
         if(err) return res.json({err: 'Failed to load activity'});
         con.query('SELECT name FROM groups WHERE group_id = ?', activity[0].group_id, (err, group_name)=>{
@@ -75,24 +76,24 @@ router.get('/update/:id', (req, res)=>{
 
 
 // Route UPDATE One activity
-// router.put('/update/:id', (req, res)=>{
-//     const data = req.body;
-//     con.query('SELECT group_id FROM groups WHERE name = ?', data.group_name, (err, group)=>{
-//         const updated_activity = {
-//             title: data.title,
-//             start_date: data.start_date,
-//             end_date: data.end_date,
-//             meetingpoint: data.meetingpoint,
-//             description: data.description,
-//             start_publication: data.start_publication,
-//             end_publication: data.end_publication,
-//             group_id: group[0].group_id
-//         }
-//         con.query(`UPDATE activities SET ? WHERE activity_id = ?`, updated_activity, req.params.id, (err, activity)=>{
-//             if(err) return res.json({err: 'Failed to update activity'});
-//             res.redirect('/activities');
-//         });
-//     });
-// });
+router.put('/update/:id', authCheck,(req, res)=>{
+    const data = req.body;
+    con.query('SELECT group_id FROM groups WHERE name = ?', data.group_name, (err, group)=>{
+        const updated_activity = {
+            title: data.title,
+            start_date: data.start_date,
+            end_date: data.end_date,
+            meetingpoint: data.meetingpoint,
+            description: data.description,
+            start_publication: data.start_publication,
+            end_publication: data.end_publication,
+            group_id: group[0].group_id
+        }
+        con.query(`UPDATE activities SET ? WHERE activity_id = ?`, updated_activity, req.params.id, (err, activity)=>{
+            if(err) return res.json({err: 'Failed to update activity'});
+            res.redirect('/activities');
+        });
+    });
+});
 
 module.exports = router;
