@@ -75,7 +75,8 @@ router.post('/login', (req, res)=>{
                     const payload = {
                         user_id: user[0].user_id,
                         username: user[0].username,
-                        is_admin: user[0].is_admin
+                        is_admin: user[0].is_admin,
+                        group_id: user[0].group_id
                     }
                     const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '12h' });
                     res.cookie('auth', token).redirect('/activities');
