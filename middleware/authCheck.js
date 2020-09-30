@@ -7,8 +7,6 @@ module.exports = (req, res, next)=> {
         req.user = userdata;
         next();
     } catch (error) {
-        return res.status(401).json({
-            message: 'Failed Authentication'
-        });
+        return res.status(401).redirect('/users/login');
     }
 };

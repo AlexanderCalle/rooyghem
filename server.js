@@ -54,6 +54,9 @@ app.use('/locations', locations);
 const leiding = require('./router/leiding');
 app.use('/leiding', leiding);
 
+const vk = require('./router/vk');
+app.use('/vk', vk);
+
 app.listen(port, ()=> {
     console.log('Server running on port ' + port);
 });

@@ -5,11 +5,11 @@ const authCheck = require('../middleware/authCheck');
 
 // Route GET all activities + form
 router.get('/', authCheck,(req, res)=>{
-    con.query('SELECT * FROM groups', (err, groups)=>{
+    con.query('SELECT * FROM groups WHERE group_id = ?', req.user.group_id, (err, groups)=>{
         if(err) return res.json({err: 'Feilid to get group'});
         con.query('SELECT * FROM activities', (err, activities)=>{
             if(err) return res.json({err: 'Failed to get activities'});
-            res.render('create_activities', {groups:groups, activities:activities});
+            res.render('create_activities', {groups:groups, activities:activities, user: req.user});
         }); 
     });
 });
@@ -89,7 +89,7 @@ router.put('/update/:id', authCheck,(req, res)=>{
             end_publication: data.end_publication,
             group_id: group[0].group_id
         }
-        con.query(`UPDATE activities SET ? WHERE activity_id = ?`, updated_activity, req.params.id, (err, activity)=>{
+        con.query(`UPDATE activities SET ? WHERE activity_id = ?`, [updated_activity, req.params.id], (err, activity)=>{
             if(err) return res.json({err: 'Failed to update activity'});
             res.redirect('/activities');
         });
