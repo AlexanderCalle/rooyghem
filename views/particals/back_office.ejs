@@ -1,5 +1,8 @@
 <ul>
     <li><a href="/activities">Activiteiten</a></li>
     <li><a href="/vk">Verhalend Kader</a></li>
+    <% if(admin) { %>
+        <li><a href="/users">users</a></li>
+    <% } %>
     <li><a href="/users/logout">logout</a></li>
 </ul>

@@ -5,21 +5,23 @@ const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const authCheck = require('../middleware/authCheck');
+const adminCheck = require('../middleware/adminCheck');
+const logginCheck = require('../middleware/logginCheck');
 require('dotenv').config();
 
 
-router.get('/', authCheck,(req, res)=>{
+router.get('/', authCheck, adminCheck,(req, res)=>{
     con.query('SELECT * FROM groups', (err, groups)=> {
         if(err) return res.json({err: err});
         con.query('SELECT * FROM users', (err, users)=>{
             if(err) return res.json({err: err});
-            res.render('users', {groups: groups, users: users});
+            res.render('users', {groups: groups, users: users, admin: req.admin});
         });
     });
 });
 
 // FIND ALL USERS
-router.get('/all', authCheck,(req, res)=> {
+router.get('/all', authCheck, adminCheck,(req, res)=> {
     con.query('SELECT * FROM users', (err, users)=>{
         if(err) return res.json({message: 'Failed to load'});
         res.json(users);
@@ -27,7 +29,7 @@ router.get('/all', authCheck,(req, res)=> {
 });
 
 // FIND SINGLE USER BY ID
-router.get('/single/:id', authCheck,(req, res)=> {
+router.get('/single/:id', authCheck, adminCheck,(req, res)=> {
     
     con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, user)=>{
         if(err) return res.json({message: 'Failed to find user'});
@@ -36,7 +38,7 @@ router.get('/single/:id', authCheck,(req, res)=> {
 });
 
 // CREATE USER
-router.post('/create', authCheck,(req, res)=> {
+router.post('/create', authCheck, adminCheck,(req, res)=> {
     const generated_id = crypto.randomBytes(11).toString('hex');
     console.log(generated_id);
     con.query('SELECT group_id FROM groups WHERE name = ?', req.body.group_name, (err, group)=> {
@@ -60,6 +62,10 @@ router.post('/create', authCheck,(req, res)=> {
             });
         });
     });
+});
+
+router.get('/login', logginCheck, (req, res)=> {
+    res.render('login')
 });
 
 // LOGIN USER + check password with hash
@@ -105,7 +111,7 @@ router.get('/logout', authCheck,(req, res)=> {
 });
 
 // DELETE ALL USERS
-router.get('/delete/all', authCheck,(req, res)=> {
+router.get('/delete/all', authCheck, adminCheck,(req, res)=> {
     con.query('DELETE FROM users', (err, users)=>{
         if(err) return res.json({err: err});
         res.send(`All users are deleted`);
@@ -113,15 +119,11 @@ router.get('/delete/all', authCheck,(req, res)=> {
 });
 
 // DELTE SINGLE USER
-router.get('/delete/single/:id', authCheck,(req, res)=> {
+router.get('/delete/single/:id', authCheck, adminCheck,(req, res)=> {
     con.query('DELETE FROM users WHERE user_id = ?', req.params.id, (err, user)=>{
         if(err) return res.json({err: err});
         res.send(`user ${user} is deleted`);
     });
-});
-
-router.get('/login', (req, res)=> {
-    res.render('login')
 });
 
 module.exports = router;

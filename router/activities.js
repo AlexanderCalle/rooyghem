@@ -7,9 +7,9 @@ const authCheck = require('../middleware/authCheck');
 router.get('/', authCheck,(req, res)=>{
     con.query('SELECT * FROM groups WHERE group_id = ?', req.user.group_id, (err, groups)=>{
         if(err) return res.json({err: 'Feilid to get group'});
-        con.query('SELECT * FROM activities', (err, activities)=>{
+        con.query('SELECT * FROM activities WHERE group_id = ?', req.user.group_id, (err, activities)=>{
             if(err) return res.json({err: 'Failed to get activities'});
-            res.render('create_activities', {groups:groups, activities:activities, user: req.user});
+            res.render('create_activities', {groups:groups, activities:activities, user: req.user, admin: req.admin});
         }); 
     });
 });
@@ -30,10 +30,16 @@ router.post('/create', authCheck,(req, res)=>{
         }
 
         if(activity != null) {
-            con.query('INSERT INTO activities SET ?', activity, (err, activity)=> {
-                if(err) return res.json({err: 'Failed to make activity'});
-                res.redirect('/activities');
-            });
+            if (group[0].group_id === req.user.group_id) {
+                con.query('INSERT INTO activities SET ?', activity, (err, activity)=> {
+                    if(err) return res.json({err: 'Failed to make activity'});
+                    res.redirect('/activities');
+                });
+            } else {
+                res.json({
+                    message: 'only make activities for your group'
+                });
+            }
         }
     });
 });
@@ -89,10 +95,16 @@ router.put('/update/:id', authCheck,(req, res)=>{
             end_publication: data.end_publication,
             group_id: group[0].group_id
         }
-        con.query(`UPDATE activities SET ? WHERE activity_id = ?`, [updated_activity, req.params.id], (err, activity)=>{
-            if(err) return res.json({err: 'Failed to update activity'});
-            res.redirect('/activities');
-        });
+        if (group[0].group_id === req.user.group_id) {
+            con.query(`UPDATE activities SET ? WHERE activity_id = ?`, [updated_activity, req.params.id], (err, activity)=>{
+                if(err) return res.json({err: 'Failed to update activity'});
+                res.redirect('/activities');
+            });
+        } else {
+            res.json({
+                message: 'only update activities for your group'
+            });
+        }
     });
 });
 
