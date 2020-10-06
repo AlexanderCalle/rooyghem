@@ -55,8 +55,15 @@ router.post('/create', authCheck, adminCheck,(req, res)=> {
             group_id: req.body.group_id
         }
         con.query('INSERT INTO users SET ?', user, (err, user)=> {
-            if(err) return res.json({message: err});
-            res.redirect('/users');
+            if(err) {
+                if(err.message === "ER_DUP_ENTRY: Duplicate entry 'AlexanderC' for key 'username_UNIQUE'") {
+                    res.json({message: 'Username already exists'});
+                } else {
+                    res.json({err: err});
+                }
+            } else {
+                res.redirect('/users');
+            }
         });
     });
 });

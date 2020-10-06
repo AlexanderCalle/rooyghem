@@ -28,6 +28,7 @@ CREATE TABLE users (
 	phone VARCHAR(45) NOT NULL,
     group_id INT NOT NULL,
     PRIMARY KEY (user_id),
+	UNIQUE KEY username_UNIQUE (username),
 	FOREIGN KEY (group_id) REFERENCES groups(group_id)
 );
 
