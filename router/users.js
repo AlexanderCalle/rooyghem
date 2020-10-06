@@ -41,25 +41,22 @@ router.get('/single/:id', authCheck, adminCheck,(req, res)=> {
 router.post('/create', authCheck, adminCheck,(req, res)=> {
     const generated_id = crypto.randomBytes(11).toString('hex');
     console.log(generated_id);
-    con.query('SELECT group_id FROM groups WHERE name = ?', req.body.group_name, (err, group)=> {
-        const group_id = JSON.parse(JSON.stringify(group));
-        bcrypt.hash(req.body.password, 11, (err, hash)=>{
-            const user = {
-                user_id: generated_id,
-                firstname: req.body.firstname,
-                lastname: req.body.lastname,
-                email: req.body.email,
-                username: req.body.username,
-                passhash: hash,
-                phone: req.body.phone,
-                is_admin: req.body.is_admin,
-                bondsteam: req.body.bondsteam,
-                group_id: group_id[0].group_id
-            }
-            con.query('INSERT INTO users SET ?', user, (err, user)=> {
-                if(err) return res.json({message: err});
-                res.redirect('/users');
-            });
+    bcrypt.hash(req.body.password, 11, (err, hash)=>{
+        const user = {
+            user_id: generated_id,
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            email: req.body.email,
+            username: req.body.username,
+            passhash: hash,
+            phone: req.body.phone,
+            is_admin: req.body.is_admin,
+            bondsteam: req.body.bondsteam,
+            group_id: req.body.group_id
+        }
+        con.query('INSERT INTO users SET ?', user, (err, user)=> {
+            if(err) return res.json({message: err});
+            res.redirect('/users');
         });
     });
 });
@@ -122,44 +119,40 @@ router.get('/:id', authCheck, adminCheck, (req, res)=> {
 
 router.put('/:id', (req, res)=>{
     const data = req.body;
-    con.query('SELECT group_id FROM groups WHERE name = ?', data.group_name, (err, group)=>{
-        if(err) return res.json({message: err.message});
-        const group_id = JSON.parse(JSON.stringify(group));
-        if(data.password === '') {
+    if(data.password === '') {
+        const user_data = {
+            firstname: data.firstname,
+            lastname: data.lastname,
+            email: data.email,
+            username: data.username,
+            phone: data.phone,
+            is_admin: data.is_admin,
+            bondsteam: data.bondsteam,
+            group_id: data.group_id
+        }
+        con.query('UPDATE users SET ? WHERE user_id = ?', [user_data, req.params.id], (err, user)=> {
+            if(err) return res.json({err: err.message});
+            res.redirect('/users');
+        });
+    } else {
+        bcrypt.hash(data.password, 11, (err, hash)=> {
             const user_data = {
                 firstname: data.firstname,
                 lastname: data.lastname,
                 email: data.email,
                 username: data.username,
+                passhash: hash,
                 phone: data.phone,
                 is_admin: data.is_admin,
                 bondsteam: data.bondsteam,
-                group_id: group_id[0].group_id
+                group_id: data.group_id
             }
             con.query('UPDATE users SET ? WHERE user_id = ?', [user_data, req.params.id], (err, user)=> {
                 if(err) return res.json({err: err.message});
                 res.redirect('/users');
             });
-        } else {
-            bcrypt.hash(data.password, 11, (err, hash)=> {
-                const user_data = {
-                    firstname: data.firstname,
-                    lastname: data.lastname,
-                    email: data.email,
-                    username: data.username,
-                    passhash: hash,
-                    phone: data.phone,
-                    is_admin: data.is_admin,
-                    bondsteam: data.bondsteam,
-                    group_id: group_id[0].group_id
-                }
-                con.query('UPDATE users SET ? WHERE user_id = ?', [user_data, req.params.id], (err, user)=> {
-                    if(err) return res.json({err: err.message});
-                    res.redirect('/users');
-                });
-            });
-        }
-    });
+        });
+    }
 });
 
 // DELETE ALL USERS

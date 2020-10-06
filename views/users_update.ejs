@@ -27,9 +27,9 @@
         <option>Volwassenen begeleiding</option>
     </select>
     <br>
-    <select name="group_name">
+    <select name="group_id">
         <% groups.forEach(function(group) { %>
-            <option><%= group.name %></option>
+            <option value="<%= group.group_id %>"><%= group.name %></option>
         <% }) %>
     </select>
     <br>

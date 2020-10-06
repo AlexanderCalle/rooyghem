@@ -74,7 +74,8 @@ router.get('/update/:id', authCheck,(req, res)=>{
             if(err) return res.json({err: 'Failed to get group'});
             res.render('update_activity', {
                 activity: activity[0],
-                group_name: group_name[0].name
+                group_name: group_name[0].name,
+                group_id: activity[0].group_id
             })
         });
     });
@@ -84,28 +85,26 @@ router.get('/update/:id', authCheck,(req, res)=>{
 // Route UPDATE One activity
 router.put('/update/:id', authCheck,(req, res)=>{
     const data = req.body;
-    con.query('SELECT group_id FROM groups WHERE name = ?', data.group_name, (err, group)=>{
-        const updated_activity = {
-            title: data.title,
-            start_date: data.start_date,
-            end_date: data.end_date,
-            meetingpoint: data.meetingpoint,
-            description: data.description,
-            start_publication: data.start_publication,
-            end_publication: data.end_publication,
-            group_id: group[0].group_id
-        }
-        if (group[0].group_id === req.user.group_id) {
-            con.query(`UPDATE activities SET ? WHERE activity_id = ?`, [updated_activity, req.params.id], (err, activity)=>{
-                if(err) return res.json({err: 'Failed to update activity'});
-                res.redirect('/activities');
-            });
-        } else {
-            res.json({
-                message: 'only update activities for your group'
-            });
-        }
-    });
+    const updated_activity = {
+        title: data.title,
+        start_date: data.start_date,
+        end_date: data.end_date,
+        meetingpoint: data.meetingpoint,
+        description: data.description,
+        start_publication: data.start_publication,
+        end_publication: data.end_publication,
+        group_id: data.group_id
+    }
+    if (data.group_id === req.user.group_id.toString()) {
+        con.query(`UPDATE activities SET ? WHERE activity_id = ?`, [updated_activity, req.params.id], (err, activity)=>{
+            if(err) return res.json({err: err.message});
+            res.redirect('/activities');
+        });
+    } else {
+        res.json({
+            message: 'only update activities for your group'
+        });
+    }
 });
 
 module.exports = router;

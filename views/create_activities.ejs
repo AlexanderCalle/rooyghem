@@ -36,7 +36,7 @@
 
 <ul>
     <% activities.forEach(function(activity){ %>
-        <li><a href="/activities/update/<%= activity.activity_id %>"><%= activity.title %></a>, <%= activity.start_date %> - <%= activity.end_date %></li>
+        <li><a href="/activities/update/<%= activity.activity_id %>"><%= activity.title %></a>, <%= activity.start_date.toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ')[0] %> <%= activity.start_date.toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ')[1] %> - <%= activity.end_date.toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ')[1] %></li>
         <form action="/activities/delete/<%= activity.activity_id %>?_method=DELETE" method="POST"><input type="submit" value="Delete"></form>
     <% }) %>
 </ul>

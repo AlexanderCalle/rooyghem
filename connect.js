@@ -15,5 +15,4 @@ con.connect((err)=> {
     console.log('Connected to Mysql');
 });
 
-//hy my name is ali
 module.exports = con;

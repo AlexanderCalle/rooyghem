@@ -4,7 +4,7 @@
 
 <ul>
     <% activities.forEach(function(activity){ %>
-        <li><%= activity.title %></li>
+        <li><%= activity.title %>, <%= activity.start_date.toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ')[0] %> <%= activity.start_date.toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ')[1] %> - <%= activity.end_date.toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ')[1] %></li>
     <% }) %>
 </ul>
 

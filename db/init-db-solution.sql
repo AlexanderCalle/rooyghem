@@ -7,7 +7,7 @@ CREATE TABLE locations (
 	iframe VARCHAR(45)
 );
 
-CREATE TABLE groups (
+CREATE TABLE `groups` (
 	group_id INT AUTO_INCREMENT,
     	PRIMARY KEY (group_id),
 	name VARCHAR(45) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE groups (
 );
 
 CREATE TABLE users (
-	user_id VARCHAR(256) NOT NULL AUTO_INCREMENT,
+	user_id VARCHAR(256) NOT NULL,
 	firstname VARCHAR(45) NOT NULL,
 	lastname VARCHAR(45) NOT NULL,
 	email VARCHAR(50) NOT NULL,
