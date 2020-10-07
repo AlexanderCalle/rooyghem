@@ -1,3 +1,7 @@
+<%if(typeof error != "undefined"){%>
+    <%- include('./particals/messages.ejs') %>
+<% } %>
+
 <h1>Login Page</h1>
 
 <form action="/users/login" method="POST">

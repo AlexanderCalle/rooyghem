@@ -4,6 +4,10 @@
 
 <h1>Create activity</h1>
 
+<%if(typeof error != "undefined"){%>
+    <%- include('./particals/messages.ejs') %>
+<% } %>
+
 <form ac action="/activities/create" method="POST">
     <input type="text" name="title" placeholder="Title...">
     <br>
