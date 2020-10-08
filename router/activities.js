@@ -48,7 +48,7 @@ router.post('/create', authCheck,(req, res)=>{
 router.get('/:group_name', (req, res)=>{
     con.query('SELECT group_id, name FROM groups WHERE name = ?', req.params.group_name, (err, group)=> {
         if(err) return res.render('badrequest');
-        con.query('SELECT * FROM activities WHERE group_id = ?', group[0].group_id, (err, activities)=> {
+        con.query('SELECT * FROM activities WHERE group_id = ? AND end_publication > ?', [group[0].group_id, new Date()], (err, activities)=> {
             if(err) return res.render('badrequest');
             res.render('./group_pages/activities', {
                 activities: activities,

@@ -8,6 +8,7 @@ const morgan = require('morgan');
 const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
+const moment = require('moment');
 
 const app = express();
 const port = 3000 || procces.env.PORT;
@@ -29,9 +30,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res)=> {
-    con.query('SELECT name FROM groups', (err, groups)=> {
+    con.query('SELECT name, group_id FROM groups', (err, groups)=> {
         if(err) return res.json({err: 'Failed to load groups'});
-        res.render('index', {groups: groups});
+        Date.prototype.addDays = function(days) {
+            var date = new Date(this.valueOf());
+            date.setDate(date.getDate() + days);
+            return date;
+        }
+        const date = new Date();
+        con.query('SELECT * from activities WHERE end_publication > ? AND start_publication <= ? AND start_date >= ? AND start_date <= ?', [date, date, date, date.addDays(14)], (err, activities)=> {
+            if(err) return res.render('badrequest');
+            res.render('index', {groups: groups, activities: activities, moment: moment});
+        });
     });
 });
 
