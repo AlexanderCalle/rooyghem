@@ -14,6 +14,16 @@ router.get('/', authCheck,(req, res)=>{
     });
 });
 
+router.get('/activity/:id', (req, res)=>{
+    con.query('SELECT * FROM activities WHERE activity_id = ?', req.params.id, (err, activity)=> {
+        if(err) return res.render('badrequest');
+        res.render('./group_pages/single_activity', {
+            activity: activity[0],
+            moment: require('moment')
+        })
+    });
+});
+
 // Route POST create activity
 router.post('/create', authCheck,(req, res)=>{
     con.query('SELECT group_id, name FROM groups WHERE name = ?', req.body.group_name,(err, group)=>{
@@ -52,7 +62,8 @@ router.get('/:group_name', (req, res)=>{
             if(err) return res.render('badrequest');
             res.render('./group_pages/activities', {
                 activities: activities,
-                group: group[0]
+                group: group[0],
+                moment: require('moment')
             })
         });
     });

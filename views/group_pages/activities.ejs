@@ -1,10 +1,10 @@
 <%- include("../particals/group_nav.ejs") -%>
-
+<% moment.locale("nl-be"); %>
 <h1>Activiteiten Pagina</h1>
 
 <ul>
     <% activities.forEach(function(activity){ %>
-        <li><%= activity.title %>, <%= activity.start_date.toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ')[0] %> <%= activity.start_date.toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ')[1] %> - <%= activity.end_date.toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ')[1] %></li>
+        <li><a href="/activities/activity/<%= activity.activity_id %>"><%= activity.title %>, <%= moment(activity.start_date).format('LLL') %> - <%= moment(activity.end_date).format("LT") %></a></li>
     <% }) %>
 </ul>
 

@@ -9,11 +9,11 @@ CREATE TABLE locations (
 
 CREATE TABLE `groups` (
 	group_id INT AUTO_INCREMENT,
-    	PRIMARY KEY (group_id),
+    PRIMARY KEY (group_id),
 	name VARCHAR(45) NOT NULL,
 	story LONGTEXT,
 	logo VARCHAR(50) NOT NULL,
-    	location_id INT NOT NULL,
+    location_id INT NOT NULL,
 	CONSTRAINT `location_id` FOREIGN KEY (`location_id`) REFERENCES locations(location_id)
 );
 
@@ -42,6 +42,6 @@ CREATE TABLE activities (
 	description VARCHAR(45),
 	start_publication DATE,
 	end_publication DATE,
-    	group_id INT NOT NULL,
+    group_id INT NOT NULL,
 	CONSTRAINT `group_id` FOREIGN KEY (`group_id`) REFERENCES groups(group_id)
 );

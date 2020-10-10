@@ -1,8 +1,7 @@
 <%- include("./particals/navbar.ejs") -%>
 <% moment.locale("nl-be"); %>
-
 <ul>
     <% activities.forEach(function(activity) { %>
-        <li><%= activity.group_id %>, <%= moment(activity.start_date).format('LLL') %> - <%= moment(activity.end_date).format("LT") %></li>
+        <li><a href="/activities/activity/<%= activity.activity_id %>"><%= activity.group_id %>: <%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></a></li>
     <% }) %>
 </ul>

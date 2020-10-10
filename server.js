@@ -38,7 +38,7 @@ app.get('/', (req, res)=> {
             return date;
         }
         const date = new Date();
-        con.query('SELECT * from activities WHERE end_publication > ? AND start_publication <= ? AND start_date >= ? AND start_date <= ?', [date, date, date, date.addDays(14)], (err, activities)=> {
+        con.query('SELECT * from activities WHERE end_publication > ? AND start_publication <= ? AND start_date >= ? AND start_date <= ? ORDER BY start_date', [date, date, date, date.addDays(14)], (err, activities)=> {
             if(err) return res.render('badrequest');
             res.render('index', {groups: groups, activities: activities, moment: moment});
         });
