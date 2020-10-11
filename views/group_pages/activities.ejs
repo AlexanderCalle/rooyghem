@@ -4,7 +4,7 @@
 
 <ul>
     <% activities.forEach(function(activity){ %>
-        <li><a href="/activities/activity/<%= activity.activity_id %>"><%= activity.title %>, <%= moment(activity.start_date).format('LLL') %> - <%= moment(activity.end_date).format("LT") %></a></li>
+        <li><a href="/activities/activity/<%= activity.activity_id %>"><%= activity.title %>: <%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></a></li>
     <% }) %>
 </ul>
 

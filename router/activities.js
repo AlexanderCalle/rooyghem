@@ -9,7 +9,7 @@ router.get('/', authCheck,(req, res)=>{
         if(err) return res.render('badrequest');
         con.query('SELECT * FROM activities WHERE group_id = ?', req.user.group_id, (err, activities)=>{
             if(err) return res.render('badrequest');
-            res.render('create_activities', {groups:groups, activities:activities, user: req.user, admin: req.admin});
+            res.render('create_activities', {groups:groups, activities:activities, user: req.user, admin: req.admin, moment: require('moment')});
         }); 
     });
 });
