@@ -29,7 +29,7 @@ CREATE TABLE users (
     group_id INT NOT NULL,
     PRIMARY KEY (user_id),
 	UNIQUE KEY username_UNIQUE (username),
-	FOREIGN KEY (group_id) REFERENCES groups(group_id)
+	FOREIGN KEY (group_id) REFERENCES `groups`(group_id)
 );
 
 CREATE TABLE activities (
@@ -43,5 +43,5 @@ CREATE TABLE activities (
 	start_publication DATE,
 	end_publication DATE,
     group_id INT NOT NULL,
-	CONSTRAINT `group_id` FOREIGN KEY (`group_id`) REFERENCES groups(group_id)
+	CONSTRAINT `group_id` FOREIGN KEY (`group_id`) REFERENCES `groups`(group_id)
 );
