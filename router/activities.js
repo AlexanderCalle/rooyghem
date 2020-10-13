@@ -5,13 +5,35 @@ const authCheck = require('../middleware/authCheck');
 
 // Route GET all activities + form
 router.get('/', authCheck,(req, res)=>{
-    con.query('SELECT * FROM groups WHERE group_id = ?', req.user.group_id, (err, groups)=>{
-        if(err) return res.render('badrequest');
-        con.query('SELECT * FROM activities WHERE group_id = ?', req.user.group_id, (err, activities)=>{
+    if(req.user.user_id != 1) {
+        con.query('SELECT * FROM groups WHERE group_id = ?', req.user.group_id, (err, groups)=>{
             if(err) return res.render('badrequest');
-            res.render('create_activities', {groups:groups, activities:activities, user: req.user, admin: req.admin, moment: require('moment')});
-        }); 
-    });
+            con.query('SELECT * FROM activities WHERE group_id = ?', req.user.group_id, (err, activities)=>{
+                if(err) return res.render('badrequest');
+                res.render('create_activities', {
+                    groups:groups, 
+                    activities:activities,
+                    user: req.user, 
+                    admin: req.admin, 
+                    moment: require('moment')
+                });
+            }); 
+        });
+    } else {
+        con.query('SELECT * FROM groups', (err, groups)=>{
+            if(err) return res.render('badrequest');
+            con.query('SELECT * FROM activities', (err, activities)=>{
+                if(err) return res.render('badrequest');
+                res.render('create_activities', {
+                    groups: groups,
+                    activities: activities,
+                    user: req.user,
+                    admin: req.admin,
+                    moment: require('moment')
+                });
+            });
+        });
+    }
 });
 
 router.get('/activity/:id', (req, res)=>{
@@ -107,16 +129,43 @@ router.put('/update/:id', authCheck,(req, res)=>{
         group_id: data.group_id
     }
     if(updated_activity != null) {
-        if (data.group_id === req.user.group_id.toString()) {
+        if(req.user.user_id == 1) {
+            con.query(`UPDATE activities SET ? WHERE activity_id = ?`, [updated_activity, req.params.id], (err, activity)=>{
+                if(err) return res.render('badrequest');
+                res.redirect('/activities');
+            });
+        } else if(data.group_id === req.user.group_id.toString()) {
             con.query(`UPDATE activities SET ? WHERE activity_id = ?`, [updated_activity, req.params.id], (err, activity)=>{
                 if(err) return res.render('badrequest');
                 res.redirect('/activities');
             });
         } else {
-            res.render('update_activity', {error: 'cannot update activity from another group'});
+            con.query('SELECT * from activities WHERE activity_id = ?', req.params.id, (err, activity)=>{
+                if(err) return res.render('badrequest');
+                con.query('SELECT name FROM groups WHERE group_id = ?', activity[0].group_id, (err, group_name)=>{
+                    if(err) return res.render('badrequest');
+                    res.render('update_activity', {
+                        activity: activity[0],
+                        group_name: group_name[0].name,
+                        group_id: activity[0].group_id,
+                        error: 'cannot update activity from another group'
+                    });
+                });
+            });
         }
     } else {
-        res.render('update_activity', {error: 'please fill everything in'});
+        con.query('SELECT * from activities WHERE activity_id = ?', req.params.id, (err, activity)=>{
+            if(err) return res.render('badrequest');
+            con.query('SELECT name FROM groups WHERE group_id = ?', activity[0].group_id, (err, group_name)=>{
+                if(err) return res.render('badrequest');
+                res.render('update_activity', {
+                    activity: activity[0],
+                    group_name: group_name[0].name,
+                    group_id: activity[0].group_id,
+                    error: 'Please fill all fields in'
+                });
+            });
+        });
     }
 });
 
