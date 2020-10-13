@@ -1,1 +1,27 @@
 <%- include("./particals/navbar.ejs") -%>
+<% moment.locale("nl-be"); %>
+<ul>
+    <% activities.forEach(function(activity) { %>
+        <% if(activity.group_id === groups[0].group_id) { %>
+            <li>Kab: <a href="/activities/activity/<%= activity.activity_id %>"><%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></a></li>
+        <% } %>
+        <% if(activity.group_id === groups[1].group_id) { %>
+            <li>Pag: <a href="/activities/activity/<%= activity.activity_id %>"><%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></a></li>
+        <% } %>
+        <% if(activity.group_id === groups[2].group_id) { %>
+            <li>Jkn: <a href="/activities/activity/<%= activity.activity_id %>"><%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></a></li>
+        <% } %>
+        <% if(activity.group_id === groups[3].group_id) { %>
+            <li>Kn: <a href="/activities/activity/<%= activity.activity_id %>"><%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></a></li>
+        <% } %>
+        <% if(activity.group_id === groups[4].group_id) { %>
+            <li>Jhn: <a href="/activities/activity/<%= activity.activity_id %>"><%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></a></li>
+        <% } %>
+        <% if(activity.group_id === groups[5].group_id) { %>
+            <li>Asp: <a href="/activities/activity/<%= activity.activity_id %>"><%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></a></li>
+        <% } %>
+        <% if(activity.group_id === groups[6].group_id) { %>
+            <li>Hn: <a href="/activities/activity/<%= activity.activity_id %>"><%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></a></li>
+        <% } %>
+    <% }) %>
+</ul>

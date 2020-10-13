@@ -13,6 +13,6 @@ module.exports = (req, res, next)=> {
             next();
         }
     } catch (error) {
-        return res.status(401).redirect('/users/login');
+        return res.status(401).render('authrequest');
     }
 };

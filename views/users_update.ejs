@@ -2,6 +2,10 @@
 
 <h1>Update users</h1>
 
+<%if(typeof error != "undefined"){%>
+    <%- include('./particals/messages.ejs') %>
+<% } %>
+
 <form action="/users/<%= user.user_id %>?_method=PUT" method="POST">
     <input type="text" name="firstname" placeholder="Firstname..." value="<%= user.firstname %>">
     <br>

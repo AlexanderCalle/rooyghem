@@ -1,5 +1,9 @@
 <%- include('./particals/back_office.ejs') %>
 
+<%if(typeof error != "undefined"){%>
+    <%- include('./particals/messages.ejs') %>
+<% } %>
+
 <h1>Create users</h1>
 
 <form action="/users/create" method="POST">
