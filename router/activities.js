@@ -5,7 +5,7 @@ const authCheck = require('../middleware/authCheck');
 
 // Route GET all activities + form
 router.get('/', authCheck,(req, res)=>{
-    con.query('SELECT * FROM groups WHERE group_id = ?', req.user.group_id, (err, groups)=>{
+    con.query('SELECT * FROM `groups` WHERE group_id = ?', req.user.group_id, (err, groups)=>{
         if(err) return res.render('badrequest');
         con.query('SELECT * FROM activities WHERE group_id = ?', req.user.group_id, (err, activities)=>{
             if(err) return res.render('badrequest');
@@ -26,7 +26,7 @@ router.get('/activity/:id', (req, res)=>{
 
 // Route POST create activity
 router.post('/create', authCheck,(req, res)=>{
-    con.query('SELECT group_id, name FROM groups WHERE name = ?', req.body.group_name,(err, group)=>{
+    con.query('SELECT group_id, name FROM `groups` WHERE name = ?', req.body.group_name,(err, group)=>{
         if(err) return res.render('badrequest');
         const activity = {
             title: req.body.title,
@@ -56,7 +56,7 @@ router.post('/create', authCheck,(req, res)=>{
 
 // Route GET all activities for one group
 router.get('/:group_name', (req, res)=>{
-    con.query('SELECT group_id, name FROM groups WHERE name = ?', req.params.group_name, (err, group)=> {
+    con.query('SELECT group_id, name FROM `groups` WHERE name = ?', req.params.group_name, (err, group)=> {
         if(err) return res.render('badrequest');
         con.query('SELECT * FROM activities WHERE group_id = ? AND end_publication > ?', [group[0].group_id, new Date()], (err, activities)=> {
             if(err) return res.render('badrequest');

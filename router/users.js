@@ -11,7 +11,7 @@ require('dotenv').config();
 
 
 router.get('/', authCheck, adminCheck,(req, res)=>{
-    con.query('SELECT * FROM groups', (err, groups)=> {
+    con.query('SELECT * FROM `groups`', (err, groups)=> {
         if(err) return res.render('badrequest');
         con.query('SELECT * FROM users', (err, users)=>{
             if(err) return res.render('badrequest');
@@ -112,7 +112,7 @@ router.get('/logout', authCheck,(req, res)=> {
 });
 
 router.get('/:id', authCheck, adminCheck, (req, res)=> {
-    con.query('SELECT * FROM groups', (err, groups)=> {
+    con.query('SELECT * FROM `groups`', (err, groups)=> {
         if(err) return res.render('badrequest');
         con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, users)=>{
             if(err) return res.json({err: err});

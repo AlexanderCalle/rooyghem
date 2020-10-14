@@ -30,7 +30,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res)=> {
-    con.query('SELECT name, group_id FROM groups', (err, groups)=> {
+    con.query('SELECT name, group_id FROM `groups`', (err, groups)=> {
         if(err) return res.json({err: 'Failed to load groups'});
         Date.prototype.addDays = function(days) {
             var date = new Date(this.valueOf());
