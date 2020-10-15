@@ -51,6 +51,10 @@ footer {
     margin: 0;
 }
 
+footer div {
+    padding: 7px 10px;
+}
+
 .footerinfo {
     display: block;
     float: left;
@@ -69,13 +73,11 @@ footer {
 
 .footersocials ul li {
     float: right;
-    padding: 14px 16px;
+    padding-top: 5px;
 }
 
 .footersocials ul li a {
     display: block;
-    /* text-align: center;
-    text-decoration: none; */
 }
 
 /* Group view CSS */
