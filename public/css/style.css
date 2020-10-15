@@ -18,6 +18,7 @@ body {
 
 .container {
     grid-area: main;
+    padding: 20px 15px;
 }
 
 /* Navbar CSS */
@@ -29,7 +30,7 @@ nav {
     grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
     grid-gap: 5em;
     background-color: rgb(141, 141, 141);
-    margin: 5px;
+    margin: 0;
 }
 
 nav ul {
