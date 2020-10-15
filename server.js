@@ -17,7 +17,7 @@ const port = 3000 || procces.env.PORT;
 app.use(morgan('dev'));
 
 //middelware
-app.use(express.static(path.join(__dirname, "public")));
+app.use('/public', express.static(path.join(__dirname, "public")));
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 app.set('views', 'views');
