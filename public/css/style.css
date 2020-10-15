@@ -58,7 +58,24 @@ footer {
 
 .footersocials {
     display: block;
+}
+
+.footersocials ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.footersocials ul li {
     float: right;
+    padding: 14px 16px;
+}
+
+.footersocials ul li a {
+    display: block;
+    /* text-align: center;
+    text-decoration: none; */
 }
 
 /* Group view CSS */
