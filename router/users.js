@@ -115,7 +115,7 @@ router.get('/:id', authCheck, adminCheck, (req, res)=> {
     con.query('SELECT * FROM `groups`', (err, groups)=> {
         if(err) return res.render('badrequest');
         con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, users)=>{
-            if(err) return res.json({err: err});
+            if(err) return res.render('badrequest');
             res.render('users_update', {groups: groups, user: users[0], admin: req.admin});
         });
     });
