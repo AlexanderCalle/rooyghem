@@ -1,0 +1,13 @@
+<a href="/">Back to home</a>
+<% moment.locale("nl-be"); %>
+<h1><%= activity.title %></h1>
+
+<p>wanneer? <%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></p>
+
+<% if(activity.meetingpoint != "") { %>
+    <p>Waar? <%= activity.meetingpoint %></p>
+<% } %>
+
+<% if(activity.description != "") { %>
+    <p>Wat? <%= activity.description %></p>
+<% } %>

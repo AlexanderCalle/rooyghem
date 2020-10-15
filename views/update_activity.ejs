@@ -1,0 +1,33 @@
+<a href="/">Back to home</a>
+
+<h1>Update activity</h1>
+
+<%if(typeof error != "undefined"){%>
+    <%- include('./particals/messages.ejs') %>
+<% } %>
+
+<form action="/activities/update/<%= activity.activity_id %>?_method=PUT" method="POST">
+    <input type="text" name="title" value="<%= activity.title %>" placeholder="Title...">
+    <br>
+    <label for="start_time">Start of activity: </label>
+    <input id="start_time" type="datetime-local" name="start_date" value="<%= activity.start_date %>">
+    <br>
+    <label for="end_time">End of activity: </label>
+    <input id="end_time" type="datetime-local" name="end_date" value="<%= activity.end_date %>">
+    <br>
+    <input type="text" name="meetingpoint" value="<%= activity.meetingpoint %>" placeholder="Meetingpoint...">
+    <br>
+    <input type="text" name="description" value="<%= activity.description %>" placeholder="Description...">
+    <br>
+    <label for="start_publication">Start of publication: </label>
+    <input id="start_publication" type="date" name="start_publication" value="<%= activity.start_publication %>">
+    <br>
+    <label for="end_publication">End of publication: </label>
+    <input id="end_publication" type="date" name="end_publication" value="<%= activity.end_publication %>">
+    <br>
+    <select name="group_id">
+        <option value="<%= group_id %>"><%= group_name %></option>
+    </select>
+    <br>
+    <input type="submit" value="Update activity">
+</form>

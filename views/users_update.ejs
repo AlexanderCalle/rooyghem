@@ -1,0 +1,41 @@
+<%- include('./particals/back_office.ejs') %>
+
+<h1>Update users</h1>
+
+<%if(typeof error != "undefined"){%>
+    <%- include('./particals/messages.ejs') %>
+<% } %>
+
+<form action="/users/<%= user.user_id %>?_method=PUT" method="POST">
+    <input type="text" name="firstname" placeholder="Firstname..." value="<%= user.firstname %>">
+    <br>
+    <input type="text" name="lastname" placeholder="Lastname..." value="<%= user.lastname %>">
+    <br>
+    <input type="email" name="email" placeholder="Email..." value="<%= user.email %>">
+    <br>
+    <input type="text" name="username" placeholder="Username..." value="<%= user.username %>">
+    <br>
+    <input type="password" name="password" placeholder="Password...">
+    <br>
+    <input type="text" name="phone" placeholder="Phone..." value="<%= user.phone %>">
+    <br>
+    <select name="is_admin">
+        <option>0</option>
+        <option>1</option>
+    </select>
+    <select name="bondsteam">
+        <option>/</option>
+        <option>Bondsleider</option>
+        <option>Bondssecretaris</option>
+        <option>Bondspenningmeester</option>
+        <option>Volwassenen begeleiding</option>
+    </select>
+    <br>
+    <select name="group_id">
+        <% groups.forEach(function(group) { %>
+            <option value="<%= group.group_id %>"><%= group.name %></option>
+        <% }) %>
+    </select>
+    <br>
+    <input type="submit" value="Create User">
+</form>
