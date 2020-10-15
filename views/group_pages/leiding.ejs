@@ -1,9 +1,12 @@
 <%- include("../particals/group_nav.ejs") -%>
 
-<h1>Leiding van <%= group.name %></h1>
+<main class="container">
+    <h1>Leiding van <%= group.name %></h1>
 
-<ul>
-    <% users.forEach(function(user){ %>
-        <li><%= user.firstname %> <%= user.lastname %></li>
-    <% }) %>
-</ul>
+    <ul>
+        <% users.forEach(function(user){ %>
+            <li><%= user.firstname %> <%= user.lastname %></li>
+        <% }) %>
+    </ul>
+
+</main>

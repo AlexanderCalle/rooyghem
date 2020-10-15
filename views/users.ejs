@@ -1,47 +1,50 @@
-<%- include('./particals/back_office.ejs') %>
+<main class="container">
+    <%- include('./particals/back_office.ejs') %>
 
-<%if(typeof error != "undefined"){%>
-    <%- include('./particals/messages.ejs') %>
-<% } %>
+    <%if(typeof error != "undefined"){%>
+        <%- include('./particals/messages.ejs') %>
+    <% } %>
 
-<h1>Create users</h1>
+    <h1>Create users</h1>
 
-<form action="/users/create" method="POST">
-    <input type="text" name="firstname" placeholder="Firstname...">
-    <br>
-    <input type="text" name="lastname" placeholder="Lastname...">
-    <br>
-    <input type="email" name="email" placeholder="Email...">
-    <br>
-    <input type="text" name="username" placeholder="Username...">
-    <br>
-    <input type="password" name="password" placeholder="Password...">
-    <br>
-    <input type="text" name="phone" placeholder="Phone...">
-    <br>
-    <select name="is_admin">
-        <option>0</option>
-        <option>1</option>
-    </select>
-    <select name="bondsteam">
-        <option>/</option>
-        <option>Bondsleider</option>
-        <option>Bondssecretaris</option>
-        <option>Bondspenningmeester</option>
-        <option>Volwassenen begeleiding</option>
-    </select>
-    <br>
-    <select name="group_id">
-        <% groups.forEach(function(group) { %>
-            <option value="<%= group.group_id %>"><%= group.name %></option>
-        <% }) %>
-    </select>
-    <br>
-    <input type="submit" value="Create User">
-</form>
+    <form action="/users/create" method="POST">
+        <input type="text" name="firstname" placeholder="Firstname...">
+        <br>
+        <input type="text" name="lastname" placeholder="Lastname...">
+        <br>
+        <input type="email" name="email" placeholder="Email...">
+        <br>
+        <input type="text" name="username" placeholder="Username...">
+        <br>
+        <input type="password" name="password" placeholder="Password...">
+        <br>
+        <input type="text" name="phone" placeholder="Phone...">
+        <br>
+        <select name="is_admin">
+            <option>0</option>
+            <option>1</option>
+        </select>
+        <select name="bondsteam">
+            <option>/</option>
+            <option>Bondsleider</option>
+            <option>Bondssecretaris</option>
+            <option>Bondspenningmeester</option>
+            <option>Volwassenen begeleiding</option>
+        </select>
+        <br>
+        <select name="group_id">
+            <% groups.forEach(function(group) { %>
+                <option value="<%= group.group_id %>"><%= group.name %></option>
+            <% }) %>
+        </select>
+        <br>
+        <input type="submit" value="Create User">
+    </form>
 
-<h1>All users</h1>
+    <h1>All users</h1>
 
-<% users.forEach(function(user) { %>
-    <p><a href="/users/<%= user.user_id %>"><%= user.username %></a>, <%= user.group_id %></p>
-<% }) %>
+    <% users.forEach(function(user) { %>
+        <p><a href="/users/<%= user.user_id %>"><%= user.username %></a>, <%= user.group_id %></p>
+    <% }) %>
+
+</main>
