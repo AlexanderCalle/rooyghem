@@ -9,7 +9,13 @@ router.get('/', (req, res)=>{
 router.get('/:group_name/info', (req, res)=> {
     con.query('SELECT * FROM `groups` WHERE name = ?', req.params.group_name, (err, group)=> {
         if(err) return res.render('badrequest');
-        res.render('./group_pages/info', {group: group[0]});
+        con.query('SELECT * FROM locations WHERE location_id = ?', group[0].location_id, (err, location) => {
+            if(err) return res.render('badrequest');
+            con.query('SELECT * FROM users WHERE group_id = ?', group[0].group_id, (err, leaders) =>{
+                if(err) return res.render('badrequest');
+                res.render('./group_pages/info', {group: group[0], location: location[0], leaders: leaders});
+            })
+        })
     });
 });
 
