@@ -25,7 +25,7 @@ body {
 
 nav {
     padding: 0;
-    margin-bottom: 10px;
+    margin: 0;
     grid-area: nav;
     width: 100%;
     display: grid;
@@ -147,6 +147,7 @@ footer div {
 /* Group view CSS */
 
 #groupcontainer {
+    padding: 10px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(50%, 1fr));
 }
