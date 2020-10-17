@@ -153,6 +153,3 @@ footer div {
     grid-template-columns: repeat(auto-fit, minmax(50%, 1fr));
 }
 
-.groupleaders {
-    width: 100%;
-}
