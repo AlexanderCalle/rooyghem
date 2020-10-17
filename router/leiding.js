@@ -3,7 +3,7 @@ const router = express.Router();
 const con = require('../connect');
 
 router.get('/info', (req, res)=> {
-    res.render('leiding');
+    res.render('leiders_page');
 });
 
 router.get('/bondsteam', (req, res)=> {

@@ -77,19 +77,19 @@ router.post('/create', authCheck,(req, res)=>{
 });
 
 // Route GET all activities for one group
-router.get('/:group_name', (req, res)=>{
-    con.query('SELECT group_id, name FROM `groups` WHERE name = ?', req.params.group_name, (err, group)=> {
-        if(err) return res.render('badrequest');
-        con.query('SELECT * FROM activities WHERE group_id = ? AND end_publication > ?', [group[0].group_id, new Date()], (err, activities)=> {
-            if(err) return res.render('badrequest');
-            res.render('./group_pages/activities', {
-                activities: activities,
-                group: group[0],
-                moment: require('moment')
-            })
-        });
-    });
-});
+// router.get('/:group_name', (req, res)=>{
+//     con.query('SELECT group_id, name FROM `groups` WHERE name = ?', req.params.group_name, (err, group)=> {
+//         if(err) return res.render('badrequest');
+//         con.query('SELECT * FROM activities WHERE group_id = ? AND end_publication > ?', [group[0].group_id, new Date()], (err, activities)=> {
+//             if(err) return res.render('badrequest');
+//             res.render('./group_pages/activities', {
+//                 activities: activities,
+//                 group: group[0],
+//                 moment: require('moment')
+//             })
+//         });
+//     });
+// });
 
 // Route DELETE One activity
 router.delete('/delete/:id', authCheck,(req, res)=>{

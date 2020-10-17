@@ -2,6 +2,7 @@
 
 html {
     height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
@@ -23,13 +24,14 @@ body {
 /* Navbar CSS */
 
 nav {
+    padding: 0;
+    margin-bottom: 10px;
     grid-area: nav;
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
     grid-gap: 5em;
     background-color: rgb(141, 141, 141);
-    margin: 5px;
 }
 
 nav ul {
@@ -59,6 +61,7 @@ nav ul li a img {
 }
 
 .dropbtn {
+    font-size: 16px;
     border: none;
     background-color: rgb(141, 141, 141);
     height: 100%;
@@ -73,21 +76,23 @@ nav ul li a img {
   }
 
 .dropdowncontent {
+    padding: 10px;
     display: none;
     position: absolute;
-    background-color: aqua;
+    background-color: grey;
     min-width: 160px;
     z-index: 1;
     text-decoration: none;
 }
 
 .dropdowncontent a {
+    margin-top: 5px;
     color: white;
     display: block;
 }
 
 .dropdowncontent a:hover {
-    background-color: rgb(0, 156, 156);
+    background-color: rgb(25, 101, 187);
 }
 
 .dropdown:hover .dropdowncontent {
