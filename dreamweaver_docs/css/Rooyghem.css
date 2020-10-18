@@ -1,0 +1,124 @@
+@charset "utf-8";
+/* CSS Document */
+
+Body{
+	font-family:ff-ernestine-pro, serif;
+    color: #f98d1e;
+    margin: 0px;
+    font-style: normal;
+    font-weight: 300;
+    background-color: #FFFAF4;
+}
+.clearfix::after {
+    content: "";
+    clear: none;
+    display: table;
+}
+.clearfix {
+    overflow: auto;
+}
+.page-wrapper{
+    max-width: 1300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.top-banner{
+	width: 100%;
+	height: 240px;
+	padding-top: 20px;
+	padding-bottom: 0px;
+	background-image: url("../images/hoofd/main.jpg");
+	background-position:bottom;
+	background-size: cover;
+} /*graag nog fade onderaan banner*/
+#logo{
+    width: 30%;
+    float:left;
+    margin-left: 10px;
+	margin-top: 200px;
+    max-width: 300px;
+}
+.top-banner img{
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+nav ul {
+	text-align:left;
+	list-style-type:none;
+	padding-left: 0px;
+}
+li{
+	display:inline;
+	float: left;
+	padding:1%;
+}
+nav a {
+   	text-decoration: none;
+    color: #f98d1e;
+    display:block;
+    margin-bottom: 10px;
+    padding-top: 0px;
+    padding-bottom: 10px;
+    font-family:futura-pt-bold,sans-serif;
+	font-style: normal;
+    font-weight: 300;
+    font-size: 1em;
+}
+nav a:hover {
+	color: #bbc3d7;
+} /*lijst moet breder naar links en duidelijker dat nav.bar*/
+h2, h3, h4{
+	font-family: futura-pt-bold, sans-serif;
+	color:#f98d1e;
+}
+.weblinks-boven{
+	float: left;
+	width: 30%;
+	display:flex;
+}
+.weblinks-boven img{
+	height: 50px;
+	width:auto;
+}
+.weblinks-boven :hover{
+	opacity: 0.8;
+	transition: 0.5s ease;
+}
+.main{
+	width: 96%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top:5px;
+}
+.nieuws{
+	padding:5px;
+}/*grid maken + scroll horizontaal*/
+article{
+	display: block;
+	padding:2px;
+}
+.footer{
+	width: 100%;
+	background-color:#f9e7d4;
+	box-sizing: border-box;
+	display:inline-flex;
+}
+.copyright{
+	margin: 5%;
+	padding-top: 5%;
+	width: 45%;
+}
+.weblinks-onder{
+	float: left;
+	width: 45%;
+	
+}
+.weblinks-onder img{
+	height: 40px;
+	transition: 0.5s ease;
+}
+.weblinks-onder :hover {
+	opacity: 0.8;
+	transition: 0.5s ease;
+}
