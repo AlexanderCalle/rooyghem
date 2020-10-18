@@ -49,8 +49,8 @@ router.get('/activity/:id', (req, res)=>{
 // Route POST create activity
 router.post('/create', authCheck,(req, res)=>{
     con.query('SELECT group_id, name FROM `groups` WHERE name = ?', req.body.group_name,(err, group)=>{
-        if(err) return res.render('badrequest');
-        const activity = {
+        if(err) return res.render('badrequest', {error: err});
+            const activity = {
             title: req.body.title,
             start_date: req.body.start_date,
             end_date: req.body.end_date,
