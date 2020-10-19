@@ -8,7 +8,7 @@ router.get('/info', (req, res)=> {
 
 router.get('/bondsteam', (req, res)=> {
     con.query('SELECT * FROM users WHERE bondsteam <> "/"', (err, users)=>{
-        if(err) return res.render('badrequest');
+        if(err) return res.render('badrequest', {error: err});
         res.render('bondsteam', {users: users});
     });
 });

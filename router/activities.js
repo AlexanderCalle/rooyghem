@@ -7,9 +7,9 @@ const authCheck = require('../middleware/authCheck');
 router.get('/', authCheck,(req, res)=>{
     if(req.user.user_id != 1) {
         con.query('SELECT * FROM `groups` WHERE group_id = ?', req.user.group_id, (err, groups)=>{
-            if(err) return res.render('badrequest');
+            if(err) return res.render('badrequest', {error: err});
             con.query('SELECT * FROM activities WHERE group_id = ?', req.user.group_id, (err, activities)=>{
-                if(err) return res.render('badrequest');
+                if(err) return res.render('badrequest', {error: err});
                 res.render('create_activities', {
                     groups:groups, 
                     activities:activities,
@@ -21,9 +21,9 @@ router.get('/', authCheck,(req, res)=>{
         });
     } else {
         con.query('SELECT * FROM `groups`', (err, groups)=>{
-            if(err) return res.render('badrequest');
+            if(err) return res.render('badrequest', {error: err});
             con.query('SELECT * FROM activities', (err, activities)=>{
-                if(err) return res.render('badrequest');
+                if(err) return res.render('badrequest', {error: err});
                 res.render('create_activities', {
                     groups: groups,
                     activities: activities,
@@ -38,7 +38,7 @@ router.get('/', authCheck,(req, res)=>{
 
 router.get('/activity/:id', (req, res)=>{
     con.query('SELECT * FROM activities WHERE activity_id = ?', req.params.id, (err, activity)=> {
-        if(err) return res.render('badrequest');
+        if(err) return res.render('badrequest', {error: err});
         res.render('./group_pages/single_activity', {
             activity: activity[0],
             moment: require('moment')
@@ -64,7 +64,7 @@ router.post('/create', authCheck,(req, res)=>{
         if(activity != null) {
             if (group[0].group_id === req.user.group_id) {
                 con.query('INSERT INTO activities SET ?', activity, (err, activity)=> {
-                    if(err) return res.render('badrequest');
+                    if(err) return res.render('badrequest', {error: err});
                     res.redirect('/activities');
                 });
             } else {
@@ -79,9 +79,9 @@ router.post('/create', authCheck,(req, res)=>{
 // Route GET all activities for one group
 // router.get('/:group_name', (req, res)=>{
 //     con.query('SELECT group_id, name FROM `groups` WHERE name = ?', req.params.group_name, (err, group)=> {
-//         if(err) return res.render('badrequest');
+//         if(err) return res.render('badrequest', {error: err});
 //         con.query('SELECT * FROM activities WHERE group_id = ? AND end_publication > ?', [group[0].group_id, new Date()], (err, activities)=> {
-//             if(err) return res.render('badrequest');
+//             if(err) return res.render('badrequest', {error: err});
 //             res.render('./group_pages/activities', {
 //                 activities: activities,
 //                 group: group[0],
@@ -94,7 +94,7 @@ router.post('/create', authCheck,(req, res)=>{
 // Route DELETE One activity
 router.delete('/delete/:id', authCheck,(req, res)=>{
     con.query('DELETE FROM activities WHERE activity_id = ?', req.params.id, (err, activity)=>{
-        if(err) return res.render('badrequest');
+        if(err) return res.render('badrequest', {error: err});
         res.redirect('/activities');
     });
 });
@@ -102,9 +102,9 @@ router.delete('/delete/:id', authCheck,(req, res)=>{
 // Router GET update activity
 router.get('/update/:id', authCheck,(req, res)=>{
     con.query('SELECT * from activities WHERE activity_id = ?', req.params.id, (err, activity)=>{
-        if(err) return res.render('badrequest');
+        if(err) return res.render('badrequest', {error: err});
         con.query('SELECT name FROM `groups` WHERE group_id = ?', activity[0].group_id, (err, group_name)=>{
-            if(err) return res.render('badrequest');
+            if(err) return res.render('badrequest', {error: err});
             res.render('update_activity', {
                 activity: activity[0],
                 group_name: group_name[0].name,
@@ -131,19 +131,19 @@ router.put('/update/:id', authCheck,(req, res)=>{
     if(updated_activity != null) {
         if(req.user.user_id == 1) {
             con.query(`UPDATE activities SET ? WHERE activity_id = ?`, [updated_activity, req.params.id], (err, activity)=>{
-                if(err) return res.render('badrequest');
+                if(err) return res.render('badrequest', {error: err});
                 res.redirect('/activities');
             });
         } else if(data.group_id === req.user.group_id.toString()) {
             con.query(`UPDATE activities SET ? WHERE activity_id = ?`, [updated_activity, req.params.id], (err, activity)=>{
-                if(err) return res.render('badrequest');
+                if(err) return res.render('badrequest', {error: err});
                 res.redirect('/activities');
             });
         } else {
             con.query('SELECT * from activities WHERE activity_id = ?', req.params.id, (err, activity)=>{
-                if(err) return res.render('badrequest');
+                if(err) return res.render('badrequest', {error: err});
                 con.query('SELECT name FROM `groups` WHERE group_id = ?', activity[0].group_id, (err, group_name)=>{
-                    if(err) return res.render('badrequest');
+                    if(err) return res.render('badrequest', {error: err});
                     res.render('update_activity', {
                         activity: activity[0],
                         group_name: group_name[0].name,
@@ -155,9 +155,9 @@ router.put('/update/:id', authCheck,(req, res)=>{
         }
     } else {
         con.query('SELECT * from activities WHERE activity_id = ?', req.params.id, (err, activity)=>{
-            if(err) return res.render('badrequest');
+            if(err) return res.render('badrequest', {error: err});
             con.query('SELECT name FROM `groups` WHERE group_id = ?', activity[0].group_id, (err, group_name)=>{
-                if(err) return res.render('badrequest');
+                if(err) return res.render('badrequest', {error: err});
                 res.render('update_activity', {
                     activity: activity[0],
                     group_name: group_name[0].name,
