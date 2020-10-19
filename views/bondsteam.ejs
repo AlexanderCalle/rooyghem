@@ -1,16 +1,8 @@
-<a href="/">Back</a>
-
-<h1>Leiding</h1>
-
-<ul>
-    <li><a href="/leiding/info">Info</a></li>
-    <li><a href="/leiding/bondsteam">Bondsteam</a></li>
-    <li><a href="/users/login">Login</a></li>
-</ul>
-
-<h1>Bondsteam</h1>
-<ul>
-    <% users.forEach(function(user){ %>
-        <li><%= user.firstname %> <%= user.lastname %>, <%= user.bondsteam %></li>
-    <% }) %>
-</ul>
+<main class="container">
+    <h1>Bondsteam</h1>
+    <ul>
+        <% users.forEach(function(user){ %>
+            <li><%= user.firstname %> <%= user.lastname %>, <%= user.bondsteam %></li>
+        <% }) %>
+    </ul>
+</main>
