@@ -1,9 +1,45 @@
-<%- include("../particals/group_nav.ejs") -%>
+<!-- <%- include("../particals/group_nav.ejs") -%> -->
 
-<h1>Info Page</h1>
+<main class="container" id="groupcontainer">
+    <div class="groupinfo">
+        <img src="<%= group.logo %>" alt="Logo <%= group.name %>" class="grouplogo">
+        <h3>Adres</h3>
+        <p>
+            <%= location.name %> <br>
+            <%= location.adress %>
+        </p>
+        <h3>Contact</h3>
+        <p>
+            <%= group.name %>@ksarooyghem.be
+        </p>
+    </div>
+    
 
-<img src="<%= group.logo %>">
+    <div class="groupstory">
+        <h3>Verhalend Kader</h3>
+        <p>
+            <%= group.story %>
+        </p>
+    </div>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin at luctus nibh. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla eget lobortis arcu. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras sed orci eros. Nam sit amet ligula pretium, rutrum lectus a, volutpat mauris. Praesent aliquet, ante a blandit scelerisque, odio risus tempor urna, sed aliquam ligula dui ut erat. Aliquam faucibus massa in purus sodales interdum. Nulla mattis risus elit, a fringilla velit mattis ut. Maecenas tempus risus leo, vitae imperdiet sapien imperdiet sed. Suspendisse a placerat justo. Praesent blandit condimentum quam non venenatis. Praesent porttitor mi suscipit odio vulputate, eu semper tellus viverra.
-
-    Cras sodales turpis quis ante imperdiet rutrum. Ut ligula lorem, euismod vel efficitur sed, semper vel sem. Mauris lobortis purus ac feugiat rhoncus. Mauris non orci hendrerit, varius eros vel, placerat massa. Mauris quis metus et lorem tempor aliquam at quis nisi. Nullam interdum, ante nec auctor gravida, justo purus elementum velit, non varius dui ipsum in dui. Fusce eget neque mauris. Curabitur tempor faucibus nisl, ut vestibulum dui sollicitudin quis. Donec erat sapien, auctor id facilisis sit amet, tempus sed lorem. Cras tellus dui, ultrices a consequat ac, pulvinar ac quam.</p>
+    
+    <div class="groupleaders">
+        <h3>Leiders</h3>
+        <% leaders.forEach(function(leader){ %>
+            <div>
+                <p>
+                    <%= leader.firstname %> <%= leader.lastname %> <br>
+                    <%= leader.email %>
+                </p>
+            </div>
+        <% }); %>
+    </div>
+    <div class="groupsactivities">
+        <h3>Activiteiten</h3>
+        <ul>
+            <% activities.forEach(function(activity){ %>
+                <li><a href="/activities/activity/<%= activity.activity_id %>"><%= activity.title %>: <%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></a></li>
+            <% }) %>
+        </ul>
+    </div>
+</main>
