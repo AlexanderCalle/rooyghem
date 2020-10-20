@@ -1,11 +1,12 @@
 <% moment.locale("nl-be"); %>
 <main class="container">
-    <div class="auto-jsCalendar" 
+    <!-- <div class="auto-jsCalendar" 
     data-navigator="false"
     data-first-day-of-the-week="2"
     data-day-format="dd"
     data-language="nl"
-    ></div>
+    ></div> -->
+    <div id="calendar" style="width: 800px;"></div>
     <ul>
         <% activities.forEach(function(activity) { %>
             <% if(activity.group_id === groups[0].group_id) { %>
@@ -31,4 +32,5 @@
             <% } %>
         <% }) %>
     </ul>
+
 </main>
