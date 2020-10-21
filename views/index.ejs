@@ -1,12 +1,15 @@
 <% moment.locale("nl-be"); %>
-<main class="container">
+<main class="container" onloaded="console.log('loading')">
     <!-- <div class="auto-jsCalendar" 
     data-navigator="false"
     data-first-day-of-the-week="2"
     data-day-format="dd"
     data-language="nl"
     ></div> -->
-    <div id="calendar" style="width: 800px;"></div>
+    <script nonce="244UUYIB788" >
+        var name = "alexander" 
+    </script>
+    <div id="calendar" style="width: 800px;" onload="MakeCalendar()"></div>
     <ul>
         <% activities.forEach(function(activity) { %>
             <% if(activity.group_id === groups[0].group_id) { %>
