@@ -46,6 +46,27 @@ app.get('/', (req, res)=> {
     });
 });
 
+app.get('/events', (req, res)=> {
+    Date.prototype.addDays = function(days) {
+        var date = new Date(this.valueOf());
+        date.setDate(date.getDate() + days);
+        return date;
+    }
+    const date = new Date();
+    con.query('SELECT * from activities WHERE end_publication > ? AND start_publication <= ? AND start_date >= ? AND start_date <= ? ORDER BY start_date', [date, date, date, date.addDays(14)], (err, activities)=> {
+        if(err) return res.render('badrequest');
+        let events = []
+        activities.forEach(activity => {
+            events.push({
+                title: activity.title,
+                start: activity.start_date,
+                end: activity.end_date
+            })
+        });
+        res.send(events);
+    });
+});
+
 // Routers
 //Route users
 const users = require('./router/users');
