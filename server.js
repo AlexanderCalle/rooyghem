@@ -58,6 +58,7 @@ app.get('/events', (req, res)=> {
         let events = []
         activities.forEach(activity => {
             events.push({
+                id: activity.activity_id,
                 title: activity.title,
                 start: activity.start_date,
                 end: activity.end_date
