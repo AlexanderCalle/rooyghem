@@ -12,9 +12,9 @@ require('dotenv').config();
 
 router.get('/', authCheck, adminCheck,(req, res)=>{
     con.query('SELECT * FROM `groups`', (err, groups)=> {
-        if(err) return res.render('badrequest');
+        if(err) return res.render('badrequest', {error: err});
         con.query('SELECT * FROM users', (err, users)=>{
-            if(err) return res.render('badrequest');
+            if(err) return res.render('badrequest', {error: err});
             res.render('users', {groups: groups, users: users, admin: req.admin});
         });
     });
@@ -23,7 +23,7 @@ router.get('/', authCheck, adminCheck,(req, res)=>{
 // FIND ALL USERS
 router.get('/all', authCheck, adminCheck,(req, res)=> {
     con.query('SELECT * FROM users', (err, users)=>{
-        if(err) return res.render('badrequest');
+        if(err) return res.render('badrequest', {error: err});
         res.json(users);
     });
 });
@@ -76,10 +76,10 @@ router.post('/login', (req, res)=>{
     const data = req.body;
     if(data.username !== '' && data.password !== '') {
         con.query('SELECT * FROM users WHERE username = ?', data.username, (err, user)=> {
-            if(err) return res.render('badrequest');
+            if(err) return res.render('badrequest', {error: err});
             if(user[0] == null) return res.render('login', {error: 'Username doesnot exists'});
             bcrypt.compare(data.password, user[0].passhash, (err, isMatch)=>{
-                if(err) return res.render('badrequest');
+                if(err) return res.render('badrequest', {error: err});
                 if(isMatch) {
                     const payload = {
                         user_id: user[0].user_id,
@@ -113,9 +113,9 @@ router.get('/logout', authCheck,(req, res)=> {
 
 router.get('/:id', authCheck, adminCheck, (req, res)=> {
     con.query('SELECT * FROM `groups`', (err, groups)=> {
-        if(err) return res.render('badrequest');
+        if(err) return res.render('badrequest', {error: err});
         con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, users)=>{
-            if(err) return res.render('badrequest');
+            if(err) return res.render('badrequest', {error: err});
             res.render('users_update', {groups: groups, user: users[0], admin: req.admin});
         });
     });
@@ -139,7 +139,7 @@ router.put('/:id', (req, res)=>{
                 if(err.message === `ER_DUP_ENTRY: Duplicate entry ${req.body.username} for key 'username_UNIQUE'`) {
                     res.render('users_update', {error: 'Username already exists'});
                 } else {
-                    res.render('badrequest');
+                    res.render('badrequest', {error: err});
                 }
             } else {
                 res.redirect('/users');
@@ -176,7 +176,7 @@ router.put('/:id', (req, res)=>{
 // DELETE ALL USERS
 router.get('/delete/all', authCheck, adminCheck,(req, res)=> {
     con.query('DELETE FROM users', (err, users)=>{
-        if(err) return res.render('badrequest');
+        if(err) return res.render('badrequest', {error: err});
         res.send(`All users are deleted`);
     });
 });
@@ -184,7 +184,7 @@ router.get('/delete/all', authCheck, adminCheck,(req, res)=> {
 // DELTE SINGLE USER
 router.get('/delete/single/:id', authCheck, adminCheck,(req, res)=> {
     con.query('DELETE FROM users WHERE user_id = ?', req.params.id, (err, user)=>{
-        if(err) return res.render('badrequest');
+        if(err) return res.render('badrequest', {error: err});
         res.send(`user ${user} is deleted`);
     });
 });
