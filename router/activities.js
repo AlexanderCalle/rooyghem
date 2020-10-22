@@ -62,16 +62,20 @@ router.post('/create', authCheck,(req, res)=>{
         }
 
         if(activity != null) {
-            if (group[0].group_id === req.user.group_id) {
+            if (group[0].group_id === req.user.group_id || req.admin) {
                 con.query('INSERT INTO activities SET ?', activity, (err, activity)=> {
                     if(err) return res.render('badrequest', {error: err});
                     res.redirect('/activities');
                 });
             } else {
-                res.render('activities', {error: 'Cannot create activities for another group'})
+                res.render('badrequest', {error: {
+                    message: 'Cannot create activities for another group'
+                }})
             }
         } else {
-            res.render('activities', {error: 'please fill everything in'});
+            res.render('badrequest', {error: {
+                message: 'please fill everything in'
+            }});
         }
     });
 });
