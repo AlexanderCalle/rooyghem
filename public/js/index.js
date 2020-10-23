@@ -3,11 +3,12 @@ document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
+            themeSystem: 'darkly',
             height: 500,
             locale: 'nl',
             dayMaxEventRows: 2,
             events: {
-                url: 'http://localhost:3000/events'
+                url: window.location.href + 'events'
             },
             eventColor: '#378006',
             eventClick: function(info) {
