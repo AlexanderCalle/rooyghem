@@ -8,6 +8,7 @@ router.get('/', (req, res)=>{
 
 router.get('/:group_name/info', (req, res)=> {
     con.query('SELECT * FROM `groups` WHERE name = ?', req.params.group_name, (err, group)=> {
+        
         if(err) return res.render('badrequest', {error: err});
 
         con.query('SELECT * FROM locations WHERE location_id = ?', group[0].location_id, (err, location) => {
