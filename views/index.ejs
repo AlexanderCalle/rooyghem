@@ -6,11 +6,12 @@
     data-day-format="dd"
     data-language="nl"
     ></div> -->
-    <script nonce="244UUYIB788" >
+    <!-- <script nonce="244UUYIB788" >
         var name = "alexander" 
-    </script>
-    <div id="calendar" style="width: 800px;" onload="MakeCalendar()"></div>
+    </script> -->
+    <div id="calendar" style="width: 800px;" onload="makeCalendar2"></div>
     <ul>
+        <% makeCalendar2 %>
         <% activities.forEach(function(activity) { %>
             <% if(activity.group_id === groups[0].group_id) { %>
                 <li>Kab: <a href="/activities/activity/<%= activity.activity_id %>"><%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></a></li>
