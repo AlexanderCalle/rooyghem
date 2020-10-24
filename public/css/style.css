@@ -204,7 +204,7 @@ article{
     margin-right: auto;
 }
 
-#groupcontainer .calendar {
+#groupcontainer #calendar {
     grid-area: calendar;
 }
 
