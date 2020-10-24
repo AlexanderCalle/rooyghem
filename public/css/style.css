@@ -8,7 +8,7 @@ html {
 body {
     min-height: 100%;
     display: grid;
-    grid-template-rows: 280px 1fr 70px;
+    grid-template-rows: max-content 1fr max-content;
     grid-template-areas: "nav"
                          "main"
                          "footer";
@@ -101,13 +101,32 @@ nav a:hover {
 	transition: 0.5s ease;
 }
 
+.drpdwn {
+    position: relative;
+    display: inline-block;
+    height: 100%;
+}
+
+.drpdwn-content {
+    padding: 10px;
+    display: none;
+    position: absolute;
+    background-color: grey;
+    z-index: 1;
+    text-decoration: none;
+}
+
+.drpdwn:hover .drpdwn-content {
+    display: block;
+}
+
 /* Footer CSS */
 footer{
 	grid-area: footer;
 	display: grid;
 	width: 100%;
 	grid-template-rows: 100%;
-	grid-template-columns: 50% 50%;
+	grid-template-columns: 75% 25%;
 	background-color:#f9e7d4;
 	box-sizing: border-box;
 	padding: 0;
@@ -119,7 +138,7 @@ footer{
 	width: 45%;
 }
 .weblinks-onder{
-	float: left;
+	float: right;
 	width: 45%;
 	
 }
