@@ -1,7 +1,7 @@
 <!-- <%- include("../particals/group_nav.ejs") -%> -->
 
 <main class="container" id="groupcontainer">
-    <div class="groupinfo">
+    <div id="groupinfo">
         <img src="<%= group.logo %>" alt="Logo <%= group.name %>" class="grouplogo">
         <h3>Adres</h3>
         <p>
@@ -13,7 +13,7 @@
             <%= group.name %>@ksarooyghem.be
         </p>
     </div>
-    <div class="groupstory">
+    <div id="groupstory">
         <h3>Verhalend Kader</h3>
         <p>
             <%= group.story %>
@@ -21,15 +21,18 @@
     </div>
 
     <div id="calendar"></div>
-    <div class="groupleaders">
-        <h3>Leiders</h3>
-        <% leaders.forEach(function(leader){ %>
-            <div class="leader">
-                <p>
-                    <%= leader.firstname %> <%= leader.lastname %> <br>
-                    <%= leader.email %>
-                </p>
-            </div>
-        <% }); %>
+
+    <div id="groupleaders">
+        <div id="groupleaders-title"><h3>Leiders</h3></div>
+        <div id="groupleaders-content">
+            <% leaders.forEach(function(leader){ %>
+                <div class="leader">
+                    <p>
+                        <%= leader.firstname %> <%= leader.lastname %> <br>
+                        <%= leader.email %>
+                    </p>
+                </div>
+            <% }); %>
+        </div>
     </div>
 </main>

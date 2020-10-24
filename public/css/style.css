@@ -187,20 +187,24 @@ article{
     margin-top: 10px;
     padding: 10px;
 	display: grid;
-    grid-template-columns: min-content 2fr 3fr;
+    grid-template-columns: max-content 3fr 2fr;
 	grid-column-gap: 20px;
-	grid-template-rows: 60% 40%;
+	grid-template-rows: max-content max-content;
 	grid-row-gap: 1fr;
     grid-template-areas: "info vk calendar"
                          "leaders leaders leaders";
 }
 
-.groupinfo {
+#groupinfo {
     grid-area: info;
     margin-right: 20%;
 }
 
-.groupstory {
+#groupinfo img {
+	max-width: 200px;
+}
+
+#groupstory {
     grid-area: vk;
     margin-left: auto;
     margin-right: auto;
@@ -210,6 +214,18 @@ article{
     grid-area: calendar;
 }
 
-.groupleaders {
+#groupleaders {
 	grid-area: leaders;
+	grid-template-rows: max-content 1fr;
+	grid-template-areas: "title"
+						  "content";
+}
+
+#groupleaders-title {
+	grid-area: title;
+}
+
+#groupleaders-content {
+	margin: auto auto;
+	grid-area: content;
 }
