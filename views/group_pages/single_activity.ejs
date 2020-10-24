@@ -2,7 +2,7 @@
     <% moment.locale("nl-be"); %>
     <h3><%= activity.title %></h3>
 
-    <p>wanneer? <%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></p>
+    <p>wanneer? <%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("D/M, LT") %></p>
 
     <% if(activity.meetingpoint != "") { %>
         <p>Waar? <%= activity.meetingpoint %></p>
