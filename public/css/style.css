@@ -139,11 +139,17 @@ footer{
 }
 .weblinks-onder{
 	float: right;
-	width: 45%;
-	
+	width: 100%;
+	margin-left: auto;
 }
+
+.weblinks-onder ul li {
+    display: inline;
+    float: right;
+}
+
 .weblinks-onder img{
-	height: 40px;
+	max-height: 40px;
 	transition: 0.5s ease;
 }
 .weblinks-onder :hover {
