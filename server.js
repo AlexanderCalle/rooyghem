@@ -63,7 +63,7 @@ app.get('/events', (req, res)=> {
                 let title;
             
                 if(activity.group_id === groups[0].group_id) {
-                    color = "#f5d400";
+                    color = "#ebbd05";
                     title = "kab: " + activity.title;
                 } else if(activity.group_id === groups[1].group_id) {
                     color = "orange";
