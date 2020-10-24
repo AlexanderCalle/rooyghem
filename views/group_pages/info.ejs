@@ -13,8 +13,6 @@
             <%= group.name %>@ksarooyghem.be
         </p>
     </div>
-    
-
     <div class="groupstory">
         <h3>Verhalend Kader</h3>
         <p>
@@ -23,24 +21,15 @@
     </div>
 
     <div id="calendar"></div>
-
     <div class="groupleaders">
         <h3>Leiders</h3>
         <% leaders.forEach(function(leader){ %>
-            <div>
+            <div class="leader">
                 <p>
                     <%= leader.firstname %> <%= leader.lastname %> <br>
                     <%= leader.email %>
                 </p>
             </div>
         <% }); %>
-    </div>
-    <div class="groupsactivities">
-        <h3>Activiteiten</h3>
-        <ul>
-            <% activities.forEach(function(activity){ %>
-                <li><a href="/activities/activity/<%= activity.activity_id %>"><%= activity.title %>: <%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></a></li>
-            <% }) %>
-        </ul>
     </div>
 </main>

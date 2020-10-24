@@ -12,7 +12,7 @@ body {
     grid-template-areas: "nav"
                          "main"
                          "footer";
-    font-family:ff-ernestine-pro, serif;
+    font-family:ff-ernestine-pro, sans-serif;
     color: #f98d1e;
     margin: 0px;
     font-style: normal;
@@ -186,9 +186,11 @@ article{
 #groupcontainer {
     margin-top: 10px;
     padding: 10px;
-    display: grid;
-    grid-template-columns: min-content 3fr 1fr;
-    grid-template-rows: 60% 40%;
+	display: grid;
+    grid-template-columns: min-content 2fr 3fr;
+	grid-column-gap: 20px;
+	grid-template-rows: 60% 40%;
+	grid-row-gap: 1fr;
     grid-template-areas: "info vk calendar"
                          "leaders leaders leaders";
 }
@@ -209,5 +211,5 @@ article{
 }
 
 .groupleaders {
-    grid-area: leaders;
+	grid-area: leaders;
 }
