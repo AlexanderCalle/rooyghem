@@ -13,7 +13,7 @@ VALUES("Kabouters", "Kabouters hebben vk", "path/kabouter/logo", 1),
       ("Hernieuwers", "Hernieuwers hebben vk", "path/hernieuwers/logo", 2),
       ("Oudercomite", "OC hebben vk", "path/oc/logo", 2)
 
-INSERT INTO activities (activity_id, title, start_date, end_date, meeting_point, description, start_publication, end_publication, group_id)
+INSERT INTO activities (activity_id, title, start_date, end_date, meetingpoint, description, start_publication, end_publication, group_id)
 VALUES (1, "KAB 1", "2020-10-24T14:00:00", "2020-10-24T17:00:00", "Engelendalelaan 18, 8310 Sint-Kruis","Een super toffe kabouteractiviteit", "2020-10-20", "2020-11-10", 1),
        (2, "KAB 2", "2020-10-31T14:00:00", "2020-10-31T17:00:00", "Engelendalelaan 18, 8310 Sint-Kruis","Een super toffe kabouteractiviteit 2", "2020-10-20", "2020-11-10", 1),
        (3, "KAB 3", "2020-11-07T14:00:00", "2020-11-07T17:00:00", "Engelendalelaan 18, 8310 Sint-Kruis","Een super toffe kabouteractiviteit 3", "2020-10-20", "2020-11-10", 1),
