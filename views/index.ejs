@@ -1,28 +1,21 @@
 <% moment.locale("nl-be"); %>
-<main class="container">
-    <ul>
-        <% activities.forEach(function(activity) { %>
-            <% if(activity.group_id === groups[0].group_id) { %>
-                <li>Kab: <a href="/activities/activity/<%= activity.activity_id %>"><%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></a></li>
-            <% } %>
-            <% if(activity.group_id === groups[1].group_id) { %>
-                <li>Pag: <a href="/activities/activity/<%= activity.activity_id %>"><%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></a></li>
-            <% } %>
-            <% if(activity.group_id === groups[2].group_id) { %>
-                <li>Jkn: <a href="/activities/activity/<%= activity.activity_id %>"><%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></a></li>
-            <% } %>
-            <% if(activity.group_id === groups[3].group_id) { %>
-                <li>Kn: <a href="/activities/activity/<%= activity.activity_id %>"><%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></a></li>
-            <% } %>
-            <% if(activity.group_id === groups[4].group_id) { %>
-                <li>Jhn: <a href="/activities/activity/<%= activity.activity_id %>"><%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></a></li>
-            <% } %>
-            <% if(activity.group_id === groups[5].group_id) { %>
-                <li>Asp: <a href="/activities/activity/<%= activity.activity_id %>"><%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></a></li>
-            <% } %>
-            <% if(activity.group_id === groups[6].group_id) { %>
-                <li>Hn: <a href="/activities/activity/<%= activity.activity_id %>"><%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></a></li>
-            <% } %>
-        <% }) %>
-    </ul>
+<main class="container" id="index-container">
+    <h2>Niet te missen!</h2>
+    <section class="news">
+        <article id="art-1">
+          <img src="images/" alt="">
+          <h3>artikeltitel</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, rem, deleniti! Sequi excepturi consequatur nesciunt asperiores perferendis, officiis iste. Porro enim maxime error ipsam numquam, nihil odit commodi nisi. Quia.</p>
+        </article>
+        <article id="art-2"> 
+          <img src="images/" alt="">
+          <h3>artikeltitel</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, rem, deleniti! Sequi excepturi consequatur nesciunt asperiores perferendis, officiis iste. Porro enim maxime error ipsam numquam, nihil odit commodi nisi. Quia.</p>
+        </article>
+        <article id="art-3"> 
+          <img src="images/" alt="">
+          <h3>artikeltitel</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, rem, deleniti! Sequi excepturi consequatur nesciunt asperiores perferendis, officiis iste. Porro enim maxime error ipsam numquam, nihil odit commodi nisi. Quia.</p>
+        </article>
+      </section>
 </main>

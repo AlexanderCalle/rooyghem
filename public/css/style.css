@@ -6,15 +6,18 @@ html {
 }
 
 body {
-    background-color: antiquewhite;
     min-height: 100%;
     display: grid;
     grid-template-rows: 70px 1fr 70px;
     grid-template-areas: "nav"
                          "main"
                          "footer";
-    padding: 0;
-    margin: 0;
+    font-family:ff-ernestine-pro, serif;
+    color: #f98d1e;
+    margin: 0px;
+    font-style: normal;
+    font-weight: 300;
+    background-color: #FFFAF4;
 }
 
 .container {
@@ -145,6 +148,29 @@ footer div {
     max-height: 40px;
 }
 
+/* Index CSS */
+
+#index-container {
+    padding: 10px;
+    display: grid;
+    grid-template-rows: max-content 1fr;
+}
+
+.news{
+    grid-template-columns: repeat(auto-fit, minmax(50%, 1fr));
+    display: grid;
+	padding:5px;
+}/*grid maken + scroll horizontaal*/
+
+article{
+	display: block;
+    padding: 5px;
+    margin: 2px 3px;
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+}
+
 /* Group view CSS */
 
 #groupcontainer {
@@ -152,4 +178,3 @@ footer div {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(50%, 1fr));
 }
-
