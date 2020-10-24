@@ -15,7 +15,7 @@ async function createAdminUser() {
             username: 'admin',
             passhash: await bcrypt.hash(process.env.DEFAULT_ADMIN_PASSWORD, 11),
             phone: '000',
-            group_id: 23
+            group_id: 1
         }
         await con.query('INSERT INTO users SET ?', user, (err, user)=>{
             if(err) return console.log(err);
