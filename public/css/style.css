@@ -181,5 +181,27 @@ article{
     margin-top: 10px;
     padding: 10px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(50%, 1fr));
+    grid-template-columns: min-content 3fr 1fr;
+    grid-template-rows: 60% 40%;
+    grid-template-areas: "info vk calendar"
+                         "leaders leaders leaders";
+}
+
+.groupinfo {
+    grid-area: info;
+    margin-right: 20%;
+}
+
+.groupstory {
+    grid-area: vk;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#groupcontainer .calendar {
+    grid-area: calendar;
+}
+
+.groupleaders {
+    grid-area: leaders;
 }
