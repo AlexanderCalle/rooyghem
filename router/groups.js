@@ -11,6 +11,8 @@ router.get('/:group_name/info', (req, res)=> {
         
         if(err) return res.render('badrequest', {error: err});
 
+        if (group.length === 0) return res.render('badrequest', {error: "No group found for " + req.params.group_name})
+
         con.query('SELECT * FROM locations WHERE location_id = ?', group[0].location_id, (err, location) => {
             if(err) return res.render('badrequest', {error: err});
 
