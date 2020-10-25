@@ -53,17 +53,21 @@ router.post('/create', authCheck, adminCheck,(req, res)=> {
             bondsteam: req.body.bondsteam,
             group_id: req.body.group_id
         }
-        con.query('INSERT INTO users SET ?', user, (err, user)=> {
-            if(err) {
-                if(err.message === `ER_DUP_ENTRY: Duplicate entry ${req.body.username} for key 'username_UNIQUE'`) {
-                    res.render('users', {error: 'Username already exists'});
+        if(user != null) {
+            con.query('INSERT INTO users SET ?', user, (err, user)=> {
+                if(err) {
+                    if(err.message === `ER_DUP_ENTRY: Duplicate entry ${req.body.username} for key 'username_UNIQUE'`) {
+                        res.render('users', {error: 'Username already exists'});
+                    } else {
+                        res.render('badrequest', {error: err});
+                    }
                 } else {
-                    res.render('badrequest');
+                    res.redirect('/users');
                 }
-            } else {
-                res.redirect('/users');
-            }
-        });
+            });
+        } else {
+            res.render('users', {error: 'Vul alles in!'});
+        }
     });
 });
 
@@ -163,7 +167,7 @@ router.put('/:id', (req, res)=>{
                     if(err.message === `ER_DUP_ENTRY: Duplicate entry ${req.body.username} for key 'username_UNIQUE'`) {
                         res.render('users_update', {error: 'Username already exists'});
                     } else {
-                        res.render('badrequest');
+                        res.render('badrequest', {error: err});
                     }
                 } else {
                     res.redirect('/users');

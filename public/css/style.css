@@ -191,7 +191,17 @@ article{
 	text-decoration: none;
 }
 
+/* message CSS */
 
+.message{
+	width: 100%;
+	padding: 10px;
+	border: solid 1px #f95c1e;
+	background-color: #fcb69b;
+	border-radius: 10px;
+	color: white;
+	text-align: center;
+}
 
 /* Group view CSS */
 

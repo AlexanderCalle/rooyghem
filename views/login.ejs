@@ -1,9 +1,9 @@
 <main class="container">
-    <%if(typeof error != "undefined"){%>
-        <%- include('./particals/messages.ejs') %>
-    <% } %>
-
+    
     <div class="login">
+        <%if(typeof error != "undefined"){%>
+            <%- include('./particals/messages.ejs') %>
+        <% } %>
         <h1>Login Page</h1>
 
         <form action="/users/login" method="POST" class="login-form">
