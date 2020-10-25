@@ -3,12 +3,16 @@
         <%- include('./particals/messages.ejs') %>
     <% } %>
 
-    <h1>Login Page</h1>
+    <div class="login">
+        <h1>Login Page</h1>
 
-    <form action="/users/login" method="POST">
-        <input type="text" name="username" placeholder="Username...">
-        <input type="password" name="password" placeholder="Password...">
-        <input type="submit" value="Login to office">
-    </form>
+        <form action="/users/login" method="POST" class="login-form">
+            <input type="text" name="username" placeholder="Gebruikersnaam...">
+            <br>
+            <input type="password" name="password" placeholder="Wachtwoord...">
+            <br>
+            <button type="submit">Login</button>
+        </form>
+    </div>
 
 </main>

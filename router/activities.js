@@ -113,6 +113,7 @@ router.get('/update/:id', authCheck,(req, res)=>{
                 activity: activity[0],
                 group_name: group_name[0].name,
                 group_id: activity[0].group_id,
+                admin: req.admin,
                 moment: require('moment')
             })
         });

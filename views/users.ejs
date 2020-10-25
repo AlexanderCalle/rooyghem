@@ -1,30 +1,40 @@
-<main class="container">
+<main class="container" id="backofficecontainer">
     <%- include('./particals/back_office.ejs') %>
 
+   <div id="backofficecreation">
     <%if(typeof error != "undefined"){%>
         <%- include('./particals/messages.ejs') %>
     <% } %>
 
-    <h1>Create users</h1>
+    <h1>Maak gebruikers</h1>
 
     <form action="/users/create" method="POST">
-        <input type="text" name="firstname" placeholder="Firstname...">
+        <label for="firstname">Voornaam </label>
+        <input id="firstname" type="text" name="firstname" placeholder="Voornaam...">
         <br>
-        <input type="text" name="lastname" placeholder="Lastname...">
+        <label for="lastname">Naam </label>
+        <input id="lastname" type="text" name="lastname" placeholder="Naam...">
         <br>
-        <input type="email" name="email" placeholder="Email...">
+        <label for="email">Email </label>
+        <input id="email" type="email" name="email" placeholder="Email...">
         <br>
-        <input type="text" name="username" placeholder="Username...">
+        <label for="username">Gebruikersnaam </label>
+        <input  type="text" name="username" placeholder="Gebruikersnaam...">
         <br>
-        <input type="password" name="password" placeholder="Password...">
+        <label for="password">Wachtwoord </label>
+        <input id="password" type="password" name="password" placeholder="Wachtwoord...">
         <br>
-        <input type="text" name="phone" placeholder="Phone...">
+        <label for="phone">Telefoonnummer </label>
+        <input id="phone" type="text" name="phone" placeholder="Telefoonnummer...">
         <br>
-        <select name="is_admin">
+        <label for="is_admin">Admin </label>
+        <select id="is_admin" name="is_admin">
             <option>0</option>
             <option>1</option>
         </select>
-        <select name="bondsteam">
+        <br>
+        <label for="bondsteam">Bondsteam</label>
+        <select id="bondsteam" name="bondsteam">
             <option>/</option>
             <option>Bondsleider</option>
             <option>Bondssecretaris</option>
@@ -32,19 +42,21 @@
             <option>Volwassenen begeleiding</option>
         </select>
         <br>
-        <select name="group_id">
+        <label for="bannen">Ban </label>
+        <select id="bannen" name="group_id">
             <% groups.forEach(function(group) { %>
                 <option value="<%= group.group_id %>"><%= group.name %></option>
             <% }) %>
         </select>
         <br>
-        <input type="submit" value="Create User">
+        <button type="submit">Maak gebruiker</button>
     </form>
 
-    <h1>All users</h1>
+    <h1>Alle gebruikers</h1>
 
     <% users.forEach(function(user) { %>
-        <p><a href="/users/<%= user.user_id %>"><%= user.username %></a>, <%= user.group_id %></p>
+        <p><a href="/users/<%= user.user_id %>"><%= user.username %></a></p>
     <% }) %>
+   </div>
 
 </main>

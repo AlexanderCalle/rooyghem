@@ -104,7 +104,7 @@ nav a:hover {
 .drpdwn {
     position: relative;
     display: inline-block;
-    height: 100%;
+	height: 100%;
 }
 
 .drpdwn-content {
@@ -112,9 +112,9 @@ nav a:hover {
 	margin: -15px;
     display: none;
     position: absolute;
-    background-color: grey;
+    background-color:  #f9e7d4;
     z-index: 1;
-    text-decoration: none;
+	text-decoration: none;
 }
 
 .drpdwn:hover .drpdwn-content {
@@ -146,7 +146,6 @@ footer{
 
 .weblinks-onder ul li {
     display: inline;
-    float: right;
 }
 
 .weblinks-onder img{
@@ -181,6 +180,18 @@ article{
     border-color: black;
     border-style: solid;
 }
+
+/* Leiders pagina CSS */
+
+.leiderscontainer{
+	padding: 10px;
+}
+
+.leiderscontainer a{
+	text-decoration: none;
+}
+
+
 
 /* Group view CSS */
 
@@ -229,4 +240,149 @@ article{
 #groupleaders-content {
 	margin: auto auto;
 	grid-area: content;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
+}
+
+/* Login backoffice css */
+
+.login {
+	margin: auto;
+	width: 30%;
+	text-align: center;
+}
+
+.login-form input{
+	max-width: 350px;
+	width: 100%;
+	margin-top: 20px;
+	padding: 10px;
+	border-radius: 10px;
+	outline: none;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+}
+
+
+.login-form button{
+	margin-top: 20px;
+	padding: 10px;
+	width: 30%;
+	min-width: 100px;
+	border-radius: 10px;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+	transition: 0.5s;
+}
+
+.login-form button:hover{
+	background-color: #f98d1e;
+	transition: 0.5s;
+}
+
+/* backoffice CSS */
+
+#backofficecontainer {
+	margin-top: 10px;
+    padding: 10px;
+	display: grid;
+    grid-template-columns: 10% 90%;
+    grid-template-areas: "nav creation";
+}
+
+#backofficenavbar{
+	grid-area: nav;
+	padding: 10px;
+}
+
+#backofficenavbar a {
+	text-decoration: none;
+	display: block;
+	margin: 10px;
+}
+
+#backofficecreation{
+	margin-left: auto;
+	margin-right: auto;
+	grid-area: creation;
+	max-width: 450px;
+	width: 30%;
+}
+
+#backofficecreation form{
+	width: 100%;
+}
+
+#backofficecreation label{
+	margin-top: 20px;
+}
+
+#backofficecreation input{
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	padding: 10px;
+	border-radius: 10px;
+	outline: none;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+}
+#backofficecreation select{
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	padding: 10px;
+	border-radius: 10px;
+	outline: none;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+	padding-right: 5px;
+}
+
+#backofficecreation button{
+	margin-top: 20px;
+	padding: 10px;
+	width: 30%;
+	min-width: 100px;
+	border-radius: 10px;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+	transition: 0.5s;
+}
+
+#backofficecreation button:hover{
+	background-color: #f98d1e;
+	transition: 0.5s;
+	color: white;
+}
+
+#backofficecreation .delete-btn{
+	margin-left: 20px;
+	padding: 2px;
+	width: 50px;
+	border-radius: 10px;
+	border: solid 1px #f95c1e;
+	background-color: #fcb69b;
+	transition: 0.5s;
+}
+
+#backofficecreation .delete-btn:hover{
+	background-color: #f95c1e;
+	transition: 0.5s;
+	color: white;
+}
+
+#backofficecreation textarea{
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	padding: 10px;
+	border-radius: 10px;
+	outline: none;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+}
+
+#backofficecreation a{
+	text-decoration: none;
 }
