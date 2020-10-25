@@ -35,6 +35,25 @@ router.get('/:group_name/info', (req, res)=> {
     });
 });
 
+router.get('/:group_name/info/events', (req,res)=> {
+    con.query('SELECT * FROM `groups` WHERE name = ?', req.params.group_name, (err, groups)=> {
+        if(err) return res.render('badrequest', {error: err});
+        con.query('SELECT * FROM activities WHERE group_id = ?', groups[0].group_id, (err, activities)=> {
+            if(err) return res.render('badrequest', {error: err});
+            let events = [];
+            activities.forEach(activity => {
+                events.push({
+                    id: activity.activity_id,
+                    title: activity.title,
+                    start: activity.start_date,
+                    end: activity.end_date,
+                });
+            });
+            res.send(events)
+        });
+    });
+});
+
 // router.get('/:group_name/vk', (req, res)=> {
 //     con.query('SELECT * FROM `groups` WHERE name = ?', req.params.group_name, (err,group)=>{
 //         if(err) return res.render('badrequest', {error: err});

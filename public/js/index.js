@@ -8,9 +8,9 @@ document.addEventListener('DOMContentLoaded', function() {
             locale: 'nl',
             dayMaxEventRows: 2,
             events: {
-                url: '/events'
+                url: window.location.href + '/events'
             },
-            eventColor: '#378006',
+            eventColor: '#f98d1e',
             eventClick: function(info) {
                 window.location.href = "/activities/activity/" + info.event.id
             }
