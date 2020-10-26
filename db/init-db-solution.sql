@@ -27,6 +27,7 @@ CREATE TABLE users (
 	passhash VARCHAR(256) NOT NULL,
 	phone VARCHAR(45) NOT NULL,
     group_id INT NOT NULL,
+	bondsteam VARCHAR(45) NOT NULL,
     PRIMARY KEY (user_id),
 	UNIQUE KEY username_UNIQUE (username),
 	FOREIGN KEY (group_id) REFERENCES `groups`(group_id)
