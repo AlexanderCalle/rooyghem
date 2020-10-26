@@ -96,16 +96,16 @@ app.get('/contact', (req, res)=> {
     });
 });
 
-app.post('/contact', (req, res)=> {
-    sendmail({
-        from: 'no-replt@ksarooyhgem.be',
-        to: 'callebauta@hotmail.com',
-        subject: 'from: ' + req.body.naam + ' ' + req.body.onderwerp,
-        html: req.body.bericht
-    }, (err, reply)=> {
-        res.redirect('/contact')
-    });
-});
+// app.post('/contact', (req, res)=> {
+//     sendmail({
+//         from: 'no-replt@ksarooyhgem.be',
+//         to: 'callebauta@hotmail.com',
+//         subject: 'from: ' + req.body.naam + ' ' + req.body.onderwerp,
+//         html: req.body.bericht
+//     }, (err, reply)=> {
+//         res.redirect('/contact')
+//     });
+// });
 
 // Routers
 //Route users
@@ -129,8 +129,6 @@ const leiding = require('./router/leiding');
 app.use('/leiding', leiding);
 
 const vk = require('./router/vk');
-const { query } = require('express');
-const sendMailFactory = require('sendmail');
 app.use('/vk', vk);
 
 const newsfeed = require('./router/newsfeeds');
