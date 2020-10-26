@@ -327,6 +327,11 @@ article{
 	text-decoration: none;
 	display: block;
 	margin: 10px;
+	color: #f98d1e;
+}
+
+#backofficenavbar a:hover {
+	color: #bbc3d7;
 }
 
 #backofficecreation{
@@ -413,4 +418,69 @@ article{
 
 #backofficecreation a{
 	text-decoration: none;
+}
+
+/* contact CSS */
+
+#contactcontainer{
+	margin-top: 10px;
+    padding: 10px;
+	display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+}
+
+#contactinfo {
+	padding-left: 50px;
+}
+
+#contactinfo a {
+	text-decoration: none;
+	color: #f98d1e;
+}
+
+#contactinfo a:hover {
+	color: #bbc3d7;
+}
+
+#contactform {
+	width: 70%;
+	padding-left: 50px;
+}
+
+#contactform input {
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	padding: 10px;
+	border-radius: 10px;
+	outline: none;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+}
+
+#contactform textarea {
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	padding: 10px;
+	border-radius: 10px;
+	outline: none;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+}
+
+#contactform button{
+	padding: 10px;
+	width: 30%;
+	min-width: 100px;
+	border-radius: 10px;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+	transition: 0.5s;
+}
+
+#contactform button:hover{
+	background-color: #f98d1e;
+	transition: 0.5s;
+	color: white;
 }

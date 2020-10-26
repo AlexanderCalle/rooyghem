@@ -11,7 +11,6 @@ const helmet = require('helmet');
 const moment = require('moment');
 const authCheck = require('./middleware/authCheck');
 
-
 const app = express();
 const port = 3000 || procces.env.PORT;
 
@@ -91,6 +90,23 @@ app.get('/', (req, res)=> {
 //     });
 // });
 
+app.get('/contact', (req, res)=> {
+    con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
+        res.render('contact', {bondsleiders: users});
+    });
+});
+
+app.post('/contact', (req, res)=> {
+    sendmail({
+        from: 'no-replt@ksarooyhgem.be',
+        to: 'callebauta@hotmail.com',
+        subject: 'from: ' + req.body.naam + ' ' + req.body.onderwerp,
+        html: req.body.bericht
+    }, (err, reply)=> {
+        res.redirect('/contact')
+    });
+});
+
 // Routers
 //Route users
 const users = require('./router/users');
@@ -113,6 +129,8 @@ const leiding = require('./router/leiding');
 app.use('/leiding', leiding);
 
 const vk = require('./router/vk');
+const { query } = require('express');
+const sendMailFactory = require('sendmail');
 app.use('/vk', vk);
 
 const newsfeed = require('./router/newsfeeds');
