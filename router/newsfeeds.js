@@ -52,12 +52,12 @@ router.post('/create', authCheck,(req, res)=>{
 
 // TODO: delete newsfeed
 // Route DELETE One activity
-// router.delete('/delete/:id', authCheck,(req, res)=>{
-//     con.query('DELETE FROM activities WHERE activity_id = ?', req.params.id, (err, activity)=>{
-//         if(err) return res.render('badrequest', {error: err});
-//         res.redirect('/activities');
-//     });
-// });
+router.delete('/delete/:id', authCheck,(req, res)=>{
+    con.query('DELETE FROM newsfeeds WHERE feed_id = ?', req.params.id, (err, newsfeed)=>{
+        if(err) return res.render('badrequest', {error: err});
+        res.redirect('/newsfeed');
+    });
+});
 
 // TODO: page for updating a newsfeed
 // Router GET update newsfeed
