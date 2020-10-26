@@ -167,7 +167,7 @@ footer{
 }
 
 .news{
-    grid-template-columns: repeat(auto-fit, minmax(50%, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
     display: grid;
 	padding:5px;
 }/*grid maken + scroll horizontaal*/
@@ -176,15 +176,20 @@ article{
 	display: block;
     padding: 5px;
     margin: 2px 3px;
-    border-width: 2px;
-    border-color: black;
-    border-style: solid;
 }
 
 /* Leiders pagina CSS */
 
 .leiderscontainer{
 	padding: 10px;
+	width: 60%;
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.leiderscontainer p {
+	width: 100%;
 }
 
 .leiderscontainer a{
@@ -209,17 +214,12 @@ article{
     margin-top: 10px;
     padding: 10px;
 	display: grid;
-    grid-template-columns: max-content 3fr 2fr;
-	grid-column-gap: 20px;
-	grid-template-rows: max-content max-content;
-	grid-row-gap: 1fr;
-    grid-template-areas: "info vk calendar"
-                         "leaders leaders leaders";
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+	grid-gap: 30px;
 }
 
 #groupinfo {
-    grid-area: info;
-    margin-right: 20%;
+	margin-right: 20%;
 }
 
 #groupinfo img {
@@ -227,17 +227,11 @@ article{
 }
 
 #groupstory {
-    grid-area: vk;
     margin-left: auto;
-    margin-right: auto;
-}
-
-#groupcontainer #calendar {
-    grid-area: calendar;
+	margin-right: auto;
 }
 
 #groupleaders {
-	grid-area: leaders;
 	grid-template-rows: max-content 1fr;
 	grid-template-areas: "title"
 						  "content";
@@ -248,10 +242,9 @@ article{
 }
 
 #groupleaders-content {
-	margin: auto auto;
 	grid-area: content;
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
 /* Login backoffice css */
