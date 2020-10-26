@@ -15,6 +15,7 @@ async function createAdminUser() {
             username: 'admin',
             passhash: await bcrypt.hash(process.env.DEFAULT_ADMIN_PASSWORD, 11),
             phone: '000',
+            bondsteam: "/",
             group_id: 1
         }
         await con.query('INSERT INTO users SET ?', user, (err, user)=>{
