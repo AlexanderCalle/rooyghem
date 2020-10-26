@@ -9,8 +9,7 @@ const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const moment = require('moment');
-const sendmail = require('sendmail');
-
+const authCheck = require('./middleware/authCheck');
 
 const app = express();
 const port = 3000 || procces.env.PORT;
@@ -39,57 +38,57 @@ app.get('/', (req, res)=> {
     });
 });
 
-app.get('/events', (req, res)=> {
-    Date.prototype.addDays = function(days) {
-        var date = new Date(this.valueOf());
-        date.setDate(date.getDate() + days);
-        return date;
-    }
-    const date = new Date();
-    con.query('SELECT * FROM `groups`', (err, groups)=>{
-        if(err) return res.render('badrequest', {error: err});
-        con.query('SELECT * from activities WHERE end_publication > ? AND start_publication <= ? AND start_date >= ? AND start_date <= ? ORDER BY start_date', [date, date, date, date.addDays(14)], (err, activities)=> {
-            if(err) return res.render('badrequest');
-            let events = []
-            activities.forEach(activity => {
-                let color;
-                let title;
+// app.get('/events', (req, res)=> {
+//     Date.prototype.addDays = function(days) {
+//         var date = new Date(this.valueOf());
+//         date.setDate(date.getDate() + days);
+//         return date;
+//     }
+//     const date = new Date();
+//     con.query('SELECT * FROM `groups`', (err, groups)=>{
+//         if(err) return res.render('badrequest', {error: err});
+//         con.query('SELECT * from activities WHERE end_publication > ? AND start_publication <= ? AND start_date >= ? AND start_date <= ? ORDER BY start_date', [date, date, date, date.addDays(14)], (err, activities)=> {
+//             if(err) return res.render('badrequest');
+//             let events = []
+//             activities.forEach(activity => {
+//                 let color;
+//                 let title;
             
-                if(activity.group_id === groups[0].group_id) {
-                    color = "#ebbd05";
-                    title = "kab: " + activity.title;
-                } else if(activity.group_id === groups[1].group_id) {
-                    color = "orange";
-                    title = "pag: " + activity.title;
-                } else if(activity.group_id === groups[2].group_id) {
-                    color = "red";
-                    title = "jkn: " + activity.title;
-                } else if(activity.group_id === groups[3].group_id) {
-                    color = "purple";
-                    title = "kn: " + activity.title;
-                } else if(activity.group_id === groups[4].group_id) {
-                    color = "blue"
-                    title = "jhn: " + activity.title;
-                } else if(activity.group_id === groups[5].group_id) {
-                    color = "green";
-                    title = "aspi: " + activity.title;
-                } else if(activity.group_id === groups[6].group_id) {
-                    color = "brown";
-                    title = "hn: " + activity.title;
-                }
+//                 if(activity.group_id === groups[0].group_id) {
+//                     color = "#ebbd05";
+//                     title = "kab: " + activity.title;
+//                 } else if(activity.group_id === groups[1].group_id) {
+//                     color = "orange";
+//                     title = "pag: " + activity.title;
+//                 } else if(activity.group_id === groups[2].group_id) {
+//                     color = "red";
+//                     title = "jkn: " + activity.title;
+//                 } else if(activity.group_id === groups[3].group_id) {
+//                     color = "purple";
+//                     title = "kn: " + activity.title;
+//                 } else if(activity.group_id === groups[4].group_id) {
+//                     color = "blue"
+//                     title = "jhn: " + activity.title;
+//                 } else if(activity.group_id === groups[5].group_id) {
+//                     color = "green";
+//                     title = "aspi: " + activity.title;
+//                 } else if(activity.group_id === groups[6].group_id) {
+//                     color = "brown";
+//                     title = "hn: " + activity.title;
+//                 }
     
-                events.push({
-                    id: activity.activity_id,
-                    title: title,
-                    start: activity.start_date,
-                    end: activity.end_date,
-                    color: color
-                })
-            });
-            res.send(events);
-        });
-    });
-});
+//                 events.push({
+//                     id: activity.activity_id,
+//                     title: title,
+//                     start: activity.start_date,
+//                     end: activity.end_date,
+//                     color: color
+//                 })
+//             });
+//             res.send(events);
+//         });
+//     });
+// });
 
 app.get('/contact', (req, res)=> {
     con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
@@ -135,7 +134,8 @@ const sendMailFactory = require('sendmail');
 app.use('/vk', vk);
 
 const newsfeed = require('./router/newsfeeds');
-app.use('/newsfeed', newsfeed);
+const adminCheck = require('./middleware/adminCheck');
+app.use('/newsfeed', authCheck, adminCheck, newsfeed);
 
 app.listen(port, ()=> {
     console.log('Server running on port ' + port);
