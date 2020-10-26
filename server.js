@@ -9,6 +9,7 @@ const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const moment = require('moment');
+const authCheck = require('./middleware/authCheck');
 
 
 const app = express();
@@ -115,7 +116,8 @@ const vk = require('./router/vk');
 app.use('/vk', vk);
 
 const newsfeed = require('./router/newsfeeds');
-app.use('/newsfeed', newsfeed);
+const adminCheck = require('./middleware/adminCheck');
+app.use('/newsfeed', authCheck, adminCheck, newsfeed);
 
 app.listen(port, ()=> {
     console.log('Server running on port ' + port);

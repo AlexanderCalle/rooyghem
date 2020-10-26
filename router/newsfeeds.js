@@ -4,7 +4,7 @@ const con = require('../connect');
 const authCheck = require('../middleware/authCheck');
 
 // Route GET all newsfeeds + form
-router.get('/', authCheck,(req, res)=>{
+router.get('/',(req, res)=>{
     con.query('SELECT * FROM newsfeeds ORDER BY start_publication', (err, newsfeeds) => {
         if (err) return res.render('badrequest', {error: err});
         res.render('create_newsfeed', {
@@ -28,7 +28,7 @@ router.get('/', authCheck,(req, res)=>{
 // });
 
 // Route POST create newsfeed
-router.post('/create', authCheck,(req, res)=>{
+router.post('/create',(req, res)=>{
     const newsfeed = {
         title: req.body.title,
         description: req.body.description,
@@ -52,7 +52,7 @@ router.post('/create', authCheck,(req, res)=>{
 
 // TODO: delete newsfeed
 // Route DELETE One activity
-router.delete('/delete/:id', authCheck,(req, res)=>{
+router.delete('/delete/:id',(req, res)=>{
     con.query('DELETE FROM newsfeeds WHERE feed_id = ?', req.params.id, (err, newsfeed)=>{
         if(err) return res.render('badrequest', {error: err});
         res.redirect('/newsfeed');
@@ -61,7 +61,7 @@ router.delete('/delete/:id', authCheck,(req, res)=>{
 
 // TODO: page for updating a newsfeed
 // Router GET update newsfeed
-router.get('/update/:id', authCheck,(req, res)=>{
+router.get('/update/:id',(req, res)=>{
     con.query('SELECT * from newsfeeds WHERE feed_id = ?', req.params.id, (err, newsfeed)=>{
         if(err) return res.render('badrequest', {error: err});
         
@@ -75,7 +75,7 @@ router.get('/update/:id', authCheck,(req, res)=>{
 
 // TODO: update one newsfeed
 // Route UPDATE One activity
-router.put('/update/:id', authCheck,(req, res)=>{
+router.put('/update/:id',(req, res)=>{
     const updated_newsfeed = {
         title: req.body.title,
         description: req.body.description,
