@@ -31,8 +31,7 @@ VALUES (1, "KAB 1", "2020-10-24T14:00:00", "2020-10-24T17:00:00", "Engelendalela
        (15, "JHN 3", "2020-11-07T14:00:00", "2020-11-07T17:00:00", "Engelendalelaan 18, 8310 Sint-Kruis","Een super toffe jonghernieuweractiviteit 3", "2020-10-20", "2020-11-10", 5),
        (16, "ASPI 1", "2020-10-24T14:00:00", "2020-10-24T17:00:00", "Engelendalelaan 18, 8310 Sint-Kruis","Een super toffe aspirantenactiviteit", "2020-10-20", "2020-11-10", 6),
        (17, "ASPI 2", "2020-10-31T14:00:00", "2020-10-31T17:00:00", "Engelendalelaan 18, 8310 Sint-Kruis","Een super toffe aspirantenactiviteit 2", "2020-10-20", "2020-11-10", 6),
-       (18, "ASPI 3", "2020-11-07T14:00:00", "2020-11-07T17:00:00", "Engelendalelaan 18, 8310 Sint-Kruis","Een super toffe aspirantenactiviteit 3", "2020-10-20", "2020-11-10", 6);
-
+       
 INSERT INTO newsfeeds (feed_id, title, description, start_publication, end_publication, picture_path, created_by)
 VALUES (1, "Artikel 1", "Dit is een nieuwtje dat we hebben meegemaakt met onze KSA", "2020-10-25", "2020-11-25", "/public/images/newsfeedpictures/picture1.jpg", "1"),
        (2, "Artikel 2", "Dit is nog een nieuwtje dat we hebben meegemaakt met onze KSA", "2020-10-25", "2020-11-25", "/public/images/newsfeedpictures/picture2.jpg", "1"),
