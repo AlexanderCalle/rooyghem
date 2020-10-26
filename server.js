@@ -32,18 +32,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res)=> {
-    con.query('SELECT name, group_id FROM `groups`', (err, groups)=> {
+    const date = new Date();
+    con.query('SELECT * FROM newsfeeds WHERE end_publication > ? AND start_publication <= ? ORDER BY start_publication', [date, date], (err, newsfeeds) => {
         if(err) return res.render('badrequest', {error: err});
-        Date.prototype.addDays = function(days) {
-            var date = new Date(this.valueOf());
-            date.setDate(date.getDate() + days);
-            return date;
-        }
-        const date = new Date();
-        con.query('SELECT * from activities WHERE end_publication > ? AND start_publication <= ? AND start_date >= ? AND start_date <= ? ORDER BY start_date', [date, date, date, date.addDays(14)], (err, activities)=> {
-            if(err) return res.render('badrequest', {error: err});
-            res.render('index', {groups: groups, activities: activities, moment: moment});
-        });
+        res.render('index', {newsfeeds: newsfeeds, moment: moment});
     });
 });
 
@@ -141,6 +133,9 @@ const vk = require('./router/vk');
 const { query } = require('express');
 const sendMailFactory = require('sendmail');
 app.use('/vk', vk);
+
+const newsfeed = require('./router/newsfeeds');
+app.use('/newsfeed', newsfeed);
 
 app.listen(port, ()=> {
     console.log('Server running on port ' + port);

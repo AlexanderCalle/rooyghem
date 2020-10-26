@@ -2,20 +2,12 @@
 <main class="container" id="index-container">
     <h2>Niet te missen!</h2>
     <section class="news">
-        <article id="art-1">
-          <img src="images/" alt="">
-          <h3>artikeltitel</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, rem, deleniti! Sequi excepturi consequatur nesciunt asperiores perferendis, officiis iste. Porro enim maxime error ipsam numquam, nihil odit commodi nisi. Quia.</p>
-        </article>
-        <article id="art-2"> 
-          <img src="images/" alt="">
-          <h3>artikeltitel</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, rem, deleniti! Sequi excepturi consequatur nesciunt asperiores perferendis, officiis iste. Porro enim maxime error ipsam numquam, nihil odit commodi nisi. Quia.</p>
-        </article>
-        <article id="art-3"> 
-          <img src="images/" alt="">
-          <h3>artikeltitel</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, rem, deleniti! Sequi excepturi consequatur nesciunt asperiores perferendis, officiis iste. Porro enim maxime error ipsam numquam, nihil odit commodi nisi. Quia.</p>
-        </article>
-      </section>
+      <% newsfeeds.forEach(function(feed) { %>
+        <div class="newsfeed">
+          <h3 class="feedtitle"><%= feed.title %></h3>
+          <img src="<%= feed.picture_path %>" alt="Picture for <%= feed.title %>" class="feedimg">
+          <p class="feedp"> <%= feed.description %> </p>
+        </div>
+    <% }) %>    
+    </section>
 </main>
