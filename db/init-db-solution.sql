@@ -47,7 +47,7 @@ CREATE TABLE activities (
 );
 
 CREATE TABLE newsfeeds (
-	feed_id INT NOT NULL,
+	feed_id INT NOT NULL AUTO_INCREMENT,
 	title VARCHAR(45) NOT NULL,
 	description TEXT NOT NULL,
 	start_publication DATE,

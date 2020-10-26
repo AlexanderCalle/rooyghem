@@ -114,6 +114,9 @@ app.use('/leiding', leiding);
 const vk = require('./router/vk');
 app.use('/vk', vk);
 
+const newsfeed = require('./router/newsfeeds');
+app.use('/newsfeed', newsfeed);
+
 app.listen(port, ()=> {
     console.log('Server running on port ' + port);
 });
