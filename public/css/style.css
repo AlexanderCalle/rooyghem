@@ -31,9 +31,31 @@ body {
 .nieuws{
 	padding:5px;
 }/*grid maken + scroll horizontaal*/
-article{
-	display: block;
+
+.newsfeed{
+	max-width: 1fr;
+	display: grid;
 	padding:2px;
+	grid-template-columns: max-content 1fr;
+	grid-template-rows: min-content 1fr;
+	grid-template-areas: "title title"
+						 "img p";
+}
+
+.feedtitle {
+	grid-area: title;
+}
+
+.feedimg {
+	grid-area: img;
+	max-width: 150px;
+}
+
+.feedp {
+	grid-area: p;
+	margin: auto 10px;
+	padding-left: 20px;
+	max-width: 60%;
 }
 
 /* Navbar CSS */

@@ -46,3 +46,15 @@ CREATE TABLE activities (
     group_id INT NOT NULL,
 	CONSTRAINT `group_id` FOREIGN KEY (`group_id`) REFERENCES `groups`(group_id)
 );
+
+CREATE TABLE newsfeeds (
+	feed_id INT NOT NULL AUTO_INCREMENT,
+	title VARCHAR(45) NOT NULL,
+	description TEXT NOT NULL,
+	start_publication DATE,
+	end_publication DATE,
+	picture_path VARCHAR(50),
+    created_by VARCHAR(256) NOT NULL,
+    PRIMARY KEY (feed_id),
+	CONSTRAINT `created_by` FOREIGN KEY (created_by) REFERENCES users(user_id)
+);

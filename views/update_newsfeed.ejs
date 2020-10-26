@@ -1,0 +1,30 @@
+<main class="container" id="backofficecontainer">
+    <%- include('./particals/back_office.ejs') %>
+    <div id="backofficecreation">
+        <h1>Update activiteit</h1>
+
+        <%if(typeof error != "undefined"){%>
+            <%- include('./particals/messages.ejs') %>
+        <% } %>
+
+        <form action="/newsfeed/update/<%=newsfeed.feed_id%>?_method=PUT" method="POST">
+            <label for="title">Titel </label>
+            <input id="title" type="text" name="title" value="<%=newsfeed.title%>" placeholder="Titel...">
+            <br>
+            <label for="description">Beschrijving </label>
+            <textarea name="description" cols="120" rows="10"><%=newsfeed.description%></textarea>
+            <br>
+            <label for="start_publication">Start publicatie </label>
+            <input id="start_publication" type="date" name="start_publication" value="<%= moment(newsfeed.start_publication).format('YYYY-MM-DD')%>">
+            <br>
+            <label for="end_publication">Einde publicatie </label>
+            <input id="end_publication" type="date" name="end_publication" value="<%= moment(newsfeed.end_publication).format('YYYY-MM-DD')%>">
+            <br>
+            <label for="picture_path">Foto </label>
+            <input  type="text" name="picture_path" value="<%=newsfeed.picture_path%>" placeholder="Pad...">
+            <br>
+            <button type="submit">Update nieuwtje</button>
+        </form>
+    </div>
+
+</main>
