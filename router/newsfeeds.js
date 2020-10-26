@@ -45,7 +45,7 @@ router.post('/create',(req, res)=>{
         })
     } else {
         res.render('badrequest', {error: {
-            message: 'please fill everything in'
+            message: 'Vul alles in!'
         }});
     }
 });
@@ -97,7 +97,8 @@ router.put('/update/:id',(req, res)=>{
             res.render('update_newsfeed', {
                 newsfeed: newsfeed[0],
                 admin: req.admin,
-                moment: require('moment')
+                moment: require('moment'),
+                error: 'Niet alles is ingevuld!'
             });
         });
     }
