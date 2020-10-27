@@ -102,6 +102,10 @@ app.get('/contact', userCheck, (req, res)=> {
     });
 });
 
+app.get('/overons', userCheck, (req, res)=> {
+    res.render('over_ons', {username: req.user.username});
+});
+
 // Routers
 //Route users
 const users = require('./router/users');

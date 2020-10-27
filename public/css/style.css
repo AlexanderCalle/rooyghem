@@ -507,3 +507,32 @@ article{
 	transition: 0.5s;
 	color: white;
 }
+
+/* Over ons CSS */
+
+.overOns {
+	text-align: left;
+	margin-right: auto;
+	margin-left: auto;
+	width: 60%;
+}
+
+.overOns button{
+	text-decoration: none;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding: 10px;
+	width: 30%;
+	min-width: 100px;
+	border-radius: 10px;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+	transition: 0.5s;
+	color: black;
+}
+
+.overOns button:hover{
+	background-color: #f98d1e;
+	transition: 0.5s;
+	color: white;
+}
