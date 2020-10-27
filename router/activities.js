@@ -14,6 +14,7 @@ router.get('/', authCheck,(req, res)=>{
                     activities:activities,
                     user: req.user, 
                     admin: req.admin, 
+                    username: req.user.username,
                     moment: require('moment')
                 });
             }); 
@@ -25,7 +26,8 @@ router.get('/activity/:id', (req, res)=>{
         if(err) return res.render('badrequest', {error: err});
         res.render('./group_pages/single_activity', {
             activity: activity[0],
-            moment: require('moment')
+            moment: require('moment'),
+            username: req.user.username
         })
     });
 });
@@ -59,6 +61,7 @@ router.post('/create', authCheck,(req, res)=>{
                                     activities: activities,
                                     user: req.user,
                                     admin: req.admin,
+                                    username: req.user.username,
                                     moment: require('moment'),
                                     error: 'Er is een datum niet ingevuld!'
                                 });
@@ -84,6 +87,7 @@ router.post('/create', authCheck,(req, res)=>{
                         activities: activities,
                         user: req.user,
                         admin: req.admin,
+                        username: req.user.username,
                         moment: require('moment'),
                         error: 'Titel is leeg!'
                     });
@@ -127,6 +131,7 @@ router.get('/update/:id', authCheck,(req, res)=>{
                 group_name: group_name[0].name,
                 group_id: activity[0].group_id,
                 admin: req.admin,
+                username: req.user.username,
                 moment: require('moment')
             })
         });
@@ -161,6 +166,7 @@ router.put('/update/:id', authCheck,(req, res)=>{
                                     group_name: group_name[0].name,
                                     group_id: activity[0].group_id,
                                     admin: req.admin,
+                                    username: req.user.username,
                                     moment: require('moment'),
                                     error: 'Er is een datum niet ingevuld!'
                                 });
@@ -182,6 +188,7 @@ router.put('/update/:id', authCheck,(req, res)=>{
                         group_name: group_name[0].name,
                         group_id: activity[0].group_id,
                         admin: req.admin,
+                        username: req.user.username,
                         moment: require('moment'),
                         error: 'cannot update activity from another group'
                     });
@@ -198,6 +205,7 @@ router.put('/update/:id', authCheck,(req, res)=>{
                     group_name: group_name[0].name,
                     group_id: activity[0].group_id,
                     admin: req.admin,
+                    username: req.user.username,
                     moment: require('moment'),
                     error: 'Titel is leeg!'
                 });

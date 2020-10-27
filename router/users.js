@@ -15,7 +15,7 @@ router.get('/', authCheck, adminCheck,(req, res)=>{
         if(err) return res.render('badrequest', {error: err});
         con.query('SELECT * FROM users', (err, users)=>{
             if(err) return res.render('badrequest', {error: err});
-            res.render('users', {groups: groups, users: users, admin: req.admin});
+            res.render('users', {groups: groups, users: users, admin: req.admin, username: req.user.username});
         });
     });
 });
@@ -66,6 +66,7 @@ router.post('/create', authCheck, adminCheck,(req, res)=> {
                                         groups: groups, 
                                         users: users, 
                                         admin: req.admin,
+                                        username: req.user.username,
                                         error: 'Gebruikersnaam bestaat al!'
                                     });
                                 });
@@ -87,6 +88,7 @@ router.post('/create', authCheck, adminCheck,(req, res)=> {
                         groups: groups, 
                         users: users, 
                         admin: req.admin,
+                        username: req.user.username,
                         error: 'Vul alles in!'
                     });
                 });
@@ -95,7 +97,7 @@ router.post('/create', authCheck, adminCheck,(req, res)=> {
 });
 
 router.get('/login', logginCheck, (req, res)=> {
-    res.render('login')
+    res.render('login', {username: req.user.username})
 });
 
 // LOGIN USER + check password with hash
@@ -117,15 +119,15 @@ router.post('/login', (req, res)=>{
                     const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '12h' });
                     res.cookie('auth', token).redirect('/activities');
                 } else {
-                    res.render('login', {error: 'Password incorrect'});
+                    res.render('login', {error: 'Password incorrect',username: req.user.username});
                 }
             });
         });
     } else {
         if(data.username == '') {
-            res.render('login', {error: 'username is required'});
+            res.render('login', {error: 'username is required', username: req.user.username});
         } else if(data.password == '') {
-            res.render('login', {error: 'password is required'});
+            res.render('login', {error: 'password is required', username: req.user.username});
         }
     }
 });
@@ -143,7 +145,7 @@ router.get('/:id', authCheck, adminCheck, (req, res)=> {
         if(err) return res.render('badrequest', {error: err});
         con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, users)=>{
             if(err) return res.render('badrequest', {error: err});
-            res.render('users_update', {groups: groups, user: users[0], admin: req.admin});
+            res.render('users_update', {groups: groups, user: users[0], admin: req.admin, username: req.user.username});
         });
     });
 });
@@ -168,7 +170,7 @@ router.put('/:id', (req, res)=>{
                         if(err) return res.render('badrequest', {error: err});
                         con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, users)=>{
                             if(err) return res.render('badrequest', {error: err});
-                            res.render('users_update', {groups: groups, user: users[0], admin: req.admin, error: 'Gebruiker bestaat al!'});
+                            res.render('users_update', {groups: groups, user: users[0], admin: req.admin, error: 'Gebruiker bestaat al!', username: req.user.username});
                         });
                     });
                 } else {
@@ -198,7 +200,7 @@ router.put('/:id', (req, res)=>{
                             if(err) return res.render('badrequest', {error: err});
                             con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, users)=>{
                                 if(err) return res.render('badrequest', {error: err});
-                                res.render('users_update', {groups: groups, user: users[0], admin: req.admin, error: 'Gebruiker bestaat al!'});
+                                res.render('users_update', {groups: groups, user: users[0], admin: req.admin, error: 'Gebruiker bestaat al!', username: req.user.username});
                             });
                         });
                     } else {

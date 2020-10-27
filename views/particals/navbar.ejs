@@ -30,5 +30,9 @@
             <li><a href="/contact">Contact</a></li>
             <li><a href="/leiding/info">Leiding</a></li>
         </ul>
+        <% if(typeof username != "undefind") { %>
+            <p><%= username %></p>
+        <% } %>
+
     </nav>
 </header>

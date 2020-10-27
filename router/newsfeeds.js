@@ -11,6 +11,7 @@ router.get('/',(req, res)=>{
             newsfeeds: newsfeeds,
             user: req.user,
             admin: req.admin,
+            username: req.user.username,
             moment: require('moment')
         });
     });
@@ -48,6 +49,7 @@ router.post('/create',(req, res)=>{
                             newsfeeds: newsfeeds,
                             user: req.user,
                             admin: req.admin,
+                            username: req.user.username,
                             moment: require('moment'),
                             error: 'Er is een datum niet ingevuld!'
                         });
@@ -66,6 +68,7 @@ router.post('/create',(req, res)=>{
                 newsfeeds: newsfeeds,
                 user: req.user,
                 admin: req.admin,
+                username: req.user.username,
                 moment: require('moment'),
                 error: 'Vul alles in!'
             });
@@ -90,6 +93,7 @@ router.get('/update/:id',(req, res)=>{
         res.render('update_newsfeed', {
             newsfeed: newsfeed[0],
             admin: req.admin,
+            username: req.user.username,
             moment: require('moment')
         });
     });
@@ -118,6 +122,7 @@ router.put('/update/:id',(req, res)=>{
             res.render('update_newsfeed', {
                 newsfeed: newsfeed[0],
                 admin: req.admin,
+                username: req.user.username,
                 moment: require('moment'),
                 error: 'Niet alles is ingevuld!'
             });

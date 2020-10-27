@@ -27,6 +27,7 @@ router.get('/:group_name/info', (req, res)=> {
                         location: location[0], 
                         leaders: leaders, 
                         activities: activities, 
+                        username: req.user.username,
                         moment: require('moment')
                     });
                 })

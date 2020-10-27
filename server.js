@@ -10,6 +10,8 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const moment = require('moment');
 const authCheck = require('./middleware/authCheck');
+const adminCheck = require('./middleware/adminCheck');
+const userCheck = require('./middleware/userCheck');
 
 const app = express();
 const port = 3000 || procces.env.PORT;
@@ -30,11 +32,15 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req, res)=> {
+app.get('/', userCheck, (req, res)=> {
     const date = new Date();
     con.query('SELECT * FROM newsfeeds WHERE end_publication > ? AND start_publication <= ? ORDER BY start_publication', [date, date], (err, newsfeeds) => {
         if(err) return res.render('badrequest', {error: err});
-        res.render('index', {newsfeeds: newsfeeds, moment: moment});
+        res.render('index', {
+            newsfeeds: newsfeeds, 
+            moment: moment, 
+            username: req.user.username
+        });
     });
 });
 
@@ -90,50 +96,38 @@ app.get('/', (req, res)=> {
 //     });
 // });
 
-app.get('/contact', (req, res)=> {
+app.get('/contact', userCheck, (req, res)=> {
     con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
-        res.render('contact', {bondsleiders: users});
+        res.render('contact', {bondsleiders: users, username: req.user.username});
     });
 });
-
-// app.post('/contact', (req, res)=> {
-//     sendmail({
-//         from: 'no-replt@ksarooyhgem.be',
-//         to: 'callebauta@hotmail.com',
-//         subject: 'from: ' + req.body.naam + ' ' + req.body.onderwerp,
-//         html: req.body.bericht
-//     }, (err, reply)=> {
-//         res.redirect('/contact')
-//     });
-// });
 
 // Routers
 //Route users
 const users = require('./router/users');
-app.use('/users', users);
+app.use('/users', userCheck, users);
 
 // Route groups
 const groups = require('./router/groups');
-app.use('/groups', groups);
+app.use('/groups', userCheck, groups);
 
 // Route activities
 const activities = require('./router/activities');
-app.use('/activities', activities);
+app.use('/activities', userCheck, activities);
 
 // Route locations
 const locations = require('./router/location');
-app.use('/locations', locations);
+app.use('/locations', userCheck, locations);
 
 // Route leiding
 const leiding = require('./router/leiding');
-app.use('/leiding', leiding);
+app.use('/leiding', userCheck, leiding);
 
 const vk = require('./router/vk');
-app.use('/vk', vk);
+app.use('/vk', userCheck, vk);
 
 const newsfeed = require('./router/newsfeeds');
-const adminCheck = require('./middleware/adminCheck');
-app.use('/newsfeed', authCheck, adminCheck, newsfeed);
+app.use('/newsfeed', authCheck, adminCheck, userCheck, newsfeed);
 
 app.listen(port, ()=> {
     console.log('Server running on port ' + port);
