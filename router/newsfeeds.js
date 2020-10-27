@@ -37,16 +37,39 @@ router.post('/create',(req, res)=>{
         picture_path: req.body.picture_path,
         created_by: req.user.user_id
     }
-    console.log("User: " + req.user.user_id);
-    if(newsfeed != null) {
+    console.log(newsfeed);
+    if(newsfeed.title != '' && newsfeed.picture_path != '') {
         con.query('INSERT INTO newsfeeds SET ?', newsfeed, (err, nf) => {
-            if(err) return res.render('badrequest', {error: err});
-            res.redirect("/newsfeed");
+            if(err) {
+                if(err.code = 'ER_TRUNCATED_WRONG_VALUE') {
+                    con.query('SELECT * FROM newsfeeds ORDER BY start_publication', (err, newsfeeds) => {
+                        if (err) return res.render('badrequest', {error: err});
+                        res.render('create_newsfeed', {
+                            newsfeeds: newsfeeds,
+                            user: req.user,
+                            admin: req.admin,
+                            moment: require('moment'),
+                            error: 'Er is een datum niet ingevuld!'
+                        });
+                    });
+                } else {
+                    res.render('badrequest', {error: err})
+                }
+            } else {
+                res.redirect("/newsfeed");
+            }
         })
     } else {
-        res.render('badrequest', {error: {
-            message: 'Vul alles in!'
-        }});
+        con.query('SELECT * FROM newsfeeds ORDER BY start_publication', (err, newsfeeds) => {
+            if (err) return res.render('badrequest', {error: err});
+            res.render('create_newsfeed', {
+                newsfeeds: newsfeeds,
+                user: req.user,
+                admin: req.admin,
+                moment: require('moment'),
+                error: 'Vul alles in!'
+            });
+        });
     }
 });
 
@@ -64,7 +87,6 @@ router.delete('/delete/:id',(req, res)=>{
 router.get('/update/:id',(req, res)=>{
     con.query('SELECT * from newsfeeds WHERE feed_id = ?', req.params.id, (err, newsfeed)=>{
         if(err) return res.render('badrequest', {error: err});
-        
         res.render('update_newsfeed', {
             newsfeed: newsfeed[0],
             admin: req.admin,
@@ -85,7 +107,7 @@ router.put('/update/:id',(req, res)=>{
         created_by: req.user.user_id
     }
     console.log(updated_newsfeed);
-    if(updated_newsfeed != null) {
+    if(updated_newsfeed.title != '' && updated_newsfeed.picture_path != '') {
         con.query(`UPDATE newsfeeds SET ? WHERE feed_id = ?`, [updated_newsfeed, req.params.id], (err, newsfeed)=>{
             if(err) return res.render('badrequest', {error: err});
             res.redirect('/newsfeed');
@@ -93,7 +115,6 @@ router.put('/update/:id',(req, res)=>{
     } else {
         con.query('SELECT * from newsfeeds WHERE feed_id = ?', req.params.id, (err, newsfeed)=>{
             if(err) return res.render('badrequest', {error: err});
-            
             res.render('update_newsfeed', {
                 newsfeed: newsfeed[0],
                 admin: req.admin,
