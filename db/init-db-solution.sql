@@ -53,7 +53,7 @@ CREATE TABLE newsfeeds (
 	description TEXT NOT NULL,
 	start_publication DATE,
 	end_publication DATE,
-	picture_path VARCHAR(50),
+	picture_path VARCHAR(256),
     created_by VARCHAR(256) NOT NULL,
     PRIMARY KEY (feed_id),
 	CONSTRAINT `created_by` FOREIGN KEY (created_by) REFERENCES users(user_id)

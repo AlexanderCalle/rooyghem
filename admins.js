@@ -1,6 +1,5 @@
 const con = require('./connect');
 const bcrypt = require('bcryptjs');
-const { createECDH } = require('crypto');
 
 require('dotenv').config();
 

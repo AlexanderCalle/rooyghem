@@ -2,6 +2,21 @@ const express = require('express');
 const router = express.Router();
 const con = require('../connect');
 const authCheck = require('../middleware/authCheck');
+const multer = require('multer');
+
+// Multer middleware Save images
+const storage = multer.diskStorage({
+    destination: (req, file, cb)=>{
+        cb(null, process.env.NEWSFEED_PATH)
+    },
+    filename: (req, file, cb) =>{
+        cb(null, Date.now()+ req.body.title + file.originalname);
+        console.log(file);
+    }
+});
+
+
+const upload = multer({ storage: storage });
 
 // Route GET all newsfeeds + form
 router.get('/',(req, res)=>{
@@ -29,17 +44,17 @@ router.get('/',(req, res)=>{
 // });
 
 // Route POST create newsfeed
-router.post('/create',(req, res)=>{
+router.post('/create', upload.single('image'), (req, res)=>{
     const newsfeed = {
         title: req.body.title,
         description: req.body.description,
         start_publication: req.body.start_publication,
         end_publication: req.body.end_publication,
-        picture_path: req.body.picture_path,
+        picture_path: process.env.NEWSFEED_PATH + req.file.filename,
         created_by: req.user.user_id
     }
     console.log(newsfeed);
-    if(newsfeed.title != '' && newsfeed.picture_path != '') {
+    if(newsfeed.title != '') {
         con.query('INSERT INTO newsfeeds SET ?', newsfeed, (err, nf) => {
             if(err) {
                 if(err.code = 'ER_TRUNCATED_WRONG_VALUE') {

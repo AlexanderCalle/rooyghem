@@ -9,7 +9,7 @@
             <%- include('./particals/messages.ejs') %>
         <% } %>
 
-        <form action="/newsfeed/create" method="POST">
+        <form action="/newsfeed/create" method="POST" enctype="multipart/form-data">
             <label for="title">Titel </label>
             <input id="title" type="text" name="title" placeholder="Titel...">
             <br>
@@ -23,7 +23,7 @@
             <input id="end_publication" type="date" name="end_publication">
             <br>
             <label for="picture_path">Foto </label>
-            <input  type="text" name="picture_path" placeholder="Pad...">
+            <input  type="file" name="image" placeholder="Pad...">
             <br>
             <button type="submit">Maak nieuwtje</button>
         </form>
