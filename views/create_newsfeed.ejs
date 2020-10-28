@@ -2,33 +2,36 @@
     <%- include('./particals/back_office.ejs') %>
 
    <div id="backofficecreation">
-    <%if(typeof error != "undefined"){%>
-        <%- include('./particals/messages.ejs') %>
-    <% } %>
+       
+    <div id="creationform">
+        <h1>Maak nieuwtje</h1>
+        <%if(typeof error != "undefined"){%>
+            <%- include('./particals/messages.ejs') %>
+        <% } %>
 
-    <h1>Maak nieuwtje</h1>
+        <form action="/newsfeed/create" method="POST">
+            <label for="title">Titel </label>
+            <input id="title" type="text" name="title" placeholder="Titel...">
+            <br>
+            <label for="description">Beschrijving </label>
+            <textarea name="description" cols="120" rows="10">Beschrijving van het nieuwtje...</textarea>
+            <br>
+            <label for="start_publication">Start publicatie </label>
+            <input id="start_publication" type="date" name="start_publication">
+            <br>
+            <label for="end_publication">Einde publicatie </label>
+            <input id="end_publication" type="date" name="end_publication">
+            <br>
+            <label for="picture_path">Foto </label>
+            <input  type="text" name="picture_path" placeholder="Pad...">
+            <br>
+            <button type="submit">Maak nieuwtje</button>
+        </form>
+    </div>
 
-    <form action="/newsfeed/create" method="POST">
-        <label for="title">Titel </label>
-        <input id="title" type="text" name="title" placeholder="Titel...">
-        <br>
-        <label for="description">Beschrijving </label>
-        <textarea name="description" cols="120" rows="10">Beschrijving van het nieuwtje...</textarea>
-        <br>
-        <label for="start_publication">Start publicatie </label>
-        <input id="start_publication" type="date" name="start_publication">
-        <br>
-        <label for="end_publication">Einde publicatie </label>
-        <input id="end_publication" type="date" name="end_publication">
-        <br>
-        <label for="picture_path">Foto </label>
-        <input  type="text" name="picture_path" placeholder="Pad...">
-        <br>
-        <button type="submit">Maak nieuwtje</button>
-    </form>
-
-    <h1>Alle nieuwtjes</h1>
-        
+    <div id="creationData">
+        <h1>Alle nieuwtjes</h1>
+            
         <% newsfeeds.forEach(function(newsfeed){ %>
             <form action="/newsfeed/delete/<%= newsfeed.feed_id %>?_method=DELETE" method="POST">
                 <a href="/newsfeed/update/<%= newsfeed.feed_id %>"><%= newsfeed.title %>: </a><%= moment(newsfeed.start_publication).format('D/M') %> - <%= moment(newsfeed.end_publication).format("D/M") %>
@@ -36,6 +39,7 @@
             </form> 
             <br>
         <% }) %>
+    </div>
 
    </div>
 

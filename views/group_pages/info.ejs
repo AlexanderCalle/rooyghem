@@ -28,6 +28,7 @@
         <div id="groupleaders-content">
             <% leaders.forEach(function(leader){ %>
                 <div class="leader">
+                    <img src="/public/images/leiding/<%= leader.username %>.jpg" alt="">
                     <p>
                         <%= leader.firstname %> <%= leader.lastname %> <br>
                         <%= leader.email %>
