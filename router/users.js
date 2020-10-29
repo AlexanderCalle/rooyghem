@@ -8,7 +8,21 @@ const authCheck = require('../middleware/authCheck');
 const adminCheck = require('../middleware/adminCheck');
 const logginCheck = require('../middleware/logginCheck');
 require('dotenv').config();
+const multer = require('multer');
 
+// Multer middleware Save images
+const storage = multer.diskStorage({
+    destination: (req, file, cb)=>{
+        cb(null, process.env.LEIDING_PATH)
+    },
+    filename: (req, file, cb) =>{
+        cb(null, Date.now() + file.originalname);
+        console.log(file);
+    }
+});
+
+
+const upload = multer({ storage: storage });
 
 router.get('/', authCheck, adminCheck,(req, res)=>{
     con.query('SELECT * FROM `groups`', (err, groups)=> {
@@ -38,7 +52,7 @@ router.get('/single/:id', authCheck, adminCheck,(req, res)=> {
 });
 
 // CREATE USER
-router.post('/create', authCheck, adminCheck,(req, res)=> {
+router.post('/create', authCheck, adminCheck, upload.single('image'), (req, res)=> {
     const generated_id = crypto.randomBytes(11).toString('hex');
         const data = req.body;
         if(data.firstname != '' && data.lastname != '' && data.email != '' && data.username != '' && data.password != '' && data.phone != '') {
@@ -53,6 +67,7 @@ router.post('/create', authCheck, adminCheck,(req, res)=> {
                     phone: req.body.phone,
                     is_admin: req.body.is_admin,
                     bondsteam: req.body.bondsteam,
+                    path_pic: process.env.LEIDING_PATH_PIC + req.file.filename,
                     group_id: req.body.group_id
                 }
                 con.query('INSERT INTO users SET ?', user, (err, user)=> {
@@ -75,7 +90,9 @@ router.post('/create', authCheck, adminCheck,(req, res)=> {
                             res.render('badrequest', {error: err});
                         }
                     } else {
-                        res.redirect('/users');
+
+                        res.redirect('/users')
+
                     }
                 });
             });

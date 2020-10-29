@@ -2,7 +2,8 @@
     <%- include("./particals/back_office.ejs") %>
 
     <div id="backofficecreation">
-        <h1>Verhalend kader</h1>
+        <div>
+            <h1>Verhalend kader</h1>
 
         <%if(typeof error != "undefined"){%>
             <%- include('./particals/messages.ejs') %>
@@ -13,5 +14,6 @@
             <br>
             <button type="submit">Post vk</button>
         </form>
+        </div>
     </div>
 </main>
