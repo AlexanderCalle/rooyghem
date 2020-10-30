@@ -19,6 +19,7 @@ const port = 3000 || procces.env.PORT;
 // Server Logs middelware
 app.use(morgan('dev'));
 
+
 //middelware
 app.use('/public', express.static(path.join(__dirname, "public")));
 app.use(expressLayouts);

@@ -169,66 +169,34 @@ router.get('/:id', authCheck, adminCheck, (req, res)=> {
 
 router.put('/:id', (req, res)=>{
     const data = req.body;
-    if(data.password == '') {
-        const user_data = {
-            firstname: data.firstname,
-            lastname: data.lastname,
-            email: data.email,
-            username: data.username,
-            phone: data.phone,
-            is_admin: data.is_admin,
-            bondsteam: data.bondsteam,
-            group_id: data.group_id
-        }
-        con.query('UPDATE users SET ? WHERE user_id = ?', [user_data, req.params.id], (err, user)=> {
-            if(err) {
-                if(err.code == `ER_DUP_ENTRY`) {
-                    con.query('SELECT * FROM `groups`', (err, groups)=> {
-                        if(err) return res.render('badrequest', {error: err});
-                        con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, users)=>{
-                            if(err) return res.render('badrequest', {error: err});
-                            res.render('users_update', {groups: groups, user: users[0], admin: req.admin, error: 'Gebruiker bestaat al!', username: req.user.username});
-                        });
-                    });
-                } else {
-                    res.render('badrequest', {error: err});
-                }
-            } else {
-                res.redirect('/users');
-            }
-        });
-    } else {
-        bcrypt.hash(data.password, 11, (err, hash)=> {
-            const user_data = {
-                firstname: data.firstname,
-                lastname: data.lastname,
-                email: data.email,
-                username: data.username,
-                passhash: hash,
-                phone: data.phone,
-                is_admin: data.is_admin,
-                bondsteam: data.bondsteam,
-                group_id: data.group_id
-            }
-            con.query('UPDATE users SET ? WHERE user_id = ?', [user_data, req.params.id], (err, user)=> {
-                if(err) {
-                    if(err.code == `ER_DUP_ENTRY`) {
-                        con.query('SELECT * FROM `groups`', (err, groups)=> {
-                            if(err) return res.render('badrequest', {error: err});
-                            con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, users)=>{
-                                if(err) return res.render('badrequest', {error: err});
-                                res.render('users_update', {groups: groups, user: users[0], admin: req.admin, error: 'Gebruiker bestaat al!', username: req.user.username});
-                            });
-                        });
-                    } else {
-                        res.render('badrequest', {error: err});
-                    }
-                } else {
-                    res.redirect('/users');
-                }
-            });
-        });
+
+    const user_data = {
+        firstname: data.firstname,
+        lastname: data.lastname,
+        email: data.email,
+        username: data.username,
+        phone: data.phone,
+        is_admin: data.is_admin,
+        bondsteam: data.bondsteam,
+        group_id: data.group_id
     }
+    con.query('UPDATE users SET ? WHERE user_id = ?', [user_data, req.params.id], (err, user)=> {
+        if(err) {
+            if(err.code == `ER_DUP_ENTRY`) {
+                con.query('SELECT * FROM `groups`', (err, groups)=> {
+                    if(err) return res.render('badrequest', {error: err});
+                    con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, users)=>{
+                        if(err) return res.render('badrequest', {error: err});
+                        res.render('users_update', {groups: groups, user: users[0], admin: req.admin, error: 'Gebruiker bestaat al!', username: req.user.username});
+                    });
+                });
+            } else {
+                res.render('badrequest', {error: err});
+            }
+        } else {
+            res.redirect('/users');
+        }
+    });
 });
 
 // DELETE ALL USERS

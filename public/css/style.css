@@ -538,3 +538,14 @@ article{
 	transition: 0.5s;
 	color: white;
 }
+
+#vkTextarea {	
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+#vkDiv{
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+	margin: auto;
+}
