@@ -26,6 +26,8 @@ router.post('/:token', (req, res)=> {
                     res.render('reset', {token: req.params.token, username: '', error: 'Wachtwoord is gereset'})
                 });
             });
+        } else {
+            res.render('reset', {token: req.params.token, username: '', error: 'Wachtwoorden kloppen niet!'})
         }
     });
 });

@@ -137,7 +137,7 @@ app.post('/forgot', (req, res)=> {
                 to: req.body.email,
                 from: 'callebauta@hotmail.com',
                 subject: 'Wachtwoord resetten',
-                text: 'Hello, \n\n U hebt dit ontvangen omdat u gevraagd heeft om uw waxhtwoord te herstellen, voor verdere instructies druk op de link hieronder\n\n' +
+                text: 'Hallo ' + req.body.email +', \n\n U hebt dit ontvangen omdat u gevraagd heeft om uw wachtwoord te herstellen, voor verdere instructies druk op de link hieronder\n\n' +
                 'http://' + req.headers.host + '/reset/' + token + '\n\n' +
                 'Als u dit niet gevraagd heb negeer dan deze mail.\n'
             }
