@@ -29,6 +29,8 @@ CREATE TABLE users (
     group_id INT NOT NULL,
 	bondsteam VARCHAR(45) NOT NULL,
 	path_pic VARCHAR(256),
+	resetPasswordToken VARCHAR(256),
+	resetPasswordExpired DATETIME,
     PRIMARY KEY (user_id),
 	UNIQUE KEY username_UNIQUE (username),
 	FOREIGN KEY (group_id) REFERENCES `groups`(group_id)

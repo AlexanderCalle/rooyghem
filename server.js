@@ -9,6 +9,8 @@ const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const moment = require('moment');
+const crypto = require('crypto');
+const sendgrid = require('sendgrid')('user', process.env.SENDGRID_API_KEY)
 const authCheck = require('./middleware/authCheck');
 const adminCheck = require('./middleware/adminCheck');
 const userCheck = require('./middleware/userCheck');
@@ -107,6 +109,48 @@ app.get('/overons', userCheck, (req, res)=> {
     res.render('over_ons', {username: req.user.username});
 });
 
+app.get('/forgot', userCheck, (req, res)=> {
+    res.render('forgot', {username: req.user.username});
+});
+
+const sgMail = require('@sendgrid/mail')
+
+app.post('/forgot', (req, res)=> {
+    let token;
+
+    crypto.randomBytes(20, (err, buf) => {
+        token = buf.toString('hex');
+    });
+
+    con.query('SELECT * FROM users WHERE email = ?', req.body.email, (err, users)=> {
+        if(err) return res.render('badrequest', {error: err});
+
+        var data = {
+            resetPasswordToken: token,
+            resetPasswordExpired: Date.now() + 3600000
+        }
+        con.query('UPDATE users SET ? WHERE email = ?', [data ,req.body.email], (err, user)=> {
+            if(err) return res.render('badrequest', {error: err, username: ''})
+            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+            const msg = {
+                to: req.body.email,
+                from: 'callebauta@hotmail.com',
+                subject: 'Wachtwoord resetten',
+                text: 'Hello, \n\n U hebt dit ontvangen omdat u gevraagd heeft om uw waxhtwoord te herstellen, voor verdere instructies druk op de link hieronder\n\n' +
+                'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+                'Als u dit niet gevraagd heb negeer dan deze mail.\n'
+            }
+            
+            sgMail.send(msg).then(()=> {
+                res.render('forgot', {error: 'Email sended', username: ''});
+            }).catch((err)=> {
+                res.render('forgot', {error: err, username: ''});
+            });
+        });
+    });
+}); 
+
 // Routers
 //Route users
 const users = require('./router/users');
@@ -133,6 +177,9 @@ app.use('/vk', userCheck, vk);
 
 const newsfeed = require('./router/newsfeeds');
 app.use('/newsfeed', authCheck, adminCheck, userCheck, newsfeed);
+
+const reset = require('./router/reset');
+app.use('/reset', reset);
 
 app.listen(port, ()=> {
     console.log('Server running on port ' + port);

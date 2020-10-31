@@ -324,6 +324,17 @@ article{
 .login-form button:hover{
 	background-color: #f98d1e;
 	transition: 0.5s;
+	color: white;
+}
+
+.login-form a{
+	text-decoration: none;
+	display: block;
+	margin: 10px;
+	color: #f98d1e;
+}
+.login-form a:hover{
+	color: #bbc3d7;
 }
 
 /* backoffice CSS */
