@@ -9,6 +9,8 @@ const adminCheck = require('../middleware/adminCheck');
 const logginCheck = require('../middleware/logginCheck');
 require('dotenv').config();
 const multer = require('multer');
+const userFormChecker = require('../middleware/userFormChecker');
+const getFields = multer();
 
 // Multer middleware Save images
 const storage = multer.diskStorage({
@@ -52,65 +54,64 @@ router.get('/single/:id', authCheck, adminCheck,(req, res)=> {
 });
 
 // CREATE USER
-router.post('/create', authCheck, adminCheck, upload.single('image'), (req, res)=> {
-    const generated_id = crypto.randomBytes(11).toString('hex');
-        const data = req.body;
-        if(data.firstname != '' && data.lastname != '' && data.email != '' && data.username != '' && data.password != '' && data.phone != '') {
-            bcrypt.hash(req.body.password, 11, (err, hash)=>{
-                const user = {
-                    user_id: generated_id,
-                    firstname: req.body.firstname,
-                    lastname: req.body.lastname,
-                    email: req.body.email,
-                    username: req.body.username,
-                    passhash: hash,
-                    phone: req.body.phone,
-                    is_admin: req.body.is_admin,
-                    bondsteam: req.body.bondsteam,
-                    path_pic: process.env.LEIDING_PATH_PIC + req.file.filename,
-                    group_id: req.body.group_id
-                }
-                con.query('INSERT INTO users SET ?', user, (err, user)=> {
-                    if(err) {
-                        if(err.code === `ER_DUP_ENTRY`) {
-                            con.query('SELECT * FROM `groups`', (err, groups)=> {
+router.post('/create', authCheck, adminCheck, upload.single('image'), userFormChecker, (req, res)=> {
+    if(req.file) {
+        const generated_id = crypto.randomBytes(11).toString('hex');
+        bcrypt.hash(req.body.password, 11, (err, hash)=>{   
+            const user = {
+                user_id: generated_id,
+                firstname: req.body.firstname,
+                lastname: req.body.lastname,
+                email: req.body.email,
+                username: req.body.username,
+                passhash: hash,
+                phone: req.body.phone,
+                is_admin: req.body.is_admin,
+                bondsteam: req.body.bondsteam,
+                path_pic: process.env.LEIDING_PATH_PIC + req.file.filename,
+                group_id: req.body.group_id
+            }
+            console.log(user);
+            con.query('INSERT INTO users SET ?', user, (err, user)=> {
+                if(err) {
+                    if(err.code === `ER_DUP_ENTRY`) {
+                        con.query('SELECT * FROM `groups`', (err, groups)=> {
+                            if(err) return res.render('badrequest', {error: err});
+                            con.query('SELECT * FROM users', (err, users)=>{
                                 if(err) return res.render('badrequest', {error: err});
-                                con.query('SELECT * FROM users', (err, users)=>{
-                                    if(err) return res.render('badrequest', {error: err});
-                                    res.render('users', {
-                                        groups: groups, 
-                                        users: users, 
-                                        admin: req.admin,
-                                        username: req.user.username,
-                                        error: 'Gebruikersnaam bestaat al!'
-                                    });
+                                res.render('users', {
+                                    groups: groups, 
+                                    users: users, 
+                                    admin: req.admin,
+                                    username: req.user.username,
+                                    error: 'Gebruikersnaam bestaat al!'
                                 });
                             });
-                        } else {
-                            res.render('badrequest', {error: err});
-                        }
+                        });
                     } else {
-
-                        res.redirect('/users')
-
+                        res.render('badrequest', {error: err});
                     }
-                });
+                } else {
+                    res.redirect('/users')
+                }
             });
-        } else {
-            con.query('SELECT * FROM `groups`', (err, groups)=> {
+        });
+    } else {
+        con.query('SELECT * FROM `groups`', (err, groups)=> {
+            if(err) return res.render('badrequest', {error: err});
+            con.query('SELECT * FROM users', (err, users)=>{
                 if(err) return res.render('badrequest', {error: err});
-                con.query('SELECT * FROM users', (err, users)=>{
-                    if(err) return res.render('badrequest', {error: err});
-                    res.render('users', {
-                        groups: groups, 
-                        users: users, 
-                        admin: req.admin,
-                        username: req.user.username,
-                        error: 'Vul alles in!'
-                    });
+                res.render('users', {
+                    groups: groups, 
+                    users: users, 
+                    admin: req.admin,
+                    username: req.user.username,
+                    error: 'Geen foto gevonden!'
                 });
             });
-        }
+        });
+    }
+
 });
 
 router.get('/login', logginCheck, (req, res)=> {

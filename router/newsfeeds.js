@@ -3,6 +3,7 @@ const router = express.Router();
 const con = require('../connect');
 const authCheck = require('../middleware/authCheck');
 const multer = require('multer');
+const newsfeedChecker = require('../middleware/newsfeedChecker');
 
 // Multer middleware Save images
 const storage = multer.diskStorage({
@@ -32,50 +33,21 @@ router.get('/',(req, res)=>{
     });
 });
 
-// TODO: implement viewing of one newsfeed
-// router.get('/activity/:id', (req, res)=>{
-//     con.query('SELECT * FROM activities WHERE activity_id = ?', req.params.id, (err, activity)=> {
-//         if(err) return res.render('badrequest', {error: err});
-//         res.render('./group_pages/single_activity', {
-//             activity: activity[0],
-//             moment: require('moment')
-//         })
-//     });
-// });
-
 // Route POST create newsfeed
-router.post('/create', upload.single('image'), (req, res)=>{
-    const newsfeed = {
-        title: req.body.title,
-        description: req.body.description,
-        start_publication: req.body.start_publication,
-        end_publication: req.body.end_publication,
-        picture_path: process.env.NEWSFEED_PATH + req.file.filename,
-        created_by: req.user.user_id
-    }
-    console.log(newsfeed);
-    if(newsfeed.title != '') {
+router.post('/create', upload.single('image'), newsfeedChecker ,(req, res)=>{
+    if(req.file){
+        const newsfeed = {
+            title: req.body.title,
+            description: req.body.description,
+            start_publication: req.body.start_publication,
+            end_publication: req.body.end_publication,
+            picture_path: process.env.NEWSFEED_PATH + req.file.filename,
+            created_by: req.user.user_id
+        }
         con.query('INSERT INTO newsfeeds SET ?', newsfeed, (err, nf) => {
-            if(err) {
-                if(err.code = 'ER_TRUNCATED_WRONG_VALUE') {
-                    con.query('SELECT * FROM newsfeeds ORDER BY start_publication', (err, newsfeeds) => {
-                        if (err) return res.render('badrequest', {error: err});
-                        res.render('create_newsfeed', {
-                            newsfeeds: newsfeeds,
-                            user: req.user,
-                            admin: req.admin,
-                            username: req.user.username,
-                            moment: require('moment'),
-                            error: 'Er is een datum niet ingevuld!'
-                        });
-                    });
-                } else {
-                    res.render('badrequest', {error: err})
-                }
-            } else {
-                res.redirect("/newsfeed");
-            }
-        })
+            if(err) return res.render('badrequest', {error: err})
+            res.redirect("/newsfeed");      
+        });
     } else {
         con.query('SELECT * FROM newsfeeds ORDER BY start_publication', (err, newsfeeds) => {
             if (err) return res.render('badrequest', {error: err});
@@ -85,7 +57,7 @@ router.post('/create', upload.single('image'), (req, res)=>{
                 admin: req.admin,
                 username: req.user.username,
                 moment: require('moment'),
-                error: 'Vul alles in!'
+                error: 'Geen foto gevonden!'
             });
         });
     }
