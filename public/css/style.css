@@ -204,13 +204,12 @@ footer{
     grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
     display: grid;
 	padding:5px;
-	white-space: normal;
+	white-space: pre-line;
 	overflow-wrap: break-word;
 }/*grid maken + scroll horizontaal*/
 
 article{
 	display: block;
-    /* padding: 5px; */
     margin: auto;
 }
 
