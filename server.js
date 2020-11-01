@@ -124,10 +124,14 @@ app.post('/forgot', (req, res)=> {
 
     con.query('SELECT * FROM users WHERE email = ?', req.body.email, (err, users)=> {
         if(err) return res.render('badrequest', {error: err});
-
+        Date.prototype.addHours = function(h) {
+            this.setTime(this.getTime() + (h*60*60*1000));
+            return this;
+          }
+          var date = new Date().addHours(2).toJSON().slice(0, 19)
         var data = {
             resetPasswordToken: token,
-            resetPasswordExpired: Date.now() + 3600000
+            resetPasswordExpired: date
         }
         con.query('UPDATE users SET ? WHERE email = ?', [data ,req.body.email], (err, user)=> {
             if(err) return res.render('badrequest', {error: err, username: ''})
@@ -179,7 +183,7 @@ const newsfeed = require('./router/newsfeeds');
 app.use('/newsfeed', authCheck, adminCheck, userCheck, newsfeed);
 
 const reset = require('./router/reset');
-app.use('/reset', reset);
+app.use('/reset', userCheck, reset);
 
 app.listen(port, ()=> {
     console.log('Server running on port ' + port);

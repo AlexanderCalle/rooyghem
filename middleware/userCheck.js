@@ -14,7 +14,7 @@ module.exports = (req, res, next)=> {
         }
     } catch (error) {
         req.user = {
-            username: null
+            username: undefined
         }
         next();
     }
