@@ -277,8 +277,7 @@ article{
 }
 
 #groupstory {
-    margin-left: auto;
-	margin-right: auto;
+    margin: auto;
 }
 
 #groupleaders {
@@ -558,12 +557,13 @@ article{
 }
 
 #vkTextarea {	
-	white-space: pre-wrap;
+	white-space: pre-line;
 	overflow-wrap: break-word;
+	margin: auto;
 }
 
 #vkDiv{
-	white-space: pre-wrap;
+	white-space: pre-line;
 	overflow-wrap: break-word;
 	margin: auto;
 }
