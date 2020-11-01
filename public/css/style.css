@@ -276,7 +276,8 @@ article{
 }
 
 #groupstory {
-    margin: auto;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #groupleaders {
