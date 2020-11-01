@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
         cb(null, process.env.LEIDING_PATH)
     },
     filename: (req, file, cb) =>{
-        cb(null, Date.now() + file.originalname);
+        cb(null, Date.now() + file.originalname.replace(/\s/g, ''));
         console.log(file);
     }
 });

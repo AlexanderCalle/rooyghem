@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
         cb(null, process.env.NEWSFEED_PATH)
     },
     filename: (req, file, cb) =>{
-        cb(null, Date.now()+ req.body.title + file.originalname);
+        cb(null, Date.now()+ req.body.title.replace(/\s/g, '') + file.originalname);
         console.log(file);
     }
 });

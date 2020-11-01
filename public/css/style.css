@@ -204,12 +204,19 @@ footer{
     grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
     display: grid;
 	padding:5px;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
 }/*grid maken + scroll horizontaal*/
 
 article{
 	display: block;
     padding: 5px;
     margin: 2px 3px;
+}
+
+#feedDescription {
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
 }
 
 /* Leiders pagina CSS */
