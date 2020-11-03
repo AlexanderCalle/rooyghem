@@ -4,9 +4,7 @@
         <div>
             <h1>Update nieuwtje</h1>
 
-            <%if(typeof error != "undefined"){%>
-                <%- include('./particals/messages.ejs') %>
-            <% } %>
+            <%- include('./particals/messages.ejs') %>
 
             <form action="/newsfeed/update/<%=newsfeed.feed_id%>?_method=PUT" method="POST">
                 <label for="title">Titel </label>

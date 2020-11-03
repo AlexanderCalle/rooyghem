@@ -5,9 +5,7 @@
         <div>
             <h1>Update gebruiker</h1>
 
-            <%if(typeof error != "undefined"){%>
-                <%- include('./particals/messages.ejs') %>
-            <% } %>
+            <%- include('./particals/messages.ejs') %>
 
             <form action="/users/<%= user.user_id %>?_method=PUT" method="POST">
                 <label for="firstname">Voornaam </label>

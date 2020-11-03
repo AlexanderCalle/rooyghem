@@ -5,9 +5,7 @@
        
     <div id="creationform">
         <h1>Maak nieuwtje</h1>
-        <%if(typeof error != "undefined"){%>
-            <%- include('./particals/messages.ejs') %>
-        <% } %>
+        <%- include('./particals/messages.ejs') %>
 
         <form action="/newsfeed/create" method="POST" enctype="multipart/form-data">
             <label for="title">Titel </label>

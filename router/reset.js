@@ -27,7 +27,7 @@ router.post('/:token', (req, res)=> {
 
                 con.query('UPDATE users SET ? WHERE resetPasswordToken = ?', [data, req.params.token], (err, user)=> {
                     if(err) return res.render('badrequest', {error: err});
-                    res.render('reset', {token: req.params.token, error: 'Wachtwoord is gereset'})
+                    res.render('reset', {token: req.params.token, succesError: 'Wachtwoord is gereset'})
                 });
             });
         } else {
