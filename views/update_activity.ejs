@@ -4,9 +4,7 @@
         <div id="creationform">
             <h1>Update activiteit</h1>
 
-            <%if(typeof error != "undefined"){%>
-                <%- include('./particals/messages.ejs') %>
-            <% } %>
+            <%- include('./particals/messages.ejs') %>
 
             <form action="/activities/update/<%= activity.activity_id %>?_method=PUT" method="POST">
                 <label for="title">Titel </label>

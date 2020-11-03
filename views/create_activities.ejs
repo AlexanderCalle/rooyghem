@@ -7,9 +7,7 @@
         <div id="creationform">
             <h1>Activiteiten maken</h1>
 
-            <%if(typeof error != "undefined"){%>
-                <%- include('./particals/messages.ejs') %>
-            <% } %>
+            <%- include('./particals/messages.ejs') %>
 
             <form action="/activities/create" method="POST">
                 <label for="title">Titel </label>

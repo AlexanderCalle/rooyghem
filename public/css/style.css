@@ -243,11 +243,22 @@ article{
 
 /* message CSS */
 
-.message{
+.errorMessage{
 	width: 100%;
 	padding: 10px;
 	border: solid 1px #f95c1e;
 	background-color: #fcb69b;
+	border-radius: 10px;
+	color: white;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.succesMessage{
+	width: 100%;
+	padding: 10px;
+	border: solid 1px #39b300;
+	background-color: #a0bb93;
 	border-radius: 10px;
 	color: white;
 	text-align: center;
