@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon"
+    "server": "nodemon server.js",
+    "script": "node newsfeedDeletion.js",
+    "dev": "npm run server & npm run script"
   },
   "author": "",
   "license": "ISC",
