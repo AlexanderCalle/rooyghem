@@ -10,10 +10,10 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const moment = require('moment');
 const crypto = require('crypto');
-const sendgrid = require('sendgrid')('user', process.env.SENDGRID_API_KEY)
 const authCheck = require('./middleware/authCheck');
 const adminCheck = require('./middleware/adminCheck');
 const userCheck = require('./middleware/userCheck');
+const sgMail = require('@sendgrid/mail')
 
 const app = express();
 const port = 3000 || procces.env.PORT;
@@ -53,6 +53,35 @@ app.get('/contact', userCheck, (req, res)=> {
     });
 });
 
+app.post('/contact', userCheck, (req, res)=> {
+    if(req.body.naam != '' && req.body.onderwerp != '' && req.body.bericht != ''){
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+        const msg = {
+            to: 'contact@ksarooyghem.be',
+            from: 'callebauta@hotmail.com',
+            subject: req.body.onderwerp,
+            text: 'Hallo , \n\n' +
+            'Vraag van: ' + req.body.naam + ' \n\n' +
+            req.body.bericht
+        }
+        
+        sgMail.send(msg).then(()=> {
+            con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
+                res.render('contact', {bondsleiders: users, username: req.user.username, succesError: 'Vraag is verstuurd!'});
+            });
+        }).catch((err)=> {
+            con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
+                res.render('contact', {bondsleiders: users, username: req.user.username, error: err});
+            });
+        });
+    } else {
+        con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
+            res.render('contact', {bondsleiders: users, username: req.user.username, error: 'Vul alles in aub'});
+        });
+    }
+});
+
 app.get('/overons', userCheck, (req, res)=> {
     res.render('over_ons', {username: req.user.username});
 });
@@ -60,8 +89,6 @@ app.get('/overons', userCheck, (req, res)=> {
 app.get('/forgot', userCheck, (req, res)=> {
     res.render('forgot', {username: req.user.username});
 });
-
-const sgMail = require('@sendgrid/mail')
 
 app.post('/forgot', (req, res)=> {
     let token;
