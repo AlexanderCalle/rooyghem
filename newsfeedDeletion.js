@@ -27,6 +27,7 @@ function EveryDayCheck() {
         now.getDate() + 1,
         0, 0, 0
     );
+
     var msToMidnight = night.getTime() - now.getTime();
 
     setTimeout(function() {
