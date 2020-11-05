@@ -1,0 +1,580 @@
+/* General CSS */
+
+html {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: max-content 1fr max-content;
+    grid-template-areas: "nav"
+                         "main"
+                         "footer";
+    font-family:ff-ernestine-pro, sans-serif;
+    color: #f98d1e;
+    margin: 0px;
+    font-style: normal;
+    font-weight: 300;
+    background-color: #FFFAF4;
+}
+
+/* index CSS */
+
+.main{
+	grid-area: main;
+	width: 96%;
+	margin-top: 30px;
+}
+
+.nieuws{
+	padding:5px;
+}/*grid maken + scroll horizontaal*/
+
+.newsfeed{
+	max-width: 1fr;
+	display: grid;
+	padding:2px;
+	grid-template-columns: max-content 1fr;
+	grid-template-rows: min-content 1fr;
+	grid-template-areas: "title title"
+						 "img p";
+}
+
+.feedtitle {
+	grid-area: title;
+}
+
+.feedimg {
+	grid-area: img;
+	max-width: 150px;
+}
+
+.feedp {
+	grid-area: p;
+	margin: auto 10px;
+	padding-left: 20px;
+	max-width: 60%;
+}
+
+/* Navbar CSS */
+
+.top-banner{
+	grid-area: nav;
+	width: 100%;
+	height: 240px;
+	padding-top: 20px;
+	padding-bottom: 0px;
+	background-image: url("../images/hoofd/main.jpg");
+	background-position:bottom;
+	background-size: cover;
+} /*graag nog fade onderaan banner*/
+#logo{
+	position: relative;
+    width: 20%;
+    float:left;
+    margin-left: 10px;
+	margin-top: 100px;
+    max-width: 200px;
+}
+.top-banner img{
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+nav ul {
+	text-align:left;
+	list-style-type:none;
+	padding-left: 0px;
+}
+li{
+	display:inline;
+	float: left;
+	padding:1%;
+}
+nav a {
+   	text-decoration: none;
+    color: #f98d1e;
+    display:block;
+    margin-bottom: 10px;
+    padding-top: 0px;
+    padding-bottom: 10px;
+    font-family:futura-pt-bold,sans-serif;
+	font-style: normal;
+    font-weight: 300;
+    font-size: 1em;
+}
+nav a:hover {
+	color: #bbc3d7;
+}
+
+nav p {
+	float: right;
+    display:block;
+    margin-bottom: 10px;
+	padding-top: 0px;
+	margin-right: 20px;
+    padding-bottom: 10px;
+	font-style: normal;
+    font-weight: 300;
+    font-size: 1em;
+}
+
+.weblinks-boven{
+	float: left;
+	width: 30%;
+	display:flex;
+}
+.weblinks-boven img{
+	height: 50px;
+	width:auto;
+}
+.weblinks-boven :hover{
+	opacity: 0.8;
+	transition: 0.5s ease;
+}
+
+.drpdwn {
+    position: relative;
+    display: inline-block;
+	height: 100%;
+}
+
+.drpdwn-content {
+	padding: 10px;
+	margin: -15px;
+    display: none;
+    position: absolute;
+    background-color:  #f9e7d4;
+    z-index: 1;
+	text-decoration: none;
+}
+
+.drpdwn:hover .drpdwn-content {
+    display: block;
+}
+
+/* Footer CSS */
+footer{
+	grid-area: footer;
+	display: grid;
+	width: 100%;
+	grid-template-rows: 100%;
+	grid-template-columns: 75% 25%;
+	background-color:#f9e7d4;
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	max-height: 100%;
+}
+.copyright{
+	margin: 20px;
+	width: 45%;
+}
+.weblinks-onder{
+	float: right;
+	width: 100%;
+	margin-left: auto;
+}
+
+.weblinks-onder ul li {
+    display: inline;
+}
+
+.weblinks-onder img{
+	max-height: 40px;
+	transition: 0.5s ease;
+}
+.weblinks-onder :hover {
+	opacity: 0.8;
+	transition: 0.5s ease;
+}
+
+
+/* Index CSS */
+
+#index-container {
+    padding: 10px;
+    display: grid;
+    grid-template-rows: max-content 1fr;
+}
+
+.news{
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    display: grid;
+	padding:5px;
+	white-space: pre-line;
+	overflow-wrap: break-word;
+}/*grid maken + scroll horizontaal*/
+
+article{
+	display: block;
+    margin: auto;
+}
+
+#feedDescription {
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+/* Leiders pagina CSS */
+
+.leiderscontainer{
+	padding: 10px;
+	width: 60%;
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.leiderscontainer p {
+	width: 100%;
+}
+
+.leiderscontainer a{
+	text-decoration: none;
+	color: #f98d1e;
+}
+
+.leiderscontainer a:hover{
+	color: #bbc3d7;
+}
+
+/* message CSS */
+
+.errorMessage{
+	width: 100%;
+	padding: 10px;
+	border: solid 1px #f95c1e;
+	background-color: #fcb69b;
+	border-radius: 10px;
+	color: white;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.succesMessage{
+	width: 100%;
+	padding: 10px;
+	border: solid 1px #39b300;
+	background-color: #a0bb93;
+	border-radius: 10px;
+	color: white;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+/* Group view CSS */
+
+#groupcontainer {
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.info {
+	display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+	grid-gap: 30px;
+}
+
+#groupinfo {
+	margin-right: 20%;
+}
+
+#groupinfo img {
+	max-width: 200px;
+}
+
+#groupstory {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#groupleaders {
+	grid-template-rows: max-content 1fr;
+	grid-template-areas: "title"
+						  "content";
+}
+
+#groupleaders-title {
+	grid-area: title;
+}
+
+#groupleaders-content {
+	grid-area: content;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+/* Login backoffice css */
+
+.login {
+	margin: auto;
+	width: 30%;
+	text-align: center;
+}
+
+.login-form input{
+	max-width: 350px;
+	width: 100%;
+	margin-top: 20px;
+	padding: 10px;
+	border-radius: 10px;
+	outline: none;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+}
+
+
+.login-form button{
+	margin-top: 20px;
+	padding: 10px;
+	width: 30%;
+	min-width: 100px;
+	border-radius: 10px;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+	transition: 0.5s;
+}
+
+.login-form button:hover{
+	background-color: #f98d1e;
+	transition: 0.5s;
+	color: white;
+}
+
+.login-form a{
+	text-decoration: none;
+	display: block;
+	margin: 10px;
+	color: #f98d1e;
+}
+.login-form a:hover{
+	color: #bbc3d7;
+}
+
+/* backoffice CSS */
+
+#backofficecontainer {
+	margin-top: 10px;
+    padding: 10px;
+	display: grid;
+    grid-template-columns: 10% 90%;
+    grid-template-areas: "nav creation";
+}
+
+#backofficenavbar{
+	grid-area: nav;
+	padding: 10px;
+}
+
+#backofficenavbar a {
+	text-decoration: none;
+	display: block;
+	margin: 10px;
+	color: #f98d1e;
+}
+
+#backofficenavbar a:hover {
+	color: #bbc3d7;
+}
+
+#backofficecreation{
+	margin-left: auto;
+	margin-right: auto;
+	grid-area: creation;
+	width: 80%;
+	display: grid;
+	grid-gap: 20px;
+	grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+}
+
+#backofficecreation form{
+	width: 90%;
+}
+
+#backofficecreation label{
+	margin-top: 20px;
+}
+
+#backofficecreation input{
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	padding: 10px;
+	border-radius: 10px;
+	outline: none;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+}
+#backofficecreation select{
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	padding: 10px;
+	border-radius: 10px;
+	outline: none;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+	padding-right: 5px;
+}
+
+#backofficecreation button{
+	margin-top: 20px;
+	padding: 10px;
+	width: 30%;
+	min-width: 100px;
+	border-radius: 10px;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+	transition: 0.5s;
+}
+
+#backofficecreation button:hover{
+	background-color: #f98d1e;
+	transition: 0.5s;
+	color: white;
+}
+
+#backofficecreation .delete-btn{
+	margin-left: 20px;
+	padding: 2px;
+	width: 50px;
+	border-radius: 10px;
+	border: solid 1px #f95c1e;
+	background-color: #fcb69b;
+	transition: 0.5s;
+}
+
+#backofficecreation .delete-btn:hover{
+	background-color: #f95c1e;
+	transition: 0.5s;
+	color: white;
+}
+
+#backofficecreation textarea{
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	padding: 10px;
+	border-radius: 10px;
+	outline: none;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+}
+
+#backofficecreation a{
+	text-decoration: none;
+	color: #f98d1e;
+}
+
+#backofficecreation a:hover{
+	color: #bbc3d7;
+}
+
+/* contact CSS */
+
+#contactcontainer{
+	margin-top: 10px;
+    padding: 10px;
+	display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+}
+
+#contactinfo {
+	padding-left: 50px;
+}
+
+#contactinfo a {
+	text-decoration: none;
+	color: #f98d1e;
+}
+
+#contactinfo a:hover {
+	color: #bbc3d7;
+}
+
+#contactform {
+	width: 70%;
+	padding-left: 50px;
+}
+
+#contactform input {
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	padding: 10px;
+	border-radius: 10px;
+	outline: none;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+}
+
+#contactform textarea {
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	padding: 10px;
+	border-radius: 10px;
+	outline: none;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+}
+
+#contactform button{
+	padding: 10px;
+	width: 30%;
+	min-width: 100px;
+	border-radius: 10px;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+	transition: 0.5s;
+}
+
+#contactform button:hover{
+	background-color: #f98d1e;
+	transition: 0.5s;
+	color: white;
+}
+
+/* Over ons CSS */
+
+.overOns {
+	text-align: left;
+	margin-right: auto;
+	margin-left: auto;
+	width: 60%;
+}
+
+.overOns button{
+	text-decoration: none;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding: 10px;
+	width: 30%;
+	min-width: 100px;
+	border-radius: 10px;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+	transition: 0.5s;
+	color: black;
+}
+
+.overOns button:hover{
+	background-color: #f98d1e;
+	transition: 0.5s;
+	color: white;
+}
+
+#vkTextarea {	
+	white-space: pre-line;
+	overflow-wrap: break-word;
+	margin: auto;
+}
+
+#vkDiv{
+	white-space: pre-line;
+	overflow-wrap: break-word;
+	margin: auto;
+}

@@ -1,0 +1,8 @@
+<main class="container">
+    <h1>Bondsteam</h1>
+    <ul>
+        <% users.forEach(function(user){ %>
+            <li><%= user.firstname %> <%= user.lastname %>, <%= user.bondsteam %></li>
+        <% }) %>
+    </ul>
+</main>

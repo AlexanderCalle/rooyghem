@@ -1,0 +1,53 @@
+<main class="container" id="backofficecontainer">
+    <%- include('./particals/back_office.ejs') %>
+
+    <div id="backofficecreation">
+        <div>
+            <h1>Update gebruiker</h1>
+
+            <%- include('./particals/messages.ejs') %>
+
+            <form action="/users/<%= user.user_id %>?_method=PUT" method="POST">
+                <label for="firstname">Voornaam </label>
+                <input id="firstname" type="text" name="firstname" placeholder="Voornaam..." value="<%= user.firstname %>" disabled>
+                <br>
+                <label for="lastname">Naam </label>
+                <input id="lastname" type="text" name="lastname" placeholder="Naam..." value="<%= user.lastname %>" disabled>
+                <br>
+                <label for="email">Email </label>
+                <input id="email" type="email" name="email" placeholder="Email..." value="<%= user.email %>">
+                <br>
+                <label for="username">Gebruikersnaam </label>
+                <input  type="text" name="username" placeholder="Gebruikersnaam..." value="<%= user.username %>">
+                <br>
+                <label for="phone">Telefoonnummer </label>
+                <input id="phone" type="text" name="phone" placeholder="Telefoonnummer..." value="<%= user.phone %>">
+                <br>
+                <label for="is_admin">Admin </label>
+                <select id="is_admin" name="is_admin">
+                    <option>0</option>
+                    <option>1</option>
+                </select>
+                <br>
+                <label for="bondsteam">Bondsteam</label>
+                <select id="bondsteam" name="bondsteam">
+                    <option>/</option>
+                    <option>Bondsleider</option>
+                    <option>Bondssecretaris</option>
+                    <option>Bondspenningmeester</option>
+                    <option>Volwassenen begeleiding</option>
+                </select>
+                <br>
+                <label for="bannen">Ban </label>
+                <select id="bannen" name="group_id">
+                    <% groups.forEach(function(group) { %>
+                        <option value="<%= group.group_id %>"><%= group.name %></option>
+                    <% }) %>
+                </select>
+                <br>
+                <button type="submit">Update gebruiker</button>
+            </form>
+        </div>
+    </div>
+
+</main>
