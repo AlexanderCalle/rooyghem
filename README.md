@@ -1,9 +1,10 @@
 # KSA Rooyghem
+Document om de continuïteit van de site te garanderen.  
 
-## Setup the project
+## Setup 
 Eerste en vooral moet je het project clonen voor als je hem nog niet heb gedaan. Je moet deze command kopiëren en plakken in je terminal.
 
-```
+```bash
 git clone https://github.com/AlI230/rooyghem.git
 ```
 
@@ -21,3 +22,20 @@ Om de databank te initialiseren, doe volgende stappen:
 7. Nu kunnen newsfeeds uitgevoerd worden door het laatste deel van fill-db.sql uit te voeren
 
 Als de structuur van de databank veranderd is, moet je die tabellen opnieuw definieren en vullen. De gemakkelijkste manier is om alle tabellen te verwijderen en het stappenplan vanaf stap 3 uit te voeren. Als je weet waar je mee bezig bent, kan je het ook anders doen.
+
+## Planning
+
+### Website
+1. Hoofdpagina (basis)
+2. Bannen hebben eigen pagina (basis)
+3. Activiteiten zijn zichtbaar (basis)
+4. Bannen hebben contactgegevens
+5. Leiding kan inloggen
+6. Leiding kan baninformatie veranderen
+7. Foto album
+8. Ingezonden foto's worden doorgestuurd ter goedkeuring
+
+### Tijdschema
+* Eind oktober: basis site klaar
+* Na de wafelbak: klaar om basis site online te plaatsen
+* Eind december: noodzakelijke functionaliteiten van de site zijn klaar om online te gaan
