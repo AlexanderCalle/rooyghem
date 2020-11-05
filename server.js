@@ -9,12 +9,18 @@ const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const moment = require('moment');
+const crypto = require('crypto');
+const authCheck = require('./middleware/authCheck');
+const adminCheck = require('./middleware/adminCheck');
+const userCheck = require('./middleware/userCheck');
+const sgMail = require('@sendgrid/mail')
 
 const app = express();
 const port = 3000 || procces.env.PORT;
 
 // Server Logs middelware
 app.use(morgan('dev'));
+
 
 //middelware
 app.use('/public', express.static(path.join(__dirname, "public")));
@@ -29,45 +35,132 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req, res)=> {
-    con.query('SELECT name, group_id FROM `groups`', (err, groups)=> {
+app.get('/', userCheck, (req, res)=> {
+    const date = new Date();
+    con.query('SELECT * FROM newsfeeds WHERE end_publication > ? AND start_publication <= ? ORDER BY start_publication', [date, date], (err, newsfeeds) => {
         if(err) return res.render('badrequest', {error: err});
-        Date.prototype.addDays = function(days) {
-            var date = new Date(this.valueOf());
-            date.setDate(date.getDate() + days);
-            return date;
-        }
-        const date = new Date();
-        con.query('SELECT * from activities WHERE end_publication > ? AND start_publication <= ? AND start_date >= ? AND start_date <= ? ORDER BY start_date', [date, date, date, date.addDays(14)], (err, activities)=> {
-            if(err) return res.render('badrequest');
-            res.render('index', {groups: groups, activities: activities, moment: moment});
+        res.render('index', {
+            newsfeeds: newsfeeds, 
+            moment: moment, 
+            username: req.user.username
         });
     });
 });
 
+app.get('/contact', userCheck, (req, res)=> {
+    con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
+        res.render('contact', {bondsleiders: users, username: req.user.username});
+    });
+});
+
+app.post('/contact', userCheck, (req, res)=> {
+    if(req.body.naam != '' && req.body.onderwerp != '' && req.body.bericht != ''){
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+        const msg = {
+            to: 'contact@ksarooyghem.be',
+            from: 'callebauta@hotmail.com',
+            subject: req.body.onderwerp,
+            text: 'Hallo , \n\n' +
+            'Vraag van: ' + req.body.naam + ' \n\n' +
+            req.body.bericht
+        }
+        
+        sgMail.send(msg).then(()=> {
+            con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
+                res.render('contact', {bondsleiders: users, username: req.user.username, succesError: 'Vraag is verstuurd!'});
+            });
+        }).catch((err)=> {
+            con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
+                res.render('contact', {bondsleiders: users, username: req.user.username, error: err});
+            });
+        });
+    } else {
+        con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
+            res.render('contact', {bondsleiders: users, username: req.user.username, error: 'Vul alles in aub'});
+        });
+    }
+});
+
+app.get('/overons', userCheck, (req, res)=> {
+    res.render('over_ons', {username: req.user.username});
+});
+
+app.get('/forgot', userCheck, (req, res)=> {
+    res.render('forgot', {username: req.user.username});
+});
+
+app.post('/forgot', (req, res)=> {
+    let token;
+
+    crypto.randomBytes(20, (err, buf) => {
+        token = buf.toString('hex');
+    });
+
+    con.query('SELECT * FROM users WHERE email = ?', req.body.email, (err, users)=> {
+        if(err) return res.render('badrequest', {error: err});
+        if(!users[0]) return res.render('forgot', {error: 'Er bestaat geen gebruiker met deze email!', username: ''});
+        Date.prototype.addHours = function(h) {
+            this.setTime(this.getTime() + (h*60*60*1000));
+            return this;
+        }
+        var date = new Date().addHours(2).toJSON().slice(0, 19);
+        var data = {
+            resetPasswordToken: token,
+            resetPasswordExpired: date
+        }
+        con.query('UPDATE users SET ? WHERE email = ?', [data ,req.body.email], (err, user)=> {
+            if(err) return res.render('badrequest', {error: err, username: ''});
+
+            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+            const msg = {
+                to: req.body.email,
+                from: 'callebauta@hotmail.com',
+                subject: 'Wachtwoord resetten',
+                text: 'Hallo ' + req.body.email +', \n\n U hebt dit ontvangen omdat u gevraagd heeft om uw wachtwoord te herstellen, voor verdere instructies druk op de link hieronder\n\n' +
+                'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+                'Als u dit niet gevraagd heb negeer dan deze mail.\n'
+            }
+            
+            sgMail.send(msg).then(()=> {
+                res.render('forgot', {succesError: 'Email sended', username: ''});
+            }).catch((err)=> {
+                res.render('forgot', {error: err, username: ''});
+            });
+        });
+    });
+}); 
+
 // Routers
 //Route users
 const users = require('./router/users');
-app.use('/users', users);
+app.use('/users', userCheck, users);
 
 // Route groups
 const groups = require('./router/groups');
-app.use('/groups', groups);
+app.use('/groups', userCheck, groups);
 
 // Route activities
 const activities = require('./router/activities');
-app.use('/activities', activities);
+app.use('/activities', userCheck, activities);
 
 // Route locations
 const locations = require('./router/location');
-app.use('/locations', locations);
+app.use('/locations', userCheck, locations);
 
 // Route leiding
 const leiding = require('./router/leiding');
-app.use('/leiding', leiding);
+app.use('/leiding', userCheck, leiding);
 
 const vk = require('./router/vk');
-app.use('/vk', vk);
+app.use('/vk', userCheck, vk);
+
+const newsfeed = require('./router/newsfeeds');
+app.use('/newsfeed', authCheck, adminCheck, userCheck, newsfeed);
+
+const reset = require('./router/reset');
+app.use('/reset', userCheck, reset);
 
 app.listen(port, ()=> {
     console.log('Server running on port ' + port);

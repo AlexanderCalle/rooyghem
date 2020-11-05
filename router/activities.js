@@ -5,7 +5,6 @@ const authCheck = require('../middleware/authCheck');
 
 // Route GET all activities + form
 router.get('/', authCheck,(req, res)=>{
-    if(req.user.user_id != 1) {
         con.query('SELECT * FROM `groups` WHERE group_id = ?', req.user.group_id, (err, groups)=>{
             if(err) return res.render('badrequest', {error: err});
             con.query('SELECT * FROM activities WHERE group_id = ?', req.user.group_id, (err, activities)=>{
@@ -15,25 +14,11 @@ router.get('/', authCheck,(req, res)=>{
                     activities:activities,
                     user: req.user, 
                     admin: req.admin, 
+                    username: req.user.username,
                     moment: require('moment')
                 });
             }); 
         });
-    } else {
-        con.query('SELECT * FROM `groups`', (err, groups)=>{
-            if(err) return res.render('badrequest', {error: err});
-            con.query('SELECT * FROM activities', (err, activities)=>{
-                if(err) return res.render('badrequest', {error: err});
-                res.render('create_activities', {
-                    groups: groups,
-                    activities: activities,
-                    user: req.user,
-                    admin: req.admin,
-                    moment: require('moment')
-                });
-            });
-        });
-    }
 });
 
 router.get('/activity/:id', (req, res)=>{
@@ -41,7 +26,8 @@ router.get('/activity/:id', (req, res)=>{
         if(err) return res.render('badrequest', {error: err});
         res.render('./group_pages/single_activity', {
             activity: activity[0],
-            moment: require('moment')
+            moment: require('moment'),
+            username: req.user.username
         })
     });
 });
@@ -61,17 +47,52 @@ router.post('/create', authCheck,(req, res)=>{
             group_id: group[0].group_id
         }
 
-        if(activity != null) {
-            if (group[0].group_id === req.user.group_id) {
+
+
+        if(activity.title != '') {
+            if (group[0].group_id === req.user.group_id || req.admin) {
                 con.query('INSERT INTO activities SET ?', activity, (err, activity)=> {
-                    if(err) return res.render('badrequest', {error: err});
-                    res.redirect('/activities');
+                    if(err) {
+                        if(err.code = 'ER_TRUNCATED_WRONG_VALUE') {
+                            con.query('SELECT * FROM activities WHERE group_id = ?', group[0].group_id,(err, activities)=>{
+                                if(err) return res.render('badrequest', {error: err});
+                                res.render('create_activities', {
+                                    groups: group,
+                                    activities: activities,
+                                    user: req.user,
+                                    admin: req.admin,
+                                    username: req.user.username,
+                                    moment: require('moment'),
+                                    error: 'Er is een datum niet ingevuld!'
+                                });
+                            });
+                        } else {
+                            res.render('badrequest', {error: err})
+                        }
+                    } else {
+                        res.redirect('/activities');
+                    }
                 });
             } else {
-                res.render('activities', {error: 'Cannot create activities for another group'})
+                res.render('badrequest', {error: {
+                    message: 'Cannot create activities for another group'
+                }})
             }
         } else {
-            res.render('activities', {error: 'please fill everything in'});
+            if(activity.title ==''){
+                con.query('SELECT * FROM activities WHERE group_id = ?', group[0].group_id, (err, activities)=>{
+                    if(err) return res.render('badrequest', {error: err});
+                    res.render('create_activities', {
+                        groups: group,
+                        activities: activities,
+                        user: req.user,
+                        admin: req.admin,
+                        username: req.user.username,
+                        moment: require('moment'),
+                        error: 'Titel is leeg!'
+                    });
+                });
+            }
         }
     });
 });
@@ -108,7 +129,10 @@ router.get('/update/:id', authCheck,(req, res)=>{
             res.render('update_activity', {
                 activity: activity[0],
                 group_name: group_name[0].name,
-                group_id: activity[0].group_id
+                group_id: activity[0].group_id,
+                admin: req.admin,
+                username: req.user.username,
+                moment: require('moment')
             })
         });
     });
@@ -128,15 +152,30 @@ router.put('/update/:id', authCheck,(req, res)=>{
         end_publication: data.end_publication,
         group_id: data.group_id
     }
-    if(updated_activity != null) {
-        if(req.user.user_id == 1) {
+    if(updated_activity.title != '') {
+        if(data.group_id === req.user.group_id.toString() || req.admin) {
             con.query(`UPDATE activities SET ? WHERE activity_id = ?`, [updated_activity, req.params.id], (err, activity)=>{
-                if(err) return res.render('badrequest', {error: err});
-                res.redirect('/activities');
-            });
-        } else if(data.group_id === req.user.group_id.toString()) {
-            con.query(`UPDATE activities SET ? WHERE activity_id = ?`, [updated_activity, req.params.id], (err, activity)=>{
-                if(err) return res.render('badrequest', {error: err});
+                if(err) {
+                    if(err.code = 'ER_TRUNCATED_WRONG_VALUE'){
+                        con.query('SELECT * from activities WHERE activity_id = ?', req.params.id, (err, activity)=>{
+                            if(err) return res.render('badrequest', {error: err});
+                            con.query('SELECT name FROM `groups` WHERE group_id = ?', activity[0].group_id, (err, group_name)=>{
+                                if(err) return res.render('badrequest', {error: err});
+                                res.render('update_activity', {
+                                    activity: activity[0],
+                                    group_name: group_name[0].name,
+                                    group_id: activity[0].group_id,
+                                    admin: req.admin,
+                                    username: req.user.username,
+                                    moment: require('moment'),
+                                    error: 'Er is een datum niet ingevuld!'
+                                });
+                            });
+                        });
+                    } else {
+                        res.render('badrequest', {error: err});
+                    }  
+                } 
                 res.redirect('/activities');
             });
         } else {
@@ -148,6 +187,9 @@ router.put('/update/:id', authCheck,(req, res)=>{
                         activity: activity[0],
                         group_name: group_name[0].name,
                         group_id: activity[0].group_id,
+                        admin: req.admin,
+                        username: req.user.username,
+                        moment: require('moment'),
                         error: 'cannot update activity from another group'
                     });
                 });
@@ -162,7 +204,10 @@ router.put('/update/:id', authCheck,(req, res)=>{
                     activity: activity[0],
                     group_name: group_name[0].name,
                     group_id: activity[0].group_id,
-                    error: 'Please fill all fields in'
+                    admin: req.admin,
+                    username: req.user.username,
+                    moment: require('moment'),
+                    error: 'Titel is leeg!'
                 });
             });
         });

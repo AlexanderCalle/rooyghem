@@ -8,7 +8,10 @@ router.get('/', (req, res)=>{
 
 router.get('/:group_name/info', (req, res)=> {
     con.query('SELECT * FROM `groups` WHERE name = ?', req.params.group_name, (err, group)=> {
+        
         if(err) return res.render('badrequest', {error: err});
+
+        if (group.length === 0) return res.render('badrequest', {error: "No group found for " + req.params.group_name})
 
         con.query('SELECT * FROM locations WHERE location_id = ?', group[0].location_id, (err, location) => {
             if(err) return res.render('badrequest', {error: err});
@@ -24,11 +27,31 @@ router.get('/:group_name/info', (req, res)=> {
                         location: location[0], 
                         leaders: leaders, 
                         activities: activities, 
+                        username: req.user.username,
                         moment: require('moment')
                     });
                 })
             });
         })
+    });
+});
+
+router.get('/:group_name/info/events', (req,res)=> {
+    con.query('SELECT * FROM `groups` WHERE name = ?', req.params.group_name, (err, groups)=> {
+        if(err) return res.render('badrequest', {error: err});
+        con.query('SELECT * FROM activities WHERE group_id = ?', groups[0].group_id, (err, activities)=> {
+            if(err) return res.render('badrequest', {error: err});
+            let events = [];
+            activities.forEach(activity => {
+                events.push({
+                    id: activity.activity_id,
+                    title: activity.title,
+                    start: activity.start_date,
+                    end: activity.end_date,
+                });
+            });
+            res.send(events)
+        });
     });
 });
 

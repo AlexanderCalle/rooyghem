@@ -1,11 +1,17 @@
-<main class="container">
+<main class="container" id="backofficecontainer">
     <%- include("./particals/back_office.ejs") %>
 
-    <h1>Verhalend kader</h1>
+    <div id="backofficecreation">
+        <div>
+            <h1>Verhalend kader</h1>
 
-    <form action="/vk?_method=PUT" method="post">
-        <textarea name="story" cols="120" rows="10"><%= vk %></textarea>
-        <br>
-        <input type="submit" value="submit">
-    </form>
+            <%- include('./particals/messages.ejs') %>
+
+            <form action="/vk?_method=PUT" method="post">
+                <textarea id="vkTextarea" name="story" cols="120" rows="10"><%= vk %></textarea>
+                <br>
+                <button type="submit">Post vk</button>
+            </form>
+        </div>
+    </div>
 </main>

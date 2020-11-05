@@ -27,6 +27,10 @@ CREATE TABLE users (
 	passhash VARCHAR(256) NOT NULL,
 	phone VARCHAR(45) NOT NULL,
     group_id INT NOT NULL,
+	bondsteam VARCHAR(45) NOT NULL,
+	path_pic VARCHAR(256),
+	resetPasswordToken VARCHAR(256),
+	resetPasswordExpired DATETIME,
     PRIMARY KEY (user_id),
 	UNIQUE KEY username_UNIQUE (username),
 	FOREIGN KEY (group_id) REFERENCES `groups`(group_id)
@@ -44,4 +48,16 @@ CREATE TABLE activities (
 	end_publication DATE,
     group_id INT NOT NULL,
 	CONSTRAINT `group_id` FOREIGN KEY (`group_id`) REFERENCES `groups`(group_id)
+);
+
+CREATE TABLE newsfeeds (
+	feed_id INT NOT NULL AUTO_INCREMENT,
+	title VARCHAR(45) NOT NULL,
+	description TEXT NOT NULL,
+	start_publication DATE,
+	end_publication DATE,
+	picture_path VARCHAR(256),
+    created_by VARCHAR(256) NOT NULL,
+    PRIMARY KEY (feed_id),
+	CONSTRAINT `created_by` FOREIGN KEY (created_by) REFERENCES users(user_id)
 );

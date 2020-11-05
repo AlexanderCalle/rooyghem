@@ -1,45 +1,40 @@
-<!-- <%- include("../particals/group_nav.ejs") -%> -->
 
 <main class="container" id="groupcontainer">
-    <div class="groupinfo">
-        <img src="<%= group.logo %>" alt="Logo <%= group.name %>" class="grouplogo">
-        <h3>Adres</h3>
-        <p>
-            <%= location.name %> <br>
-            <%= location.adress %>
-        </p>
-        <h3>Contact</h3>
-        <p>
-            <%= group.name %>@ksarooyghem.be
-        </p>
-    </div>
+    <div class="info">
+        <div id="groupinfo">
+            <img src="<%= group.logo %>" alt="Logo <%= group.name %>" class="grouplogo">
+            <h3>Adres</h3>
+            <p>
+                <%= location.name %> <br>
+                <%= location.adress %>
+            </p>
+            <h3>Contact</h3>
+            <p>
+                <%= group.name %>@ksarooyghem.be
+            </p>
+        </div>
+        <div id="groupstory">
+            <h3>Verhalend Kader</h3>
+            <p id="vkDiv">
+                <%- group.story -%>
+            </p>
+        </div>
     
-
-    <div class="groupstory">
-        <h3>Verhalend Kader</h3>
-        <p>
-            <%= group.story %>
-        </p>
+        <div id="calendar"></div>
     </div>
 
-    
-    <div class="groupleaders">
-        <h3>Leiders</h3>
-        <% leaders.forEach(function(leader){ %>
-            <div>
-                <p>
-                    <%= leader.firstname %> <%= leader.lastname %> <br>
-                    <%= leader.email %>
-                </p>
-            </div>
-        <% }); %>
-    </div>
-    <div class="groupsactivities">
-        <h3>Activiteiten</h3>
-        <ul>
-            <% activities.forEach(function(activity){ %>
-                <li><a href="/activities/activity/<%= activity.activity_id %>"><%= activity.title %>: <%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %></a></li>
-            <% }) %>
-        </ul>
+    <div id="groupleaders">
+        <div id="groupleaders-title"><h3>Leiders</h3></div>
+        <div id="groupleaders-content">
+            <% leaders.forEach(function(leader){ %>
+                <div class="leader">
+                    <img src="<%= leader.path_pic %>" alt="" height="150px">
+                    <p>
+                        <%= leader.firstname %> <%= leader.lastname %> <br>
+                        <%= leader.email %>
+                    </p>
+                </div>
+            <% }); %>
+        </div>
     </div>
 </main>

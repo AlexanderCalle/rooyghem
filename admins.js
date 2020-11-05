@@ -1,6 +1,5 @@
 const con = require('./connect');
 const bcrypt = require('bcryptjs');
-const { createECDH } = require('crypto');
 
 require('dotenv').config();
 
@@ -15,7 +14,8 @@ async function createAdminUser() {
             username: 'admin',
             passhash: await bcrypt.hash(process.env.DEFAULT_ADMIN_PASSWORD, 11),
             phone: '000',
-            group_id: 23
+            bondsteam: "/",
+            group_id: 1
         }
         await con.query('INSERT INTO users SET ?', user, (err, user)=>{
             if(err) return console.log(err);

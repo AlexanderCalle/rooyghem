@@ -13,7 +13,8 @@ router.get('/:group_name', (req, res)=>{
             if(err) return res.render('badrequest', {error: err});
             res.render('./group_pages/location', {
                 location: locations[0],
-                group: group[0]
+                group: group[0],
+                username: req.user.username
             })
         });
     });
