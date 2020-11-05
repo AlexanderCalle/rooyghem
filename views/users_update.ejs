@@ -5,16 +5,14 @@
         <div>
             <h1>Update gebruiker</h1>
 
-            <%if(typeof error != "undefined"){%>
-                <%- include('./particals/messages.ejs') %>
-            <% } %>
+            <%- include('./particals/messages.ejs') %>
 
             <form action="/users/<%= user.user_id %>?_method=PUT" method="POST">
                 <label for="firstname">Voornaam </label>
-                <input id="firstname" type="text" name="firstname" placeholder="Voornaam..." value="<%= user.firstname %>">
+                <input id="firstname" type="text" name="firstname" placeholder="Voornaam..." value="<%= user.firstname %>" disabled>
                 <br>
                 <label for="lastname">Naam </label>
-                <input id="lastname" type="text" name="lastname" placeholder="Naam..." value="<%= user.lastname %>">
+                <input id="lastname" type="text" name="lastname" placeholder="Naam..." value="<%= user.lastname %>" disabled>
                 <br>
                 <label for="email">Email </label>
                 <input id="email" type="email" name="email" placeholder="Email..." value="<%= user.email %>">

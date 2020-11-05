@@ -5,10 +5,7 @@
        
        <div id="creationform">
             <h1>Maak gebruikers</h1>
-            <%if(typeof error != "undefined"){%>
-                <%- include('./particals/messages.ejs') %>
-            <% } %>
-
+            <%- include('./particals/messages.ejs') %>
             <form action="/users/create" method="POST" enctype="multipart/form-data">
                 <label for="firstname">Voornaam </label>
                 <input id="firstname" type="text" name="firstname" placeholder="Voornaam...">

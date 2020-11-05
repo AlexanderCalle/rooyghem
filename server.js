@@ -10,10 +10,10 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const moment = require('moment');
 const crypto = require('crypto');
-const sendgrid = require('sendgrid')('user', process.env.SENDGRID_API_KEY)
 const authCheck = require('./middleware/authCheck');
 const adminCheck = require('./middleware/adminCheck');
 const userCheck = require('./middleware/userCheck');
+const sgMail = require('@sendgrid/mail')
 
 const app = express();
 const port = 3000 || procces.env.PORT;
@@ -47,62 +47,39 @@ app.get('/', userCheck, (req, res)=> {
     });
 });
 
-// app.get('/events', (req, res)=> {
-//     Date.prototype.addDays = function(days) {
-//         var date = new Date(this.valueOf());
-//         date.setDate(date.getDate() + days);
-//         return date;
-//     }
-//     const date = new Date();
-//     con.query('SELECT * FROM `groups`', (err, groups)=>{
-//         if(err) return res.render('badrequest', {error: err});
-//         con.query('SELECT * from activities WHERE end_publication > ? AND start_publication <= ? AND start_date >= ? AND start_date <= ? ORDER BY start_date', [date, date, date, date.addDays(14)], (err, activities)=> {
-//             if(err) return res.render('badrequest');
-//             let events = []
-//             activities.forEach(activity => {
-//                 let color;
-//                 let title;
-            
-//                 if(activity.group_id === groups[0].group_id) {
-//                     color = "#ebbd05";
-//                     title = "kab: " + activity.title;
-//                 } else if(activity.group_id === groups[1].group_id) {
-//                     color = "orange";
-//                     title = "pag: " + activity.title;
-//                 } else if(activity.group_id === groups[2].group_id) {
-//                     color = "red";
-//                     title = "jkn: " + activity.title;
-//                 } else if(activity.group_id === groups[3].group_id) {
-//                     color = "purple";
-//                     title = "kn: " + activity.title;
-//                 } else if(activity.group_id === groups[4].group_id) {
-//                     color = "blue"
-//                     title = "jhn: " + activity.title;
-//                 } else if(activity.group_id === groups[5].group_id) {
-//                     color = "green";
-//                     title = "aspi: " + activity.title;
-//                 } else if(activity.group_id === groups[6].group_id) {
-//                     color = "brown";
-//                     title = "hn: " + activity.title;
-//                 }
-    
-//                 events.push({
-//                     id: activity.activity_id,
-//                     title: title,
-//                     start: activity.start_date,
-//                     end: activity.end_date,
-//                     color: color
-//                 })
-//             });
-//             res.send(events);
-//         });
-//     });
-// });
-
 app.get('/contact', userCheck, (req, res)=> {
     con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
         res.render('contact', {bondsleiders: users, username: req.user.username});
     });
+});
+
+app.post('/contact', userCheck, (req, res)=> {
+    if(req.body.naam != '' && req.body.onderwerp != '' && req.body.bericht != ''){
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+        const msg = {
+            to: 'contact@ksarooyghem.be',
+            from: 'callebauta@hotmail.com',
+            subject: req.body.onderwerp,
+            text: 'Hallo , \n\n' +
+            'Vraag van: ' + req.body.naam + ' \n\n' +
+            req.body.bericht
+        }
+        
+        sgMail.send(msg).then(()=> {
+            con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
+                res.render('contact', {bondsleiders: users, username: req.user.username, succesError: 'Vraag is verstuurd!'});
+            });
+        }).catch((err)=> {
+            con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
+                res.render('contact', {bondsleiders: users, username: req.user.username, error: err});
+            });
+        });
+    } else {
+        con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
+            res.render('contact', {bondsleiders: users, username: req.user.username, error: 'Vul alles in aub'});
+        });
+    }
 });
 
 app.get('/overons', userCheck, (req, res)=> {
@@ -113,8 +90,6 @@ app.get('/forgot', userCheck, (req, res)=> {
     res.render('forgot', {username: req.user.username});
 });
 
-const sgMail = require('@sendgrid/mail')
-
 app.post('/forgot', (req, res)=> {
     let token;
 
@@ -124,17 +99,19 @@ app.post('/forgot', (req, res)=> {
 
     con.query('SELECT * FROM users WHERE email = ?', req.body.email, (err, users)=> {
         if(err) return res.render('badrequest', {error: err});
+        if(!users[0]) return res.render('forgot', {error: 'Er bestaat geen gebruiker met deze email!', username: ''});
         Date.prototype.addHours = function(h) {
             this.setTime(this.getTime() + (h*60*60*1000));
             return this;
-          }
-          var date = new Date().addHours(2).toJSON().slice(0, 19)
+        }
+        var date = new Date().addHours(2).toJSON().slice(0, 19);
         var data = {
             resetPasswordToken: token,
             resetPasswordExpired: date
         }
         con.query('UPDATE users SET ? WHERE email = ?', [data ,req.body.email], (err, user)=> {
-            if(err) return res.render('badrequest', {error: err, username: ''})
+            if(err) return res.render('badrequest', {error: err, username: ''});
+
             sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
             const msg = {
@@ -147,7 +124,7 @@ app.post('/forgot', (req, res)=> {
             }
             
             sgMail.send(msg).then(()=> {
-                res.render('forgot', {error: 'Email sended', username: ''});
+                res.render('forgot', {succesError: 'Email sended', username: ''});
             }).catch((err)=> {
                 res.render('forgot', {error: err, username: ''});
             });
