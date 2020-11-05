@@ -24,6 +24,7 @@
     </div>
     <div id="contactform">
         <h3>Stuur ons een bericht</h3>
+        <%- include('./particals/messages.ejs') %>
         <form action="/contact" method="POST">
             <input name="naam" type="text" placeholder="Naam...">
             <input type="text" name="onderwerp" placeholder="Onderwerp...">
