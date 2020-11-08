@@ -48,7 +48,7 @@ router.get('/all', authCheck, adminCheck,(req, res)=> {
 router.get('/single/:id', authCheck, adminCheck,(req, res)=> {
     
     con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, user)=>{
-        if(err) return res.json({message: 'Failed to find user'});
+        if(err) return res.json({message: 'Gebruiker werd niet gevonden'});
         res.json(user);
     });
 });
@@ -204,7 +204,7 @@ router.put('/:id', (req, res)=>{
 router.get('/delete/single/:id', authCheck, adminCheck,(req, res)=> {
     con.query('DELETE FROM users WHERE user_id = ?', req.params.id, (err, user)=>{
         if(err) return res.render('badrequest', {error: err});
-        res.send(`user ${user} is deleted`);
+        res.send(`gebruiker ${user} werd verwijderd`);
     });
 });
 
