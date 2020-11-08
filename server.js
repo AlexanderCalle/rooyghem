@@ -67,7 +67,7 @@ app.post('/contact', userCheck, (req, res)=> {
         
         sgMail.send(msg).then(()=> {
             con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
-                res.render('contact', {bondsleiders: users, username: req.user.username, succesError: 'Vraag is verstuurd!'});
+                res.render('contact', {bondsleiders: users, username: req.user.username, succesError: 'Vraag werd verstuurd'});
             });
         }).catch((err)=> {
             con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
@@ -76,7 +76,7 @@ app.post('/contact', userCheck, (req, res)=> {
         });
     } else {
         con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
-            res.render('contact', {bondsleiders: users, username: req.user.username, error: 'Vul alles in aub'});
+            res.render('contact', {bondsleiders: users, username: req.user.username, error: 'Gelieve alle velden in te vullen'});
         });
     }
 });
@@ -123,7 +123,7 @@ app.post('/forgot', (req, res)=> {
             }
             
             sgMail.send(msg).then(()=> {
-                res.render('forgot', {succesError: 'Email sended', username: ''});
+                res.render('forgot', {succesError: 'Email werd verzonden', username: ''});
             }).catch((err)=> {
                 res.render('forgot', {error: err, username: ''});
             });

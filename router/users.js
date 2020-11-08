@@ -84,7 +84,7 @@ router.post('/create', authCheck, adminCheck, upload.single('image'), userFormCh
                                     users: users, 
                                     admin: req.admin,
                                     username: req.user.username,
-                                    error: 'Gebruikersnaam bestaat al!'
+                                    error: 'Gebruikersnaam bestaat al'
                                 });
                             });
                         });
@@ -106,7 +106,7 @@ router.post('/create', authCheck, adminCheck, upload.single('image'), userFormCh
                     users: users, 
                     admin: req.admin,
                     username: req.user.username,
-                    error: 'Geen foto gevonden!'
+                    error: 'Geen foto gevonden'
                 });
             });
         });
@@ -124,7 +124,7 @@ router.post('/login', (req, res)=>{
     if(data.username !== '' && data.password !== '') {
         con.query('SELECT * FROM users WHERE username = ?', data.username, (err, user)=> {
             if(err) return res.render('badrequest', {error: err});
-            if(user[0] == null) return res.render('login', {error: 'Username doesnot exists'});
+            if(user[0] == null) return res.render('login', {error: 'Deze gebruikersnaam bestaat niet'});
             bcrypt.compare(data.password, user[0].passhash, (err, isMatch)=>{
                 if(err) return res.render('badrequest', {error: err});
                 if(isMatch) {
@@ -137,15 +137,15 @@ router.post('/login', (req, res)=>{
                     const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '12h' });
                     res.cookie('auth', token).redirect('/activities');
                 } else {
-                    res.render('login', {error: 'Password incorrect',username: req.user.username});
+                    res.render('login', {error: 'Password klopt niet',username: req.user.username});
                 }
             });
         });
     } else {
         if(data.username == '') {
-            res.render('login', {error: 'username is required', username: req.user.username});
+            res.render('login', {error: 'Vul uw gebruikersnaam is', username: req.user.username});
         } else if(data.password == '') {
-            res.render('login', {error: 'password is required', username: req.user.username});
+            res.render('login', {error: 'Vul uw wachtwoord in', username: req.user.username});
         }
     }
 });
@@ -188,7 +188,7 @@ router.put('/:id', (req, res)=>{
                     if(err) return res.render('badrequest', {error: err});
                     con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, users)=>{
                         if(err) return res.render('badrequest', {error: err});
-                        res.render('users_update', {groups: groups, user: users[0], admin: req.admin, error: 'Gebruiker bestaat al!', username: req.user.username});
+                        res.render('users_update', {groups: groups, user: users[0], admin: req.admin, error: 'Gebruikersnaam is al in gebruik', username: req.user.username});
                     });
                 });
             } else {
