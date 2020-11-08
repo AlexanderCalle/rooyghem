@@ -13,9 +13,7 @@ const crypto = require('crypto');
 const authCheck = require('./middleware/authCheck');
 const adminCheck = require('./middleware/adminCheck');
 const userCheck = require('./middleware/userCheck');
-const sgMail = require('@sendgrid/mail')
-
-//HY my name is ali
+const sgMail = require('@sendgrid/mail');
 
 const app = express();
 const port = 3000 || procces.env.PORT;
