@@ -13,7 +13,7 @@ const crypto = require('crypto');
 const authCheck = require('./middleware/authCheck');
 const adminCheck = require('./middleware/adminCheck');
 const userCheck = require('./middleware/userCheck');
-const sgMail = require('@sendgrid/mail')
+const sgMail = require('@sendgrid/mail');
 
 //HY my name is ali
 
