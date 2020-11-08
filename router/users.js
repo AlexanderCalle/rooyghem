@@ -200,14 +200,6 @@ router.put('/:id', (req, res)=>{
     });
 });
 
-// DELETE ALL USERS
-router.get('/delete/all', authCheck, adminCheck,(req, res)=> {
-    con.query('DELETE FROM users', (err, users)=>{
-        if(err) return res.render('badrequest', {error: err});
-        res.send(`All users are deleted`);
-    });
-});
-
 // DELTE SINGLE USER
 router.get('/delete/single/:id', authCheck, adminCheck,(req, res)=> {
     con.query('DELETE FROM users WHERE user_id = ?', req.params.id, (err, user)=>{
