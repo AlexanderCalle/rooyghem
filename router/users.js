@@ -31,7 +31,7 @@ router.get('/', authCheck, adminCheck,(req, res)=>{
         if(err) return res.render('badrequest', {error: err});
         con.query('SELECT * FROM users', (err, users)=>{
             if(err) return res.render('badrequest', {error: err});
-            res.render('users', {groups: groups, users: users, admin: req.admin, username: req.user.username});
+            res.render('users', {groups: groups, users: users, user:req.user, admin: req.admin, username: req.user.username});
         });
     });
 });
