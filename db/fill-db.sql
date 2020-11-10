@@ -12,3 +12,4 @@ VALUES("Kabouters", "Kabouters hebben vk", "/public/images/banlogos/kabouters.jp
       ("Aspiranten", "Aspiranten hebben vk", "/public/images/banlogos/aspiranten.jpg", 2),
       ("Hernieuwers", "Hernieuwers hebben vk", "/public/images/banlogos/hernieuwers.jpg", 2),
       ("Oudercomite", "OC hebben vk", "/public/images/banlogos/hernieuwers.jpg", 2);
+      ("Webteam", "Nerd van Rooyghem", "/public/images/banlogos/webteam.jpg", 2);
