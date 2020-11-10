@@ -122,9 +122,12 @@ nav p {
 }
 
 .weblinks-boven{
+	position: relative;
+	top: 100%;
+	transform: translateY(-100%);
+	margin-left: -32px;
 	float: left;
 	width: 30%;
-	display:flex;
 }
 .weblinks-boven img{
 	height: 50px;
@@ -176,10 +179,11 @@ footer{
 	float: right;
 	width: 100%;
 	margin-left: auto;
+	margin-right: auto;
 }
 
 .weblinks-onder ul li {
-    display: inline;
+    display: flex;
 }
 
 .weblinks-onder img{
@@ -360,12 +364,34 @@ article{
 	margin-top: 10px;
     padding: 10px;
 	display: grid;
-    grid-template-columns: 10% 90%;
-    grid-template-areas: "nav creation";
+    grid-template-columns: 200px 90%;
+}
+
+@media only screen and (max-width: 800px) {
+    #backofficecontainer {
+	  grid-template-columns: repeat(1, 100%);
+	}
+	#backofficenavbar{
+		margin-left: auto;
+		margin-right: auto;
+	}
+	#backofficecreation{
+		width: auto;
+		grid-template-columns: repeat(1, auto);
+		margin-left: 0;
+		margin-right: 0;
+		padding: 20px;
+	}
+	#backofficecreation form{
+		width: 100px;
+	}
+	#backofficecreation input{
+		width: 50px;
+	}
 }
 
 #backofficenavbar{
-	grid-area: nav;
+	width: 150px;
 	padding: 10px;
 }
 
@@ -383,7 +409,6 @@ article{
 #backofficecreation{
 	margin-left: auto;
 	margin-right: auto;
-	grid-area: creation;
 	width: 80%;
 	display: grid;
 	grid-gap: 20px;
