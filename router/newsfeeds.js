@@ -81,6 +81,7 @@ router.get('/update/:id',(req, res)=>{
             newsfeed: newsfeed[0],
             admin: req.admin,
             username: req.user.username,
+            user: req.user,
             moment: require('moment')
         });
     });
@@ -111,6 +112,7 @@ router.put('/update/:id',(req, res)=>{
                 admin: req.admin,
                 username: req.user.username,
                 moment: require('moment'),
+                user: req.user,
                 error: 'Niet alles is ingevuld!'
             });
         });

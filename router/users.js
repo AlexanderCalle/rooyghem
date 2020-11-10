@@ -82,6 +82,7 @@ router.post('/create', authCheck, adminCheck, upload.single('image'), userFormCh
                                 res.render('users', {
                                     groups: groups, 
                                     users: users, 
+                                    user: req.user,
                                     admin: req.admin,
                                     username: req.user.username,
                                     error: 'Gebruikersnaam bestaat al'
@@ -105,6 +106,7 @@ router.post('/create', authCheck, adminCheck, upload.single('image'), userFormCh
                     groups: groups, 
                     users: users, 
                     admin: req.admin,
+                    user: req.user,
                     username: req.user.username,
                     error: 'Geen foto gevonden'
                 });
