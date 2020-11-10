@@ -161,6 +161,9 @@ app.use('/newsfeed', authCheck, adminCheck, userCheck, newsfeed);
 const reset = require('./router/reset');
 app.use('/reset', userCheck, reset);
 
+const profile = require('./router/profile');
+app.use('/profile', userCheck, authCheck, adminCheck, profile);
+
 app.listen(port, ()=> {
     console.log('Server running on port ' + port);
 });
