@@ -278,8 +278,14 @@ article{
 
 .info {
 	display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: 250px repeat(auto-fit, minmax(350px, 1fr));
 	grid-gap: 30px;
+}
+
+@media only screen and (max-width: 1200px) {
+    .info {
+		grid-template-columns: repeat(1, minmax(350px, 1fr));
+	}
 }
 
 #groupinfo {
@@ -291,8 +297,7 @@ article{
 }
 
 #groupstory {
-	margin-left: auto;
-	margin-right: auto;
+	margin-left: 0;
 }
 
 #groupleaders {
