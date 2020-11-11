@@ -7,7 +7,7 @@
 
             <%- include('./particals/messages.ejs') %>
 
-            <form action="/users/<%= user.user_id %>?_method=PUT" method="POST">
+            <form action="/users/<%= user.user_id %>?_method=PUT" method="POST" enctype="multipart/form-data">
                 <label for="firstname">Voornaam </label>
                 <input id="firstname" type="text" name="firstname" placeholder="Voornaam..." value="<%= user.firstname %>">
                 <br>
@@ -44,6 +44,9 @@
                         <option value="<%= group.group_id %>"><%= group.name %></option>
                     <% }) %>
                 </select>
+                <br>
+                <label for="picture_path">Foto van gebruiker </label>
+                <input  type="file" name="image" placeholder="Leiders foto...">
                 <br>
                 <button type="submit">Update gebruiker</button>
             </form>

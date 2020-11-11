@@ -14,6 +14,7 @@ module.exports = (req, res, next) => {
                     groups: groups, 
                     users: users, 
                     admin: req.admin,
+                    user: req.user,
                     username: req.user.username,
                     error: 'Vul alles in!'
                 });
