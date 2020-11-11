@@ -2,23 +2,37 @@ const express = require('express');
 const router = express.Router();
 const con = require('../connect');
 const authCheck = require('../middleware/authCheck');
+const adminCheck = require('../middleware/adminCheck')
 
 // Route GET all activities + form
-router.get('/', authCheck,(req, res)=>{
-        con.query('SELECT * FROM `groups` WHERE group_id = ?', req.user.group_id, (err, groups)=>{
+router.get('/', authCheck, (req, res)=>{
+    con.query('SELECT * FROM `groups` WHERE group_id = ?', req.user.group_id, (err, groups)=>{
+        if(err) return res.render('badrequest', {error: err});
+        con.query('SELECT * FROM activities WHERE group_id = ?', req.user.group_id, (err, activities)=>{
             if(err) return res.render('badrequest', {error: err});
-            con.query('SELECT * FROM activities WHERE group_id = ?', req.user.group_id, (err, activities)=>{
-                if(err) return res.render('badrequest', {error: err});
-                res.render('create_activities', {
-                    groups:groups, 
-                    activities:activities,
-                    user: req.user, 
-                    admin: req.admin, 
-                    username: req.user.username,
-                    moment: require('moment')
-                });
-            }); 
+            res.render('create_activities', {
+                groups:groups, 
+                activities:activities,
+                user: req.user, 
+                admin: req.admin, 
+                username: req.user.username,
+                moment: require('moment')
+            });
+        }); 
+    });
+});
+
+router.get('/allactivities', authCheck, adminCheck, (req, res)=> {
+    con.query('SELECT * FROM activities', (err, activities)=> {
+        if(err) return res.render('badrequest', {error: err});
+        res.render('all_activities', {
+            activities:activities,
+            user: req.user, 
+            admin: req.admin, 
+            username: req.user.username,
+            moment: require('moment')
         });
+    });
 });
 
 router.get('/activity/:id', (req, res)=>{
@@ -46,9 +60,6 @@ router.post('/create', authCheck,(req, res)=>{
             end_publication: req.body.end_publication,
             group_id: group[0].group_id
         }
-
-
-
         if(activity.title != '') {
             if (group[0].group_id === req.user.group_id || req.admin) {
                 con.query('INSERT INTO activities SET ?', activity, (err, activity)=> {
