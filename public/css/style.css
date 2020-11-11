@@ -400,35 +400,46 @@ article{
 /* backoffice CSS */
 
 #backofficecontainer {
-	width: 100%;
+	max-width: 100%;
 	margin-top: 10px;
     padding: 10px;
 	display: grid;
 	grid-template-columns: min-content 1fr;
 }
 
-/* @media only screen and (max-width: 800px) {
+@media only screen and (max-width: 800px) {
     #backofficecontainer {
-	  grid-template-columns: repeat(1, 100%);
+	  max-width: 100%;
+	  display: grid;
+	  grid-template-columns: min-content 1fr;
+	  grid-template-areas: "bonav bocontent";
 	}
 	#backofficenavbar{
+		display: block;
+		grid-area: bonav;
 		margin-left: auto;
 		margin-right: auto;
 	}
 	#backofficecreation{
-		width: 100%;
-		grid-template-columns: repeat(1, auto);
+		display: inline-block;
+		grid-area: bocontent;
+		max-width: 100%;
+		/* grid-template-columns: repeat(1, auto); */
 		margin-left: 0;
 		margin-right: 0;
 		padding: 20px;
 	}
+	#creationform {
+		display: inline-block;
+		max-width: 100%;
+	}
 	#backofficecreation form{
-		width: 100px;
+		width: 100%;
 	}
 	#backofficecreation input{
-		width: 50px;
+		width: 100%;
 	}
-} */
+}
 
 #backofficenavbar{
 	width: min-content;
@@ -447,16 +458,18 @@ article{
 }
 
 #backofficecreation{
-	margin-left: auto;
+	/* margin-left: auto; */
+	margin-left: 30px;
 	margin-right: auto;
-	width: 80%;
+	/* width: 80%; */
+	max-width: 100%;
 	display: grid;
 	grid-gap: 20px;
 	grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
 }
 
 #backofficecreation form{
-	width: 90%;
+	max-width: 100%;
 }
 
 #backofficecreation label{
@@ -464,7 +477,7 @@ article{
 }
 
 #backofficecreation input{
-	width: 100%;
+	max-width: 100%;
 	margin-top: 5px;
 	margin-bottom: 10px;
 	padding: 10px;
@@ -474,7 +487,7 @@ article{
 	background-color: #ffebd6;
 }
 #backofficecreation select{
-	width: 100%;
+	max-width: 100%;
 	margin-top: 5px;
 	margin-bottom: 10px;
 	padding: 10px;
