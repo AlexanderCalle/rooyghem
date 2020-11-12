@@ -10,28 +10,28 @@
             <%- include('./particals/messages.ejs') %>
 
             <form action="/activities/create" method="POST">
-                <label for="title">Titel </label>
+                <label for="title">Titel </label> <br>
                 <input id="title" type="text" name="title" placeholder="Titel...">
                 <br>
-                <label for="start_time">Start activiteit </label>
+                <label for="start_time">Start activiteit </label> <br>
                 <input id="start_time" type="datetime-local" name="start_date">
                 <br>
-                <label for="end_time">Einde activiteit </label>
+                <label for="end_time">Einde activiteit </label><br>
                 <input id="end_time" type="datetime-local" name="end_date">
                 <br>
-                <label for="meetingpoint">Plaats </label>
+                <label for="meetingpoint">Plaats </label><br>
                 <input id="meetingpoint" type="text" name="meetingpoint" placeholder="Plaats...">
                 <br>
-                <label for="description">Beschrijving </label>
+                <label for="description">Beschrijving </label><br>
                 <input id="description" type="text" name="description" placeholder="Beschrijving...">
                 <br>
-                <label for="start_publication">Start publicatie </label>
+                <label for="start_publication">Start publicatie </label><br>
                 <input id="start_publication" type="date" name="start_publication">
                 <br>
-                <label for="end_publication">Einde publicatie </label>
+                <label for="end_publication">Einde publicatie </label><br>
                 <input id="end_publication" type="date" name="end_publication">
                 <br>
-                <label for="bannen">Ban </label>
+                <label for="bannen">Ban </label><br>
                 <select id="bannen" name="group_name">
                     <% groups.forEach(function(group) { %>
                         <option><%= group.name %></option>
@@ -44,7 +44,6 @@
         
         <div id="creationData">
             <h1>Alle activiteiten</h1>
-        
             <% activities.forEach(function(activity){ %>
                 <form action="/activities/delete/<%= activity.activity_id %>?_method=DELETE" method="POST">
                     <a href="/activities/update/<%= activity.activity_id %>"><%= activity.title %>: </a><%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %>

@@ -5,26 +5,37 @@ html {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+* {
+	box-sizing: border-box;
+}
+
 body {
-    min-height: 100%;
-    display: grid;
-    grid-template-rows: max-content 1fr max-content;
+	min-height: 100%;
+	max-width: 100%;
+	display: grid;
+	grid-template-columns: 100%;
+    grid-template-rows: min-content 1fr min-content;
     grid-template-areas: "nav"
                          "main"
                          "footer";
     font-family:ff-ernestine-pro, sans-serif;
     color: #f98d1e;
-    margin: 0px;
+	margin: 0px;
+	padding: 0;
     font-style: normal;
     font-weight: 300;
     background-color: #FFFAF4;
 }
 
+.container {
+	max-width: 100%;
+}
+
 /* index CSS */
 
-.main{
+main{
 	grid-area: main;
-	width: 96%;
+	max-width: 100%;
 	margin-top: 30px;
 }
 
@@ -57,6 +68,118 @@ body {
 	padding-left: 20px;
 	max-width: 60%;
 }
+
+/* Navbar CSS
+
+.top-header {
+	max-width: 100%;
+	grid-area: nav;
+	display: grid;
+	grid-template-rows: min-content min-content;
+	grid-template-areas: "banner"
+						 "links";
+}
+
+.top-banner{
+	grid-area: banner;
+	max-width: 100%;
+	height: 240px;
+	padding-top: 20px;
+	padding-bottom: 0px;
+	background-image: url("../images/hoofd/main.jpg");
+	background-position:bottom;
+	background-size: cover;
+	display: grid;
+	grid-template-columns: min-content min-content 1fr;
+}
+
+#logo{
+	display: inline-block;
+	width: 20%;
+	height: max-content;
+    margin-left: 10px;
+	margin-top: 100px;
+    max-width: 200px;
+}
+
+#logo img {
+	width: 100px;
+	height: auto;
+}
+
+nav {
+	grid-area: links;
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr min-content;
+}
+
+nav ul {
+	display: block;
+	text-align:left;
+	list-style-type:none;
+	padding-left: 0px;
+	width: 100%;
+	float: left;
+}
+
+li{
+	display:inline;
+	float: left;
+	padding:1%;
+}
+nav a {
+   	text-decoration: none;
+    color: #f98d1e;
+    display:block;
+    margin-bottom: 10px;
+    padding-top: 0px;
+    padding-bottom: 10px;
+    font-family:futura-pt-bold,sans-serif;
+	font-style: normal;
+    font-weight: 300;
+    font-size: 1em;
+}
+nav a:hover {
+	color: #bbc3d7;
+}
+
+nav p {
+	float: right;
+    display:block;
+    margin-bottom: 10px;
+	padding-top: 0px;
+	margin-right: 20px;
+    padding-bottom: 10px;
+	font-style: normal;
+    font-weight: 300;
+    font-size: 1em;
+}
+
+.weblinks-boven{
+	display: grid;
+	max-width: 100%;
+	min-width: 150px;
+	margin-top: 100%;
+	margin-left: 10px;
+	height: auto;
+	grid-template-columns: repeat(4, 1fr);
+}
+.weblinks-boven img{
+	max-width: 100%;
+	height: auto;
+}
+.weblinks-boven :hover{
+	opacity: 0.8;
+	transition: 0.5s ease;
+}
+
+.drpdwn {
+    position: relative;
+	display: inline-block;
+	height: 100%;
+	/* min-width: 150px; 
+} */
 
 /* Navbar CSS */
 
@@ -125,12 +248,12 @@ nav p {
 	position: relative;
 	top: 100%;
 	transform: translateY(-100%);
-	margin-left: -32px;
+	margin-left: 10px;
 	float: left;
 	width: 30%;
 }
 .weblinks-boven img{
-	height: 50px;
+	height: 45px;
 	width:auto;
 }
 .weblinks-boven :hover{
@@ -157,6 +280,20 @@ nav p {
 .drpdwn:hover .drpdwn-content {
     display: block;
 }
+
+.drpdwn-content {
+	padding: 10px;
+	margin: -15px;
+    display: none;
+    position: absolute;
+    background-color:  #f9e7d4;
+    z-index: 1;
+	text-decoration: none;
+}
+
+.drpdwn:hover .drpdwn-content {
+    display: block;
+} 
 
 /* Footer CSS */
 footer{
@@ -366,37 +503,54 @@ article{
 /* backoffice CSS */
 
 #backofficecontainer {
+	max-width: 100%;
 	margin-top: 10px;
     padding: 10px;
 	display: grid;
-    grid-template-columns: 200px 90%;
+	grid-template-columns: 200px 1fr;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 700px) {
     #backofficecontainer {
-	  grid-template-columns: repeat(1, 100%);
+	  max-width: 100%;
+	  display: grid;
+	  grid-template-columns: repeat(1, 1fr);
 	}
 	#backofficenavbar{
-		margin-left: auto;
-		margin-right: auto;
+		display: block;
+		margin-left: 0;
 	}
 	#backofficecreation{
-		width: auto;
-		grid-template-columns: repeat(1, auto);
+		display: flex;
+		max-width: 80%;
 		margin-left: 0;
-		margin-right: 0;
-		padding: 20px;
+		padding: 0px;
+	}
+	#creationform {
+		display: inline-block;
+		width: 300px;
+		margin-left: 10px;
+	}
+	.vkForm {
+		display: block;
+		width: 100%;
+		left: 10px;
 	}
 	#backofficecreation form{
-		width: 100px;
+		width: 100%;
 	}
 	#backofficecreation input{
-		width: 50px;
+		width: 100%;
+	}
+
+	#creationData{
+		margin-left: 10px;
+		width: 350px;
 	}
 }
 
 #backofficenavbar{
-	width: 150px;
+	width: min-content;
 	padding: 10px;
 }
 
@@ -412,16 +566,20 @@ article{
 }
 
 #backofficecreation{
-	margin-left: auto;
-	margin-right: auto;
+	margin-left: 0;
 	width: 80%;
 	display: grid;
-	grid-gap: 20px;
+	grid-gap: 30px;
 	grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+}
+#creationData{
+	margin: 0;
+	width: 80%;
+	display: inline-block;
 }
 
 #backofficecreation form{
-	width: 90%;
+	width: 100%;
 }
 
 #backofficecreation label{
@@ -429,6 +587,7 @@ article{
 }
 
 #backofficecreation input{
+	max-width: 100%;
 	width: 100%;
 	margin-top: 5px;
 	margin-bottom: 10px;
@@ -439,7 +598,7 @@ article{
 	background-color: #ffebd6;
 }
 #backofficecreation select{
-	width: 100%;
+	max-width: 100%;
 	margin-top: 5px;
 	margin-bottom: 10px;
 	padding: 10px;
@@ -483,6 +642,11 @@ article{
 	color: white;
 }
 
+.vkForm {
+	margin-left: 0;
+	width: 80%;
+}
+
 #backofficecreation textarea{
 	width: 100%;
 	margin-top: 5px;
@@ -507,13 +671,12 @@ article{
 
 #contactcontainer{
 	margin-top: 10px;
-    padding: 10px;
 	display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(370px, 1fr));
 }
 
 #contactinfo {
-	padding-left: 50px;
+	margin-left: 10px;
 }
 
 #contactinfo a {
@@ -526,8 +689,9 @@ article{
 }
 
 #contactform {
-	width: 70%;
-	padding-left: 50px;
+	width: 80%;
+	margin-left: 10px;
+	margin-bottom: 30px;
 }
 
 #contactform input {
@@ -607,4 +771,13 @@ article{
 	white-space: pre-line;
 	overflow-wrap: break-word;
 	margin: auto;
+}
+
+@media only screen and (max-width: 700px) {
+
+	#contactcontainer{
+		margin-top: 10px;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min-content, 1fr));
+	}
 }
