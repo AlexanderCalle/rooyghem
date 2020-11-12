@@ -536,11 +536,6 @@ article{
 		width: 100%;
 		left: 10px;
 	}
-	/* .vkForm d {
-		display: block;
-		width: 100%;
-		margin-left: 10px;
-	} */
 	#backofficecreation form{
 		width: 100%;
 	}
@@ -677,7 +672,7 @@ article{
 #contactcontainer{
 	margin-top: 10px;
 	display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min-content, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(370px, 1fr));
 }
 
 #contactinfo {
@@ -776,4 +771,13 @@ article{
 	white-space: pre-line;
 	overflow-wrap: break-word;
 	margin: auto;
+}
+
+@media only screen and (max-width: 700px) {
+
+	#contactcontainer{
+		margin-top: 10px;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min-content, 1fr));
+	}
 }
