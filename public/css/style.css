@@ -667,6 +667,10 @@ article{
 	color: #bbc3d7;
 }
 
+#backofficecreation input[type='checkbox']{
+	width: 16px;
+}
+
 /* contact CSS */
 
 #contactcontainer{

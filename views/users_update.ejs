@@ -23,11 +23,21 @@
                 <label for="phone">Telefoonnummer </label>
                 <input id="phone" type="text" name="phone" placeholder="Telefoonnummer..." value="<%= user.phone %>">
                 <br>
-                <label for="is_admin">Admin </label>
-                <select id="is_admin" name="is_admin">
-                    <option>0</option>
-                    <option>1</option>
-                </select>
+                <% if(user.is_banleader == 1) { %>
+                    <input type="checkbox" name="is_banleader" id="is_banleader" value="1" checked>
+                    <label for="is_banleader">Banleider</label>
+                <% } else { %>
+                    <input type="checkbox" name="is_banleader" id="is_banleader" value="1">
+                    <label for="is_banleader">Banleider</label>
+                <% } %>    
+                <br>
+                <% if(user.is_admin == 1) { %>
+                    <input id="is_admin" type="checkbox" name="is_admin" value="1" checked>
+                    <label for="is_admin">Admin </label>
+                <% } else { %>
+                    <input id="is_admin" type="checkbox" name="is_admin" value="1">
+                    <label for="is_admin">Admin </label>
+                <% } %>   
                 <br>
                 <label for="bondsteam">Bondsteam</label>
                 <select id="bondsteam" name="bondsteam">

@@ -66,10 +66,11 @@ router.post('/create', authCheck, adminCheck, upload.single('image'), userFormCh
                 username: req.body.username,
                 passhash: hash,
                 phone: req.body.phone,
-                is_admin: req.body.is_admin,
+                is_admin: req.body.is_admin || 0,
                 bondsteam: req.body.bondsteam,
                 path_pic: process.env.LEIDING_PATH_PIC + req.file.filename,
-                group_id: req.body.group_id
+                group_id: req.body.group_id,
+                is_banleader: req.body.is_banleader || 0,
             }
             console.log(user);
             con.query('INSERT INTO users SET ?', user, (err, user)=> {
@@ -186,10 +187,11 @@ router.put('/:id', authCheck, adminCheck, upload.single('image'), userFormChecke
                 email: data.email,
                 username: data.username,
                 phone: data.phone,
-                is_admin: data.is_admin,
+                is_admin: data.is_admin || 0,
                 bondsteam: data.bondsteam,
                 path_pic: process.env.LEIDING_PATH_PIC + req.file.filename,
-                group_id: data.group_id
+                group_id: data.group_id,
+                is_banleader: data.is_banleader  || 0,
             }
             con.query('UPDATE users SET ? WHERE user_id = ?', [user_data, req.params.id], (err, user)=> {
                 if(err) {
@@ -217,9 +219,10 @@ router.put('/:id', authCheck, adminCheck, upload.single('image'), userFormChecke
             email: data.email,
             username: data.username,
             phone: data.phone,
-            is_admin: data.is_admin,
+            is_admin: data.is_admin || 0,
             bondsteam: data.bondsteam,
-            group_id: data.group_id
+            group_id: data.group_id,
+            is_banleader: data.is_banleader || 0
         }
         con.query('UPDATE users SET ? WHERE user_id = ?', [user_data, req.params.id], (err, user)=> {
             if(err) {
