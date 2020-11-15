@@ -27,13 +27,24 @@
         <div id="groupleaders-title"><h3>Leiders</h3></div>
         <div id="groupleaders-content">
             <% leaders.forEach(function(leader){ %>
-                <div class="leader">
-                    <img src="<%= leader.path_pic %>" alt="" height="150px">
-                    <p>
-                        <%= leader.firstname %> <%= leader.lastname %> <br>
-                        <%= leader.email %>
-                    </p>
-                </div>
+                <% if(leader.is_banleader == 1 ){ %>
+                    <div class="leader">
+                        <img src="<%= leader.path_pic %>" alt="" height="150px">
+                        <p>
+                            <%= leader.firstname %> <%= leader.lastname %> <br>
+                            <%= leader.email %> <br>
+                            (Banleider)
+                        </p>
+                    </div>
+                <% } else { %>
+                    <div class="leader">
+                        <img src="<%= leader.path_pic %>" alt="" height="150px">
+                        <p>
+                            <%= leader.firstname %> <%= leader.lastname %> <br>
+                            <%= leader.email %>
+                        </p>
+                    </div>
+                <% } %>
             <% }); %>
         </div>
     </div>
