@@ -41,6 +41,7 @@
                 <br>
                 <label for="bondsteam">Bondsteam</label>
                 <select id="bondsteam" name="bondsteam">
+                    <option> <%= user.bondsteam %> </option>
                     <option>/</option>
                     <option>Bondsleider</option>
                     <option>Bondssecretaris</option>
@@ -50,6 +51,11 @@
                 <br>
                 <label for="bannen">Ban </label>
                 <select id="bannen" name="group_id">
+                    <% groups.forEach(function(group) { %>
+                        <% if(group.group_id == user.group_id) { %>
+                            <option value="<%= group.group_id %>"><%= group.name %></option>
+                        <% } %>
+                    <% }) %>
                     <% groups.forEach(function(group) { %>
                         <option value="<%= group.group_id %>"><%= group.name %></option>
                     <% }) %>

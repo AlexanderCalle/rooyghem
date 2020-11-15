@@ -62,5 +62,5 @@ CREATE TABLE newsfeeds (
 	CONSTRAINT `created_by` FOREIGN KEY (created_by) REFERENCES users(user_id)
 );
 
-ALTER TABLE `Rooyghem`.`users` 
+ALTER TABLE `rooyghem`.`users` 
 ADD COLUMN `is_banleader` TINYINT(1) NULL DEFAULT 0 AFTER `resetPasswordExpired`;
