@@ -16,7 +16,17 @@ router.put('/', authCheck,(req, res)=>{
     data.story = data.story.replace(/\n/g, '\n');
     con.query('UPDATE `groups` SET story = ? WHERE group_id = ?', [data.story, req.user.group_id], (err, story)=>{
         if(err) return res.render('badrequest', {error: err});
-        res.redirect('/vk');
+        con.query('SELECT story FROM `groups` WHERE group_id = ?', req.user.group_id, (err, group)=>{
+            if(err) return res.render('badrequest', {error: err});
+            res.render('all_vk_form', 
+            {vk: group[0].story, 
+                admin: req.admin, 
+                user: req.user, 
+                username: req.user.username, 
+                group_id: req.params.group_id,
+                succesError: 'Verhaal is gepost!'
+            });
+        });
     });
 });
 
@@ -43,7 +53,17 @@ router.put('/allvk/:group_id', authCheck, adminCheck, (req, res)=>{
     data.story = data.story.replace(/\n/g, '\n');
     con.query('UPDATE `groups` SET story = ? WHERE group_id = ?', [data.story, req.params.group_id], (err, story)=>{
         if(err) return res.render('badrequest', {error: err});
-        res.redirect('/vk/allvk');
+        con.query('SELECT story FROM `groups` WHERE group_id = ?', req.params.group_id, (err, group)=>{
+            if(err) return res.render('badrequest', {error: err});
+            res.render('all_vk_form', 
+            {vk: group[0].story, 
+                admin: req.admin, 
+                user: req.user, 
+                username: req.user.username, 
+                group_id: req.params.group_id,
+                succesError: 'Verhaal is gepost!'
+            });
+        });
     });
 });
 
