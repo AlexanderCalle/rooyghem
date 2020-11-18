@@ -13,12 +13,14 @@
                 <%= group.name %>@ksarooyghem.be
             </p>
         </div>
+        <% if(group.name != "Aspiranten") {%>
         <div id="groupstory">
             <h3>Verhalend Kader</h3>
             <p id="vkDiv">
                 <%- group.story -%>
             </p>
         </div>
+        <% } %>
     
         <div id="calendar"></div>
     </div>
