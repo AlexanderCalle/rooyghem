@@ -57,11 +57,11 @@ app.post('/contact', userCheck, (req, res)=> {
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
         const msg = {
-            to: 'contact@ksarooyghem.be',
-            from: 'callebauta@hotmail.com',
+            to: 'dekersgieteremiel@gmail.com',
+            from: 'ksarooyghemwebteam@gmail.com',
             subject: req.body.onderwerp,
             text: 'Hallo , \n\n' +
-            'Vraag van: ' + req.body.naam + ' \n\n' +
+            'Vraag van: ' + req.body.naam + + ', email: ' + req.body.email + ' \n\n' +
             req.body.bericht
         }
         
@@ -115,7 +115,7 @@ app.post('/forgot', (req, res)=> {
 
             const msg = {
                 to: req.body.email,
-                from: 'callebauta@hotmail.com',
+                from: 'ksarooyghemwebteam@gmail.com',
                 subject: 'Wachtwoord resetten',
                 text: 'Hallo ' + req.body.email +', \n\n U hebt dit ontvangen omdat u gevraagd heeft om uw wachtwoord te herstellen, voor verdere instructies druk op de link hieronder\n\n' +
                 'http://' + req.headers.host + '/reset/' + token + '\n\n' +
