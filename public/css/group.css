@@ -1,0 +1,44 @@
+#groupcontainer {
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.info {
+	display: grid;
+    grid-template-columns: 250px repeat(auto-fit, minmax(350px, 1fr));
+	grid-gap: 30px;
+}
+
+@media only screen and (max-width: 1200px) {
+    .info {
+		grid-template-columns: repeat(1, minmax(350px, 1fr));
+	}
+}
+
+#groupinfo {
+	margin-right: 20%;
+}
+
+#groupinfo img {
+	max-width: 200px;
+}
+
+#groupstory {
+	margin-left: 0;
+}
+
+#groupleaders {
+	grid-template-rows: max-content 1fr;
+	grid-template-areas: "title"
+						  "content";
+}
+
+#groupleaders-title {
+	grid-area: title;
+}
+
+#groupleaders-content {
+	grid-area: content;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
