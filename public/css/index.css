@@ -23,7 +23,7 @@
 
 .feedp {
 	grid-area: p;
-	margin: auto 10px;
+	margin: 10px 10px;
 	padding-left: 20px;
 	max-width: 60%;
 }
