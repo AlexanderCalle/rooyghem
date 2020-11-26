@@ -131,6 +131,11 @@ app.post('/forgot', (req, res)=> {
     });
 }); 
 
+app.get('/sitemap', function(_, res) {
+    res.contentType('application/xml');
+    res.sendFile(path.join(__dirname, 'sitemap.xml'));
+});
+
 // Routers
 //Route users
 const users = require('./router/users');
@@ -163,6 +168,7 @@ app.use('/reset', userCheck, reset);
 
 const profile = require('./router/profile');
 app.use('/profile', userCheck, authCheck, adminCheck, profile);
+
 
 app.listen(port, ()=> {
     console.log('Server running on port ' + port);
