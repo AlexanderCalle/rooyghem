@@ -1,0 +1,14 @@
+<head>
+    <link rel="stylesheet" href="/public/css/group.css">
+</head>
+
+<main class="container">
+    <div class="groupscontainer">
+        <% groups.forEach(function (group){ %>
+            <div class="groupCard">
+                <img src="<%= group.logo %>" alt="Logo <%= group.name %>" class="grouplogo">
+                <p>Group: <%= group.name %></p>
+            </div>
+        <% }) %>
+    </div>
+</main>

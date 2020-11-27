@@ -42,3 +42,11 @@
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
+
+/* Bannen overview */
+
+.groupscontainer{
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	grid-gap: 30px;
+}
