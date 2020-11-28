@@ -3,7 +3,13 @@ const router = express.Router();
 const con = require('../connect');
 
 router.get('/', (req, res)=>{
-    res.send('groups');
+    con.query('SELECT * FROM `groups` WHERE group_id <= 6', (err, groups)=> {
+        if(err) return res.render('badrequest', {error: err});
+        res.render('groups', {
+            groups: groups,
+            username: req.user.username
+        });
+    })
 });
 
 router.get('/:group_name/info', (req, res)=> {
