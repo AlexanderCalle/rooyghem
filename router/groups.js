@@ -20,8 +20,7 @@ router.get('/:group_name/info', (req, res)=> {
                 if(err) return res.render('badrequest', {error: err});
 
                 con.query('SELECT * FROM users WHERE group_id = ? ORDER BY is_banleader DESC, lastname ASC', group[0].group_id, (err, leaders) =>{
-                    if(err) return res.render('badrequest', {error: err});
-
+                    if(err) return res.render('badrequest', {error: err}); 
                     res.render('./group_pages/info', {
                         group: group[0],
                         location: location[0], 

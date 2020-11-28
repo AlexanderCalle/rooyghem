@@ -132,8 +132,9 @@ app.post('/forgot', (req, res)=> {
 }); 
 
 app.get('/sitemap', function(_, res) {
+    console.log(__dirname);
     res.contentType('application/xml');
-    res.sendFile(path.join(__dirname, 'sitemap.xml'));
+    res.sendFile(path.join(__dirname, "sitemap.xml"));
 });
 
 // Routers
