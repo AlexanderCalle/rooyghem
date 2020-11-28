@@ -19,7 +19,7 @@ router.get('/:group_name/info', (req, res)=> {
             con.query('SELECT * FROM activities WHERE group_id = ? AND end_publication > ?', [group[0].group_id, new Date()], (err, activities)=> {
                 if(err) return res.render('badrequest', {error: err});
 
-                con.query('SELECT * FROM users WHERE group_id = ?', group[0].group_id, (err, leaders) =>{
+                con.query('SELECT * FROM users WHERE group_id = ? ORDER BY is_banleader DESC, lastname ASC', group[0].group_id, (err, leaders) =>{
                     if(err) return res.render('badrequest', {error: err});
 
                     res.render('./group_pages/info', {
