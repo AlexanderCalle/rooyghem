@@ -47,7 +47,7 @@ app.get('/', userCheck, (req, res)=> {
 });
 
 app.get('/contact', userCheck, (req, res)=> {
-    con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
+    con.query('SELECT firstname, lastname, email, path_pic, phone FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
         res.render('contact', {bondsleiders: users, username: req.user.username});
     });
 });
