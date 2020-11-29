@@ -3,11 +3,11 @@ const router = express.Router();
 const con = require('../connect');
 
 router.get('/', (req, res)=>{
-    con.query('SELECT * FROM `groups`', (err, groups)=> {
+    con.query('SELECT * FROM `groups` WHERE group_id <= 6', (err, groups)=> {
         if(err) return res.render('badrequest', {error: err});
         res.render('groups', {
             groups: groups,
-            username: req.user.username,
+            username: req.user.username
         });
     })
 });
@@ -24,10 +24,8 @@ router.get('/:group_name/info', (req, res)=> {
 
             con.query('SELECT * FROM activities WHERE group_id = ? AND end_publication > ?', [group[0].group_id, new Date()], (err, activities)=> {
                 if(err) return res.render('badrequest', {error: err});
-
-                con.query('SELECT * FROM users WHERE group_id = ?', group[0].group_id, (err, leaders) =>{
+                con.query('SELECT firstname, lastname, email, is_banleader, path_pic FROM users WHERE group_id = ? ORDER BY is_banleader DESC, lastname ASC', group[0].group_id, (err, leaders) =>{
                     if(err) return res.render('badrequest', {error: err});
-
                     res.render('./group_pages/info', {
                         group: group[0],
                         location: location[0], 

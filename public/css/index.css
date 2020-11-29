@@ -6,10 +6,10 @@
 	max-width: 1fr;
 	display: grid;
 	padding:2px;
-	grid-template-columns: max-content 1fr;
-	grid-template-rows: min-content 1fr;
-	grid-template-areas: "title title"
-						 "img p";
+	grid-template-rows: min-content min-content 1fr;
+	grid-template-areas: "title"
+						 "img"
+						 "p";
 }
 
 .feedtitle {
@@ -23,9 +23,7 @@
 
 .feedp {
 	grid-area: p;
-	margin: 10px 10px;
-	padding-left: 20px;
-	max-width: 60%;
+	max-width: 90%;
 }
 
 #index-container {

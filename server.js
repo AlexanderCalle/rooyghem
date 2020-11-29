@@ -47,7 +47,7 @@ app.get('/', userCheck, (req, res)=> {
 });
 
 app.get('/contact', userCheck, (req, res)=> {
-    con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
+    con.query('SELECT firstname, lastname, email, path_pic, phone FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
         res.render('contact', {bondsleiders: users, username: req.user.username});
     });
 });
@@ -132,8 +132,9 @@ app.post('/forgot', (req, res)=> {
 }); 
 
 app.get('/sitemap', function(_, res) {
+    console.log(__dirname);
     res.contentType('application/xml');
-    res.sendFile(path.join(__dirname, 'sitemap.xml'));
+    res.sendFile(path.join(__dirname, "sitemap.xml"));
 });
 
 // Routers

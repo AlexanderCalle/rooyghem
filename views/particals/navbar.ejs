@@ -14,8 +14,9 @@
     </div>
     <nav class="nav-bar">
         <ul>
-            <li class="drpdwn"><a href="/groups">Bannen</a>
+            <li class="drpdwn"><a class="reference" href="#">Bannen</a>
                 <ul class="drpdwn-content">
+                    <li><a href="/groups">Overzicht</a></li>
                     <li><a href="/groups/kabouters/info">Kabouters</a></li>
                     <li><a href="/groups/pagadders/info">Pagadders</a></li>
                     <li><a href="/groups/jongknapen/info">Jongknapen</a></li>
@@ -24,9 +25,9 @@
                     <li><a href="/groups/aspiranten/info">Aspiranten</a></li>
                 </ul>
             </li>
-            <li><a href="/overons">Over ons</a></li>
-            <li><a href="/contact">Contact</a></li>
-            <li><a href="/users/login">Login</a></li>
+            <li><a class="reference" href="/overons">Over ons</a></li>
+            <li><a class="reference" href="/contact">Contact</a></li>
+            <li><a class="reference" href="/users/login">Login</a></li>
         </ul>
         <% if(typeof username != "undefined") { %>
             <p><%= username %></p>
