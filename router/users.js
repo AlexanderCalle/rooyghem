@@ -175,7 +175,7 @@ router.get('/:id', authCheck, adminCheck, (req, res)=> {
         if(err) return res.render('badrequest', {error: err});
         con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, users)=>{
             if(err) return res.render('badrequest', {error: err});
-            res.render('users_update', {groups: groups, user: users[0], admin: req.admin, username: req.user.username});
+            res.render('users_update', {groups: groups,user:req.user, userInfo: users[0], admin: req.admin, username: req.user.username});
         });
     });
 });
