@@ -29,7 +29,7 @@ const upload = multer({ storage: storage });
 router.get('/', authCheck, adminCheck,(req, res)=>{
     con.query('SELECT * FROM `groups`', (err, groups)=> {
         if(err) return res.render('badrequest', {error: err});
-        con.query('SELECT * FROM users', (err, users)=>{
+        con.query('SELECT * FROM users ORDER BY lastname ASC, firstname ASC', (err, users)=>{
             if(err) return res.render('badrequest', {error: err});
             res.render('users_interface', {users: users, user:req.user, admin: req.admin, username: req.user.username});
         });

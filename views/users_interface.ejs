@@ -5,7 +5,8 @@
         <div class="users">
             <% users.forEach(function(user) { %>
                 <div class="userinfo">
-                    <p><%= user.username %>
+                    <p><%= user.firstname %>
+                        <%= user.lastname %>
                         <div class="buttons">
                             <a href="/users/<%= user.user_id %>">bewerk</a>
                             <a href="/users/delete/single/<%= user.user_id %>">delete</a>
