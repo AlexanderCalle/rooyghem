@@ -167,3 +167,55 @@
 #backofficecreation input[type='checkbox']{
 	width: 16px;
 }
+
+.userpanel {
+	border: 1px solid #f98d1e;
+	border-radius: 20px;
+	height: auto;
+	padding: 10px;
+}
+
+.userpanel .users {
+	height: 260px;
+	padding: 10px;
+	overflow: auto;
+}
+
+ a{
+	text-decoration: none;
+	color: #f98d1e;
+}
+
+ a:hover{
+	color: #bbc3d7;
+}
+
+.addLink {
+	display: block;
+	float: right;
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+.userinfo {
+	padding-left: 20px;
+	padding: 5px;
+	border: 1px solid #f98d1e;
+	border-radius: 10px;
+	margin-top: 10px;
+}
+
+.userinfo .buttons {
+	float: right;
+	display: inline-block;
+	margin-top: -30px
+}
+
+.userinfo .buttons a {
+	margin-right: 20px;
+}
+.userinfo p {
+	margin-left: 20px;
+}
+

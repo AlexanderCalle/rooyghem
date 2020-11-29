@@ -31,6 +31,15 @@ router.get('/', authCheck, adminCheck,(req, res)=>{
         if(err) return res.render('badrequest', {error: err});
         con.query('SELECT * FROM users', (err, users)=>{
             if(err) return res.render('badrequest', {error: err});
+            res.render('users_interface', {users: users, user:req.user, admin: req.admin, username: req.user.username});
+        });
+    });
+});
+router.get('/create', authCheck, adminCheck,(req, res)=>{
+    con.query('SELECT * FROM `groups`', (err, groups)=> {
+        if(err) return res.render('badrequest', {error: err});
+        con.query('SELECT * FROM users', (err, users)=>{
+            if(err) return res.render('badrequest', {error: err});
             res.render('users', {groups: groups, users: users, user:req.user, admin: req.admin, username: req.user.username});
         });
     });
@@ -248,7 +257,7 @@ router.put('/:id', authCheck, adminCheck, upload.single('image'), userFormChecke
 router.get('/delete/single/:id', authCheck, adminCheck,(req, res)=> {
     con.query('DELETE FROM users WHERE user_id = ?', req.params.id, (err, user)=>{
         if(err) return res.render('badrequest', {error: err});
-        res.send(`gebruiker ${user} werd verwijderd`);
+        res.redirect('/users');
     });
 });
 
