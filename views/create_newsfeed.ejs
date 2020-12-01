@@ -28,18 +28,6 @@
         </form>
     </div>
 
-    <div id="creationData">
-        <h1>Alle nieuwtjes</h1>
-            
-        <% newsfeeds.forEach(function(newsfeed){ %>
-            <form action="/newsfeed/delete/<%= newsfeed.feed_id %>?_method=DELETE" method="POST">
-                <a href="/newsfeed/update/<%= newsfeed.feed_id %>"><%= newsfeed.title %>: </a><%= moment(newsfeed.start_publication).format('D/M') %> - <%= moment(newsfeed.end_publication).format("D/M") %>
-                <button class="delete-btn" type="submit">Delete</button>
-            </form> 
-            <br>
-        <% }) %>
-    </div>
-
    </div>
 
 </main>

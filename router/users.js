@@ -81,7 +81,6 @@ router.post('/create', authCheck, adminCheck, upload.single('image'), userFormCh
                 group_id: req.body.group_id,
                 is_banleader: req.body.is_banleader || 0,
             }
-            console.log(user);
             con.query('INSERT INTO users SET ?', user, (err, user)=> {
                 if(err) {
                     if(err.code === `ER_DUP_ENTRY`) {

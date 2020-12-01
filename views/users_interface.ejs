@@ -1,10 +1,10 @@
 <main class="container" id="backofficecontainer">
     <%- include('./particals/back_office.ejs') %>
-    <div class="userpanel">
+    <div class="interface">
         <h2>Gebruikers</h2>
-        <div class="users">
+        <div class="info">
             <% users.forEach(function(user) { %>
-                <div class="userinfo">
+                <div class="interfaceinfo">
                     <p><%= user.firstname %>
                         <%= user.lastname %>
                         <div class="buttons">

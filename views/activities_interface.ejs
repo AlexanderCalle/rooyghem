@@ -1,9 +1,7 @@
 <main class="container" id="backofficecontainer">
-
-    <%- include("./particals/back_office.ejs") %>
-
+    <%- include('./particals/back_office.ejs') %>
     <div class="interface">
-        <h2>Alle activiteiten</h2>
+        <h2>Activiteiten</h2>
         <div class="info">
             <% activities.forEach(function(activity) { %>
                 <div class="interfaceinfo">
@@ -18,6 +16,6 @@
                 </div>
             <% }) %>
         </div>
+        <a class="addLink" href="/activities/create">Nieuwe activiteit</a>
     </div>
-            
 </main>

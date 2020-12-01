@@ -41,17 +41,6 @@
                 <button type="submit">Maak activiteit</button>
             </form>
         </div>
-        
-        <div id="creationData">
-            <h1>Alle activiteiten</h1>
-            <% activities.forEach(function(activity){ %>
-                <form action="/activities/delete/<%= activity.activity_id %>?_method=DELETE" method="POST">
-                    <a href="/activities/update/<%= activity.activity_id %>"><%= activity.title %>: </a><%= moment(activity.start_date).format('D/M, HH:mm') %> - <%= moment(activity.end_date).format("LT") %>
-                    <button class="delete-btn" type="submit">Delete</button>
-                </form> 
-                <br>
-            <% }) %>
-        </div>
     </div>
             
 </main>

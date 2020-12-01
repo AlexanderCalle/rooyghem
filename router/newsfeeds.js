@@ -23,6 +23,20 @@ const upload = multer({ storage: storage });
 router.get('/',(req, res)=>{
     con.query('SELECT * FROM newsfeeds ORDER BY start_publication', (err, newsfeeds) => {
         if (err) return res.render('badrequest', {error: err});
+        res.render('newsfeeds_interface', {
+            newsfeeds: newsfeeds,
+            user: req.user,
+            admin: req.admin,
+            username: req.user.username,
+            moment: require('moment')
+        });
+    });
+});
+
+
+router.get('/create',(req, res)=>{
+    con.query('SELECT * FROM newsfeeds ORDER BY start_publication', (err, newsfeeds) => {
+        if (err) return res.render('badrequest', {error: err});
         res.render('create_newsfeed', {
             newsfeeds: newsfeeds,
             user: req.user,
@@ -65,7 +79,7 @@ router.post('/create', upload.single('image'), newsfeedChecker ,(req, res)=>{
 
 // TODO: delete newsfeed
 // Route DELETE One activity
-router.delete('/delete/:id',(req, res)=>{
+router.get('/delete/:id',(req, res)=>{
     con.query('DELETE FROM newsfeeds WHERE feed_id = ?', req.params.id, (err, newsfeed)=>{
         if(err) return res.render('badrequest', {error: err});
         res.redirect('/newsfeed');

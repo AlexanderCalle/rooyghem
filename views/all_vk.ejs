@@ -1,17 +1,13 @@
 <main class="container" id="backofficecontainer">
 
     <%- include("./particals/back_office.ejs") %>
-
-    <div id="backofficecreation">
-        
-        <div id="creationData">
-            <h1>Alle Verhalende Kaders</h1>
-        
+    <div class="interface">
+        <h2>Alle verhalende kaders</h2>
+        <div class="info">
             <% groups.forEach(function(group) { %>
                 <form action="/vk/allvk/<%= group.group_id %>" method="GET">
-                    <button type="submit">vk: <%= group.name %></button>
+                    <button type="submit"><%= group.name %></button>
                 </form> 
-                <br>
             <% }) %>
         </div>
     </div>

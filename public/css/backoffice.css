@@ -106,7 +106,7 @@
 	padding-right: 5px;
 }
 
-#backofficecreation button{
+ button{
 	margin-top: 20px;
 	padding: 10px;
 	width: 30%;
@@ -117,7 +117,7 @@
 	transition: 0.5s;
 }
 
-#backofficecreation button:hover{
+button:hover{
 	background-color: #f98d1e;
 	transition: 0.5s;
 	color: white;
@@ -168,15 +168,22 @@
 	width: 16px;
 }
 
-.userpanel {
+.interface {
 	border: 1px solid #f98d1e;
 	border-radius: 20px;
 	height: auto;
+	width: auto;
+	max-height: 400px;
 	padding: 10px;
 }
 
-.userpanel .users {
+.interface h2 {
+	margin-left: 10px;
+}
+
+.interface .info {
 	height: 260px;
+	width: 100%;
 	padding: 10px;
 	overflow: auto;
 }
@@ -190,6 +197,28 @@
 	color: #bbc3d7;
 }
 
+.info {
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.info button{
+	margin-top: 20px;
+	padding: 10px;
+	width: 60%;
+	min-width: 100px;
+	border-radius: 10px;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+	transition: 0.5s;
+}
+
+.info button:hover{
+	background-color: #f98d1e;
+	transition: 0.5s;
+	color: white;
+}
+
 .addLink {
 	display: block;
 	float: right;
@@ -198,7 +227,7 @@
 	margin-bottom: 10px;
 }
 
-.userinfo {
+.interfaceinfo {
 	padding-left: 20px;
 	padding: 5px;
 	border: 1px solid #f98d1e;
@@ -206,16 +235,16 @@
 	margin-top: 10px;
 }
 
-.userinfo .buttons {
+.interfaceinfo .buttons {
 	float: right;
 	display: inline-block;
-	margin-top: -30px
+	margin-top: -35px
 }
 
-.userinfo .buttons a {
+.interfaceinfo .buttons a {
 	margin-right: 20px;
 }
-.userinfo p {
+.interfaceinfo p {
 	margin-left: 20px;
 }
 
