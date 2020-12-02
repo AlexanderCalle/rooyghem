@@ -11,11 +11,12 @@ require('dotenv').config();
 const multer = require('multer');
 const userFormChecker = require('../middleware/userFormChecker');
 const fs = require('fs');
+const compression = require('../middleware/compression');
 
 // Multer middleware Save images
 const storage = multer.diskStorage({
     destination: (req, file, cb)=>{
-        cb(null, process.env.LEIDING_PATH)
+        cb(null, process.env.TEMP_PATH)
     },
     filename: (req, file, cb) =>{
         cb(null, Date.now() + file.originalname.replace(/\s/g, ''));
@@ -66,6 +67,7 @@ router.get('/single/:id', authCheck, adminCheck,(req, res)=> {
 router.post('/create', authCheck, adminCheck, upload.single('image'), userFormChecker, (req, res)=> {
     if(req.file) {
         const generated_id = crypto.randomBytes(11).toString('hex');
+        compression( process.env.TEMP_PATH + req.file.filename, process.env.LEIDING_PATH)
         bcrypt.hash(req.body.password, 11, (err, hash)=>{   
             const user = {
                 user_id: generated_id,
@@ -183,12 +185,10 @@ router.put('/:id', authCheck, adminCheck, upload.single('image'), userFormChecke
     const data = req.body;
 
     if(req.file) {
-        
+        compression( process.env.TEMP_PATH + req.file.filename, process.env.LEIDING_PATH)
         con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, users)=> {
             if(err) return res.render('badrequest', {error: err});
-
             fs.unlinkSync( '.' + users[0].path_pic);
-
             const user_data = {
                 firstname: data.firstname,
                 lastname: data.lastname,

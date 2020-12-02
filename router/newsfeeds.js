@@ -4,11 +4,12 @@ const con = require('../connect');
 const authCheck = require('../middleware/authCheck');
 const multer = require('multer');
 const newsfeedChecker = require('../middleware/newsfeedChecker');
+const compression = require('../middleware/compression');
 
 // Multer middleware Save images
 const storage = multer.diskStorage({
     destination: (req, file, cb)=>{
-        cb(null, process.env.NEWSFEED_PATH)
+        cb(null, process.env.TEMP_PATH)
     },
     filename: (req, file, cb) =>{
         cb(null, Date.now()+ req.body.title.replace(/\s/g, '') + file.originalname);
@@ -50,6 +51,7 @@ router.get('/create',(req, res)=>{
 // Route POST create newsfeed
 router.post('/create', upload.single('image'), newsfeedChecker ,(req, res)=>{
     if(req.file){
+        compression(process.env.TEMP_PATH + req.file.filename, process.env.NEWSFEED_PATH)
         const newsfeed = {
             title: req.body.title,
             description: req.body.description,
