@@ -5,7 +5,7 @@ const fs = require('fs');
 
 module.exports = async (image, path) => {
     console.log(image);
-    await imagemin([image], {
+    imagemin([image], {
         destination: path,
         plugins: [
             imageminJpegtran(),
