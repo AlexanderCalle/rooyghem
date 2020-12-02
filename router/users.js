@@ -188,7 +188,7 @@ router.put('/:id', authCheck, adminCheck, upload.single('image'), userFormChecke
         compression( process.env.TEMP_PATH + req.file.filename, process.env.LEIDING_PATH)
         con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, users)=> {
             if(err) return res.render('badrequest', {error: err});
-            fs.unlinkSync( '.' + users[0].path_pic);
+            //fs.unlinkSync( '.' + users[0].path_pic);
             const user_data = {
                 firstname: data.firstname,
                 lastname: data.lastname,
