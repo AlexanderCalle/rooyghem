@@ -61,7 +61,7 @@ app.post('/contact', userCheck, (req, res)=> {
             from: 'ksarooyghemwebteam@gmail.com',
             subject: req.body.onderwerp,
             text: 'Hallo , \n\n' +
-            'Vraag van: ' + req.body.naam + + ', email: ' + req.body.email + ' \n\n' +
+            'Vraag van: ' + req.body.naam + ', email: ' + req.body.email + ' \n\n' +
             req.body.bericht
         }
         
