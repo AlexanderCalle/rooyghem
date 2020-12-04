@@ -5,9 +5,9 @@ CREATE TABLE albums (
     description LONGTEXT,
     activity_start DATE,
     activity_end DATE,
-    creation_date DATE,
+    creation_date DATETIME,
     checked BOOLEAN DEFAULT FALSE,
-    approved_by VARCHAR(255) NOT NULL,
+    approved_by VARCHAR(255),
     approved_on DATE,
     PRIMARY KEY(album_id),
     FOREIGN KEY (group_id) REFERENCES `groups`(group_id)

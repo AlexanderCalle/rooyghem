@@ -3,46 +3,18 @@
     <div class="interface">
         <h2>Albums</h2>
         <div class="info">
+            <% albums.forEach(function(album) { %>
                 <div class="interfaceinfo">
                     <div class="interfaceinfo-inner">
                         <img src="/public/images/album1.svg" width="50" height="auto">
-                        <p>Title 1</p>
+                        <p> <%= album.name %></p>
                         <div class="albumButtons">
-                            <a href="/albums/#">bewerk</a>
-                            <a href="/albums/delete/#">delete</a>
+                            <a href="/albums/update/<% album.album_id %>">bewerk</a>
+                            <a href="/albums/delete/<% album.album_id %>">delete</a>
                         </div>
                     </div>
                 </div>
-                <div class="interfaceinfo">
-                    <div class="interfaceinfo-inner">
-                        <img src="/public/images/album1.svg" width="50" height="auto">
-                        <p>Title 1</p>
-                        <div class="albumButtons">
-                            <a href="/albums/#">bewerk</a>
-                            <a href="/albums/delete/#">delete</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="interfaceinfo">
-                    <div class="interfaceinfo-inner">
-                        <img src="/public/images/album1.svg" width="50" height="auto">
-                        <p>Title 1</p>
-                        <div class="albumButtons">
-                            <a href="/albums/#">bewerk</a>
-                            <a href="/albums/delete/#">delete</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="interfaceinfo">
-                    <div class="interfaceinfo-inner">
-                        <img src="/public/images/album1.svg" width="50" height="auto">
-                        <p>Title 1</p>
-                        <div class="albumButtons">
-                            <a href="/albums/#">bewerk</a>
-                            <a href="/albums/delete/#">delete</a>
-                        </div>
-                    </div>
-                </div>
+            <% }) %>
         </div>
         <a class="addLink" href="/albums/create">Nieuwe album</a>
     </div>

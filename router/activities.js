@@ -107,9 +107,9 @@ router.post('/create', authCheck,(req, res)=>{
                 }})
             }
         } else {
-            if(activity.title ==''){
+            if(activity.title == ''){
                 con.query('SELECT * FROM activities WHERE group_id = ?', group[0].group_id, (err, activities)=>{
-                    if(err) return res.render('badrequest', {error: err});
+                    if (err) return res.render('badrequest', {error: err});
                     res.render('create_activities', {
                         groups: group,
                         activities: activities,

@@ -8,7 +8,7 @@
             <h1>Album maken</h1>
             <%- include('./particals/messages.ejs') %>
 
-            <form action="/activities/create" method="POST">
+            <form action="/albums/create" method="POST">
                 <label for="title">Naam Album</label> </label> <br>
                 <input id="title" type="text" name="name" placeholder="Naam album...">
                 <br>
@@ -16,10 +16,10 @@
                 <input id="description" type="text" name="description" placeholder="Beschrijving...">
                 <br>
                 <label for="start_time">Start activiteit </label> <br>
-                <input id="start_time" type="datetime-local" name="start_date">
+                <input id="activity_start" type="date" name="activity_start">
                 <br>
                 <label for="end_time">Einde activiteit </label><br>
-                <input id="end_time" type="datetime-local" name="end_date">
+                <input id="activity_end" type="date" name="activity_end">
                 <br>
                 <button type="submit">Maak album</button>
             </form>
