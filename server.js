@@ -158,18 +158,25 @@ app.use('/locations', userCheck, locations);
 const leiding = require('./router/leiding');
 app.use('/leiding', userCheck, leiding);
 
+// Route Vk
 const vk = require('./router/vk');
 app.use('/vk', userCheck, vk);
 
+// Route Newsfeed
 const newsfeed = require('./router/newsfeeds');
 app.use('/newsfeed', authCheck, adminCheck, userCheck, newsfeed);
 
+// Route reset
 const reset = require('./router/reset');
 app.use('/reset', userCheck, reset);
 
+// Route profile
 const profile = require('./router/profile');
 app.use('/profile', userCheck, authCheck, adminCheck, profile);
 
+// Route Albums
+const albums = require('./router/albums');
+app.use('/albums', userCheck, authCheck, albums);
 
 app.listen(port, ()=> {
     console.log('Server running on port ' + port);

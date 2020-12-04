@@ -238,7 +238,7 @@ button:hover{
 .interfaceinfo .buttons {
 	float: right;
 	display: inline-block;
-	margin-top: -35px
+	margin-top: -35px 
 }
 
 .interfaceinfo .buttons a {
@@ -248,3 +248,26 @@ button:hover{
 	margin-left: 20px;
 }
 
+.interfaceinfo-inner {
+	padding: 10px;
+	padding-bottom: 15px;
+}
+
+.interfaceinfo-inner img {
+	float: left;
+	display: inline-block;
+}
+
+.interfaceinfo-inner p {
+	display: inline-block;
+}
+
+.interfaceinfo-inner .albumButtons {
+	display: inline-block;
+	margin-top: 20px;	
+	float: right;
+}
+
+.interfaceinfo-inner .albumButtons a {
+	margin-right: 20px;	
+}

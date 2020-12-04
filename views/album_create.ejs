@@ -1,0 +1,29 @@
+<main class="container" id="backofficecontainer">
+
+    <%- include("./particals/back_office.ejs") %>
+
+    <div id="backofficecreation">
+        
+        <div id="creationform">
+            <h1>Album maken</h1>
+            <%- include('./particals/messages.ejs') %>
+
+            <form action="/activities/create" method="POST">
+                <label for="title">Naam Album</label> </label> <br>
+                <input id="title" type="text" name="name" placeholder="Naam album...">
+                <br>
+                <label for="description">Beschrijving </label><br>
+                <input id="description" type="text" name="description" placeholder="Beschrijving...">
+                <br>
+                <label for="start_time">Start activiteit </label> <br>
+                <input id="start_time" type="datetime-local" name="start_date">
+                <br>
+                <label for="end_time">Einde activiteit </label><br>
+                <input id="end_time" type="datetime-local" name="end_date">
+                <br>
+                <button type="submit">Maak album</button>
+            </form>
+        </div>
+    </div>
+            
+</main>
