@@ -6,6 +6,7 @@ CREATE TABLE albums (
     activity_start DATE,
     activity_end DATE,
     creation_date DATE,
+    checked BOOLEAN DEFAULT FALSE,
     PRIMARY KEY(album_id),
     FOREIGN KEY (group_id) REFERENCES `groups`(group_id)
 )
