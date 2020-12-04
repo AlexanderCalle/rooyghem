@@ -7,10 +7,10 @@
                 <div class="interfaceinfo">
                     <div class="interfaceinfo-inner">
                         <img src="/public/images/album1.svg" width="50" height="auto">
-                        <p> <%= album.name %></p>
+                        <p><a href="/albums/album/<%= album.album_id %>"><%= album.name %></a></p>
                         <div class="albumButtons">
-                            <a href="/albums/update/<% album.album_id %>">bewerk</a>
-                            <a href="/albums/delete/<% album.album_id %>">delete</a>
+                            <a href="/albums/update/<%= album.album_id %>">bewerk</a>
+                            <a href="/albums/delete/<%= album.album_id %>">delete</a>
                         </div>
                     </div>
                 </div>

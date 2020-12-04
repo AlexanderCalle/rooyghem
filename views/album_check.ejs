@@ -3,14 +3,16 @@
     <div class="interface">
         <h2>Albums</h2>
         <div class="info">
-                <a href="/albums/check/1">
+            <% albums.forEach(function(album) { %>
+                <a href="/albums/check/<%= album.album_id %>">
                     <div class="interfaceinfo">
                         <div class="interfaceinfo-inner">
                             <img src="/public/images/album1.svg" width="50" height="auto">
-                            <p>Title 1</p>
+                            <p><%= album.name %></p>
                         </div>
                     </div>
                 </a>
+            <% }) %>
         </div>
     </div>
 </main>

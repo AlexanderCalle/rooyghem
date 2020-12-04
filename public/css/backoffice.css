@@ -188,6 +188,29 @@ button:hover{
 	overflow: auto;
 }
 
+.interfacePhoto {
+	border: 1px solid #f98d1e;
+	border-radius: 20px;
+	height: auto;
+	width: auto;
+	max-height: 400px;
+	padding: 10px;
+}
+
+.interfacePhoto h2 {
+	margin-left: 10px;
+}
+
+.interfacePhoto .infoPhoto {
+	height: 260px;
+	width: auto;
+	padding: 10px;
+	overflow: scroll;
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
  a{
 	text-decoration: none;
 	color: #f98d1e;
@@ -234,6 +257,18 @@ button:hover{
 	border-radius: 10px;
 	margin-top: 10px;
 }
+.interfaceinfoPhoto {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	display: inline-block;
+	padding-left: 20px;
+	padding: 5px;
+	border: 1px solid #f98d1e;
+	border-radius: 10px;
+	margin-top: 10px;
+	width: auto;
+}
 
 .interfaceinfo .buttons {
 	float: right;
@@ -267,7 +302,6 @@ button:hover{
 	margin-top: 20px;	
 	float: right;
 }
-
 .interfaceinfo-inner .albumButtons a {
 	margin-right: 20px;	
 }
