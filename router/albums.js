@@ -129,14 +129,16 @@ router.get('/album/:id/add', (req, res) => {
         });
     });
 });
-router.post('/album/:id/add',upload.array('pic') , (req, res) => {
+router.post('/album/:id/add', upload.array('pic'), (req, res) => {
     con.query('SELECT * FROM albums WHERE album_id = ?', req.params.id, async (err, album)  => {
         if (err) return res.render('badrequest', {error: err});
         
         await req.files.forEach(function(file) {
             const pic_destination = process.env.ALBUMS_PATH + '/' + album[0].name + album[0].album_id + '/'
             const pic_destination_site = process.env.ALBUMS_PATH_SITE + '/' + album[0].name + album[0].album_id + '/'
-            compression( process.env.TEMP_PATH + file.filename, pic_destination);
+
+            compression(process.env.TEMP_PATH + file.filename, pic_destination);
+
             const pic_data = {
                 name: file.filename,
                 album_id: album[0].album_id,
@@ -144,10 +146,10 @@ router.post('/album/:id/add',upload.array('pic') , (req, res) => {
                 upload_date: moment(Date.now()).format('YYYY-MM-DD')
             }
 
-            con.query('INSERT INTO pictures SET ?', pic_data, (err, pic_data)=> {
+            con.query('INSERT INTO pictures SET ?', pic_data, (err, pic)=> {
                 if(err) return res.render('badrequest', {error: err});
                 console.log('succes');
-            })
+            });
         });
 
         res.redirect('/albums/album/' + album[0].album_id)

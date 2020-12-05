@@ -15,7 +15,7 @@ CREATE TABLE albums (
 
 CREATE TABLE pictures (
     pictures_id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(45) NOT NULL,
+    name VARCHAR(256) NOT NULL,
     album_id INT,
     path VARCHAR(255),
     upload_date DATE,
