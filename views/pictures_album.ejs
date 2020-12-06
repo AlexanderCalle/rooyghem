@@ -1,0 +1,15 @@
+<head>
+    <link rel="stylesheet" href="/public/css/group.css">
+</head>
+<main class="container" id="backofficecontainer">
+    <div class="interfacePhoto" style="width: 100%">
+        <h2>Fotos in <%= album.name %></h2>
+        <div class="infoPhoto">
+            <% pictures.forEach(function(pic) { %>
+                <div class="interfaceinfoPhoto">
+                    <img src="<%= pic.path %>">
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</main>

@@ -113,9 +113,19 @@ router.put('/update/:id', (req, res)=> {
 });
 
 router.get('/delete/:id', (req, res)=> {
-    con.query('DELETE FROM albums WHERE album_id = ?', req.params.id, (err, album)=>{
-        if(err) return res.render('badrequest', {error: err});
-        res.redirect('/albums');
+    con.query('SELECT * FROM pictures WHERE album_id = ?', req.params.id, async (err, pictures)=> {
+        if (err) return res.render('badrequest', {error:err});
+        await pictures.forEach((picture)=> {
+            fs.unlinkSync('.' + picture.path);
+            con.query('DELETE FROM pictures WHERE pictures_id = ?', picture.pictures_id, (err, result)=> {
+                if (err) return res.render('badrequest', {error: err});
+                console.log('deleted');
+            })
+        });
+        con.query('DELETE FROM albums WHERE album_id = ?', req.params.id, (err, album)=>{
+            if(err) return res.render('badrequest', {error: err});
+            res.redirect('/albums');
+        });
     });
 });
 
@@ -167,6 +177,8 @@ router.get('/album/:album_id/pic/delete/:pictures_id', (req, res)=> {
     });
 });
 
+// Checker routes
+
 router.get('/checker', (req, res)=> {
     con.query('SELECT * FROM albums WHERE checked = 0', (err, albums)=>{
         if(err) return res.render('checker', {error: err});
@@ -174,6 +186,53 @@ router.get('/checker', (req, res)=> {
             admin: req.admin,
             user: req.user,
             albums: albums
+        });
+    });
+});
+
+router.get('/check/:id', (req, res)=> {
+    con.query('SELECT * FROM albums WHERE album_id = ?', req.params.id, (err, album)=> {
+        if (err) return res.render('badrequest', {error: err});
+        con.query('SELECT * FROM pictures WHERE album_id = ?', req.params.id, (err, pictures)=> {
+            if (err) return res.render('badrequest', {error: err});
+            res.render('pictures_check', {
+                user: req.user,
+                admin: req.admin,
+                album: album[0],
+                pictures: pictures,
+            })
+        });
+    });
+});
+
+router.get('/check/:id/checked', (req, res)=> {
+    con.query('SELECT * FROM albums WHERE album_id = ?', req.params.id, (err, album)=> {
+        if (err) return res.render('badrequest', {error: err});
+
+        const update_data = {
+            checked: true,
+            approved_by: req.user.id,
+            approved_on: moment(Date.now()).format('YYYY-MM-DD')
+        }
+
+        con.query('UPDATE albums SET ? WHERE album_id = ?', [update_data, req.params.id], (err, result)=> {
+            if (err) return res.render('bad', {error: err});
+            res.redirect('/albums/checker')
+        });
+    });
+});
+
+router.get('/groups/:group_id/:id', (req, res)=> {
+    con.query('SELECT * FROM albums WHERE album_id = ?', req.params.id, (err, album)=> {
+        if (err) return res.render('badrequest', {error: err});
+        con.query('SELECT * FROM pictures WHERE album_id = ?', req.params.id, (err, pictures)=> {
+            if (err) return res.render('badrequest', {error: err});
+            res.render('pictures_album', {
+                user: req.user,
+                admin: req.admin,
+                album: album[0],
+                pictures: pictures,
+            })
         });
     });
 });

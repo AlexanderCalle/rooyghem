@@ -1,5 +1,6 @@
 <head>
     <link rel="stylesheet" href="/public/css/group.css">
+    <link rel="stylesheet" href="/public/css/backoffice.css">
 </head>
 
 <main class="container" id="groupcontainer">
@@ -26,6 +27,24 @@
         <% } %>
     
         <div id="calendar"></div>
+    </div>
+    <br>
+    <div class="albums">
+        <div class="interface">
+            <h2>Albums</h2>
+            <div class="info">
+                <% albums.forEach(function(album) { %>
+                    <a href="/albums/groups/<%= group.name %>/<%= album.album_id %>">
+                        <div class="interfaceinfo">
+                            <div class="interfaceinfo-inner">
+                                <img src="/public/images/album1.svg" width="50" height="auto">
+                                <p><%= album.name %></p>
+                            </div>
+                        </div>
+                    </a>
+                <% }) %>
+            </div>
+        </div>
     </div>
 
     <div id="groupleaders">

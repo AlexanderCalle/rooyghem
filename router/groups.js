@@ -26,14 +26,20 @@ router.get('/:group_name/info', (req, res)=> {
                 if(err) return res.render('badrequest', {error: err});
                 con.query('SELECT firstname, lastname, email, is_banleader, path_pic FROM users WHERE group_id = ? ORDER BY is_banleader DESC, lastname ASC', group[0].group_id, (err, leaders) =>{
                     if(err) return res.render('badrequest', {error: err});
-                    res.render('./group_pages/info', {
-                        group: group[0],
-                        location: location[0], 
-                        leaders: leaders, 
-                        activities: activities, 
-                        username: req.user.username,
-                        moment: require('moment')
+                    
+                    con.query('SELECT * FROM albums WHERE group_id = ? AND checked = 1', group[0].group_id, (err, albums) => {
+                        if(err) return res.render('badrequest', {error: err});
+                        res.render('./group_pages/info', {
+                            group: group[0],
+                            location: location[0], 
+                            leaders: leaders, 
+                            activities: activities, 
+                            username: req.user.username,
+                            albums: albums,
+                            moment: require('moment')
+                        });
                     });
+
                 })
             });
         })
