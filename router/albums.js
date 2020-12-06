@@ -122,9 +122,16 @@ router.get('/delete/:id', (req, res)=> {
                 console.log('deleted');
             })
         });
-        con.query('DELETE FROM albums WHERE album_id = ?', req.params.id, (err, album)=>{
-            if(err) return res.render('badrequest', {error: err});
-            res.redirect('/albums');
+        con.query('SELECT * FROM albums WHERE album_id = ?', req.params.id, (err, album)=> {
+            if (err) return res.render('badrequest', {error: err});
+
+            const pic_destination = process.env.ALBUMS_PATH + '/' + album[0].name + album[0].album_id + '/'
+            fs.rmdirSync(pic_destination);
+
+            con.query('DELETE FROM albums WHERE album_id = ?', req.params.id, (err, album)=>{
+                if(err) return res.render('badrequest', {error: err});
+                res.redirect('/albums');
+            });
         });
     });
 });
