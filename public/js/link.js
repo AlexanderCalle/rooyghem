@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .addEventListener('click', function() {
             var myTextArea = document.getElementById('feedDescription');
             var myTextAreaValue = myTextArea.value;
-            var updatedText = myTextAreaValue + '<i>(vet cursief)</i>';
+            var updatedText = myTextAreaValue + '<i>(cursief tekst)</i>';
             myTextArea.value = updatedText;
         });
 });
