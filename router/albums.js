@@ -97,18 +97,40 @@ router.get('/update/:id', (req, res)=> {
 });
 
 router.put('/update/:id', (req, res)=> {
-    data = req.body;
-    album_data = {
-        name: data.name,
-        group_id: req.user.group_id,
-        description: data.description,
-        activity_start: data.activity_start,
-        activity_end: data.activity_end,
-    }
+    con.query('SELECT name FROM albums WHERE album_id = ?', req.params.id, (err, album)=>{
+        if(err) return res.render('badrequest', {error: err});
 
-    con.query('UPDATE albums SET ? WHERE album_id = ?', [album_data ,req.params.id], (err, album)=> {
-        if (err) return res.render('badrequest', {error: err});
-        res.redirect('/albums')
+        data = req.body;
+
+        var dirOld = process.env.ALBUMS_PATH+ '/' + album[0].name + req.params.id + '/'
+        var dirNew = process.env.ALBUMS_PATH+ '/' + data.name + req.params.id + '/'
+
+        if(data.name != album[0].name) {
+            fs.renameSync(dirOld, dirNew);
+            con.query('SELECT * FROM pictures WHERE album_id = ?', req.params.id, (err, pictures) => {
+                if(err) return res.render('badrequest', {error: err});
+                pictures.forEach((picture) => {
+                    console.log(picture.pictures_id);
+                    const newPicDest = process.env.ALBUMS_PATH_SITE + '/' + data.name + req.params.id + '/' + picture.name;
+                    con.query('UPDATE pictures SET path = ? WHERE pictures_id = ?', [newPicDest, picture.pictures_id], (err, res) => {
+                        if(err) return res.render('badrequest', {error: err});
+                    })
+                })
+            });
+        }
+
+        album_data = {
+            name: data.name,
+            group_id: req.user.group_id,
+            description: data.description,
+            activity_start: data.activity_start,
+            activity_end: data.activity_end,
+        }
+
+        con.query('UPDATE albums SET ? WHERE album_id = ?', [album_data ,req.params.id], (err, album)=> {
+            if (err) return res.render('badrequest', {error: err});
+            res.redirect('/albums')
+        });
     });
 });
 
@@ -116,7 +138,8 @@ router.get('/delete/:id', (req, res)=> {
     con.query('SELECT * FROM pictures WHERE album_id = ?', req.params.id, async (err, pictures)=> {
         if (err) return res.render('badrequest', {error:err});
         await pictures.forEach((picture)=> {
-            fs.unlinkSync('.' + picture.path);
+            console.log(picture.path);
+            fs.unlinkSync('.'+picture.path);
             con.query('DELETE FROM pictures WHERE pictures_id = ?', picture.pictures_id, (err, result)=> {
                 if (err) return res.render('badrequest', {error: err});
                 console.log('deleted');
@@ -225,6 +248,17 @@ router.get('/check/:id/checked', (req, res)=> {
         con.query('UPDATE albums SET ? WHERE album_id = ?', [update_data, req.params.id], (err, result)=> {
             if (err) return res.render('bad', {error: err});
             res.redirect('/albums/checker')
+        });
+    });
+});
+
+router.get('/album/:album_id/pic/delete/checker/:pictures_id', (req, res)=> {
+    con.query('SELECT * FROM pictures WHERE pictures_id = ?', req.params.pictures_id, (err, pic)=> {
+        if (err) return res.render('badrequest', {error: err});
+        fs.unlinkSync('.' + pic[0].path);
+        con.query('DELETE FROM pictures WHERE pictures_id = ?', req.params.pictures_id, (err, pic)=>{
+            if(err) return res.render('badrequest', {error: err});
+            res.redirect('/albums/check/' + req.params.album_id);
         });
     });
 });
