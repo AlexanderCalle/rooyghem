@@ -33,16 +33,20 @@
         <div class="interface">
             <h2>Albums</h2>
             <div class="info">
-                <% albums.forEach(function(album) { %>
-                    <a href="/albums/groups/<%= group.name %>/<%= album.album_id %>">
-                        <div class="interfaceinfo">
-                            <div class="interfaceinfo-inner">
-                                <img src="/public/images/album1.svg" width="50" height="auto">
-                                <p><%= album.name %></p>
+                <% if(albums != null ) { %>
+                    <% albums.forEach(function(album) { %>
+                        <a href="/albums/groups/<%= group.name %>/<%= album.album_id %>">
+                            <div class="interfaceinfo">
+                                <div class="interfaceinfo-inner">
+                                    <img src="/public/images/album1.svg" width="50" height="auto">
+                                    <p><%= album.name %></p>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                <% }) %>
+                        </a>
+                    <% }) %>
+                <% } else { %>
+                    <p>Nog geen albums te zien!</p>
+                <% } %>
             </div>
         </div>
     </div>

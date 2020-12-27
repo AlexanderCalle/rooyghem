@@ -29,15 +29,27 @@ router.get('/:group_name/info', (req, res)=> {
                     
                     con.query('SELECT * FROM albums WHERE group_id = ? AND checked = 1', group[0].group_id, (err, albums) => {
                         if(err) return res.render('badrequest', {error: err});
-                        res.render('./group_pages/info', {
-                            group: group[0],
-                            location: location[0], 
-                            leaders: leaders, 
-                            activities: activities, 
-                            username: req.user.username,
-                            albums: albums,
-                            moment: require('moment')
-                        });
+                        if(albums[0] != null){
+                            res.render('./group_pages/info', {
+                                group: group[0],
+                                location: location[0], 
+                                leaders: leaders, 
+                                activities: activities, 
+                                username: req.user.username,
+                                albums: albums,
+                                moment: require('moment')
+                            });
+                        } else {
+                            res.render('./group_pages/info', {
+                                group: group[0],
+                                location: location[0], 
+                                leaders: leaders, 
+                                activities: activities, 
+                                username: req.user.username,
+                                albums: null,
+                                moment: require('moment')
+                            });
+                        }
                     });
 
                 })
