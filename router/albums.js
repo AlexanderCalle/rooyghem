@@ -263,19 +263,4 @@ router.get('/album/:album_id/pic/delete/checker/:pictures_id', (req, res)=> {
     });
 });
 
-router.get('/groups/:group_id/:id', (req, res)=> {
-    con.query('SELECT * FROM albums WHERE album_id = ?', req.params.id, (err, album)=> {
-        if (err) return res.render('badrequest', {error: err});
-        con.query('SELECT * FROM pictures WHERE album_id = ?', req.params.id, (err, pictures)=> {
-            if (err) return res.render('badrequest', {error: err});
-            res.render('pictures_album', {
-                user: req.user,
-                admin: req.admin,
-                album: album[0],
-                pictures: pictures,
-            })
-        });
-    });
-});
-
 module.exports = router;

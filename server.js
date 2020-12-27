@@ -131,6 +131,21 @@ app.post('/forgot', (req, res)=> {
     });
 }); 
 
+app.get('/albums/groups/:group_id/:id', (req, res)=> {
+    con.query('SELECT * FROM albums WHERE album_id = ?', req.params.id, (err, album)=> {
+        if (err) return res.render('badrequest', {error: err});
+        con.query('SELECT * FROM pictures WHERE album_id = ?', req.params.id, (err, pictures)=> {
+            if (err) return res.render('badrequest', {error: err});
+            res.render('pictures_album', {
+                user: req.user,
+                admin: req.admin,
+                album: album[0],
+                pictures: pictures,
+            })
+        });
+    });
+});
+
 app.get('/sitemap', function(_, res) {
     console.log(__dirname);
     res.contentType('application/xml');
