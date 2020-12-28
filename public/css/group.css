@@ -185,6 +185,12 @@ button:hover{
 	border-radius: 10px;
 	margin-top: 10px;
 	height: auto;
+	transition: 0.3s;
+	cursor: pointer;
+}
+
+.interfaceinfoPhoto:hover {
+	opacity: 0.7;
 }
 
 .interfaceinfoPhoto img {
