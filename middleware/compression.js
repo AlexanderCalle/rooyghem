@@ -9,11 +9,11 @@ module.exports = async (image, path) => {
         destination: path,
         plugins: [
             imageminJpegtran(),
-            imageminPngquant({
-                quality: [0.6, 0.8],
-            })
+            imageminPngquant()
         ]
     }).then(() => {
         fs.unlinkSync(image)
+    }).catch(err => {
+        console.error(err);
     })
 };
