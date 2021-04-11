@@ -1,6 +1,6 @@
 <head>
     <link rel="stylesheet" href="/public/css/group.css">
-    <link rel="stylesheet" href="/public/css/backoffice.css">
+    <!-- <link rel="stylesheet" href="/public/css/backoffice.css"> -->
 </head>
 
 <main class="container" id="groupcontainer">
@@ -18,36 +18,41 @@
             </p>
         </div>
         <% if(group.name != "Aspiranten") {%>
-        <div id="groupstory">
-            <h3>Verhalend Kader</h3>
-            <p id="vkDiv">
-                <%- group.story -%>
-            </p>
-        </div>
+            <div id="groupstory">
+                <h3>Verhalend Kader</h3>
+                <p id="vkDiv">
+                    <%- group.story -%>
+                </p>
+            </div>
+            <div id="calendar"></div>
+        <% } else {%> 
+            <div id="calendar" class="aspiCalendar"></div>
         <% } %>
-    
-        <div id="calendar"></div>
+
     </div>
     <br>
     <div class="albums">
+        <h2>Albums</h2>
         <div class="interface">
-            <h2>Albums</h2>
-            <div class="info">
-                <% if(albums != null ) { %>
-                    <% albums.forEach(function(album) { %>
-                        <a href="/albums/groups/<%= group.name %>/<%= album.album_id %>">
-                            <div class="interfaceinfo">
-                                <div class="interfaceinfo-inner">
-                                    <img src="/public/images/album1.svg" width="50" height="auto">
-                                    <p><%= album.name %></p>
+            <% if(albums != null ) { %>
+                <% albums.forEach(function(groupedAlbum) { %>
+                    <h3><%= groupedAlbum.date %></h3>
+                    <div class="info">
+                        <% groupedAlbum.albums.forEach(function(album){ %>
+                            <a href="/albums/groups/<%= group.name %>/<%= album.album_id %>">
+                                <div class="interfaceinfo">
+                                    <div class="interfaceinfo-inner">
+                                        <img src="/public/images/album1.svg" width="50" height="auto">
+                                        <p><%= album.name %></p>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    <% }) %>
-                <% } else { %>
-                    <p>Nog geen albums te zien!</p>
-                <% } %>
-            </div>
+                            </a>
+                        <% }) %>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p>Nog geen albums te zien!</p>
+            <% } %>
         </div>
     </div>
 
