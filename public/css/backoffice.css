@@ -195,7 +195,7 @@ button:hover{
 	border-radius: 20px;
 	height: auto;
 	width: auto;
-	max-height: 400px;
+	max-height: 500px;
 	padding: 10px;
 }
 
@@ -204,10 +204,10 @@ button:hover{
 }
 
 .interfacePhoto .infoPhoto {
-	height: 260px;
+	max-height: 360px;
 	width: auto;
 	padding: 10px;
-	overflow: auto;
+	overflow-y: auto;
 	display: grid;
 	grid-gap: 10px;
 	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
