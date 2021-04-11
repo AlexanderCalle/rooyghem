@@ -1,6 +1,10 @@
 #groupcontainer {
     margin-top: 10px;
-    padding: 10px;
+    padding: 20px;
+}
+
+.aspiCalendar {
+	max-width: 50%;
 }
 
 .info {
@@ -12,6 +16,10 @@
 @media only screen and (max-width: 1200px) {
     .info {
 		grid-template-columns: repeat(1, minmax(350px, 1fr));
+	}
+
+	.aspiCalendar {
+		max-width: 100%;
 	}
 }
 
@@ -109,19 +117,33 @@ button:hover{
 	width: auto;
 	max-height: 400px;
 	padding: 10px;
+	overflow-y: auto;
 }
 
-.interface h2 {
+.interface h2, .interface h3 {
 	margin-left: 10px;
 }
 
 .interface .info {
-	height: 260px;
+	height: auto;
 	width: 100%;
 	padding: 10px;
-	overflow: auto;
+	/* overflow: auto; */
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(150px, 2fr))
+}
+
+.interface .info a {
+	max-height: 100px;
+}
+
+a{
+	text-decoration: none;
+	color: #f98d1e;
+}
+
+ a:hover{
+	color: #bbc3d7;
 }
 
 .interfaceinfo {
@@ -154,8 +176,6 @@ button:hover{
 .interfacePhoto {
 	border: 1px solid #f98d1e;
 	border-radius: 20px;
-	height: auto;
-	width: auto;
 	max-height: 400px;
 	padding: 10px;
 }
@@ -165,7 +185,7 @@ button:hover{
 }
 
 .interfacePhoto .infoPhoto {
-	height: 260px;
+	height: auto;
 	width: auto;
 	padding: 10px;
 	overflow: auto;
@@ -184,7 +204,6 @@ button:hover{
 	border: 1px solid #f98d1e;
 	border-radius: 10px;
 	margin-top: 10px;
-	height: auto;
 	transition: 0.3s;
 	cursor: pointer;
 }
@@ -194,6 +213,7 @@ button:hover{
 }
 
 .interfaceinfoPhoto img {
+	object-fit: contain;
 	width: 150px;
-	height: auto;
+	height: 150px;
 }

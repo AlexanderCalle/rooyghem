@@ -30,13 +30,54 @@ router.get('/:group_name/info', (req, res)=> {
                     con.query('SELECT * FROM albums WHERE group_id = ? AND checked = 1', group[0].group_id, (err, albums) => {
                         if(err) return res.render('badrequest', {error: err});
                         if(albums[0] != null){
+
+                            const sortedAlbums = albums.sort((a,b) => {
+                                return new Date(a.end_date) - new Date(b.end_date);
+                            });
+
+                            const groups = albums.reduce((groups, album) => {
+                                const dateString = album.activity_end.toString();
+                                const date = new Date(dateString);
+                                const month = date.getMonth() + 1;
+
+                                if(month >= 1 && month <= 8){
+                                    const year = parseInt(date.getFullYear()) - 1 + " - " + date.getFullYear();
+                                    
+                                    if(!groups[year]){
+                                        groups[year] = [];
+                                    }
+
+                                    groups[year].push(album);
+                                }
+
+                                if(month >= 9 && month <= 12){                                
+                                    const year = date.getFullYear() + " - " + (parseInt(date.getFullYear()) + 1).toString();
+
+                                    if(!groups[year]){
+                                        groups[year] = [];
+                                    }
+
+                                    groups[year].push(album);
+                                }
+                            
+                                return groups;
+                            }, {})
+
+                            const groupedAlbums = Object.keys(groups).map((date) => {
+                                return {
+                                    date,
+                                    albums: groups[date]
+                                };
+                            });
+
+
                             res.render('./group_pages/info', {
                                 group: group[0],
                                 location: location[0], 
                                 leaders: leaders, 
                                 activities: activities, 
                                 username: req.user.username,
-                                albums: albums,
+                                albums: groupedAlbums,
                                 moment: require('moment')
                             });
                         } else {

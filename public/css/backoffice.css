@@ -169,6 +169,7 @@ button:hover{
 }
 
 .interface {
+	position: relative;
 	border: 1px solid #f98d1e;
 	border-radius: 20px;
 	height: auto;
@@ -189,6 +190,7 @@ button:hover{
 }
 
 .interfacePhoto {
+	position: relative;
 	border: 1px solid #f98d1e;
 	border-radius: 20px;
 	height: auto;
@@ -243,11 +245,10 @@ button:hover{
 }
 
 .addLink {
-	display: block;
-	float: right;
-	margin-top: 10px;
-	margin-right: 10px;
-	margin-bottom: 10px;
+	position: absolute;
+	/* margin-top: 10px; */
+	right: 20px;
+	bottom: 20px;
 }
 
 .interfaceinfo {
@@ -257,6 +258,17 @@ button:hover{
 	border-radius: 10px;
 	margin-top: 10px;
 }
+
+.interfacePhoto .infoPhoto {
+	height: auto;
+	width: auto;
+	padding: 10px;
+	overflow: auto;
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
 .interfaceinfoPhoto {
 	text-align: center;
 	margin-left: auto;
@@ -268,6 +280,12 @@ button:hover{
 	border-radius: 10px;
 	margin-top: 10px;
 	width: auto;
+}
+
+.interfaceinfoPhoto img {
+	object-fit: contain;
+	width: 150px;
+	height: 150px;
 }
 
 .interfaceinfo .buttons {
