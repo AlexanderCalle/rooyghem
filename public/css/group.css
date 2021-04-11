@@ -154,8 +154,6 @@ button:hover{
 .interfacePhoto {
 	border: 1px solid #f98d1e;
 	border-radius: 20px;
-	height: auto;
-	width: auto;
 	max-height: 400px;
 	padding: 10px;
 }
@@ -165,7 +163,7 @@ button:hover{
 }
 
 .interfacePhoto .infoPhoto {
-	height: 260px;
+	height: auto;
 	width: auto;
 	padding: 10px;
 	overflow: auto;
@@ -184,7 +182,6 @@ button:hover{
 	border: 1px solid #f98d1e;
 	border-radius: 10px;
 	margin-top: 10px;
-	height: auto;
 	transition: 0.3s;
 	cursor: pointer;
 }
@@ -194,6 +191,7 @@ button:hover{
 }
 
 .interfaceinfoPhoto img {
+	object-fit: contain;
 	width: 150px;
-	height: auto;
+	height: 150px;
 }
