@@ -27,7 +27,7 @@ router.get('/:group_name/info', (req, res)=> {
                 con.query('SELECT firstname, lastname, email, is_banleader, path_pic FROM users WHERE group_id = ? ORDER BY is_banleader DESC, lastname ASC', group[0].group_id, (err, leaders) =>{
                     if(err) return res.render('badrequest', {error: err});
                     
-                    con.query('SELECT * FROM albums WHERE group_id = ? AND checked = 1', group[0].group_id, (err, albums) => {
+                    con.query('SELECT * FROM albums WHERE group_id = ? AND checked = 1 ORDER BY activity_end DESC', group[0].group_id, (err, albums) => {
                         if(err) return res.render('badrequest', {error: err});
                         if(albums[0] != null){
 
