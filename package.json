@@ -22,10 +22,8 @@
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0",
     "express-layout": "^0.1.0",
+    "gifsicle": "^5.2.0",
     "helmet": "^4.1.1",
-    "imagemin": "^7.0.1",
-    "imagemin-jpegtran": "^7.0.0",
-    "imagemin-pngquant": "^9.0.1",
     "jsonwebtoken": "^8.5.1",
     "method-override": "^3.0.0",
     "moment": "^2.29.1",
@@ -33,6 +31,10 @@
     "multer": "^1.4.2",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.4",
+    "pngcrush": "^3.0.0",
     "sendgrid": "^5.2.3"
+  },
+  "devDependencies": {
+    "compress-images": "^1.9.9"
   }
 }
