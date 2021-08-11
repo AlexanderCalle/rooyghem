@@ -4,16 +4,16 @@ const imageminPngquant = require('imagemin-pngquant');
 const fs = require('fs');
 
 module.exports = async (image, path) => {
-
+    console.log("Compressing " + image + " to " + path);
     await imagemin([image], {
         destination: path,
         plugins: [
             imageminJpegtran(),
-            imageminPngquant({
-                quality: [0.6, 0.8],
-            })
+            imageminPngquant()
         ]
     }).then(() => {
         fs.unlinkSync(image)
+    }).catch(err => {
+        console.error(err);
     })
 };

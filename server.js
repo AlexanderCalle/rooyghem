@@ -15,7 +15,7 @@ const adminCheck = require('./middleware/adminCheck');
 const userCheck = require('./middleware/userCheck');
 const sgMail = require('@sendgrid/mail');
 const app = express();
-const port = 3000 || procces.env.PORT;
+const port = 2000 || procces.env.PORT;
 
 // Server Logs middelware
 app.use(morgan('dev'));
