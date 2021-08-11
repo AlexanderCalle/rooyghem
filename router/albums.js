@@ -169,7 +169,7 @@ router.get('/album/:id/add', (req, res) => {
         });
     });
 });
-router.post('/album/:id/add', upload.array('pic'), (req, res) => {
+router.post('/album/:id/add', upload.array('pic'), async (req, res) => {
     con.query('SELECT * FROM albums WHERE album_id = ?', req.params.id, async (err, album)  => {
         if (err) return res.render('badrequest', {error: err});
         
