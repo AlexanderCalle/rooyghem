@@ -173,7 +173,7 @@ router.post('/album/:id/add', upload.array('pic'), (req, res) => {
     con.query('SELECT * FROM albums WHERE album_id = ?', req.params.id, async (err, album)  => {
         if (err) return res.render('badrequest', {error: err});
         
-        await req.files.forEach(function(file) {
+        async() => req.files.forEach(function(file) {
             const pic_destination = process.env.ALBUMS_PATH + '/' + album[0].name + album[0].album_id + '/'
             const pic_destination_site = process.env.ALBUMS_PATH_SITE + '/' + album[0].name + album[0].album_id + '/'
 
