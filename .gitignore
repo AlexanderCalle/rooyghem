@@ -3,3 +3,4 @@ public/images/newsfeedpictures/*
 public/images/temp/*
 public/images/albums/*
 connect.js
+node_modules/*
