@@ -8,7 +8,8 @@
             <h1>Foto('s) toevoegen aan <%= album.name %></h1>
             <%- include('./particals/messages.ejs') %>
             <form action="/albums/album/<%= album.album_id %>/add" method="POST" enctype="multipart/form-data">
-                <input type="file" name="pic" id="upload" multiple>
+                <!-- <input type="file" name="pic" id="upload" multiple> -->
+                <input name="pic" type="file" accept="image/*" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
                 <div class="pic-group" style="display: none" >
                     <p>fkjldsqhfkljhqsd</p>
                 </div>
@@ -17,5 +18,5 @@
             </form>
         </div>
     </div>
-    <script src="../public/js/image-upload.js"></script>
+    <!-- <script src="../public/js/image-upload.js"></script> -->
 </main>
