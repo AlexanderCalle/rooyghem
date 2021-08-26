@@ -1,0 +1,26 @@
+<main class="container" id="backofficecontainer">
+
+    <%- include("./particals/back_office.ejs") %>
+
+    <div id="backofficecreation">
+        
+        <div id="creationform">
+            <h1>Foto('s) toevoegen aan <%= album.name %></h1>
+            <%- include('./particals/messages.ejs') %>
+            <form action="/albums/album/<%= album.album_id %>/add" method="POST" enctype="multipart/form-data">
+                <input id="multi_file_upload" type="file" name="pic" multiple>
+                <div class="pic-group" style="display: none" >
+                    <p>fkjldsqhfkljhqsd</p>
+                </div>
+                <br>
+                <button type="submit">Voeg toe</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- <script type="text/javascript">
+        $('#multi_file_upload').change(function(e) {
+
+        })
+    </script> -->
+</main>
