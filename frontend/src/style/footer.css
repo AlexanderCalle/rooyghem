@@ -1,7 +1,4 @@
 footer{
-	position: fixed;
-	bottom: 0;
-	left: 0;
 	grid-area: footer;
 	display: grid;
 	width: 100%;
