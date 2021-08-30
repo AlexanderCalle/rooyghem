@@ -49,7 +49,8 @@ app.get('/', userCheck, (req, res)=> {
 
 app.get('/contact', userCheck, (req, res)=> {
     con.query('SELECT firstname, lastname, email, path_pic, phone FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
-        res.render('contact', {bondsleiders: users, username: req.user.username});
+        if(err) return res.status(500).json({"statuscode": 500, "error": err});
+        return res.json({bondsleiders: users, username: req.user.username});
     });
 });
 
@@ -58,7 +59,7 @@ app.post('/contact', userCheck, (req, res)=> {
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
         const msg = {
-            to: 'dekersgieteremiel@gmail.com',
+            to: 'joris.deckmyn3@gmail.com',
             from: 'ksarooyghemwebteam@gmail.com',
             subject: req.body.onderwerp,
             text: 'Hallo , \n\n' +
@@ -68,26 +69,26 @@ app.post('/contact', userCheck, (req, res)=> {
         
         sgMail.send(msg).then(()=> {
             con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
-                res.render('contact', {bondsleiders: users, username: req.user.username, succesError: 'Vraag werd verstuurd'});
+                return res.json({bondsleiders: users, username: req.user.username, message: 'Vraag werd verstuurd'});
             });
         }).catch((err)=> {
             con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
-                res.render('contact', {bondsleiders: users, username: req.user.username, error: err});
+                return res.status(500).json({"statuscode": 500, bondsleiders: users, username: req.user.username, error: err});
             });
         });
     } else {
         con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
-            res.render('contact', {bondsleiders: users, username: req.user.username, error: 'Gelieve alle velden in te vullen'});
+            return res.status(400).json({'statuscode': 400, bondsleiders: users, username: req.user.username, error: 'Gelieve alle velden in te vullen'});
         });
     }
 });
 
 app.get('/overons', userCheck, (req, res)=> {
-    res.render('over_ons', {username: req.user.username});
+    return res.json({username: req.user.username});
 });
 
 app.get('/forgot', userCheck, (req, res)=> {
-    res.render('forgot', {username: req.user.username});
+    return res.json({username: req.user.username});
 });
 
 app.post('/forgot', (req, res)=> {
@@ -98,8 +99,8 @@ app.post('/forgot', (req, res)=> {
     });
 
     con.query('SELECT * FROM users WHERE email = ?', req.body.email, (err, users)=> {
-        if(err) return res.render('badrequest', {error: err});
-        if(!users[0]) return res.render('forgot', {error: 'Er bestaat geen gebruiker met deze email!', username: ''});
+        if(err) return res.status(400).json({"statuscode": 400, error: err});
+        if(!users[0]) return res.status(404).json({"statuscode": 404, error: 'Er bestaat geen gebruiker met deze email!', username: ''});
         Date.prototype.addHours = function(h) {
             this.setTime(this.getTime() + (h*60*60*1000));
             return this;
@@ -110,7 +111,7 @@ app.post('/forgot', (req, res)=> {
             resetPasswordExpired: date
         }
         con.query('UPDATE users SET ? WHERE email = ?', [data ,req.body.email], (err, user)=> {
-            if(err) return res.render('badrequest', {error: err, username: ''});
+            if(err) return res.status(500).json({"statuscode": 500, error: err, username: ''});
 
             sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -124,9 +125,9 @@ app.post('/forgot', (req, res)=> {
             }
             
             sgMail.send(msg).then(()=> {
-                res.render('forgot', {succesError: 'Email werd verzonden', username: ''});
+                return res.json({message: 'Email werd verzonden', username: ''});
             }).catch((err)=> {
-                res.render('forgot', {error: err, username: ''});
+                return res.status(500).json({"statuscode": 500, error: err, username: ''});
             });
         });
     });
@@ -134,10 +135,10 @@ app.post('/forgot', (req, res)=> {
 
 app.get('/albums/groups/:group_id/:id', (req, res)=> {
     con.query('SELECT * FROM albums WHERE album_id = ?', req.params.id, (err, album)=> {
-        if (err) return res.render('badrequest', {error: err});
+        if (err) return res.status(400).json({"statuscode": 400, error: err});
         con.query('SELECT * FROM pictures WHERE album_id = ?', req.params.id, (err, pictures)=> {
-            if (err) return res.render('badrequest', {error: err});
-            res.render('pictures_album', {
+            if (err) return res.status(400).json({"statuscode": 400, error: err});
+            return res.json({
                 user: req.user,
                 admin: req.admin,
                 album: album[0],
