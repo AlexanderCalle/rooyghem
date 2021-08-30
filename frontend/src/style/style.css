@@ -16,7 +16,7 @@ body {
     grid-template-areas: "nav"
                          "main"
                          "footer";
-    font-family:ff-ernestine-pro, sans-serif;
+    font-family: ff-ernestine-pro, sans-serif;
     color: #f98d1e;
 	margin: 0px;
 	padding: 0;

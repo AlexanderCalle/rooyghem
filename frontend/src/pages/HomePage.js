@@ -8,7 +8,7 @@ import newfeedTestimage from '../images/newsfeedpictures/1606637895806Nieuwesite
 const HomePage = () => {
 
     return (
-        <div>
+        <>
             <Navbar />
             <main class="container" id="index-container">
                 <h2>Niet te missen!</h2>
@@ -24,7 +24,7 @@ const HomePage = () => {
                 </section>
             </main>
             <Footer />
-        </div>
+        </>
     )
 }
 
