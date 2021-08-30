@@ -29,10 +29,10 @@ const upload = multer({ storage: storage });
 
 router.get('/', authCheck, adminCheck,(req, res)=>{
     con.query('SELECT * FROM `groups`', (err, groups)=> {
-        if(err) return res.render('badrequest', {error: err});
+        if(err) return res.status(400).json({"statuscode": 400, "error": err});
         con.query('SELECT * FROM users ORDER BY lastname ASC, firstname ASC', (err, users)=>{
-            if(err) return res.render('badrequest', {error: err});
-            res.render('users_interface', {users: users, user:req.user, admin: req.admin, username: req.user.username});
+            if(err) return res.status(500).json({"statuscode": 500, "error": err});
+            return res.json({users: users, user:req.user, admin: req.admin, username: req.user.username});
         });
     });
 });
@@ -134,12 +134,14 @@ router.get('/login', logginCheck, (req, res)=> {
 // LOGIN USER + check password with hash
 router.post('/login', (req, res)=>{
     const data = req.body;
+    console.log(req.body);
     if(data.username !== '' && data.password !== '') {
-        con.query('SELECT * FROM users WHERE username = ?', data.username, (err, user)=> {
-            if(err) return res.render('badrequest', {error: err});
-            if(user[0] == null) return res.render('login', {error: 'Deze gebruikersnaam bestaat niet'});
+        console.log(data.username + " " + data.password);
+        con.query('SELECT * FROM users WHERE username = ?;', data.username, (err, user)=> {
+            if(err) return res.status(500).json({"statuscode": 500, "error": err})
+            if(user[0] == null) return res.status(401).json({error: 'Deze gebruikersnaam bestaat niet'});
             bcrypt.compare(data.password, user[0].passhash, (err, isMatch)=>{
-                if(err) return res.render('badrequest', {error: err});
+                if(err) return res.status(401).json({"statuscode": 401, "error": err});
                 if(isMatch) {
                     const payload = {
                         user_id: user[0].user_id,
@@ -148,17 +150,17 @@ router.post('/login', (req, res)=>{
                         group_id: user[0].group_id
                     }
                     const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '12h' });
-                    res.cookie('auth', token).redirect('/activities');
+                    return res.cookie('auth', token).json({"statuscode": 200, "message": "login succesfull"});
                 } else {
-                    res.render('login', {error: 'Password klopt niet',username: req.user.username});
+                    return res.status(401).json({error: 'Password klopt niet',username: req.user.username});
                 }
             });
         });
     } else {
         if(data.username == '') {
-            res.render('login', {error: 'Vul uw gebruikersnaam is', username: req.user.username});
+            return res.status(401).json({error: 'Vul uw gebruikersnaam in', username: req.user.username});
         } else if(data.password == '') {
-            res.render('login', {error: 'Vul uw wachtwoord in', username: req.user.username});
+            return res.status(401).json({error: 'Vul uw wachtwoord in', username: req.user.username});
         }
     }
 });

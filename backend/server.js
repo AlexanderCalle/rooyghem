@@ -37,12 +37,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', userCheck, (req, res)=> {
     const date = new Date();
     con.query('SELECT * FROM newsfeeds WHERE end_publication > ? AND start_publication <= ? ORDER BY start_publication', [date, date], (err, newsfeeds) => {
-        if(err) return res.render('badrequest', {error: err});
-        res.render('index', {
-            newsfeeds: newsfeeds, 
-            moment: moment, 
+        if(err) return res.status(404).json({"statuscode": 404, "error": err});
+        return res.status(200).json({
+            newsfeeds: newsfeeds,
+            moment: moment,
             username: req.user.username
         });
+
     });
 });
 
