@@ -38,10 +38,10 @@ router.get('/', authCheck, adminCheck,(req, res)=>{
 });
 router.get('/create', authCheck, adminCheck,(req, res)=>{
     con.query('SELECT * FROM `groups`', (err, groups)=> {
-        if(err) return res.render('badrequest', {error: err});
+        if(err) return res.status(400).json({"statuscode": 400, error: err});
         con.query('SELECT * FROM users', (err, users)=>{
-            if(err) return res.render('badrequest', {error: err});
-            res.render('users', {groups: groups, users: users, user:req.user, admin: req.admin, username: req.user.username});
+            if(err) return res.status(400).json({"statuscode": 400, error: err});
+            res.json({groups: groups, users: users, user:req.user, admin: req.admin, username: req.user.username});
         });
     });
 });
@@ -49,8 +49,8 @@ router.get('/create', authCheck, adminCheck,(req, res)=>{
 // FIND ALL USERS
 router.get('/all', authCheck, adminCheck,(req, res)=> {
     con.query('SELECT * FROM users', (err, users)=>{
-        if(err) return res.render('badrequest', {error: err});
-        res.json(users);
+        if(err) return res.status(400).json({"statuscode": 400, error: err});
+        return res.json({"users": users});
     });
 });
 
@@ -58,8 +58,8 @@ router.get('/all', authCheck, adminCheck,(req, res)=> {
 router.get('/single/:id', authCheck, adminCheck,(req, res)=> {
     
     con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, user)=>{
-        if(err) return res.json({message: 'Gebruiker werd niet gevonden'});
-        res.json(user);
+        if(err) return res.status(404).json({"statuscode": 404, error: 'Gebruiker werd niet gevonden'});
+        return res.json({"user": user});
     });
 });
 
@@ -86,41 +86,43 @@ router.post('/create', authCheck, adminCheck, upload.single('image'), userFormCh
             con.query('INSERT INTO users SET ?', user, (err, user)=> {
                 if(err) {
                     if(err.code === `ER_DUP_ENTRY`) {
-                        con.query('SELECT * FROM `groups`', (err, groups)=> {
-                            if(err) return res.render('badrequest', {error: err});
-                            con.query('SELECT * FROM users', (err, users)=>{
-                                if(err) return res.render('badrequest', {error: err});
-                                res.render('users', {
-                                    groups: groups, 
-                                    users: users, 
-                                    user: req.user,
-                                    admin: req.admin,
-                                    username: req.user.username,
-                                    error: 'Gebruikersnaam bestaat al'
-                                });
-                            });
-                        });
+                        // con.query('SELECT * FROM `groups`', (err, groups)=> {
+                        //     if(err) return res.status(500).json({"statuscode": 500, error: err});
+                        //     con.query('SELECT * FROM users', (err, users)=>{
+                        //         if(err) return res.status(500).json({"statuscode": 500, error: err});
+                        //         return res.json({
+                        //             groups: groups, 
+                        //             users: users, 
+                        //             user: req.user,
+                        //             admin: req.admin,
+                        //             username: req.user.username,
+                        //             error: 'Gebruikersnaam bestaat al'
+                        //         });
+                        //     });
+                        // });
+                        return res.status(409).json({'statuscode': 409, error: "username already exists"});
                     } else {
-                        res.render('badrequest', {error: err});
+                        return res.status(400).json({'statuscode': 400, error: err});
                     }
                 } else {
-                    res.redirect('/users')
+                    return res.json({"message": "user was created"});
                 }
             });
         });
     } else {
         con.query('SELECT * FROM `groups`', (err, groups)=> {
-            if(err) return res.render('badrequest', {error: err});
+            if(err) return res.status(400).json({'statuscode': 400, error: err});
             con.query('SELECT * FROM users', (err, users)=>{
-                if(err) return res.render('badrequest', {error: err});
-                res.render('users', {
-                    groups: groups, 
-                    users: users, 
-                    admin: req.admin,
-                    user: req.user,
-                    username: req.user.username,
-                    error: 'Geen foto gevonden'
-                });
+                if(err) return res.status(400).json({'statuscode': 400, error: err});
+                // res.render('users', {
+                //     groups: groups, 
+                //     users: users, 
+                //     admin: req.admin,
+                //     user: req.user,
+                //     username: req.user.username,
+                //     error: 'Geen foto gevonden'
+                // });
+                return res.status(422).json({'statuscode': 422, 'error': 'Geen foto gevonden'});
             });
         });
     }
@@ -136,7 +138,6 @@ router.post('/login', (req, res)=>{
     const data = req.body;
     console.log(req.body);
     if(data.username !== '' && data.password !== '') {
-        console.log(data.username + " " + data.password);
         con.query('SELECT * FROM users WHERE username = ?;', data.username, (err, user)=> {
             if(err) return res.status(500).json({"statuscode": 500, "error": err})
             if(user[0] == null) return res.status(401).json({error: 'Deze gebruikersnaam bestaat niet'});
@@ -167,18 +168,18 @@ router.post('/login', (req, res)=>{
 
 router.get('/logout', authCheck,(req, res)=> {
     try {
-        res.clearCookie('auth').redirect('/');
+        return res.clearCookie('auth').status(200).json({"message": "Logged out succesfully"});
     } catch (error) {
-        res.render('badrequest');
+        return res.status(500).json({"statuscode": 500, "error": error});
     }
 });
 
 router.get('/:id', authCheck, adminCheck, (req, res)=> {
     con.query('SELECT * FROM `groups`', (err, groups)=> {
-        if(err) return res.render('badrequest', {error: err});
+        if(err) return res.status(400).json({"statuscode": 400, error: err});
         con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, users)=>{
-            if(err) return res.render('badrequest', {error: err});
-            res.render('users_update', {groups: groups, user:req.user, userInfo: users[0], admin: req.admin, username: req.user.username});
+            if(err) return res.status(400).json({"statuscode": 400, error: err});
+            return res.json({groups: groups, user:req.user, userInfo: users[0], admin: req.admin, username: req.user.username});
         });
     });
 });
@@ -207,17 +208,17 @@ router.put('/:id', authCheck, adminCheck, upload.single('image'), userFormChecke
                 if(err) {
                     if(err.code == `ER_DUP_ENTRY`) {
                         con.query('SELECT * FROM `groups`', (err, groups)=> {
-                            if(err) return res.render('badrequest', {error: err});
+                            if(err) return res.status(400).json({"statuscode": 400, error: err});
                             con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, users)=>{
-                                if(err) return res.render('badrequest', {error: err});
-                                res.render('users_update', {groups: groups, user: users[0], admin: req.admin, error: 'Gebruikersnaam is al in gebruik', username: req.user.username});
+                                if(err) return res.status(400).json({"statuscode": 400, error: err});
+                                return res.status(409).json({groups: groups, user: users[0], admin: req.admin, error: 'Gebruikersnaam is al in gebruik', username: req.user.username});
                             });
                         });
                     } else {
-                        res.render('badrequest', {error: err});
+                        return res.status(400).json({'statuscode': 400, error: err});
                     }
                 } else {
-                    res.redirect('/users');
+                    return res.json({"message": "user was updated"});
                 }
             });
         });
@@ -238,17 +239,17 @@ router.put('/:id', authCheck, adminCheck, upload.single('image'), userFormChecke
             if(err) {
                 if(err.code == `ER_DUP_ENTRY`) {
                     con.query('SELECT * FROM `groups`', (err, groups)=> {
-                        if(err) return res.render('badrequest', {error: err});
+                        if(err) return res.status(400).json({'statuscode': 400, error: err});
                         con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, users)=>{
-                            if(err) return res.render('badrequest', {error: err});
-                            res.render('users_update', {groups: groups, user: users[0], admin: req.admin, error: 'Gebruikersnaam is al in gebruik', username: req.user.username});
+                            if(err) returnres.status(400).json({'statuscode': 400, error: err});
+                            return res.status(409).json({groups: groups, user: users[0], admin: req.admin, error: 'Gebruikersnaam is al in gebruik', username: req.user.username});
                         });
                     });
                 } else {
-                    res.render('badrequest', {error: err});
+                    return res.status(400).json({'statuscode': 400, error: err});
                 }
             } else {
-                res.redirect('/users');
+                res.json({"message": "user was updated"});
             }
         });
     } 
@@ -257,8 +258,8 @@ router.put('/:id', authCheck, adminCheck, upload.single('image'), userFormChecke
 // DELTE SINGLE USER
 router.get('/delete/single/:id', authCheck, adminCheck,(req, res)=> {
     con.query('DELETE FROM users WHERE user_id = ?', req.params.id, (err, user)=>{
-        if(err) return res.render('badrequest', {error: err});
-        res.redirect('/users');
+        if(err) return res.status(400).json({'statuscode': 400, error: err});
+        return res.json({"message": "user was deleted"});
     });
 });
 
