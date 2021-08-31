@@ -188,8 +188,8 @@ const reset = require('./router/reset');
 app.use('/reset', userCheck, reset);
 
 // Route profile
-const profile = require('./router/profile');
-app.use('/profile', userCheck, authCheck, adminCheck, profile);
+// const profile = require('./router/profile');
+// app.use('/profile', userCheck, authCheck, adminCheck, profile);
 
 // Route Albums
 const albums = require('./router/albums');
