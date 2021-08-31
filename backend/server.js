@@ -181,7 +181,7 @@ app.use('/vk', userCheck, vk);
 
 // Route Newsfeed
 const newsfeed = require('./router/newsfeeds');
-app.use('/newsfeed', authCheck, adminCheck, userCheck, newsfeed);
+app.use('/newsfeeds', authCheck, adminCheck, userCheck, newsfeed);
 
 // Route reset
 const reset = require('./router/reset');
