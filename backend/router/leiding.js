@@ -5,7 +5,7 @@ const logginCheck = require('../middleware/logginCheck');
 const userCheck = require('../middleware/userCheck');
 
 router.get('/info', logginCheck, userCheck, (req, res)=> {
-    res.render('leiders_page', {username: req.user.username});
+    res.json({username: req.user.username});
 });
 
 // router.get('/bondsteam', (req, res)=> {
