@@ -192,6 +192,7 @@ button:hover{
 }
 
 .interface {
+	position: relative;
 	border: 1px solid #f98d1e;
 	border-radius: 20px;
 	height: auto;
@@ -209,6 +210,30 @@ button:hover{
 	width: 100%;
 	padding: 10px;
 	overflow: auto;
+}
+
+.interfacePhoto {
+	position: relative;
+	border: 1px solid #f98d1e;
+	border-radius: 20px;
+	height: auto;
+	width: auto;
+	max-height: 500px;
+	padding: 10px;
+}
+
+.interfacePhoto h2 {
+	margin-left: 10px;
+}
+
+.interfacePhoto .infoPhoto {
+	max-height: 360px;
+	width: auto;
+	padding: 10px;
+	overflow-y: auto;
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
 
  a{
@@ -243,11 +268,10 @@ button:hover{
 }
 
 .addLink {
-	display: block;
-	float: right;
-	margin-top: 10px;
-	margin-right: 10px;
-	margin-bottom: 10px;
+	position: absolute;
+	/* margin-top: 10px; */
+	right: 20px;
+	bottom: 20px;
 }
 
 .interfaceinfo {
@@ -258,10 +282,39 @@ button:hover{
 	margin-top: 10px;
 }
 
+.interfacePhoto .infoPhoto {
+	height: auto;
+	width: auto;
+	padding: 10px;
+	overflow: auto;
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.interfaceinfoPhoto {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	display: inline-block;
+	padding-left: 20px;
+	padding: 5px;
+	border: 1px solid #f98d1e;
+	border-radius: 10px;
+	margin-top: 10px;
+	width: auto;
+}
+
+.interfaceinfoPhoto img {
+	object-fit: contain;
+	width: 150px;
+	height: 150px;
+}
+
 .interfaceinfo .buttons {
 	float: right;
 	display: inline-block;
-	margin-top: -35px
+	margin-top: -35px 
 }
 
 .interfaceinfo .buttons a {

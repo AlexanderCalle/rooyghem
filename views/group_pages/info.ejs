@@ -1,5 +1,6 @@
 <head>
     <link rel="stylesheet" href="/public/css/group.css">
+    <!-- <link rel="stylesheet" href="/public/css/backoffice.css"> -->
 </head>
 
 <main class="container" id="groupcontainer">
@@ -17,16 +18,19 @@
             </p>
         </div>
         <% if(group.name != "Aspiranten") {%>
-        <div id="groupstory">
-            <h3>Verhalend Kader</h3>
-            <p id="vkDiv">
-                <%- group.story -%>
-            </p>
-        </div>
+            <div id="groupstory">
+                <h3>Verhalend Kader</h3>
+                <p id="vkDiv">
+                    <%- group.story -%>
+                </p>
+            </div>
+            <div id="calendar"></div>
+        <% } else {%> 
+            <div id="calendar" class="aspiCalendar"></div>
         <% } %>
-    
-        <div id="calendar"></div>
+
     </div>
+    <br>
 
     <div id="groupleaders">
         <div id="groupleaders-title"><h3>Leiders</h3></div>

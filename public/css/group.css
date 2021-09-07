@@ -1,6 +1,10 @@
 #groupcontainer {
     margin-top: 10px;
-    padding: 10px;
+    padding: 20px;
+}
+
+.aspiCalendar {
+	max-width: 50%;
 }
 
 .info {
@@ -12,6 +16,10 @@
 @media only screen and (max-width: 1200px) {
     .info {
 		grid-template-columns: repeat(1, minmax(350px, 1fr));
+	}
+
+	.aspiCalendar {
+		max-width: 100%;
 	}
 }
 
@@ -98,4 +106,114 @@ button:hover{
 	background-color: #f98d1e;
 	transition: 0.5s;
 	color: white;
+}
+
+/* Albums */
+
+.interface {
+	border: 1px solid #f98d1e;
+	border-radius: 20px;
+	height: auto;
+	width: auto;
+	max-height: 400px;
+	padding: 10px;
+	overflow-y: auto;
+}
+
+.interface h2, .interface h3 {
+	margin-left: 10px;
+}
+
+.interface .info {
+	height: auto;
+	width: 100%;
+	padding: 10px;
+	/* overflow: auto; */
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 2fr))
+}
+
+.interface .info a {
+	max-height: 100px;
+}
+
+a{
+	text-decoration: none;
+	color: #f98d1e;
+}
+
+ a:hover{
+	color: #bbc3d7;
+}
+
+.interfaceinfo {
+	padding-left: 20px;
+	padding: 5px;
+	border: 1px solid #f98d1e;
+	border-radius: 10px;
+	margin-top: 10px;
+}
+.interfaceinfo p {
+	margin-left: 20px;
+}
+
+.interfaceinfo-inner {
+	padding: 10px;
+	padding-bottom: 15px;
+}
+
+.interfaceinfo-inner img {
+	float: left;
+	display: inline-block;
+}
+
+.interfaceinfo-inner p {
+	display: inline-block;
+}
+
+/* photos in album */
+
+.interfacePhoto {
+	border: 1px solid #f98d1e;
+	border-radius: 20px;
+	max-height: 600px;
+	padding: 10px;
+}
+
+.interfacePhoto h2 {
+	margin-left: 10px;
+}
+
+.interfacePhoto .infoPhoto {
+	max-height: 460px;
+	width: auto;
+	padding: 10px;
+	overflow-y: auto;
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.interfaceinfoPhoto {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	display: inline-block;
+	padding-left: 20px;
+	padding: 5px;
+	border: 1px solid #f98d1e;
+	border-radius: 10px;
+	margin-top: 10px;
+	transition: 0.3s;
+	cursor: pointer;
+}
+
+.interfaceinfoPhoto:hover {
+	opacity: 0.7;
+}
+
+.interfaceinfoPhoto img {
+	object-fit: contain;
+	width: 150px;
+	height: 150px;
 }

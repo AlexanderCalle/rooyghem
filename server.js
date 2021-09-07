@@ -15,7 +15,7 @@ const adminCheck = require('./middleware/adminCheck');
 const userCheck = require('./middleware/userCheck');
 const sgMail = require('@sendgrid/mail');
 const app = express();
-const port = 3000 || procces.env.PORT;
+const port = 2000 || procces.env.PORT;
 
 // Server Logs middelware
 app.use(morgan('dev'));
@@ -158,20 +158,25 @@ app.use('/locations', userCheck, locations);
 const leiding = require('./router/leiding');
 app.use('/leiding', userCheck, leiding);
 
+// Route Vk
 const vk = require('./router/vk');
 app.use('/vk', userCheck, vk);
 
+// Route Newsfeed
 const newsfeed = require('./router/newsfeeds');
 app.use('/newsfeed', authCheck, adminCheck, userCheck, newsfeed);
 
+// Route reset
 const reset = require('./router/reset');
 app.use('/reset', userCheck, reset);
 
+// Route profile
 const profile = require('./router/profile');
 app.use('/profile', userCheck, authCheck, adminCheck, profile);
 
 const wafelbak = require('./router/wafelbak');
 app.use('/wafelbak', userCheck, wafelbak);
+
 
 app.listen(port, ()=> {
     console.log('Server running on port ' + port);
