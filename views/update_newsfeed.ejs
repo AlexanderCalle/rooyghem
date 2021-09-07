@@ -1,3 +1,7 @@
+<head>
+    <script src="/public/js/link.js"></script>
+</head>
+
 <main class="container" id="backofficecontainer">
     <%- include('./particals/back_office.ejs') %>
     <div id="backofficecreation">
@@ -11,7 +15,12 @@
                 <input id="title" type="text" name="title" value="<%=newsfeed.title%>" placeholder="Titel...">
                 <br>
                 <label for="description">Beschrijving </label>
-                <textarea name="description" cols="120" rows="10"><%=newsfeed.description%></textarea>
+                <br>
+                <button type='button' id="link" style="width: 50px">Link</button>
+                <button type='button' id="vet" style="width: 50px">Vet</button>
+                <button type='button' id="cursief" style="width: 50px">Cursief</button>
+                <br>
+                <textarea name="description" id="feedDescription" cols="120" rows="10"><%=newsfeed.description%></textarea>
                 <br>
                 <label for="start_publication">Start publicatie </label>
                 <input id="start_publication" type="date" name="start_publication" value="<%= moment(newsfeed.start_publication).format('YYYY-MM-DD')%>">

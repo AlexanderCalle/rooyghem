@@ -31,30 +31,6 @@
 
     </div>
     <br>
-    <div class="albums">
-        <h2>Albums</h2>
-        <div class="interface">
-            <% if(albums != null ) { %>
-                <% albums.forEach(function(groupedAlbum) { %>
-                    <h3><%= groupedAlbum.date %></h3>
-                    <div class="info">
-                        <% groupedAlbum.albums.forEach(function(album){ %>
-                            <a href="/albums/groups/<%= group.name %>/<%= album.album_id %>">
-                                <div class="interfaceinfo">
-                                    <div class="interfaceinfo-inner">
-                                        <img src="/public/images/album1.svg" width="50" height="auto">
-                                        <p><%= album.name %></p>
-                                    </div>
-                                </div>
-                            </a>
-                        <% }) %>
-                    </div>
-                <% }) %>
-            <% } else { %>
-                <p>Nog geen albums te zien!</p>
-            <% } %>
-        </div>
-    </div>
 
     <div id="groupleaders">
         <div id="groupleaders-title"><h3>Leiders</h3></div>
