@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
         if(err) return res.render('badrequest', {error: err})
         res.render('wafelbak_order', {
             groups: groups,
+            username: req.user.username
         });
     })
 });
@@ -25,7 +26,9 @@ router.post('/order', (req, res) => {
 
     con.query('INSERT INTO orders SET ?', order, (err, order) => {
         if(err) return res.render('badrequest', {error: err});
-        res.redirect('/wafelbak')
+        res.render('succes_order', {
+            username: req.user.username
+        })
     })
 
 });
