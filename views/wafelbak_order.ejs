@@ -1,0 +1,35 @@
+<head>
+    <link rel="stylesheet" href="/public/css/wafelbak.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+     <script>
+       function onSubmit(token) {
+         document.getElementById("wafelbak_form").submit();
+       }
+     </script>
+</head>
+
+<main id="wafelbakcontent">
+    <div id="wafebalform">
+        <h2>Bestel hier onze heerlijke wafels!</h2>
+
+        <form id="wafelbak_form" action="/wafelbak/order" method="POST">
+            <input type="text" placeholder="Voornaam" name="firstname" required />
+            <input type="text" name="lastname" placeholder="Achternaam" required />
+            <input type="number" name="total_amount" placeholder="Aantal pakketten..." required />
+            <input type="email" name="email" placeholder="Email" required />
+            <select id="bannen" name="group">
+                <% groups.forEach(function(group) { %>
+                    <option><%= group.name %></option>
+                <% }) %>
+                <option>Geen idee</option>
+            </select>
+            <br>
+            <button class="g-recaptcha" data-sitekey="6Lda4E4cAAAAAEMITzaJKTyhPGHZuDuKK4kFuCOD" data-callback='onSubmit'>
+                Bestel het nu!
+            </button>
+        </form>
+    </div>
+    <div id="wafelbakphoto">
+        <img src="/public/images/wafelbak.jpg" alt="Wafelbak">
+    </div>
+</main>

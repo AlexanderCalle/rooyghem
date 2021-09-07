@@ -170,6 +170,8 @@ app.use('/reset', userCheck, reset);
 const profile = require('./router/profile');
 app.use('/profile', userCheck, authCheck, adminCheck, profile);
 
+const wafelbak = require('./router/wafelbak');
+app.use('/wafelbak', userCheck, wafelbak);
 
 app.listen(port, ()=> {
     console.log('Server running on port ' + port);
