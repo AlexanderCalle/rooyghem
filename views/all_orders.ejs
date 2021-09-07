@@ -7,7 +7,7 @@
         <div class="info">
             <% orders.forEach(function(order) { %>
                 <details class="interfaceinfo">
-                    <summary><%= order.firstname %> <%= order.lastname %></summary>
+                    <summary><%= order.firstname %> <%= order.lastname %> <a class="summary-button" href="/wafelbak/order/delete/<%= order.order_id %>">delete</a></summary>
                     <p>Ban: <%= order.group %></p>
                     <p>email: <%= order.email %></p>
                     <p>Aantal pakketten: <%= order.total_amount %></p>

@@ -275,7 +275,10 @@ details {
 	cursor: pointer;
 }
 
-
 summary {
 	padding: 10px;
+}
+
+.summary-button {
+	float: right;
 }

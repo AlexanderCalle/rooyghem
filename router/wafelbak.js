@@ -46,13 +46,10 @@ router.get('/orders', (req, res) => {
 
 // Route DELETE order
 router.get('/order/delete/:id', (req, res) => {
-
-});
-
-// Route PUT order
-// if someone want to change there order
-router.get('/order/update/:id', (req, res) => {
-
+    con.query('DELETE FROM `orders` WHERE order_id = ?', req.params.id, (err, orders) => {
+        if(err) return res.render('badrequest', {error: err});
+        res.redirect('/wafelbak/orders')
+    })
 });
 
 module.exports = router;
