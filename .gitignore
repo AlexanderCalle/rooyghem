@@ -1,4 +1,6 @@
 public/images/leiding/*
 public/images/newsfeedpictures/*
+log/*
+node_modules/*
 connect.js
 node_modules/*
