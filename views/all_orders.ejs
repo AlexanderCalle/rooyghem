@@ -2,8 +2,11 @@
     <%- include("./particals/back_office.ejs") %>
 
     <div class="interface">
-        <h2>Wafelbak bestellingen</h2>
-
+        <div class="orders-header">
+            <h2>Wafelbak bestellingen</h2> 
+            <a href="/wafelbak/excel">Download bestellingen</a>
+        </div>
+            
         <div class="info">
             <% orders.forEach(function(order) { %>
                 <details class="interfaceinfo">
