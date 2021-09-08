@@ -1,0 +1,7 @@
+File from: [./public/images/temp/1628697312810IMG_2175.PNG]
+
+File to: [./public/images/albums/test8/1628697312810IMG_2175.PNG]
+
+Compression algorithm: [pngquant]
+
+Description: Error: spawn /Users/alexander/Documents/developing/rooyghem/node_modules/pngquant-bin/vendor/pngquant ENOENT
