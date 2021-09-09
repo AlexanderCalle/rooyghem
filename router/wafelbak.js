@@ -53,7 +53,7 @@ router.get('/orders', userCheck, authCheck, adminCheck,(req, res) => {
             user: req.user,
             admin: req.admin,
             username: req.user.username
-        })
+        });
     })
 });
 

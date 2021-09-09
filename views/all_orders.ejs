@@ -3,7 +3,8 @@
 
     <div class="interface">
         <div class="orders-header">
-            <h2>Wafelbak bestellingen</h2> 
+            <h2>Wafelbak bestellingen</h2>
+	    <p>Totaal aantal pakketten: <%= total_nr %></p> 
             <a href="/wafelbak/excel">Download bestellingen</a>
         </div>
             
@@ -17,8 +18,5 @@
                 </details>
             <% }) %>
         </div>
-        <p>
-            Totaal aantal pakketten: <%= total_nr %>
-        </p>
     </div>
 </main>
