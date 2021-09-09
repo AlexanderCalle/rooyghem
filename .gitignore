@@ -1,9 +1,6 @@
-public/images/leiding/*
-public/images/newsfeedpictures/*
-public/images/temp/*
-public/*
-log/*
+public
+log
 connect.js
 node_modules
-backend/*
-frontend/*
+backend
+frontend

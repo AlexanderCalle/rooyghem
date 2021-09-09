@@ -1,4 +1,4 @@
-<main style="padding: 10px;">
+<main style="padding: 10px; text-align: center;">
     <% moment.locale("nl-be"); %>
     <h3><%= activity.title %></h3>
 
@@ -9,6 +9,6 @@
     <% } %>
 
     <% if(activity.description != "") { %>
-        <p>Wat? <%= activity.description %></p>
+        <p>Wat? <%- activity.description %></p>
     <% } %>
 </main>
