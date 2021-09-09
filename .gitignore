@@ -1,11 +1,9 @@
 public/images/leiding/*
 public/images/newsfeedpictures/*
 public/images/temp/*
-public/images/albums/*
-<<<<<<< HEAD
+public/*
 log/*
-node_modules/*
-=======
 connect.js
-node_modules/*
->>>>>>> ec98cf73db805b34a4c672d9d91b081c0158e9c3
+node_modules
+backend/*
+frontend/*
