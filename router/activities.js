@@ -47,20 +47,38 @@ router.get('/activity/:id', (req, res)=>{
 
 // Route GET form
 router.get('/create', authCheck, (req, res)=>{
-    con.query('SELECT * FROM `groups` WHERE group_id = ?', req.user.group_id, (err, groups)=>{
-        if(err) return res.render('badrequest', {error: err});
-        con.query('SELECT * FROM activities WHERE group_id = ?', req.user.group_id, (err, activities)=>{
+    console.log(req.user);
+    if(req.admin === true) {
+        con.query('SELECT * FROM `groups`', req.user.group_id, (err, groups)=>{
             if(err) return res.render('badrequest', {error: err});
-            res.render('create_activities', {
-                groups:groups, 
-                activities:activities,
-                user: req.user, 
-                admin: req.admin, 
-                username: req.user.username,
-                moment: require('moment')
-            });
-        }); 
-    });
+            con.query('SELECT * FROM activities WHERE group_id = ?', req.user.group_id, (err, activities)=>{
+                if(err) return res.render('badrequest', {error: err});
+                res.render('create_activities', {
+                    groups: groups, 
+                    activities:activities,
+                    user: req.user, 
+                    admin: req.admin, 
+                    username: req.user.username,
+                    moment: require('moment')
+                });
+            }); 
+        });
+    } else {
+        con.query('SELECT * FROM `groups` WHERE group_id = ?', req.user.group_id, (err, groups)=>{
+            if(err) return res.render('badrequest', {error: err});
+            con.query('SELECT * FROM activities WHERE group_id = ?', req.user.group_id, (err, activities)=>{
+                if(err) return res.render('badrequest', {error: err});
+                res.render('create_activities', {
+                    groups: groups, 
+                    activities:activities,
+                    user: req.user, 
+                    admin: req.admin, 
+                    username: req.user.username,
+                    moment: require('moment')
+                });
+            }); 
+        });
+    }
 });
 
 // Route POST create activity
