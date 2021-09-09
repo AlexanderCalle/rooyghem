@@ -1,10 +1,5 @@
-public/images/leiding/*
-public/images/newsfeedpictures/*
+public/*
 log/*
 node_modules/*
 connect.js
 node_modules/*
-<<<<<<< HEAD
-public/excel/*
-=======
->>>>>>> e6fd28bdd614540e41fd73d4710e0dcb48fa21f7

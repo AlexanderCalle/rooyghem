@@ -1,5 +1,5 @@
 CREATE TABLE `orders` (
-    order_id INT NOT NULL AUTOINCREMENT,
+    order_id INT NOT NULL AUTO_INCREMENT,
     PRIMARY KEY (order_id),
     firstname VARCHAR(255) NOT NULL,
     lastname VARCHAR(255) NOT NULL,
