@@ -1,5 +1,6 @@
-public/*
-log/*
-node_modules/*
+public
+log
 connect.js
-node_modules/*
+node_modules
+backend
+frontend
