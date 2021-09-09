@@ -2,26 +2,11 @@ const express = require('express');
 const router = express.Router();
 const con = require('../connect');
 const authCheck = require('../middleware/authCheck');
-const adminCheck = require('../middleware/adminCheck')
+const adminCheck = require('../middleware/adminCheck');
+const userCheck = require('../middleware/userCheck');
 
 // Route GET all activities + form
-router.get('/', authCheck, (req, res)=>{
-    con.query('SELECT * FROM `groups` WHERE group_id = ?', req.user.group_id, (err, groups)=>{
-        if(err) return res.status(400).json({"statuscode": 400, error: err});
-        con.query('SELECT * FROM activities WHERE group_id = ?', req.user.group_id, (err, activities)=>{
-            if(err) return res.status(400).json({"statuscode": 400, error: err});
-            return res.json({
-                activities:activities,
-                user: req.user, 
-                admin: req.admin, 
-                username: req.user.username,
-                moment: require('moment')
-            });
-        }); 
-    });
-});
-
-router.get('/allactivities', authCheck, adminCheck, (req, res)=> {
+router.get('/', (req, res)=> {
     con.query('SELECT * FROM activities', (err, activities)=> {
         if(err) return res.status(400).json({"statuscode": 400, error: err});
         return res.json({
@@ -34,7 +19,24 @@ router.get('/allactivities', authCheck, adminCheck, (req, res)=> {
     });
 });
 
-router.get('/activity/:id', (req, res)=>{
+router.get('/me', userCheck, (req, res)=>{
+    if(req.user.group_id == undefined) return res.status(401).json({"statuscode": 401, "error": "Log in before consulting this endpoint"});
+    con.query('SELECT * FROM `groups` WHERE group_id = ?', req.user.group_id, (err, groups)=>{
+        if(err) return res.status(400).json({"statuscode": 400, error: err});
+        con.query('SELECT * FROM activities WHERE group_id = ?', req.user.group_id, (err, activities)=>{
+            if(err) return res.status(400).json({"statuscode": 400, error: err});
+            return res.json({
+                activities:activities,
+                // user: req.user, 
+                // admin: req.admin, 
+                // username: req.user.username,
+                moment: require('moment')
+            });
+        }); 
+    });
+});
+
+router.get('/:id', (req, res)=>{
     con.query('SELECT * FROM activities WHERE activity_id = ?', req.params.id, (err, activity)=> {
         if(err) return res.status(400).json({"statuscode": 400, error: err});
         if (activity[0] == null) return res.status(404).json({"statuscode": 404, "error": "Activity not found"});
@@ -47,22 +49,22 @@ router.get('/activity/:id', (req, res)=>{
 });
 
 // Route GET form
-router.get('/create', authCheck, (req, res)=>{
-    con.query('SELECT * FROM `groups` WHERE group_id = ?', req.user.group_id, (err, groups)=>{
-        if(err) return res.status(400).json({"statuscode": 400, error: err});
-        con.query('SELECT * FROM activities WHERE group_id = ?', req.user.group_id, (err, activities)=>{
-            if(err) return res.status(400).json({"statuscode": 400, error: err});
-            return res.json({
-                groups:groups, 
-                activities:activities,
-                user: req.user, 
-                admin: req.admin, 
-                username: req.user.username,
-                moment: require('moment')
-            });
-        }); 
-    });
-});
+// router.get('/create', authCheck, (req, res)=>{
+//     con.query('SELECT * FROM `groups` WHERE group_id = ?', req.user.group_id, (err, groups)=>{
+//         if(err) return res.status(400).json({"statuscode": 400, error: err});
+//         con.query('SELECT * FROM activities WHERE group_id = ?', req.user.group_id, (err, activities)=>{
+//             if(err) return res.status(400).json({"statuscode": 400, error: err});
+//             return res.json({
+//                 groups:groups, 
+//                 activities:activities,
+//                 user: req.user, 
+//                 admin: req.admin, 
+//                 username: req.user.username,
+//                 moment: require('moment')
+//             });
+//         }); 
+//     });
+// });
 
 // Route POST create activity
 router.post('/create', authCheck,(req, res)=>{
@@ -135,23 +137,23 @@ router.get('/delete/:id', authCheck,(req, res)=>{
 });
 
 // Router GET update activity
-router.get('/update/:id', authCheck,(req, res)=>{
-    con.query('SELECT * from activities WHERE activity_id = ?', req.params.id, (err, activity)=>{
-        if(err) return res.status(400).json({"statuscode": 400, error: err});
-        con.query('SELECT name FROM `groups` WHERE group_id = ?', activity[0].group_id, (err, group_name)=>{
-            if(err) return res.status(400).json({"statuscode": 400, error: err});
-            return res.json({
-                activity: activity[0],
-                group_name: group_name[0].name,
-                group_id: activity[0].group_id,
-                admin: req.admin,
-                username: req.user.username,
-                user: req.user,
-                moment: require('moment')
-            });
-        });
-    });
-});
+// router.get('/update/:id', authCheck,(req, res)=>{
+//     con.query('SELECT * from activities WHERE activity_id = ?', req.params.id, (err, activity)=>{
+//         if(err) return res.status(400).json({"statuscode": 400, error: err});
+//         con.query('SELECT name FROM `groups` WHERE group_id = ?', activity[0].group_id, (err, group_name)=>{
+//             if(err) return res.status(400).json({"statuscode": 400, error: err});
+//             return res.json({
+//                 activity: activity[0],
+//                 group_name: group_name[0].name,
+//                 group_id: activity[0].group_id,
+//                 admin: req.admin,
+//                 username: req.user.username,
+//                 user: req.user,
+//                 moment: require('moment')
+//             });
+//         });
+//     });
+// });
 
 
 // Route UPDATE One activity

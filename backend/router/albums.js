@@ -6,6 +6,8 @@ const fs = require('fs');
 const compression = require('../middleware/compression');
 const router = express.Router();
 const path = require('path');
+const authCheck = require('../middleware/authCheck');
+const adminCheck = require('../middleware/adminCheck');
 
 // Multer middleware Save images
 const storage = multer.diskStorage({
@@ -21,15 +23,44 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+// Get all albums
 router.get('/' , (req, res)=> {
-    con.query('SELECT * FROM albums WHERE group_id = ?', req.user.group_id, (err, albums)=> {
+    con.query('SELECT * FROM albums WHERE checked = 1', (err, albums)=> {
         if(err) return res.status(400).json({"statuscode": 400, error: err});
         return res.json({
-            user: req.user,
-            admin: req.admin,
-            albums: albums,
+            albums: albums
         });
     });
+});
+
+// Get albums of group
+router.get('/groups/:group_id', (req, res)=> {
+    con.query('SELECT * FROM albums WHERE group_id = ? AND checked = 1', req.params.group_id, (err, albums) => {
+        if(err) return res.status(400).json({"statuscode": 400, "error": err});
+        if(albums.length == 0) return res.status(404).json({"statuscode": 404, "error": "Group not found"});
+        const responseData = {
+            albums: []
+        };
+        albums.forEach(album => {
+            a = {
+                name: album.name,
+                group_id: album.group_id,
+                description: album.description,
+                activity_start: album.activity_start,
+                activity_end: album.activity_end,
+                creation_date: album.creation_date,
+                picture_urls: []
+            };
+            con.query('SELECT pictures_id FROM pictures WHERE album_id = ?', album.album_id, (err, ids) => {
+                if(err) return res.status(400).json({"statuscode": 400, "error": err});
+                ids.forEach(id => {
+                    a.picture_urls.push('/albums/pictures/' + id.pictures_id);
+                });
+            });
+            responseData.albums.push(a);
+        })
+        return res.json(responseData);
+    })
 });
 
 router.get('/album/:id', (req, res) => {

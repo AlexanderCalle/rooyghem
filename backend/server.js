@@ -48,8 +48,11 @@ app.get('/', userCheck, (req, res)=> {
 });
 
 app.get('/contact', userCheck, (req, res)=> {
-    con.query('SELECT firstname, lastname, email, path_pic, phone FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
-        if(err) return res.status(500).json({"statuscode": 500, "error": err});
+    con.query('SELECT firstname, lastname, email, user_id, phone FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
+        if(err) return res.status(400).json({"statuscode": 400, "error": err});
+        users.forEach(user => {
+            user.picture = '/users/single/' + user.user_id + '/picture';
+        })
         return res.json({bondsleiders: users, username: req.user.username});
     });
 });
@@ -69,29 +72,29 @@ app.post('/contact', userCheck, (req, res)=> {
         
         sgMail.send(msg).then(()=> {
             con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
-                return res.json({bondsleiders: users, username: req.user.username, message: 'Vraag werd verstuurd'});
+                return res.json({message: 'Vraag werd verstuurd'});
             });
         }).catch((err)=> {
             con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
-                return res.status(500).json({"statuscode": 500, bondsleiders: users, username: req.user.username, error: err});
+                return res.status(500).json({"statuscode": 500, error: err});
             });
         });
     } else {
         con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
-            return res.status(400).json({'statuscode': 400, bondsleiders: users, username: req.user.username, error: 'Gelieve alle velden in te vullen'});
+            return res.status(400).json({'statuscode': 400, error: 'Gelieve alle velden in te vullen'});
         });
     }
 });
 
-app.get('/overons', userCheck, (req, res)=> {
-    return res.json({username: req.user.username});
-});
+// app.get('/overons', userCheck, (req, res)=> {
+//     return res.json({username: req.user.username});
+// });
 
-app.get('/forgot', userCheck, (req, res)=> {
-    return res.json({username: req.user.username});
-});
+// app.get('/forgot', userCheck, (req, res)=> {
+//     return res.json({username: req.user.username});
+// });
 
-app.post('/forgot', (req, res)=> {
+app.post('/forgot', userCheck, (req, res)=> {
     let token;
 
     crypto.randomBytes(20, (err, buf) => {
@@ -127,26 +130,11 @@ app.post('/forgot', (req, res)=> {
             sgMail.send(msg).then(()=> {
                 return res.json({message: 'Email werd verzonden', username: ''});
             }).catch((err)=> {
-                return res.status(500).json({"statuscode": 500, error: err, username: ''});
+                return res.status(500).json({"statuscode": 500, error: err});
             });
         });
     });
 }); 
-
-app.get('/albums/groups/:group_id/:id', (req, res)=> {
-    con.query('SELECT * FROM albums WHERE album_id = ?', req.params.id, (err, album)=> {
-        if (err) return res.status(400).json({"statuscode": 400, error: err});
-        con.query('SELECT * FROM pictures WHERE album_id = ?', req.params.id, (err, pictures)=> {
-            if (err) return res.status(400).json({"statuscode": 400, error: err});
-            return res.json({
-                user: req.user,
-                admin: req.admin,
-                album: album[0],
-                pictures: pictures,
-            })
-        });
-    });
-});
 
 app.get('/sitemap', function(_, res) {
     console.log(__dirname);
@@ -181,7 +169,7 @@ app.use('/vk', userCheck, vk);
 
 // Route Newsfeed
 const newsfeed = require('./router/newsfeeds');
-app.use('/newsfeeds', authCheck, adminCheck, userCheck, newsfeed);
+app.use('/newsfeeds', newsfeed);
 
 // Route reset
 const reset = require('./router/reset');
@@ -193,7 +181,7 @@ app.use('/reset', userCheck, reset);
 
 // Route Albums
 const albums = require('./router/albums');
-app.use('/albums', userCheck, authCheck, albums);
+app.use('/albums', albums);
 
 app.listen(port, ()=> {
     console.log('Server running on port ' + port);

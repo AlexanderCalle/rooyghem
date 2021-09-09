@@ -31,7 +31,7 @@ router.post('/:token', (req, res)=> {
                 });
             });
         } else {
-            return res.status(403).json({"statuscode": 403, "error": "passwords did not match"});
+            return res.status(400).json({"statuscode": 400, "error": "passwords did not match"});
         }
     });
 });

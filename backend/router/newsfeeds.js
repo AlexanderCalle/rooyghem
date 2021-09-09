@@ -6,6 +6,8 @@ const multer = require('multer');
 const newsfeedChecker = require('../middleware/newsfeedChecker');
 const compression = require('../middleware/compression');
 const path = require('path');
+const adminCheck = require('../middleware/adminCheck');
+const userCheck = require('../middleware/userCheck');
 
 // Multer middleware Save images
 const storage = multer.diskStorage({
@@ -32,7 +34,6 @@ router.get('/',(req, res)=>{
             newsfeeds: newsfeeds,
             user: req.user,
             admin: req.admin,
-            username: req.user.username,
             moment: require('moment')
         });
     });
@@ -45,21 +46,21 @@ router.get('/:feed_id/picture', (req, res) => {
     });
 });
 
-router.get('/create',(req, res)=>{
-    con.query('SELECT * FROM newsfeeds ORDER BY start_publication', (err, newsfeeds) => {
-        if (err) return res.status(400).json({"statuscode": 400, error: err});
-        return res.json({
-            newsfeeds: newsfeeds,
-            user: req.user,
-            admin: req.admin,
-            username: req.user.username,
-            moment: require('moment')
-        });
-    });
-});
+// router.get('/create',(req, res)=>{
+//     con.query('SELECT * FROM newsfeeds ORDER BY start_publication', (err, newsfeeds) => {
+//         if (err) return res.status(400).json({"statuscode": 400, error: err});
+//         return res.json({
+//             newsfeeds: newsfeeds,
+//             user: req.user,
+//             admin: req.admin,
+//             username: req.user.username,
+//             moment: require('moment')
+//         });
+//     });
+// });
 
 // Route POST create newsfeed
-router.post('/create', upload.single('image'), newsfeedChecker ,(req, res)=>{
+router.post('/create', authCheck, adminCheck, userCheck, upload.single('image'), newsfeedChecker ,(req, res)=>{
     if(req.file){
         compression(process.env.TEMP_PATH + req.file.filename, process.env.NEWSFEED_PATH)
         const newsfeed = {
@@ -92,7 +93,7 @@ router.post('/create', upload.single('image'), newsfeedChecker ,(req, res)=>{
 
 // TODO: delete newsfeed
 // Route DELETE One activity
-router.get('/delete/:id',(req, res)=>{
+router.get('/delete/:id', authCheck, adminCheck, userCheck, (req, res)=>{
     con.query('DELETE FROM newsfeeds WHERE feed_id = ?', req.params.id, (err, newsfeed)=>{
         if(err) return res.status(400).json({"statuscode": 400, error: err});
         res.json({"message": "Feed deleted succesfully"});
@@ -116,7 +117,7 @@ router.get('/delete/:id',(req, res)=>{
 
 // TODO: update one newsfeed
 // Route UPDATE One activity
-router.put('/update/:id',(req, res)=>{
+router.put('/update/:id', authCheck, adminCheck, userCheck, (req, res)=>{
     const updated_newsfeed = {
         title: req.body.title,
         description: req.body.description,
