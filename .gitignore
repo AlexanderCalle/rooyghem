@@ -1,4 +1,5 @@
 backend/*
+frontend/*
 log/*
 node_modules/*
 connect.js
