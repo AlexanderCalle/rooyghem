@@ -1,4 +1,4 @@
-backend/public/images/*
+backend/*
 log/*
 node_modules/*
 connect.js
