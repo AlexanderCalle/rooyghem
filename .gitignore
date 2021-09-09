@@ -5,4 +5,4 @@ node_modules/*
 connect.js
 node_modules/*
 public/excel/*
-node_modules
+node_modules/*
