@@ -43,8 +43,13 @@ router.post('/order', (req, res) => {
 router.get('/orders', userCheck, authCheck, adminCheck,(req, res) => {
     con.query('SELECT * FROM `orders` WHERE YEAR(order_date) = YEAR(CURRENT_DATE())', (err, orders) => {
         if(err) return res.render('badrequest', {error: err});
+        var total_nr = 0;
+        orders.forEach(order => {
+            total_nr += order.total_amount;
+        });
         res.render("all_orders", {
             orders: orders,
+            total_nr: total_nr,
             user: req.user,
             admin: req.admin,
             username: req.user.username
