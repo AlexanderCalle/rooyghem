@@ -9,6 +9,7 @@ const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const moment = require('moment');
+const cors = require('cors');
 const crypto = require('crypto');
 const authCheck = require('./middleware/authCheck');
 const adminCheck = require('./middleware/adminCheck');
@@ -22,6 +23,10 @@ app.use(morgan('dev'));
 
 
 //middelware
+app.use(cors({
+    origin:'*',
+    credentials: true
+}));
 app.use('/public', express.static(path.join(__dirname, "public")));
 app.use(expressLayouts);
 app.set('view engine', 'ejs');

@@ -1,11 +1,20 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import '../style/index.css';
 import '../style/style.css';
-import newfeedTestimage from '../images/newsfeedpictures/1606637895806Nieuwesite66898832_503377667078169_9064108580730306560_n.jpg'
+import Newsfeed from '../components/Newsfeed';
 
 const HomePage = () => {
+
+    const [newsfeeds, setNewsFeeds] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:2000/newsfeeds').then((res) => res.json())
+            .then(result => {
+                setNewsFeeds(result.newsfeeds);
+            })
+    }, [])
 
     return (
         <>
@@ -13,14 +22,9 @@ const HomePage = () => {
             <main class="container" id="index-container">
                 <h2>Niet te missen!</h2>
                 <section class="news">
-                {/* <% newsfeeds.forEach(function(feed) { %>
-                    
-                <% }) %>     */}
-                    <div class="newsfeed">
-                        <h3 class="feedtitle">test</h3>
-                        <img src={newfeedTestimage} alt="Picture for" class="feedimg" />
-                        <p class="feedp">description</p>
-                    </div>
+                {newsfeeds.map(feed => (
+                    <Newsfeed feed={feed} />
+                ))}   
                 </section>
             </main>
             <Footer />

@@ -25,7 +25,7 @@ const upload = multer({ storage: storage });
 
 // Route GET all newsfeeds + form
 router.get('/',(req, res)=>{
-    con.query('SELECT * FROM newsfeeds ORDER BY start_publication', (err, newsfeeds) => {
+    con.query('SELECT * FROM newsfeeds WHERE end_publication > CURRENT_DATE() ORDER BY start_publication', (err, newsfeeds) => {
         if (err) return res.status(400).json({"statuscode": 400, error: err});
         newsfeeds.forEach(feed => {
             feed.picture_path = "/newsfeeds/" + feed.feed_id + "/picture";
