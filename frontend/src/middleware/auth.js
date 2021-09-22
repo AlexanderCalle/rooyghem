@@ -13,8 +13,17 @@ class Auth {
         if(Cookies.get('auth') !== undefined && localStorage.getItem('tokens')) {
             return true;
         } else {
+            if(Cookies.get('auth') === null && localStorage.getItem('tokens') !== null){
+                localStorage.removeItem('tokens')
+            }
             return false;
         }
+    }
+
+    logout() {
+        Cookies.remove('auth');
+        localStorage.removeItem('tokens');
+        return true;
     }
 
     setUser(user) {
