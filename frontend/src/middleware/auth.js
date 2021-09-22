@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie';
+
 class Auth {
     constructor() {
         this.user = null;
@@ -5,6 +7,14 @@ class Auth {
 
     isAuthenticated() {
         return this.user !== null;
+    }
+
+    isValidToken() {
+        if(Cookies.get('auth') !== undefined && localStorage.getItem('tokens')) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     setUser(user) {
@@ -23,6 +33,8 @@ class Auth {
         .then(data => {
             if (data.statuscode === 200) {
                 this.user = data.user;
+                Cookies.set('auth', data.token, { expires: 2 });
+                localStorage.setItem("tokens", JSON.stringify(this.user));
             } else {
                 console.log("Login failed");
             }

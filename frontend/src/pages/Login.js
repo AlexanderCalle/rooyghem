@@ -15,14 +15,16 @@ const LoginPage = () => {
     
     const login = async e => {
         e.preventDefault();
+        setStartedLogin(true);
         const f = await Auth.login({username, password});
+        setFinishedLogin(true);
     };
 
     if(startedLogin && !finishedLogin) {
         return(<p>Aan het inloggen...</p>);
     }
 
-    if(!Auth.isAuthenticated()) {
+    if(!Auth.isAuthenticated() && !Auth.isValidToken()) {
         console.log("Not logged in");
         return (
             <>

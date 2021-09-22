@@ -166,7 +166,7 @@ router.post('/login', (req, res)=>{
                     }
                     const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '12h' });
                     console.log("Login succesfull");
-                    return res.cookie('auth', token).json({"statuscode": 200, "message": "login succesfull", "user": payload});
+                    return res.cookie('auth', token).json({"statuscode": 200, "message": "login succesfull", "user": payload, "token": token});
                 } else {
                     return res.status(401).json({error: 'Password klopt niet',username: req.user.username});
                 }
