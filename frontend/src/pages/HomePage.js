@@ -8,7 +8,7 @@ import Newsfeed from '../components/Newsfeed';
 const HomePage = () => {
 
     const [newsfeeds, setNewsFeeds] = useState([]);
-
+    console.log("Homepage");
     useEffect(() => {
         fetch('http://localhost:2000/newsfeeds').then((res) => res.json())
             .then(result => {

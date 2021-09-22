@@ -30,7 +30,8 @@ router.get('/:group_name/info', (req, res)=> {
         if(err) return res.status(400).json({"statuscode": 400, error: err});
 
         if (group.length === 0) return res.status(404).json({"statuscode": 404, error: "Group not found"});
-        group[0].logo = '/groups/' + req.params.group_name + '/logo';
+        group[0].logo = req.protocol + '://' + req.headers.host + '/groups/' + req.params.group_name + '/logo';
+        group[0].contact = req.params.group_name + '@ksarooyghem.be';
         con.query('SELECT * FROM locations WHERE location_id = ?', group[0].location_id, (err, location) => {
             if(err) return res.status(400).json({"statuscode": 400, error: err});
             location[0].picture = '/locations/' + location[0].location_id + '/picture';
@@ -39,7 +40,7 @@ router.get('/:group_name/info', (req, res)=> {
                 con.query('SELECT user_id, firstname, lastname, email, is_banleader FROM users WHERE group_id = ? ORDER BY is_banleader DESC, lastname ASC', group[0].group_id, (err, leaders) =>{
                     if(err) return res.status(400).json({"statuscode": 400, error: err});
                     leaders.forEach(leader => {
-                        leader.picture = '/users/single/' + leader.user_id + '/picture';
+                        leader.picture = req.protocol + '://' + req.headers.host + '/users/single/' + leader.user_id + '/picture';
                     });
                     con.query('SELECT * FROM albums WHERE group_id = ? AND checked = 1 ORDER BY activity_end DESC', group[0].group_id, (err, albums) => {
                         if(err) return res.status(400).json({"statuscode": 400, error: err});
