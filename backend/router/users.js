@@ -165,7 +165,8 @@ router.post('/login', (req, res)=>{
                         group_id: user[0].group_id
                     }
                     const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '12h' });
-                    return res.cookie('auth', token).json({"statuscode": 200, "message": "login succesfull"});
+                    console.log("Login succesfull");
+                    return res.cookie('auth', token).json({"statuscode": 200, "message": "login succesfull", "user": payload});
                 } else {
                     return res.status(401).json({error: 'Password klopt niet',username: req.user.username});
                 }

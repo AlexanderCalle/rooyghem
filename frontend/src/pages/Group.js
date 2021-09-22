@@ -51,6 +51,7 @@ const GroupPage = () => {
                     </div>
                 </div>
             </main>
+            <Footer />
         </>
     );
 }
