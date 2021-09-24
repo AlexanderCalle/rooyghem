@@ -22,7 +22,15 @@ const BackofficeActivitiesPage = () => {
     }, [setActivities]);
 
     if(!activities) {
-        return(<div>Aan het laden...</div>);
+        return(
+        <> 
+            <Navbar />
+            <main class="container" id="backofficecontainer">
+                <BackofficeMenu />
+                <p>Aan het laden...</p>
+            </main>
+        </>
+        );
     }
     console.log(activities);
     return(
@@ -37,7 +45,7 @@ const BackofficeActivitiesPage = () => {
                             <ActivityListEl activity={activity}/>
                         ))}
                     </div>
-                    <a href="/activities/create" class="addLink">Nieuwe activiteit</a>
+                    <a href="/backoffice/activities/create" class="addLink">Nieuwe activiteit</a>
                 </div>
             </main>
         </>

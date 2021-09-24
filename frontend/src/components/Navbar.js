@@ -6,6 +6,9 @@ import instagramlogo from '../images/weblinks/instagramlogo.png';
 import twitterlogo from '../images/weblinks/twitterlogo.png';
 
 const Navbar = () => {
+
+    const user = JSON.parse(localStorage.getItem('tokens'));
+
     return (
         <header class="top-header">
             <div class="top-banner">
@@ -35,9 +38,8 @@ const Navbar = () => {
                     <li><a class="reference" href="/contact">Contact</a></li>
                     <li><a class="reference" href="/users/login">Login</a></li>
                 </ul>
-                {/* <% if(typeof username != "undefined") { %>
-                    <p><%= username %></p>
-                <% } %> */}
+                
+                {user && <p>{user.username}</p>}
 
             </nav>
         </header>

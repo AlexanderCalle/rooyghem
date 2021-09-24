@@ -131,6 +131,7 @@ router.post('/create', authCheck,(req, res)=>{
 
 // Route DELETE One activity
 router.get('/delete/:id', authCheck,(req, res)=>{
+    if(req.user.group_id == undefined) return res.status(401).json({"statuscode": 401, "error": "Log in before consulting this endpoint"});
     con.query('DELETE FROM activities WHERE activity_id = ?', req.params.id, (err, activity)=>{
         if(err) return res.status(400).json({"statuscode": 400, error: err});
         return res.json({"message": "Deleted activity succesfully"});

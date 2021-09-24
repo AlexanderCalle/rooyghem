@@ -8,8 +8,24 @@ const ActivityListEl = (props) => {
 
     const startTime = new Intl.DateTimeFormat('default', dateFormatOptions).format(Date.parse(props.activity.start_date));
     const endTime = new Intl.DateTimeFormat('default', dateFormatOptions).format(Date.parse(props.activity.end_date));
-    const updateLink = "/activities/update/" + props.activity.activity_id;
-    const deleteLink = "/activities/delete/" + props.activity.activity_id;
+    const updateLink = "/backoffice/activities/update/" + props.activity.activity_id;
+    
+    const deleteLink = async () => {
+        const response = await fetch('http://localhost:2000/activities/delete' + props.activity.activity_id, {'credentials': 'include'});
+        switch(response.statusCode) {
+            case 200:
+                window.location.reload();
+                break;
+            case 401:
+                alert('Je hebt geen toegang om dit te doen!');
+                break;
+            case 400:
+                alert('Er is een fout opgetreden probeer opnieuw');
+                break;
+            default:
+                break;
+        } 
+    };
 
     return (
         <div class="interfaceinfo">
