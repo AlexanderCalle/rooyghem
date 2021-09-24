@@ -50,7 +50,7 @@ const LoginPage = () => {
     } else {
         console.log("Logged in");
         return (
-            <Redirect to="/backoffice"/>
+            <Redirect to="/backoffice/activities"/>
         )
     }
 }

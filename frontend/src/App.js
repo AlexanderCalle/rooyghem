@@ -7,6 +7,7 @@ import Group from './pages/Group';
 import Login from './pages/Login';
 import PrivateRoute from './PrivateRoute';
 import BackofficePage from './pages/Backoffice';
+import BackofficeActivities from './pages/BackofficeActivities';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route exact path="/groups/:group_name/info" component={Group}/>
           <Route exact path="/users/login" component={Login}/>
           <PrivateRoute exact path="/backoffice" component={BackofficePage}/>
+          <PrivateRoute exat path="/backoffice/activities" component ={BackofficeActivities}/>
         </Switch>
       </body>
     </Router>
