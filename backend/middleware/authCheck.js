@@ -13,6 +13,6 @@ module.exports = (req, res, next)=> {
             next();
         }
     } catch (error) {
-        return res.status(401).render('authrequest');
+        return res.status(401).json({"statusCode": 401,"error": "Auth failed"});
     }
 };

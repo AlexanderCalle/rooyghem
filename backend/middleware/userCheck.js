@@ -5,6 +5,7 @@ module.exports = (req, res, next)=> {
         const token = req.cookies.auth;
         const userdata = jwt.verify(token, process.env.TOKEN_SECRET);
         req.user = userdata;
+        console.log(req.user);
         if(userdata.is_admin === 1){
             req.admin = true;
             next();
