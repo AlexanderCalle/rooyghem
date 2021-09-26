@@ -13,7 +13,7 @@ class Auth {
         if(Cookies.get('auth') !== undefined && localStorage.getItem('tokens')) {
             return true;
         } else {
-            if(Cookies.get('auth') === null && localStorage.getItem('tokens') !== null){
+            if(Cookies.get('auth') === undefined && localStorage.getItem('tokens') !== null){
                 localStorage.removeItem('tokens')
             }
             return false;
@@ -42,7 +42,7 @@ class Auth {
         .then(data => {
             if (data.statuscode === 200) {
                 this.user = data.user;
-                Cookies.set('auth', data.token, { expires: 2 });
+                Cookies.set('auth', data.token, { expires: .5 });
                 localStorage.setItem("tokens", JSON.stringify(this.user));
             } else {
                 console.log("Login failed");

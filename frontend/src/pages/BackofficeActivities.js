@@ -10,11 +10,16 @@ const BackofficeActivitiesPage = () => {
     const user = JSON.parse(localStorage.getItem('tokens'));
 
     const [activities, setActivities] = useState(null);
+    const [message, setMessage] = useState(null);
+
     Cookies.set('auth', (Cookies.get('auth')));
     useEffect(() => {
         const fetchData = async () => {
             const res = await fetch('http://localhost:2000/activities/me', {'credentials': 'include'});
             const json = await res.json();
+            if(res.statusCode === 401) {
+                setMessage("Authorazation mislukt probeer opnieuw in te loggen");
+            }
             setActivities(json.activities);
         }
 
@@ -27,12 +32,11 @@ const BackofficeActivitiesPage = () => {
             <Navbar />
             <main class="container" id="backofficecontainer">
                 <BackofficeMenu />
-                <p>Aan het laden...</p>
+                {message ? <p>{message}</p> : <p>Aan het laden...</p>}
             </main>
         </>
         );
     }
-    console.log(activities);
     return(
         <>
             <Navbar/>

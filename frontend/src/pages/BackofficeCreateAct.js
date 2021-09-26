@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import BackofficeMenu from '../components/BackofficeMenu'
 import Navbar from '../components/Navbar'
+import axios from 'axios'
 
 const BackofficeCreateAct = () => {
 
@@ -13,7 +14,7 @@ const BackofficeCreateAct = () => {
     const [description, setDescription] = useState("");
     const [startPublication, setStartPublication] = useState("");
     const [endPublication, setEndPublication] = useState("");
-    const [groupName, setGroupName] = useState("");
+    const [groupName, setGroupName] = useState("Kabouters");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -39,8 +40,7 @@ const BackofficeCreateAct = () => {
 
     const create = async e => {
         e.preventDefault();
-
-        const data = {
+        const data_act = {
             title,
             startTime,
             endTime,
@@ -50,13 +50,23 @@ const BackofficeCreateAct = () => {
             endPublication,
             groupName
         }
+        // console.log(data_act);
         const requestOptions = {
             method: 'POST',
+            credentials: 'include',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
+            body: JSON.stringify(data_act)
         }
 
-        // post request moet nog gedaan worden!
+        fetch('http://localhost:2000/activities/create', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                if(data.statusCode === 200) {
+                    window.location = '/backoffice/activities';
+                } else if(data.statusCode === 401) {
+                    console.log(data.error);
+                }
+            })
     }
 
     return (
