@@ -16,17 +16,17 @@ function BackofficeNewsfeedCreate() {
         
         const formData = new FormData();
         
-        formData.append("image", image);
         formData.append("title", title);
         formData.append("description", description);
         formData.append("startPublication", startPublication);
         formData.append("endPublication", endPublication);
+        formData.append("image", image);
 
         
         const requestOptions = {
             method: 'POST',
             credentials: 'include',
-            headers: {'Content-Type': 'multipart/form-data', "Access-Control-Allow-Origin": "*"},
+            // headers: {'Content-Type': 'multipart/form-data', "Access-Control-Allow-Origin": "*"},
 
             body: formData
         }
@@ -34,12 +34,15 @@ function BackofficeNewsfeedCreate() {
         fetch('http://localhost:2000/newsfeeds/create', requestOptions)
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             if(data.statuscode === 200) {
                 window.location = "/backoffice/newsfeed"
             } else {
                 console.log(data.error);
             }
-        })
+        });
+
+        // fetch('https://httpbin.org/anything', requestOptions).then(res => res.json()).then(data => console.log(data));
         
     }
 
@@ -67,7 +70,10 @@ function BackofficeNewsfeedCreate() {
                             <input id="end_publication" type="date" value={endPublication} onChange={e => setEndPublication(e.target.value)} name="end_publication" />
                             <br />
                             <label for="picture_path">Foto </label>
-                            <input  type="file" name="image" onChange={e => setImage(e.target.files[0])}placeholder="Pad..." />
+                            <input  type="file" name="image" onChange={e => {
+                                const file = e.target.files[0];
+                                setImage(file);
+                            }}placeholder="Pad..." />
                             <br />
                             <button type="submit">Maak nieuwtje</button>
                         </form>
