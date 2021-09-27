@@ -5,6 +5,8 @@ import LeaderOverview from '../components/Leader';
 import '../style/group.css';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.bubble.css'
 
 const GroupPage = () => {
     const params = useParams();
@@ -36,7 +38,7 @@ const GroupPage = () => {
                     <div id="groupstory">
                         <h3>Verhalend Kader</h3>
                         <div id="vkDiv">
-                            {groupInfo.story}
+                            <ReactQuill value={groupInfo.story} readOnly={true} theme="bubble"/>
                         </div>
                     </div>
                 </div>
