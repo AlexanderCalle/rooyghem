@@ -12,7 +12,6 @@ const BackofficeActivitiesPage = () => {
     const [activities, setActivities] = useState(null);
     const [message, setMessage] = useState(null);
 
-    Cookies.set('auth', (Cookies.get('auth')));
     useEffect(() => {
         const fetchData = async () => {
             const res = await fetch('http://localhost:2000/activities/me', {'credentials': 'include'});

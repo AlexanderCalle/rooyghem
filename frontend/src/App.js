@@ -10,6 +10,7 @@ import BackofficePage from './pages/Backoffice';
 import BackofficeActivities from './pages/BackofficeActivities';
 import BackofficeCreateAct from './pages/BackofficeCreateAct';
 import BackofficeUpdateAct from './pages/BackofficeUpdateAct';
+import BackofficeVkPage from './pages/BackofficeVk';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <PrivateRoute exact path="/backoffice/activities" component ={BackofficeActivities}/>
           <PrivateRoute exact path="/backoffice/activities/create" component ={BackofficeCreateAct}/>
           <PrivateRoute path="/backoffice/activities/update/:activity_id" component={BackofficeUpdateAct} />
+          <PrivateRoute exact path="/backoffice/vk" component={BackofficeVkPage} />
         </Switch>
       </body>
     </Router>

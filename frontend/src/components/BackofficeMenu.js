@@ -28,7 +28,7 @@ const BackofficeMenu = () => {
     return(
         <div id="backofficenavbar">
             <a href="/backoffice/activities">Activiteiten</a>
-            <a href="/vk">Verhalend Kader</a>
+            <a href="/backoffice/vk">Verhalend Kader</a>
             <a href={profileLink}>Mijn Profiel</a>  
             {adminOptions()}
             <button onClick={logout}>Logout</button>

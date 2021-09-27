@@ -13,6 +13,7 @@ router.get('/', authCheck,(req, res)=>{
 
 router.put('/', authCheck,(req, res)=>{
     const data = req.body;
+    console.log(data);
     data.story = data.story.replace(/\n/g, '\n');
     con.query('UPDATE `groups` SET story = ? WHERE group_id = ?', [data.story, req.user.group_id], (err, story)=>{
         if(err) return res.status(400).json({"statuscode": 400, error: err});
