@@ -250,6 +250,7 @@ button:hover{
 	border: 1px solid #f98d1e;
 	border-radius: 10px;
 	margin-top: 10px;
+	width: 100%;
 }
 
 .interfacePhoto .infoPhoto {

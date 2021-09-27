@@ -1,4 +1,5 @@
 import React from 'react';
+import '../style/backoffice.css';
 
 const ActivityListEl = (props) => {
     const dateFormatOptions = {

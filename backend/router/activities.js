@@ -31,7 +31,7 @@ router.get('/me', userCheck, (req, res)=>{
                 // user: req.user, 
                 // admin: req.admin, 
                 // username: req.user.username,
-                moment: require('moment')
+                // moment: require('moment')
             });
         }); 
     });
@@ -68,19 +68,20 @@ router.get('/:id', (req, res)=>{
 // });
 
 // Route POST create activity
-router.post('/create', authCheck,(req, res)=>{
-    con.query('SELECT group_id, name FROM `groups` WHERE name = ?', req.body.group_name,(err, group)=>{
+router.post('/create', userCheck,(req, res)=>{
+    con.query('SELECT group_id, name FROM `groups` WHERE name = ?', req.body.groupName,(err, group)=>{
         if(err) return res.status(400).json({"statuscode": 400, error: err});
         const activity = {
             title: req.body.title,
-            start_date: req.body.start_date,
-            end_date: req.body.end_date,
+            start_date: req.body.startTime,
+            end_date: req.body.endTime,
             meetingpoint: req.body.meetingpoint,
             description: req.body.description,
-            start_publication: req.body.start_publication,
-            end_publication: req.body.end_publication,
+            start_publication: req.body.startPublication,
+            end_publication: req.body.endPublication,
             group_id: group[0].group_id
         }
+        console.log(req.user.group_id);
         if(activity.title != '') {
             if (group[0].group_id === req.user.group_id || req.admin) {
                 con.query('INSERT INTO activities SET ?', activity, (err, activity)=> {
@@ -103,11 +104,11 @@ router.post('/create', authCheck,(req, res)=>{
                             return res.status(400).json({"statuscode": 400, "error": err});
                         }
                     } else {
-                        return res.json({"message": "Created activity succesfully"});
+                        return res.json({"statusCode" : 200,"message": "Created activity succesfully"});
                     }
                 });
             } else {
-                return res.status(401).json({"statuscode": 401, error:'Cannot create activities for another group'});
+                return res.status(401).json({"statusCode": 401, "error":'Cannot create activities for another group'});
             }
         } else {
             if(activity.title == ''){
