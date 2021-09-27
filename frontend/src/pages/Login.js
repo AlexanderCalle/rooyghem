@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
-import BackofficePage  from './Backoffice';
 import Auth from '../middleware/auth';
 import { Redirect, Route } from "react-router";
 import '../style/login.css';
+import '../style/style.css'
 
 
 const LoginPage = () => {

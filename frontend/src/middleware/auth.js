@@ -42,7 +42,7 @@ class Auth {
         .then(data => {
             if (data.statuscode === 200) {
                 this.user = data.user;
-                Cookies.set('auth', data.token, { expires: .5 });
+                Cookies.set('auth', data.token, { expires: 1 });
                 localStorage.setItem("tokens", JSON.stringify(this.user));
             } else {
                 console.log("Login failed");
