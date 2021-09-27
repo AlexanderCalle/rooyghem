@@ -20,6 +20,12 @@ class Auth {
         }
     }
 
+    isAdmin() {
+        const {is_admin} = JSON.parse(localStorage.getItem('token'));
+        if(is_admin) return true;
+        return false;
+    }
+
     logout() {
         Cookies.remove('auth');
         localStorage.removeItem('tokens');

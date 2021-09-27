@@ -13,6 +13,9 @@ import BackofficeUpdateAct from './pages/BackofficeUpdateAct';
 import BackofficeVkPage from './pages/BackofficeVk';
 import BackofficeProfile from './pages/BackofficeProfile';
 import BackofficeUpdateProfile from './pages/BackofficeUpdateProfile';
+import AdminRoute from './AdminRoute';
+import BackofficeNewsfeed from './pages/BackofficeNewsfeed';
+import BackofficeNewsfeedCreate from './pages/BackofficeNewsfeedCreate';
 
 function App() {
   return (
@@ -31,6 +34,8 @@ function App() {
           <PrivateRoute exact path="/backoffice/vk" component={BackofficeVkPage} />
           <PrivateRoute exact path="/backoffice/profile" component={BackofficeProfile} />
           <PrivateRoute exact path="/backoffice/profile/update" component={BackofficeUpdateProfile} />
+          <AdminRoute exact path="/backoffice/newsfeed" component={BackofficeNewsfeed} />
+          <AdminRoute exact path="/backoffice/newsfeed/create" component={BackofficeNewsfeedCreate} />
         </Switch>
       </body>
     </Router>

@@ -37,7 +37,6 @@ const ActivityListEl = (props) => {
                 <a href={updateLink}>Bewerk</a>
                 <a href={deleteLink}>Verwijder</a>
             </div>
-            <p></p>
         </div>
     );
 }

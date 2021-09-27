@@ -46,57 +46,44 @@ router.get('/:feed_id/picture', (req, res) => {
     });
 });
 
-// router.get('/create',(req, res)=>{
-//     con.query('SELECT * FROM newsfeeds ORDER BY start_publication', (err, newsfeeds) => {
-//         if (err) return res.status(400).json({"statuscode": 400, error: err});
-//         return res.json({
-//             newsfeeds: newsfeeds,
-//             user: req.user,
-//             admin: req.admin,
-//             username: req.user.username,
-//             moment: require('moment')
-//         });
-//     });
-// });
+router.get('/backoffice', userCheck, adminCheck, (req, res)=>{
+    con.query('SELECT * FROM newsfeeds ORDER BY start_publication', (err, newsfeeds) => {
+        if (err) return res.status(400).json({"statuscode": 400, error: err});
+        return res.json({
+            "statuscode": 200,
+            newsfeeds: newsfeeds,
+        });
+    });
+});
 
 // Route POST create newsfeed
-router.post('/create', authCheck, adminCheck, userCheck, upload.single('image'), newsfeedChecker ,(req, res)=>{
+router.post('/create', authCheck, adminCheck, userCheck, upload.single('image'), newsfeedChecker, (req, res)=>{
     if(req.file){
         compression(process.env.TEMP_PATH + req.file.filename, process.env.NEWSFEED_PATH)
         const newsfeed = {
             title: req.body.title,
             description: req.body.description,
-            start_publication: req.body.start_publication,
-            end_publication: req.body.end_publication,
+            start_publication: req.body.startPublication,
+            end_publication: req.body.endPublication,
             picture_path: process.env.NEWSFEED_PATH + req.file.filename,
             created_by: req.user.user_id
         }
         con.query('INSERT INTO newsfeeds SET ?', newsfeed, (err, nf) => {
             if(err) return res.status(400).json({"statuscode": 400, error: err});
-            return res.json({"message": "Feed succesfully created"});    
+            return res.json({"statuscode": 200, "message": "Feed succesfully created"});    
         });
     } else {
-        // con.query('SELECT * FROM newsfeeds ORDER BY start_publication', (err, newsfeeds) => {
-        //     if (err) return res.render('badrequest', {error: err});
-        //     res.render('create_newsfeed', {
-        //         newsfeeds: newsfeeds,
-        //         user: req.user,
-        //         admin: req.admin,
-        //         username: req.user.username,
-        //         moment: require('moment'),
-        //         error: 'Geen foto gevonden!'
-        //     });
-        // });
+        console.log(req.body.title);
         return res.status(400).json({"statuscode": 400, "error": "No picture was given"});
     }
 });
 
 // TODO: delete newsfeed
 // Route DELETE One activity
-router.get('/delete/:id', authCheck, adminCheck, userCheck, (req, res)=>{
+router.delete('/delete/:id', authCheck, adminCheck, userCheck, (req, res)=>{
     con.query('DELETE FROM newsfeeds WHERE feed_id = ?', req.params.id, (err, newsfeed)=>{
         if(err) return res.status(400).json({"statuscode": 400, error: err});
-        res.json({"message": "Feed deleted succesfully"});
+        res.json({"statuscode": 200, "message": "Feed deleted succesfully"});
     });
 });
 

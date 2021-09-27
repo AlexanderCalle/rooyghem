@@ -4,6 +4,6 @@ module.exports = (req, res, next)=> {
     if(req.admin) {
         next();
     } else {
-        res.render('authrequest');
+        res.status(401).json({error: 'No Admin'});
     }
 }

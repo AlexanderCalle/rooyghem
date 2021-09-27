@@ -31,28 +31,27 @@ function BackofficeProfile() {
                 </main>
             </>
         )
-    } else {
-        return (
-            <>
-               <Navbar />
-               <main className="container" id="backofficecontainer">
-                    <BackofficeMenu />
-                    <div id="backofficecreation">
-                        <div>
-                            <h1>Mijn Profiel</h1>
-                            <br />
-                            <h3>Email: </h3>
-                            <p>{user.email}</p>
-                            <h3>Telefoonnummer: </h3>
-                            <p>{user.phone}</p>
-                            <button onClick={() => window.location = "/backoffice/profile/update"}>Gegevens veranderen?</button> <br/> <br/>
-                            <a href="/forgot">Wachtwoord veranderen?</a>
-                        </div>
+    } 
+    return (
+        <>
+            <Navbar />
+            <main className="container" id="backofficecontainer">
+                <BackofficeMenu />
+                <div id="backofficecreation">
+                    <div>
+                        <h1>Mijn Profiel</h1>
+                        <br />
+                        <h3>Email: </h3>
+                        <p>{user.email}</p>
+                        <h3>Telefoonnummer: </h3>
+                        <p>{user.phone}</p>
+                        <button onClick={() => window.location = "/backoffice/profile/update"}>Gegevens veranderen?</button> <br/> <br/>
+                        <a href="/forgot">Wachtwoord veranderen?</a>
                     </div>
-               </main>
-            </>
-        )
-    }
+                </div>
+            </main>
+        </>
+    )
 
 }
 
