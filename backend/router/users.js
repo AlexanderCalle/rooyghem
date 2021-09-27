@@ -64,7 +64,7 @@ router.get('/single/:id', (req, res)=> {
         if(err) return res.status(400).json({"statuscode": 404, error: err});
         if(user.length == 0) return res.status(404).json({"statuscode": 404, error: 'Gebruiker werd niet gevonden'});
         user[0].picture = '/users/single/' + user[0].user_id + '/picture';
-        return res.json({"user": user[0]});
+        return res.json({"statuscode": 200, "user": user[0]});
     });
 });
 

@@ -102,40 +102,40 @@ const CreateActivityForm = (props) => {
 
     return(
         <div id="creationform">
-                    <h1>Activiteit maken</h1>
+            <h1>{props.activity ? "Update activiteit" : "Maak activiteit"}</h1>
 
-                    <form onSubmit={props.activity ? update : create}>
-                        <label for="title">Titel </label> <br />
-                        <input id="title" value={title} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Titel..." />
-                        <br />
-                        <label for="start_time">Start activiteit </label> <br />
-                        <input id="start_time" value={startTime} onChange={(e) => setStartTime(e.target.value)} type="datetime-local" name="start_date" />
-                        <br />
-                        <label for="end_time">Einde activiteit </label><br/>
-                        <input id="end_time" value={endTime} onChange={(e) => setEndTime(e.target.value)} type="datetime-local" name="end_date"/>
-                        <br/>
-                        <label for="meetingpoint">Plaats </label><br/>
-                        <input id="meetingpoint" value={meetingpoint} onChange={(e) => setMeetingpoint(e.target.value)} type="text" name="meetingpoint" placeholder="Plaats..."/>
-                        <br/>
-                        <label for="description">Beschrijving </label><br/>
-                        <input id="description" value={description} onChange={(e) => setDescription(e.target.value)} type="text" name="description" placeholder="Beschrijving..."/>
-                        <br/>
-                        <label for="start_publication">Start publicatie </label><br/>
-                        <input id="start_publication" value={startPublication} onChange={(e) => setStartPublication(e.target.value)} type="date" name="start_publication"/>
-                        <br/>
-                        <label for="end_publication">Einde publicatie </label><br/>
-                        <input id="end_publication" value={endPublication} onChange={(e) => setEndPublication(e.target.value)} type="date" name="end_publication"/>
-                        <br/>
-                        <label for="bannen">Ban </label><br/>
-                        <select id="bannen" onChange={(e) => setGroupName(e.target.value)} name="group_name">
-                            {groups.map(function(group) {
-                                return (<option> {group.name} </option>)
-                            })}
-                        </select>
-                        <br/>
-                        <button type="submit">{props.activity ? "Update activiteit" : "Maak activiteit"}</button>
-                    </form>
-                </div>
+            <form onSubmit={props.activity ? update : create}>
+                <label for="title">Titel </label> <br />
+                <input id="title" value={title} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Titel..." />
+                <br />
+                <label for="start_time">Start activiteit </label> <br />
+                <input id="start_time" value={startTime} onChange={(e) => setStartTime(e.target.value)} type="datetime-local" name="start_date" />
+                <br />
+                <label for="end_time">Einde activiteit </label><br/>
+                <input id="end_time" value={endTime} onChange={(e) => setEndTime(e.target.value)} type="datetime-local" name="end_date"/>
+                <br/>
+                <label for="meetingpoint">Plaats </label><br/>
+                <input id="meetingpoint" value={meetingpoint} onChange={(e) => setMeetingpoint(e.target.value)} type="text" name="meetingpoint" placeholder="Plaats..."/>
+                <br/>
+                <label for="description">Beschrijving </label><br/>
+                <input id="description" value={description} onChange={(e) => setDescription(e.target.value)} type="text" name="description" placeholder="Beschrijving..."/>
+                <br/>
+                <label for="start_publication">Start publicatie </label><br/>
+                <input id="start_publication" value={startPublication} onChange={(e) => setStartPublication(e.target.value)} type="date" name="start_publication"/>
+                <br/>
+                <label for="end_publication">Einde publicatie </label><br/>
+                <input id="end_publication" value={endPublication} onChange={(e) => setEndPublication(e.target.value)} type="date" name="end_publication"/>
+                <br/>
+                <label for="bannen">Ban </label><br/>
+                <select id="bannen" onChange={(e) => setGroupName(e.target.value)} name="group_name">
+                    {groups.map(function(group) {
+                        return (<option> {group.name} </option>)
+                    })}
+                </select>
+                <br/>
+                <button type="submit">{props.activity ? "Update activiteit" : "Maak activiteit"}</button>
+            </form>
+        </div>
     );
 }
 

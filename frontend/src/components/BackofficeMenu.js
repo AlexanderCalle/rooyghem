@@ -4,7 +4,6 @@ import Auth from '../middleware/auth';
 const BackofficeMenu = () => {
     const user = JSON.parse(localStorage.getItem('tokens'));
     const isAdmin = user && user.is_admin;
-    const profileLink = '/profile/' + user.user_id;
 
     const adminOptions = () => {
         if (isAdmin) {
@@ -32,7 +31,7 @@ const BackofficeMenu = () => {
         <div id="backofficenavbar">
             <a href="/backoffice/activities">Activiteiten</a>
             <a href="/backoffice/vk">Verhalend Kader</a>
-            <a href={profileLink}>Mijn Profiel</a>  
+            <a href="/backoffice/profile">Mijn Profiel</a>  
             {adminOptions()}
             <button onClick={logout}>Logout</button>
         </div>

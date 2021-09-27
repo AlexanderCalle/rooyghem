@@ -7,25 +7,13 @@ router.get('/:id', (req, res) => {
         if(err) return res.status(400).json({"statuscode": 400, error: err});
         if(users[0] == null) return res.status(404).json({"statuscode": 404, error: "User not found"});
         return res.json({
-            username: users[0].username,
+            "statuscode": 200,
             user: users[0],
-            admin: req.admin
         })
     });
 });
 
-router.get('/update/:id', (req, res) => {
-    con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, users)=> {
-        if(err) return res.render('badrequest', {error: err});
-        res.render('profile_update', {
-            username: users[0].username,
-            user: users[0],
-            admin: req.admin
-        })
-    });
-});
-
-router.post('/update/:id', (req, res) => {
+router.put('/update/:id', (req, res) => {
 
     const data = {
         email: req.body.email,
@@ -36,11 +24,9 @@ router.post('/update/:id', (req, res) => {
         if (err) return res.render('badrequest', {error: err});
         con.query('SELECT * FROM users WHERE user_id = ?', req.params.id, (err, users)=> {
             if(err) return res.render('badrequest', {error: err});
-            res.render('profile_update', {
-                username: users[0].username,
-                user: users[0],
-                admin: req.admin,
-                succesError: 'Profiel is veranderd!'
+            res.json({
+                "statuscode": 200,
+                message: 'Profiel is veranderd!'
             })
         });
     });
