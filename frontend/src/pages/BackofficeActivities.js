@@ -32,7 +32,6 @@ const BackofficeActivitiesPage = () => {
         </>
         );
     }
-    console.log(activities);
     return(
         <>
             <Navbar/>

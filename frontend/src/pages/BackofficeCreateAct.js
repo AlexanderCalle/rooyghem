@@ -56,7 +56,9 @@ const BackofficeCreateAct = () => {
             body: JSON.stringify(data)
         }
 
-        // post request moet nog gedaan worden!
+        const res = await fetch('http://localhost:2000/create', requestOptions);
+        const json = await res.json();
+        return <Redirect  to="/backoffice/activities"/>
     }
 
     return (
