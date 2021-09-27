@@ -5,20 +5,18 @@ const CreateActivityForm = (props) => {
     const [groups, setGroups] = useState(null);
 
     const [title, setTitle] = useState(props.activity? props.activity.title : "");
-    const [startTime, setStartTime] = useState(props.activity? props.activity.start_date : "");
-    const [endTime, setEndTime] = useState(props.activity? props.activity.end_date : "");
+    const [startTime, setStartTime] = useState(props.activity? props.activity.start_date.split('.')[0] : "");
+    const [endTime, setEndTime] = useState(props.activity? props.activity.end_date.split('.')[0] : "");
     const [meetingpoint, setMeetingpoint] = useState(props.activity? props.activity.meetingpoint : "");
     const [description, setDescription] = useState(props.activity? props.activity.description : "");
-    const [startPublication, setStartPublication] = useState(props.activity? props.activity.start_publication : "");
-    const [endPublication, setEndPublication] = useState(props.activity? props.activity.end_publication: "");
+    const [startPublication, setStartPublication] = useState(props.activity? props.activity.start_publication.split('T')[0] : "");
+    const [endPublication, setEndPublication] = useState(props.activity? props.activity.end_publication.split('T')[0] : "");
     const [groupName, setGroupName] = useState("Kabouters");
 
     const formatDate = (dateString) => {
         let date = new Date(dateString);
         return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()+ "T" + date.getHours() + ":" + date.getMinutes();
     };
-
-    console.log(startTime);
     
     useEffect(() => {
         const fetchData = async () => {
@@ -33,7 +31,7 @@ const CreateActivityForm = (props) => {
     if(!groups) {
         return(
         <> 
-                <p>Aan het laden...</p>
+            <p>Aan het laden...</p>
         </>
         );
     }
@@ -69,11 +67,44 @@ const CreateActivityForm = (props) => {
             })
     }
 
+    const update = async e => {
+        e.preventDefault();
+        const data_act = {
+            title,
+            startTime,
+            endTime,
+            meetingpoint,
+            description,
+            startPublication,
+            endPublication,
+            groupName
+        }
+
+        const requestOptions = {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data_act)
+        }
+
+        fetch('http://localhost:2000/activities/update/' + props.activity.activity_id, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                if(data.statusCode === 200) {
+                    window.location = '/backoffice/activities';
+                } else if(data.statusCode === 401) {
+                    console.log(data.error);
+                } else {
+                    console.log(data.error);
+                }
+            })
+    }
+
     return(
         <div id="creationform">
                     <h1>Activiteit maken</h1>
 
-                    <form onSubmit={create}>
+                    <form onSubmit={props.activity ? update : create}>
                         <label for="title">Titel </label> <br />
                         <input id="title" value={title} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Titel..." />
                         <br />
@@ -102,7 +133,7 @@ const CreateActivityForm = (props) => {
                             })}
                         </select>
                         <br/>
-                        <button type="submit">Maak activiteit</button>
+                        <button type="submit">{props.activity ? "Update activiteit" : "Maak activiteit"}</button>
                     </form>
                 </div>
     );

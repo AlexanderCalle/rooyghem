@@ -21,7 +21,7 @@ router.get('/', (req, res)=> {
 
 router.get('/me', userCheck, (req, res)=>{
     console.log(JSON.stringify(req.cookies));
-    if(req.user.group_id == undefined) return res.status(401).json({"statuscode": 401, "error": "Log in before consulting this endpoint"});
+    if(req.user.group_id == undefined) return res.status(401).json({"statusCode": 401, "error": "Log in before consulting this endpoint"});
     con.query('SELECT * FROM `groups` WHERE group_id = ?', req.user.group_id, (err, groups)=>{
         if(err) return res.status(400).json({"statuscode": 400, error: err});
         con.query('SELECT * FROM activities WHERE group_id = ?', req.user.group_id, (err, activities)=>{
@@ -68,7 +68,7 @@ router.get('/:id', (req, res)=>{
 // });
 
 // Route POST create activity
-router.post('/create', userCheck,(req, res)=>{
+router.post('/create', userCheck, (req, res)=>{
     con.query('SELECT group_id, name FROM `groups` WHERE name = ?', req.body.groupName,(err, group)=>{
         if(err) return res.status(400).json({"statuscode": 400, error: err});
         const activity = {
@@ -161,45 +161,66 @@ router.get('/delete/:id', authCheck,(req, res)=>{
 
 // Route UPDATE One activity
 router.put('/update/:id', authCheck,(req, res)=>{
-    const data = req.body;
-    const updated_activity = {
-        title: data.title,
-        start_date: data.start_date,
-        end_date: data.end_date,
-        meetingpoint: data.meetingpoint,
-        description: data.description,
-        start_publication: data.start_publication,
-        end_publication: data.end_publication,
-        group_id: data.group_id
-    }
-    if(updated_activity.title != '') {
-        if(data.group_id === req.user.group_id.toString() || req.admin) {
-            con.query(`UPDATE activities SET ? WHERE activity_id = ?`, [updated_activity, req.params.id], (err, activity)=>{
-                if(err) {
-                    if(err.code = 'ER_TRUNCATED_WRONG_VALUE'){
-                        // con.query('SELECT * from activities WHERE activity_id = ?', req.params.id, (err, activity)=>{
-                        //     if(err) return res.render('badrequest', {error: err});
-                        //     con.query('SELECT name FROM `groups` WHERE group_id = ?', activity[0].group_id, (err, group_name)=>{
-                        //         if(err) return res.render('badrequest', {error: err});
-                        //         res.render('update_activity', {
-                        //             activity: activity[0],
-                        //             group_name: group_name[0].name,
-                        //             group_id: activity[0].group_id,
-                        //             admin: req.admin,
-                        //             username: req.user.username,
-                        //             user: req.user,
-                        //             moment: require('moment'),
-                        //             error: 'Er is een datum niet ingevuld!'
-                        //         });
-                        //     });
-                        // });
-                        return res.status(400).json({"statuscode": 400, "error": "No date was given"});
-                    } else {
-                        return res.status(400).json({"statuscode": 400, error: err});
-                    }  
-                } 
-                return res.json({"message": "Activity updated succesfully"});
-            });
+    con.query('SELECT group_id, name FROM `groups` WHERE name = ?', req.body.groupName,(err, group)=>{
+        if(err) return res.status(400).json({"statusCode": 400, error: err});
+        const data = req.body;
+        const updated_activity = {
+            title: data.title,
+            start_date: data.startTime,
+            end_date: data.endTime,
+            meetingpoint: data.meetingpoint,
+            description: data.description,
+            start_publication: data.startPublication,
+            end_publication: data.endPublication,
+            group_id: group[0].group_id
+        }
+        if(updated_activity.title != '') {
+            if(group[0].group_id === req.user.group_id.toString() || req.admin) {
+                con.query(`UPDATE activities SET ? WHERE activity_id = ?`, [updated_activity, req.params.id], (err, activity)=>{
+                    if(err) {
+                        if(err.code = 'ER_TRUNCATED_WRONG_VALUE'){
+                            // con.query('SELECT * from activities WHERE activity_id = ?', req.params.id, (err, activity)=>{
+                            //     if(err) return res.render('badrequest', {error: err});
+                            //     con.query('SELECT name FROM `groups` WHERE group_id = ?', activity[0].group_id, (err, group_name)=>{
+                            //         if(err) return res.render('badrequest', {error: err});
+                            //         res.render('update_activity', {
+                            //             activity: activity[0],
+                            //             group_name: group_name[0].name,
+                            //             group_id: activity[0].group_id,
+                            //             admin: req.admin,
+                            //             username: req.user.username,
+                            //             user: req.user,
+                            //             moment: require('moment'),
+                            //             error: 'Er is een datum niet ingevuld!'
+                            //         });
+                            //     });
+                            // });
+                            return res.status(400).json({"statuscode": 400, "error": "No date was given"});
+                        } else {
+                            return res.status(400).json({"statuscode": 400, error: err});
+                        }  
+                    } 
+                    return res.json({"statusCode": 200, "message": "Activity updated succesfully"});
+                });
+            } else {
+                // con.query('SELECT * from activities WHERE activity_id = ?', req.params.id, (err, activity)=>{
+                //     if(err) return res.render('badrequest', {error: err});
+                //     con.query('SELECT name FROM `groups` WHERE group_id = ?', activity[0].group_id, (err, group_name)=>{
+                //         if(err) return res.render('badrequest', {error: err});
+                //         res.render('update_activity', {
+                //             activity: activity[0],
+                //             group_name: group_name[0].name,
+                //             group_id: activity[0].group_id,
+                //             admin: req.admin,
+                //             username: req.user.username,
+                //             user: req.user,
+                //             moment: require('moment'),
+                //             error: 'cannot update activity from another group'
+                //         });
+                //     });
+                // });
+                return res.status(401).json({"statuscode": 401, error: "Cannot update activity from another group"});
+            }
         } else {
             // con.query('SELECT * from activities WHERE activity_id = ?', req.params.id, (err, activity)=>{
             //     if(err) return res.render('badrequest', {error: err});
@@ -213,31 +234,13 @@ router.put('/update/:id', authCheck,(req, res)=>{
             //             username: req.user.username,
             //             user: req.user,
             //             moment: require('moment'),
-            //             error: 'cannot update activity from another group'
+            //             error: 'Titel is leeg!'
             //         });
             //     });
             // });
-            return res.status(401).json({"statuscode": 401, error: "Cannot update activity from another group"});
+            return res.status(400).json({"statuscode": 400, error: "No title was given"});
         }
-    } else {
-        // con.query('SELECT * from activities WHERE activity_id = ?', req.params.id, (err, activity)=>{
-        //     if(err) return res.render('badrequest', {error: err});
-        //     con.query('SELECT name FROM `groups` WHERE group_id = ?', activity[0].group_id, (err, group_name)=>{
-        //         if(err) return res.render('badrequest', {error: err});
-        //         res.render('update_activity', {
-        //             activity: activity[0],
-        //             group_name: group_name[0].name,
-        //             group_id: activity[0].group_id,
-        //             admin: req.admin,
-        //             username: req.user.username,
-        //             user: req.user,
-        //             moment: require('moment'),
-        //             error: 'Titel is leeg!'
-        //         });
-        //     });
-        // });
-        return res.status(400).json({"statuscode": 400, error: "No title was given"});
-    }
+    });
 });
 
 module.exports = router;
