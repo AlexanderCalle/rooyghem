@@ -4,15 +4,22 @@ const CreateActivityForm = (props) => {
 
     const [groups, setGroups] = useState(null);
 
-    const [title, setTitle] = useState("");
-    const [startTime, setStartTime] = useState("");
-    const [endTime, setEndTime] = useState("");
-    const [meetingpoint, setMeetingpoint] = useState("");
-    const [description, setDescription] = useState("");
-    const [startPublication, setStartPublication] = useState("");
-    const [endPublication, setEndPublication] = useState("");
+    const [title, setTitle] = useState(props.activity? props.activity.title : "");
+    const [startTime, setStartTime] = useState(props.activity? props.activity.start_date : "");
+    const [endTime, setEndTime] = useState(props.activity? props.activity.end_date : "");
+    const [meetingpoint, setMeetingpoint] = useState(props.activity? props.activity.meetingpoint : "");
+    const [description, setDescription] = useState(props.activity? props.activity.description : "");
+    const [startPublication, setStartPublication] = useState(props.activity? props.activity.start_publication : "");
+    const [endPublication, setEndPublication] = useState(props.activity? props.activity.end_publication: "");
     const [groupName, setGroupName] = useState("Kabouters");
 
+    const formatDate = (dateString) => {
+        let date = new Date(dateString);
+        return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()+ "T" + date.getHours() + ":" + date.getMinutes();
+    };
+
+    console.log(startTime);
+    
     useEffect(() => {
         const fetchData = async () => {
             const res = await fetch('http://localhost:2000/groups/');
@@ -43,7 +50,7 @@ const CreateActivityForm = (props) => {
             endPublication,
             groupName
         }
-        // console.log(data_act);
+
         const requestOptions = {
             method: 'POST',
             credentials: 'include',
