@@ -20,12 +20,13 @@ router.put('/', authCheck,(req, res)=>{
         con.query('SELECT story FROM `groups` WHERE group_id = ?', req.user.group_id, (err, group)=>{
             if(err) return res.status(400).json({"statuscode": 400, error: err});
             return res.json({
+                "statuscode": 200,
                 vk: group[0].story, 
-                admin: req.admin, 
-                user: req.user, 
-                username: req.user.username, 
-                group_id: req.params.group_id,
-                message: 'Verhaal is gepost!'
+                // admin: req.admin, 
+                // user: req.user, 
+                // username: req.user.username, 
+                // group_id: req.params.group_id,
+                "message": 'Verhaal is gepost!'
             });
         });
     });

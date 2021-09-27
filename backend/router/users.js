@@ -164,11 +164,11 @@ router.post('/login', (req, res)=>{
                         is_admin: user[0].is_admin,
                         group_id: user[0].group_id
                     }
-                    const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '12h' });
-                    console.log("Login succesfull");
+                    const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '1d' });
+
                     return res.cookie('auth', token).json({"statuscode": 200, "message": "login succesfull", "user": payload, "token": token});
                 } else {
-                    return res.status(401).json({error: 'Password klopt niet',username: req.user.username});
+                    return res.status(401).json({error: 'Password klopt niet', username: req.user.username});
                 }
             });
         });
