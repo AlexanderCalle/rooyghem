@@ -39,9 +39,9 @@ const BackofficeVkPage = () => {
         fetch('http://localhost:2000/vk', requestOptions)
             .then(response => response.json())
             .then(data => {
-                if(data.statusCode === 200) {
-                    window.location = '/backoffice/vk';
-                } else if (data.statusCode === 401) {
+                if(data.statuscode === 200) {
+                    setMessage(data.message)
+                } else if (data.statuscode === 401) {
                     console.log(data.error);
                     setMessage("Er is een authorisatiefout: " + data.error);
                 } else {
@@ -70,6 +70,7 @@ const BackofficeVkPage = () => {
             <BackofficeMenu />
             <div id="backofficecreation">
                 <div id="vkForm">
+                    <p>{message}</p>
                     <h1>Verhalend kader</h1>
                     <ReactQuill theme="snow" value={story} onChange={setStory} />
                     <button onClick={updateVk}>Post vk</button>
