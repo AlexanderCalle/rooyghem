@@ -16,6 +16,7 @@ import BackofficeUpdateProfile from './pages/BackofficeUpdateProfile';
 import AdminRoute from './AdminRoute';
 import BackofficeNewsfeed from './pages/BackofficeNewsfeed';
 import BackofficeNewsfeedCreate from './pages/BackofficeNewsfeedCreate';
+import BackofficeNewsfeedUpdate from './pages/BackofficeNewsfeedUpdate';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <PrivateRoute exact path="/backoffice/profile/update" component={BackofficeUpdateProfile} />
           <AdminRoute exact path="/backoffice/newsfeed" component={BackofficeNewsfeed} />
           <AdminRoute exact path="/backoffice/newsfeed/create" component={BackofficeNewsfeedCreate} />
+          <AdminRoute path="/backoffice/newsfeed/update/:newsfeed_id" component={BackofficeNewsfeedUpdate} />
         </Switch>
       </body>
     </Router>

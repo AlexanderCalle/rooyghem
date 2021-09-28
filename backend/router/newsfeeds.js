@@ -12,10 +12,14 @@ const userCheck = require('../middleware/userCheck');
 // Multer middleware Save images
 const storage = multer.diskStorage({
     destination: (req, file, cb)=>{
-        cb(null, process.env.TEMP_PATH)
+        if(file) {
+            cb(null, process.env.TEMP_PATH)
+        }
     },
     filename: (req, file, cb) =>{
-        cb(null, Date.now()+ req.body.title.replace(/\s/g, '') + file.originalname);
+        if (file) {
+            cb(null, Date.now()+ req.body.title.replace(/\s/g, '') + file.originalname);
+        }
     }
 });
 
@@ -51,6 +55,17 @@ router.get('/backoffice', userCheck, adminCheck, (req, res)=>{
         return res.json({
             "statuscode": 200,
             newsfeeds: newsfeeds,
+        });
+    });
+});
+
+router.get('/:feed_id', (req, res) => {
+    con.query('SELECT * FROM newsfeeds WHERE feed_id = ?', req.params.feed_id, (err, newsfeed) => {
+        if(err) return res.status(400).json({"statuscode": 400, error: err});
+        if(newsfeed.length === 0) return res.status(404).json({"statuscode": 404, "error": "no newsfeed with given id"})
+        newsfeed[0].picture_path = req.protocol + '://' + req.headers.host + "/newsfeeds/" + newsfeed[0].feed_id;
+        res.json({
+            newsfeed: newsfeed[0]
         });
     });
 });
@@ -103,20 +118,26 @@ router.delete('/delete/:id', authCheck, adminCheck, userCheck, (req, res)=>{
 
 // TODO: update one newsfeed
 // Route UPDATE One activity
-router.put('/update/:id', authCheck, adminCheck, userCheck, (req, res)=>{
+router.put('/update/:id', authCheck, adminCheck, userCheck, upload.single('image'), newsfeedChecker, (req, res)=>{
     const updated_newsfeed = {
         title: req.body.title,
         description: req.body.description,
         start_publication: req.body.start_publication,
         end_publication: req.body.end_publication,
-        picture_path: req.body.picture_path,
         created_by: req.user.user_id
     }
     console.log(updated_newsfeed);
-    if(updated_newsfeed.title != '' && updated_newsfeed.picture_path != '') {
+
+    if (req.file) {
+        compression(process.env.TEMP_PATH + req.file.filename, process.env.NEWSFEED_PATH);
+        updated_newsfeed.picture_path = process.env.NEWSFEED_PATH + req.file.filename
+    }
+
+    // TODO: handle optional file paramater
+    if(updated_newsfeed.title != '') {
         con.query(`UPDATE newsfeeds SET ? WHERE feed_id = ?`, [updated_newsfeed, req.params.id], (err, newsfeed)=>{
             if(err) return res.status(400).json({"statuscode": 400, error: err});
-            return res.json({"message": "Feed updated succesfully"});
+            return res.json({"statuscode": 200, "message": "Feed updated succesfully"});
         });
     } else {
         // con.query('SELECT * from newsfeeds WHERE feed_id = ?', req.params.id, (err, newsfeed)=>{

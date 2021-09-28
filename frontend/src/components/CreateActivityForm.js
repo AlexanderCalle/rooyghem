@@ -12,11 +12,6 @@ const CreateActivityForm = (props) => {
     const [startPublication, setStartPublication] = useState(props.activity? props.activity.start_publication.split('T')[0] : "");
     const [endPublication, setEndPublication] = useState(props.activity? props.activity.end_publication.split('T')[0] : "");
     const [groupName, setGroupName] = useState("Kabouters");
-
-    const formatDate = (dateString) => {
-        let date = new Date(dateString);
-        return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()+ "T" + date.getHours() + ":" + date.getMinutes();
-    };
     
     useEffect(() => {
         const fetchData = async () => {
