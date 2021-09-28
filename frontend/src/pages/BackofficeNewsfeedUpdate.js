@@ -16,6 +16,7 @@ const BackofficeNewsfeedUpdate = () => {
         };
 
         fetchData();
+        console.log(newsfeedInfo);
     }, [setNewsfeedInfo, params.newsfeed_id]);
     
     if(!newsfeedInfo) {

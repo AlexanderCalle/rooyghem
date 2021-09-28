@@ -10,8 +10,6 @@ const CreateNewsfeedForm = (props) => {
     const [endPublication, setEndPublication] = useState(isUpdateForm ? props.newsfeed.end_publication.split('T')[0]: "");
     const [image, setImage] = useState(null);
 
-    console.log(startPublication);
-
     const makeFormData = () => {
         const formData = new FormData();
         
