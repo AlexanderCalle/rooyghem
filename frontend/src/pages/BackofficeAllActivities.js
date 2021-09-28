@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import BackofficeMenu from '../components/BackofficeMenu';
 import Navbar from '../components/Navbar';
-import ActivityListEl from '../components/ActivityListEl'
+import ActivityListEl from '../components/ActivityListEl';
+import '../style/backoffice.css';
 
 function BackofficeAllActivities() {
 
