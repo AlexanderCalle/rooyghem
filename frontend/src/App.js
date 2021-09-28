@@ -22,6 +22,7 @@ import BackofficeUsersPage from './pages/BackofficeUsers';
 import BackofficeActivityDelete from './pages/BackofficeDeleteActivity';
 import BackofficeUsersCreate from './pages/BackofficeUsersCreate';
 import BackofficeUsersUpdate from './pages/BackofficeUsersUpdate';
+import BackofficeAllActivities from './pages/BackofficeAllActivities';
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
           <AdminRoute exact path="/backoffice/users" component={BackofficeUsersPage} />
           <AdminRoute exact path="/backoffice/users/create" component={BackofficeUsersCreate} />
           <AdminRoute exact path="/backoffice/users/update/:user_id" component={BackofficeUsersUpdate} />
+          <AdminRoute exact path="/backoffice/activities/allactivities" component={BackofficeAllActivities} />
         </Switch>
       </body>
     </Router>
