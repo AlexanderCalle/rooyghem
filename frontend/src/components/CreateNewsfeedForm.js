@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react'
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const CreateNewsfeedForm = (props) => {
     const isUpdateForm = props.newsfeed !== undefined;
@@ -68,8 +70,6 @@ const CreateNewsfeedForm = (props) => {
                 console.log(data.error);
             }
         });
-
-        // fetch('https://httpbin.org/anything', requestOptions).then(data => data.json()).then(data => console.log(data));
     }
 
     return(
@@ -81,7 +81,7 @@ const CreateNewsfeedForm = (props) => {
                 <br />
                 <label for="description">Beschrijving </label>
                 <br />
-                <textarea name="description" value={description} onChange={e => setDescription(e.target.value)} id="feedDescription" cols="120" rows="10">Beschrijving van het nieuwtje...</textarea>
+                <ReactQuill onChange={setDescription} value={description} theme="snow"/>
                 <br />
                 <label for="start_publication">Start publicatie </label>
                 <input id="start_publication" type="date" value={startPublication} onChange={e => setStartPublication(e.target.value)} name="start_publication" />

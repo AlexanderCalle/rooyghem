@@ -1,4 +1,6 @@
 import React from "react";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.bubble.css';
 
 const Newsfeed = (props) => {
 
@@ -6,7 +8,7 @@ const Newsfeed = (props) => {
         <div class="newsfeed">
             <h3 class="feedtitle">{props.feed.title}</h3>
             <img src={'http://localhost:2000/newsfeeds/' + props.feed.feed_id + '/picture'} alt="Picture for" class="feedimg" />
-            <p class="feedp" dangerouslySetInnerHTML={{__html:props.feed.description}}></p>
+            <ReactQuill class="feedp" theme="bubble" value={props.feed.description} readOnly={true} />
         </div>
     )
 
