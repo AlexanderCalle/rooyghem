@@ -21,22 +21,6 @@ function BackofficeNewsfeed() {
         fetchData();
     }, [setNewsFeeds]);
 
-    const deleteNewsfeed = (feed_id) => {
-
-        const requestOptions = {
-            method: 'DELETE',
-            credentials: 'include',
-        }
-
-        fetch("http://localhost:2000/newsfeeds/delete/" + feed_id, requestOptions)
-            .then(response => response.json())
-            .then(data => {
-                if(data.statuscode === 200) { 
-                    window.location.reload();
-                }
-            })
-    }
-
     if(!newsfeeds) {
         return (
             <>
@@ -62,7 +46,7 @@ function BackofficeNewsfeed() {
                                 <p>{newsfeed.title}</p>
                                 <div class="buttons">
                                     <a href={"/backoffice/newsfeed/update/" + newsfeed.feed_id}>bewerk</a>
-                                    <a onClick={() => deleteNewsfeed(newsfeed.feed_id)}>delete</a>
+                                    <a href={"/backoffice/newsfeed/delete/" + newsfeed.feed_id}>delete</a>
                                 </div>
                              
                             </div>

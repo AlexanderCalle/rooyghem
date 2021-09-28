@@ -4,7 +4,7 @@ import BackofficeMenu from '../components/BackofficeMenu'
 import Navbar from '../components/Navbar'
 import CreateNewsfeedForm from '../components/CreateNewsfeedForm'
 
-const BackofficeNewsfeedUpdate = () => {
+const BackofficeNewsfeedCreate = () => {
     const params = useParams();
     const [newsfeedInfo, setNewsfeedInfo] = useState(null);
 
@@ -26,17 +26,34 @@ const BackofficeNewsfeedUpdate = () => {
         )
     }
 
+    const deleteNewsfeed = () => {
+
+        const requestOptions = {
+            method: 'DELETE',
+            credentials: 'include',
+        }
+
+        fetch("http://localhost:2000/newsfeeds/delete/" + params.newsfeed_id, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                if(data.statuscode === 200) { 
+                    window.location = "/backoffice/newsfeed";
+                }
+            })
+    }
+
     return (
         <>
             <Navbar />
             <main className="container" id="backofficecontainer">
                 <BackofficeMenu />
                 <div id="backofficecreation">
-                    <CreateNewsfeedForm newsfeed={newsfeedInfo}/>
+                    <CreateNewsfeedForm newsfeed={newsfeedInfo} readOnly={true}/>
+                    <button onClick={deleteNewsfeed}>Verwijder nieuwtje</button>
                 </div>
             </main>
         </>
     )
 }
 
-export default BackofficeNewsfeedUpdate;
+export default BackofficeNewsfeedCreate;

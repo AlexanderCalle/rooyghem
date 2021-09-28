@@ -17,6 +17,9 @@ import AdminRoute from './AdminRoute';
 import BackofficeNewsfeed from './pages/BackofficeNewsfeed';
 import BackofficeNewsfeedCreate from './pages/BackofficeNewsfeedCreate';
 import BackofficeNewsfeedUpdate from './pages/BackofficeNewsfeedUpdate';
+import BackofficeNewsfeedDelete from './pages/BackofficeNewsfeedDelete';
+import BackofficeUsersPage from './pages/BackofficeUsers';
+import BackofficeActivityDelete from './pages/BackofficeDeleteActivity';
 
 function App() {
   return (
@@ -31,6 +34,7 @@ function App() {
           <PrivateRoute exact path="/backoffice" component={BackofficePage}/>
           <PrivateRoute exact path="/backoffice/activities" component ={BackofficeActivities}/>
           <PrivateRoute exact path="/backoffice/activities/create" component ={BackofficeCreateAct}/>
+          <PrivateRoute path="/backoffice/activities/delete/:activity_id" component={BackofficeActivityDelete} />
           <PrivateRoute path="/backoffice/activities/update/:activity_id" component={BackofficeUpdateAct} />
           <PrivateRoute exact path="/backoffice/vk" component={BackofficeVkPage} />
           <PrivateRoute exact path="/backoffice/profile" component={BackofficeProfile} />
@@ -38,6 +42,8 @@ function App() {
           <AdminRoute exact path="/backoffice/newsfeed" component={BackofficeNewsfeed} />
           <AdminRoute exact path="/backoffice/newsfeed/create" component={BackofficeNewsfeedCreate} />
           <AdminRoute path="/backoffice/newsfeed/update/:newsfeed_id" component={BackofficeNewsfeedUpdate} />
+          <AdminRoute path="/backoffice/newsfeed/delete/:newsfeed_id" component={BackofficeNewsfeedDelete} />
+          <AdminRoute exact path="/backoffice/users" component={BackofficeUsersPage} />
         </Switch>
       </body>
     </Router>

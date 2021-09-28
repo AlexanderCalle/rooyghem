@@ -76,26 +76,29 @@ const CreateNewsfeedForm = (props) => {
         <div id="creationform">
             <h1>Maak nieuwtje</h1>
             <form onSubmit={isUpdateForm? update : create}>
-                <label for="title">Titel </label>
-                <input id="title" type="text" value={title} onChange={e => setTitle(e.target.value)} name="title" placeholder="Titel..." />
-                <br />
-                <label for="description">Beschrijving </label>
-                <br />
-                <ReactQuill onChange={setDescription} value={description} theme="snow"/>
-                <br />
-                <label for="start_publication">Start publicatie </label>
-                <input id="start_publication" type="date" value={startPublication} onChange={e => setStartPublication(e.target.value)} name="start_publication" />
-                <br />
-                <label for="end_publication">Einde publicatie </label>
-                <input id="end_publication" type="date" value={endPublication} onChange={e => setEndPublication(e.target.value)} name="end_publication" />
-                <br />
-                <label for="picture_path">Foto </label>
-                <input  type="file" name="image" onChange={e => {
-                    const file = e.target.files[0];
-                    setImage(file);
-                }}placeholder="Pad..." />
-                <br />
-                <button type="submit">Maak nieuwtje</button>
+                <fieldset disabled={props.readOnly? true: false}>
+                    <label for="title">Titel </label>
+                    <input id="title" type="text" value={title} onChange={e => setTitle(e.target.value)} name="title" placeholder="Titel..." />
+                    <br />
+                    <label for="description">Beschrijving </label>
+                    <br />
+                    <ReactQuill onChange={setDescription} value={description} theme="snow"/>
+                    <br />
+                    <label for="start_publication">Start publicatie </label>
+                    <input id="start_publication" type="date" value={startPublication} onChange={e => setStartPublication(e.target.value)} name="start_publication" />
+                    <br />
+                    <label for="end_publication">Einde publicatie </label>
+                    <input id="end_publication" type="date" value={endPublication} onChange={e => setEndPublication(e.target.value)} name="end_publication" />
+                    <br />
+                    <label for="picture_path">Foto </label>
+                    <input  type="file" name="image" onChange={e => {
+                        const file = e.target.files[0];
+                        setImage(file);
+                    }}placeholder="Pad..." />
+                    <br />
+                    {props.readOnly? <></>:
+                        <button type="submit">Maak nieuwtje</button>}
+                </fieldset>
             </form>
         </div>
     );

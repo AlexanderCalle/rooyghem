@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 
 const CreateActivityForm = (props) => {
 
+    // Make state variables
     const [groups, setGroups] = useState(null);
 
     const [title, setTitle] = useState(props.activity? props.activity.title : "");
@@ -12,7 +13,18 @@ const CreateActivityForm = (props) => {
     const [startPublication, setStartPublication] = useState(props.activity? props.activity.start_publication.split('T')[0] : "");
     const [endPublication, setEndPublication] = useState(props.activity? props.activity.end_publication.split('T')[0] : "");
     const [groupName, setGroupName] = useState("Kabouters");
+
+    // local variables
+    var header = "";
+    if (props.readOnly) {
+        header = "Activiteit verwijderen?";
+    } else if (props.activity) {
+        header = "Update activiteit";
+    } else {
+        header = "Nieuwe activiteit";
+    }
     
+    // fetch group data
     useEffect(() => {
         const fetchData = async () => {
             const res = await fetch('http://localhost:2000/groups/');
@@ -23,6 +35,7 @@ const CreateActivityForm = (props) => {
         fetchData();
     }, [setGroups]);
 
+    
     if(!groups) {
         return(
         <> 
@@ -31,6 +44,7 @@ const CreateActivityForm = (props) => {
         );
     }
 
+    // callbacks for create, update and delete
     const create = async e => {
         e.preventDefault();
         const data_act = {
@@ -97,9 +111,9 @@ const CreateActivityForm = (props) => {
 
     return(
         <div id="creationform">
-            <h1>{props.activity ? "Update activiteit" : "Maak activiteit"}</h1>
-
-            <form onSubmit={props.activity ? update : create}>
+            <h1>{header}</h1>
+            <form onSubmit={props.activity ? update : create} readOnly={props.readOnly ? true : false}>
+                <fieldset disabled={props.readOnly ? true : false}>
                 <label for="title">Titel </label> <br />
                 <input id="title" value={title} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="Titel..." />
                 <br />
@@ -128,7 +142,10 @@ const CreateActivityForm = (props) => {
                     })}
                 </select>
                 <br/>
-                <button type="submit">{props.activity ? "Update activiteit" : "Maak activiteit"}</button>
+                {props.readOnly ? <></> :
+                <button type="submit">{props.activity ? "Update activiteit" : "Maak activiteit"}</button>    
+                }
+                </fieldset>
             </form>
         </div>
     );

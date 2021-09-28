@@ -4,9 +4,11 @@ import BackofficeMenu from '../components/BackofficeMenu'
 import Navbar from '../components/Navbar'
 import CreateActivityForm from '../components/CreateActivityForm';
 
-const BackofficeUpdateAct = () => {
+const BackofficeActivityDelete = (props) => {
     const params = useParams();
     const [activityInfo, setActivityInfo] = useState(null);
+
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -21,19 +23,24 @@ const BackofficeUpdateAct = () => {
     if(!activityInfo) {
         return (<div>Aan het laden...</div>);
     }
-    
+
+    const deleteActivity = async () => {
+        const response = await fetch('http://localhost:2000/activities/delete/' + activityInfo.activity_id, {'credentials': 'include'});
+        window.location = '/backoffice/activities';
+    };
+
     return (
         <>
             <Navbar/>
             <main class="container" id="backofficecontainer">
                 <BackofficeMenu />
                 <div id="backofficecreation">
-                    <CreateActivityForm activity={activityInfo}/>
+                    <CreateActivityForm activity={activityInfo} readOnly={true}/>
+                    <button onClick={deleteActivity}>Verwijder activiteit</button>
                 </div>
             </main>
         </>
     );
-}
+};
 
-export default BackofficeUpdateAct;
-
+export default BackofficeActivityDelete;
