@@ -2,7 +2,7 @@ import React from 'react';
 import '../style/backoffice.css';
 
 const UserListEl = (props) => {
-    const updateLink = "/backoffice/users/" + props.user.user_id + "/update";
+    const updateLink = "/backoffice/users/update/" + props.user.user_id;
     
     const deleteLink = async () => {
         const response = await fetch('http://localhost:2000/users/delete/single/' + props.user.user_id, {'credentials': 'include'});
