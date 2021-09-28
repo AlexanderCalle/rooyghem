@@ -63,7 +63,7 @@ router.get('/single/:id', (req, res)=> {
     con.query('SELECT user_id, firstname, lastname, email, is_admin, username, phone, group_id, bondsteam, is_banleader FROM users WHERE user_id = ?', req.params.id, (err, user)=>{
         if(err) return res.status(400).json({"statuscode": 404, error: err});
         if(user.length == 0) return res.status(404).json({"statuscode": 404, error: 'Gebruiker werd niet gevonden'});
-        user[0].picture = '/users/single/' + user[0].user_id + '/picture';
+        user[0].picture = req.protocol + '://' + req.headers.host + '/users/single/' + user[0].user_id + '/picture';
         return res.json({"statuscode": 200, "user": user[0]});
     });
 });
