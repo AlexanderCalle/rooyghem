@@ -3,3 +3,6 @@ CHANGE COLUMN `email` `phone` VARCHAR(255) NOT NULL ;
 
 ALTER TABLE `Rooyghem`.`orders` 
 ADD COLUMN `pick_up_moment` VARCHAR(255) NOT NULL AFTER `order_date`;
+
+ALTER TABLE `Rooyghem`.`orders` 
+ADD COLUMN `email` VARCHAR(255) NOT NULL AFTER `phone`;
