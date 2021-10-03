@@ -5,6 +5,6 @@ CREATE TABLE `orders` (
     lastname VARCHAR(255) NOT NULL,
     `group` VARCHAR(255) NOT NULL,
     total_amount INT NOT NULL,
-    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(255) NOT NULL,
     order_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
