@@ -26,7 +26,8 @@ router.post('/order', (req, res) => {
         lastname: req.body.lastname,
         group: req.body.group,
         total_amount: req.body.total_amount,
-        phone: req.body.phone
+        phone: req.body.phone,
+        pick_up_moment: req.body.pick_up_moment
     }
 
     con.query('INSERT INTO orders SET ?', order, (err, order) => {
@@ -84,6 +85,7 @@ router.get('/excel', userCheck, authCheck, adminCheck, (req, res) => {
             { header: 'telefoonnummer', key: 'phone', width: 40 },
             { header: 'Ban', key: 'group', width: 30 },
             { header: 'Aantal pakketten', key: 'total_amount', width: 30 },
+            { header: 'Ophaal moment', key: 'pick_up_moment', width: 30 },
             { header: 'Datum', key: 'order_date', width: 30 }
         ];
 

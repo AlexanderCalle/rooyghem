@@ -6,5 +6,6 @@ CREATE TABLE `orders` (
     `group` VARCHAR(255) NOT NULL,
     total_amount INT NOT NULL,
     phone VARCHAR(255) NOT NULL,
-    order_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    order_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
+    pick_up_moment VARCHAR(255) NOT NULL,
 )
