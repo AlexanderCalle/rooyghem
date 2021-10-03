@@ -6,12 +6,12 @@ const con = mysql.createConnection({
     port: '3306',
     user: 'root',
     password: 'R00yghem,8310',
-    database: 'rooyghem_dev'
+    database: 'rooyghem'
 });
 
 // Create connection with Mysql
-con.connect((err)=> {
-    if(err) return console.log('Error connecting to Mysql: ' + err.message);
+con.connect((err) => {
+    if (err) return console.log('Error connecting to Mysql: ' + err.message);
     console.log('Connected to Mysql');
 });
 
