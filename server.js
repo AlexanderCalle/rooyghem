@@ -34,73 +34,73 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', userCheck, (req, res)=> {
+app.get('/', userCheck, (req, res) => {
     const date = new Date();
     con.query('SELECT * FROM newsfeeds WHERE end_publication > ? AND start_publication <= ? ORDER BY start_publication', [date, date], (err, newsfeeds) => {
-        if(err) return res.render('badrequest', {error: err});
+        if (err) return res.render('badrequest', { error: err });
         res.render('index', {
-            newsfeeds: newsfeeds, 
-            moment: moment, 
+            newsfeeds: newsfeeds,
+            moment: moment,
             username: req.user.username
         });
     });
 });
 
-app.get('/contact', userCheck, (req, res)=> {
-    con.query('SELECT firstname, lastname, email, path_pic, phone FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
-        res.render('contact', {bondsleiders: users, username: req.user.username});
+app.get('/contact', userCheck, (req, res) => {
+    con.query('SELECT firstname, lastname, email, path_pic, phone FROM users WHERE bondsteam = "bondsleider"', (err, users) => {
+        res.render('contact', { bondsleiders: users, username: req.user.username });
     });
 });
 
-app.post('/contact', userCheck, (req, res)=> {
-    if(req.body.naam != '' && req.body.onderwerp != '' && req.body.bericht != ''){
+app.post('/contact', userCheck, (req, res) => {
+    if (req.body.naam != '' && req.body.onderwerp != '' && req.body.bericht != '') {
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
         const msg = {
-            to: 'dekersgieteremiel@gmail.com',
+            to: 'joris.deckmyn@ksarooyghem.be',
             from: 'ksarooyghemwebteam@gmail.com',
             subject: req.body.onderwerp,
             text: 'Hallo , \n\n' +
-            'Vraag van: ' + req.body.naam + ', email: ' + req.body.email + ' \n\n' +
-            req.body.bericht
+                'Vraag van: ' + req.body.naam + ', email: ' + req.body.email + ' \n\n' +
+                req.body.bericht
         }
-        
-        sgMail.send(msg).then(()=> {
-            con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
-                res.render('contact', {bondsleiders: users, username: req.user.username, succesError: 'Vraag werd verstuurd'});
+
+        sgMail.send(msg).then(() => {
+            con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users) => {
+                res.render('contact', { bondsleiders: users, username: req.user.username, succesError: 'Vraag werd verstuurd' });
             });
-        }).catch((err)=> {
-            con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
-                res.render('contact', {bondsleiders: users, username: req.user.username, error: err});
+        }).catch((err) => {
+            con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users) => {
+                res.render('contact', { bondsleiders: users, username: req.user.username, error: err });
             });
         });
     } else {
-        con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
-            res.render('contact', {bondsleiders: users, username: req.user.username, error: 'Gelieve alle velden in te vullen'});
+        con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users) => {
+            res.render('contact', { bondsleiders: users, username: req.user.username, error: 'Gelieve alle velden in te vullen' });
         });
     }
 });
 
-app.get('/overons', userCheck, (req, res)=> {
-    res.render('over_ons', {username: req.user.username});
+app.get('/overons', userCheck, (req, res) => {
+    res.render('over_ons', { username: req.user.username });
 });
 
-app.get('/forgot', userCheck, (req, res)=> {
-    res.render('forgot', {username: req.user.username});
+app.get('/forgot', userCheck, (req, res) => {
+    res.render('forgot', { username: req.user.username });
 });
 
-app.post('/forgot', (req, res)=> {
+app.post('/forgot', (req, res) => {
     let token;
 
     crypto.randomBytes(20, (err, buf) => {
         token = buf.toString('hex');
     });
 
-    con.query('SELECT * FROM users WHERE email = ?', req.body.email, (err, users)=> {
-        if(err) return res.render('badrequest', {error: err});
-        if(!users[0]) return res.render('forgot', {error: 'Er bestaat geen gebruiker met deze email!', username: ''});
-        Date.prototype.addHours = function(h) {
-            this.setTime(this.getTime() + (h*60*60*1000));
+    con.query('SELECT * FROM users WHERE email = ?', req.body.email, (err, users) => {
+        if (err) return res.render('badrequest', { error: err });
+        if (!users[0]) return res.render('forgot', { error: 'Er bestaat geen gebruiker met deze email!', username: '' });
+        Date.prototype.addHours = function (h) {
+            this.setTime(this.getTime() + (h * 60 * 60 * 1000));
             return this;
         }
         var date = new Date().addHours(2).toJSON().slice(0, 19);
@@ -108,8 +108,8 @@ app.post('/forgot', (req, res)=> {
             resetPasswordToken: token,
             resetPasswordExpired: date
         }
-        con.query('UPDATE users SET ? WHERE email = ?', [data ,req.body.email], (err, user)=> {
-            if(err) return res.render('badrequest', {error: err, username: ''});
+        con.query('UPDATE users SET ? WHERE email = ?', [data, req.body.email], (err, user) => {
+            if (err) return res.render('badrequest', { error: err, username: '' });
 
             sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -117,21 +117,21 @@ app.post('/forgot', (req, res)=> {
                 to: req.body.email,
                 from: 'ksarooyghemwebteam@gmail.com',
                 subject: 'Wachtwoord resetten',
-                text: 'Hallo ' + req.body.email +', \n\n U hebt dit ontvangen omdat u gevraagd heeft om uw wachtwoord te herstellen, voor verdere instructies druk op de link hieronder\n\n' +
-                'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-                'Als u dit niet gevraagd heb negeer dan deze mail.\n'
+                text: 'Hallo ' + req.body.email + ', \n\n U hebt dit ontvangen omdat u gevraagd heeft om uw wachtwoord te herstellen, voor verdere instructies druk op de link hieronder\n\n' +
+                    'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+                    'Als u dit niet gevraagd heb negeer dan deze mail.\n'
             }
-            
-            sgMail.send(msg).then(()=> {
-                res.render('forgot', {succesError: 'Email werd verzonden', username: ''});
-            }).catch((err)=> {
-                res.render('forgot', {error: err, username: ''});
+
+            sgMail.send(msg).then(() => {
+                res.render('forgot', { succesError: 'Email werd verzonden', username: '' });
+            }).catch((err) => {
+                res.render('forgot', { error: err, username: '' });
             });
         });
     });
-}); 
+});
 
-app.get('/sitemap', function(_, res) {
+app.get('/sitemap', function (_, res) {
     console.log(__dirname);
     res.contentType('application/xml');
     res.sendFile(path.join(__dirname, "sitemap.xml"));
@@ -178,6 +178,6 @@ const wafelbak = require('./router/wafelbak');
 app.use('/wafelbak', userCheck, wafelbak);
 
 
-app.listen(port, ()=> {
+app.listen(port, () => {
     console.log('Server running on port ' + port);
 });

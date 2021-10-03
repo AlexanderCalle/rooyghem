@@ -6,6 +6,9 @@ const adminCheck = require('../middleware/adminCheck');
 const userCheck = require('../middleware/userCheck');
 const excel = require('exceljs');
 const fs = require('fs');
+const sgMail = require('@sendgrid/mail')
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 // Route GET form page
 // page to order
@@ -27,14 +30,54 @@ router.post('/order', (req, res) => {
         group: req.body.group,
         total_amount: req.body.total_amount,
         phone: req.body.phone,
+        email: req.body.email,
         pick_up_moment: req.body.pick_up_moment
     }
 
-    con.query('INSERT INTO orders SET ?', order, (err, order) => {
-        if (err) return res.render('badrequest', { error: err });
-        res.render('succes_order', {
-            username: req.user.username
+    let moment;
+
+    switch (order.pick_up_moment) {
+
+        case 'donderdag':
+            moment = 'donderdag 28 oktober vanaf 19u'
+            break;
+
+        case 'vrijdag':
+            moment = 'vrijdag 29 oktober vanaf 16u'
+            break;
+
+        case 'zaterdag':
+            moment = 'zaterdag 30 oktober van 9u tot 12u'
+            break;
+
+        default:
+            break;
+    }
+
+    const msg = {
+        to: order.email,
+        from: 'ksarooyghemwebteam@gmail.com',
+        subject: 'Bestelling wafels',
+        text: 'Beste ' + order.firstname + ' ' + order.lastname + ', \n\n' +
+            'Heel Ksa Rooyghem wil u bedanken voor uw bestelling! \n\n' +
+            'Uw bestelling van ' + order.total_amount + ' pakketten is met succes geplaatst \n\n' +
+            'Uw kunt deze afhalen op ' + moment + '. \n\n' +
+            'Wij werken met een belonings systeem, in de onderstaande link zal je moeten invullen hoeveel pakketten u heeft besteld. \n' +
+            'Hiervoor zal u een beloning kunnen ontvangen! \n' +
+            'https://forms.gle/BN9z56WTKQCKQf1x6 \n\n' +
+            'Vele Ksa Groeten'
+    }
+
+    sgMail.send(msg).then(() => {
+        con.query('INSERT INTO orders SET ?', order, (err, order) => {
+            if (err) return res.render('badrequest', { error: err });
+            res.render('succes_order', {
+                username: req.user.username
+            })
         })
+    }).catch(error => {
+        console.log(error);
+        res.render('badrequest', { error: error });
     })
 
 });
