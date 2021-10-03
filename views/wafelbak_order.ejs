@@ -1,0 +1,39 @@
+<head>
+    <link rel="stylesheet" href="/public/css/wafelbak.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+     <script>
+       function onSubmit(token) {
+         document.getElementById("wafelbak_form").submit();
+       }
+     </script>
+</head>
+
+<main id="wafelbakcontent">
+    <div id="wafebalform">
+        <h2>Bestel hier onze heerlijke wafels!</h2>
+        <p>
+            Onze jaarlijkse wafelbak draait weer op volle toeren. Bestel snel je pakketjes heerlijke luikse wafels. Een pakket van 4 wafels kost €5.
+            De pakketten kunnen worden opgehaald op donderdag 28 oktober vanaf 19u, vrijdag 29 oktober vanaf 16u en zaterdag 30 oktober van 9u tot 12u.
+            Deadline om wafels te bestellen online is woensdag 27 oktober.
+        </p>
+        <form id="wafelbak_form" action="/wafelbak/order" method="POST">
+            <input type="text" placeholder="Voornaam" name="firstname" required />
+            <input type="text" name="lastname" placeholder="Achternaam" required />
+            <input type="number" name="total_amount" placeholder="Aantal pakketten..." required />
+            <input type="text" name="phone" placeholder="Telefoonnummer" required />
+            <select id="bannen" name="group">
+                <% groups.forEach(function(group) { %>
+                    <option><%= group.name %></option>
+                <% }) %>
+                <option>Geen groep</option>
+            </select>
+            <br>
+            <button class="g-recaptcha" data-sitekey="6Lda4E4cAAAAAEMITzaJKTyhPGHZuDuKK4kFuCOD" data-callback='onSubmit'>
+                Bestel
+            </button>
+        </form>
+    </div>
+    <div id="wafelbakphoto">
+        <img src="/public/images/wafelbak.jpg" alt="Wafelbak">
+    </div>
+</main>

@@ -94,16 +94,39 @@
 	border: solid 1px #f98d1e;
 	background-color: #ffebd6;
 }
-#backofficecreation select{
-	max-width: 100%;
-	margin-top: 5px;
-	margin-bottom: 10px;
-	padding: 10px;
-	border-radius: 10px;
-	outline: none;
-	border: solid 1px #f98d1e;
-	background-color: #ffebd6;
-	padding-right: 5px;
+#backofficecreation select {
+    /* styling */
+    background-color: #ffebd6;
+    border: solid 1px #f98d1e;
+    border-radius: 10px;
+    display: inline-block;
+    line-height: 1.5em;
+    padding: 0.5em 3.5em 0.5em 1em;
+    outline: none;
+
+    /* reset */
+
+    margin-top: 10px;      
+    margin-bottom: 10px;      
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background-image:
+        linear-gradient(45deg, transparent 50%, gray 50%),
+        linear-gradient(135deg, gray 50%, transparent 50%),
+        linear-gradient(to right, #ccc, #ccc);
+    background-position:
+        calc(100% - 20px) calc(1em + 2px),
+        calc(100% - 15px) calc(1em + 2px),
+        calc(100% - 2.5em) 0.5em;
+    background-size:
+        5px 5px,
+        5px 5px,
+        1px 1.5em;
+    background-repeat: no-repeat;
 }
 
  button{
@@ -169,6 +192,7 @@ button:hover{
 }
 
 .interface {
+	position: relative;
 	border: 1px solid #f98d1e;
 	border-radius: 20px;
 	height: auto;
@@ -186,6 +210,30 @@ button:hover{
 	width: 100%;
 	padding: 10px;
 	overflow: auto;
+}
+
+.interfacePhoto {
+	position: relative;
+	border: 1px solid #f98d1e;
+	border-radius: 20px;
+	height: auto;
+	width: auto;
+	max-height: 500px;
+	padding: 10px;
+}
+
+.interfacePhoto h2 {
+	margin-left: 10px;
+}
+
+.interfacePhoto .infoPhoto {
+	max-height: 360px;
+	width: auto;
+	padding: 10px;
+	overflow-y: auto;
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
 
  a{
@@ -219,14 +267,6 @@ button:hover{
 	color: white;
 }
 
-.addLink {
-	display: block;
-	float: right;
-	margin-top: 10px;
-	margin-right: 10px;
-	margin-bottom: 10px;
-}
-
 .interfaceinfo {
 	padding-left: 20px;
 	padding: 5px;
@@ -235,10 +275,48 @@ button:hover{
 	margin-top: 10px;
 }
 
+.interfacePhoto .infoPhoto {
+	height: auto;
+	width: auto;
+	padding: 10px;
+	overflow: auto;
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+	margin-bottom: 10px;
+}
+
+.addLink {
+	display: flex;
+	justify-content: flex-end;
+	align-content: flex-end;
+	position: relative;
+	/* margin-top: 10px; */
+}
+
+.interfaceinfoPhoto {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	display: inline-block;
+	padding-left: 20px;
+	padding: 5px;
+	border: 1px solid #f98d1e;
+	border-radius: 10px;
+	margin-top: 10px;
+	width: auto;
+}
+
+.interfaceinfoPhoto img {
+	object-fit: contain;
+	width: 150px;
+	height: 150px;
+}
+
 .interfaceinfo .buttons {
 	float: right;
 	display: inline-block;
-	margin-top: -35px
+	margin-top: -35px 
 }
 
 .interfaceinfo .buttons a {
@@ -248,3 +326,21 @@ button:hover{
 	margin-left: 20px;
 }
 
+details {
+	cursor: pointer;
+}
+
+summary {
+	padding: 10px;
+}
+
+.summary-button {
+	float: right;
+}
+
+.orders-header {
+	padding: 0px 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}

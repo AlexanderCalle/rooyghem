@@ -1,0 +1,13 @@
+File from: [./public/images/temp/1628697642166139643035_865199350982399_3293386521250373331_n.png]
+
+File to: [./public/images/albums/Test temp5/1628697642166139643035_865199350982399_3293386521250373331_n.png]
+
+Compression algorithm: [pngquant]
+
+Description: Error: spawn /Users/alexander/Documents/developing/rooyghem/node_modules/pngquant-bin/vendor/pngquant ENOENTFile from: [./public/images/temp/1628697642178IMG_2175.PNG]
+
+File to: [./public/images/albums/Test temp5/1628697642178IMG_2175.PNG]
+
+Compression algorithm: [pngquant]
+
+Description: Error: spawn /Users/alexander/Documents/developing/rooyghem/node_modules/pngquant-bin/vendor/pngquant ENOENT
