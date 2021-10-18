@@ -12,7 +12,7 @@ const CreateActivityForm = (props) => {
     const [description, setDescription] = useState(props.activity? props.activity.description : "");
     const [startPublication, setStartPublication] = useState(props.activity? props.activity.start_publication.split('T')[0] : "");
     const [endPublication, setEndPublication] = useState(props.activity? props.activity.end_publication.split('T')[0] : "");
-    const [groupName, setGroupName] = useState("Kabouters");
+    const [groupId, setGroupId] = useState(props.activity? props.activity.group_id : 1);
 
     // local variables
     var header = "";
@@ -45,9 +45,8 @@ const CreateActivityForm = (props) => {
     }
 
     // callbacks for create, update and delete
-    const create = async e => {
-        e.preventDefault();
-        const data_act = {
+    const makeActivityObj = () => {
+        return {
             title,
             startTime,
             endTime,
@@ -55,8 +54,13 @@ const CreateActivityForm = (props) => {
             description,
             startPublication,
             endPublication,
-            groupName
+            groupId
         }
+    }
+
+    const create = async e => {
+        e.preventDefault();
+        const data_act = makeActivityObj();
 
         const requestOptions = {
             method: 'POST',
@@ -78,16 +82,7 @@ const CreateActivityForm = (props) => {
 
     const update = async e => {
         e.preventDefault();
-        const data_act = {
-            title,
-            startTime,
-            endTime,
-            meetingpoint,
-            description,
-            startPublication,
-            endPublication,
-            groupName
-        }
+        const data_act = makeActivityObj()
 
         const requestOptions = {
             method: 'PUT',
@@ -136,9 +131,9 @@ const CreateActivityForm = (props) => {
                 <input id="end_publication" value={endPublication} onChange={(e) => setEndPublication(e.target.value)} type="date" name="end_publication"/>
                 <br/>
                 <label for="bannen">Ban </label><br/>
-                <select id="bannen" onChange={(e) => setGroupName(e.target.value)} name="group_name">
+                <select id="bannen" onChange={(e) => setGroupId(e.target.value)} name="group_name" value={groupId}>
                     {groups.map(function(group) {
-                        return (<option> {group.name} </option>)
+                        return (<option value={group.group_id}>{group.name} </option>)
                     })}
                 </select>
                 <br/>

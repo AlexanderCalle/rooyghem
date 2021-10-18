@@ -28,7 +28,7 @@ const BackofficeActivityDelete = (props) => {
         const response = await fetch('http://localhost:2000/activities/delete/' + activityInfo.activity_id, {'credentials': 'include'});
         window.location = '/backoffice/activities';
     };
-
+    console.log(activityInfo);
     return (
         <>
             <Navbar/>

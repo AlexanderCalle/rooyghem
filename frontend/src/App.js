@@ -19,8 +19,8 @@ import BackofficeNewsfeedCreate from './pages/BackofficeNewsfeedCreate';
 import BackofficeNewsfeedUpdate from './pages/BackofficeNewsfeedUpdate';
 import BackofficeNewsfeedDelete from './pages/BackofficeNewsfeedDelete';
 import BackofficeUsersPage from './pages/BackofficeUsers';
-import BackofficeUsersCreatePage from './pages/BackofficeUsersCreate.Js';
-import BackofficeUsersUpdatePage from './pages/BackofficeUsersUpdate';
+import BackofficeUsersCreatePage from './pages/BackofficeUsersCreate.js';
+import BackofficeUsersUpdatePage from './pages/BackofficeUsersUpdate.js';
 import BackofficeUsersDelete from './pages/BackofficeUsersDelete';
 import BackofficeActivityDelete from './pages/BackofficeDeleteActivity';
 import BackofficeUsersCreate from './pages/BackofficeUsersCreate';
@@ -54,6 +54,7 @@ function App() {
           <AdminRoute exact path="/backoffice/users" component={BackofficeUsersPage} />
           <AdminRoute exact path="/backoffice/users/create" component={BackofficeUsersCreate} />
           <AdminRoute exact path="/backoffice/users/update/:user_id" component={BackofficeUsersUpdate} />
+          <AdminRoute exact path="/backoffice/users/delete/:user_id" component={BackofficeUsersDelete} />
           <AdminRoute exact path="/backoffice/activities/allactivities" component={BackofficeAllActivities} />
           <AdminRoute exact path="/backoffice/vk/allvk" component={BackofficeAllVk} />
           <AdminRoute exact path="/backoffice/vk/allvk/update/:group_id" component={BackofficeAllVkUpdate} />

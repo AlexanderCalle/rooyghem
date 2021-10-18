@@ -43,7 +43,7 @@ CREATE TABLE activities (
 	start_date DATETIME NOT NULL,
 	end_date DATETIME NOT NULL,
 	meetingpoint VARCHAR(45),
-	description VARCHAR(45),
+	description TEXT,
 	start_publication DATE,
 	end_publication DATE,
     group_id INT NOT NULL,
