@@ -23,6 +23,11 @@ import BackofficeUsersCreatePage from './pages/BackofficeUsersCreate.Js';
 import BackofficeUsersUpdatePage from './pages/BackofficeUsersUpdate';
 import BackofficeUsersDelete from './pages/BackofficeUsersDelete';
 import BackofficeActivityDelete from './pages/BackofficeDeleteActivity';
+import BackofficeUsersCreate from './pages/BackofficeUsersCreate';
+import BackofficeUsersUpdate from './pages/BackofficeUsersUpdate';
+import BackofficeAllActivities from './pages/BackofficeAllActivities';
+import BackofficeAllVk from './pages/BackofficeAllVk';
+import BackofficeAllVkUpdate from './pages/BackofficeAllVkUpdate';
 
 function App() {
   return (
@@ -47,9 +52,11 @@ function App() {
           <AdminRoute path="/backoffice/newsfeed/update/:newsfeed_id" component={BackofficeNewsfeedUpdate} />
           <AdminRoute path="/backoffice/newsfeed/delete/:newsfeed_id" component={BackofficeNewsfeedDelete} />
           <AdminRoute exact path="/backoffice/users" component={BackofficeUsersPage} />
-          <AdminRoute exact path="/backoffice/users/create" component={BackofficeUsersCreatePage} />
-          <AdminRoute path="/backoffice/users/:user_id/update" component={BackofficeUsersUpdatePage} />
-          <AdminRoute path="/backoffice/users/:user_id/delete" component={BackofficeUsersDelete} />
+          <AdminRoute exact path="/backoffice/users/create" component={BackofficeUsersCreate} />
+          <AdminRoute exact path="/backoffice/users/update/:user_id" component={BackofficeUsersUpdate} />
+          <AdminRoute exact path="/backoffice/activities/allactivities" component={BackofficeAllActivities} />
+          <AdminRoute exact path="/backoffice/vk/allvk" component={BackofficeAllVk} />
+          <AdminRoute exact path="/backoffice/vk/allvk/update/:group_id" component={BackofficeAllVkUpdate} />
         </Switch>
       </body>
     </Router>

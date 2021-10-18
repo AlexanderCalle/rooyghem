@@ -64,6 +64,7 @@ router.get('/:feed_id', (req, res) => {
         if(err) return res.status(400).json({"statuscode": 400, error: err});
         if(newsfeed.length === 0) return res.status(404).json({"statuscode": 404, "error": "no newsfeed with given id"})
         newsfeed[0].picture_path = req.protocol + '://' + req.headers.host + "/newsfeeds/" + newsfeed[0].feed_id;
+        console.log(newsfeed[0]);
         res.json({
             newsfeed: newsfeed[0]
         });
@@ -77,8 +78,8 @@ router.post('/create', authCheck, adminCheck, userCheck, upload.single('image'),
         const newsfeed = {
             title: req.body.title,
             description: req.body.description,
-            start_publication: req.body.startPublication,
-            end_publication: req.body.endPublication,
+            start_publication: req.body.start_publication,
+            end_publication: req.body.end_publication,
             picture_path: process.env.NEWSFEED_PATH + req.file.filename,
             created_by: req.user.user_id
         }

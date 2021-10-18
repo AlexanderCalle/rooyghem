@@ -39,15 +39,13 @@ router.get('/', authCheck, adminCheck,(req, res)=>{
     });
 
 });
-// router.get('/create', authCheck, adminCheck,(req, res)=>{
-//     con.query('SELECT * FROM `groups`', (err, groups)=> {
-//         if(err) return res.status(400).json({"statuscode": 400, error: err});
-//         con.query('SELECT * FROM users', (err, users)=>{
-//             if(err) return res.status(400).json({"statuscode": 400, error: err});
-//             res.json({groups: groups, users: users, user:req.user, admin: req.admin, username: req.user.username});
-//         });
-//     });
-// });
+
+router.get('/groups', authCheck, adminCheck,(req, res)=>{
+    con.query('SELECT * FROM `groups`', (err, groups)=> {
+        if(err) return res.status(400).json({"statuscode": 400, error: err});
+        res.status(200).json({"statuscode": 200, groups: groups});
+    });
+});
 
 // FIND ALL USERS
 // router.get('/all', authCheck, adminCheck,(req, res)=> {
@@ -59,7 +57,6 @@ router.get('/', authCheck, adminCheck,(req, res)=>{
 
 // FIND SINGLE USER BY ID
 router.get('/single/:id', (req, res)=> {
-    
     con.query('SELECT user_id, firstname, lastname, email, is_admin, username, phone, group_id, bondsteam, is_banleader FROM users WHERE user_id = ?', req.params.id, (err, user)=>{
         if(err) return res.status(400).json({"statuscode": 404, error: err});
         if(user.length == 0) return res.status(404).json({"statuscode": 404, error: 'Gebruiker werd niet gevonden'});
@@ -119,7 +116,7 @@ router.post('/create', authCheck, adminCheck, upload.single('image'), userFormCh
                         return res.status(400).json({'statuscode': 400, error: err});
                     }
                 } else {
-                    return res.json({"message": "user was created"});
+                    return res.json({"statuscode": 200, "message": "user was created"});
                 }
             });
         });
@@ -235,7 +232,7 @@ router.put('/single/:id', authCheck, adminCheck, upload.single('image'), userFor
                         return res.status(400).json({'statuscode': 400, error: err});
                     }
                 } else {
-                    return res.json({"message": "user was updated"});
+                    return res.status(200).json({"statuscode": 200,"message": "user was updated"});
                 }
             });
         });
@@ -267,7 +264,7 @@ router.put('/single/:id', authCheck, adminCheck, upload.single('image'), userFor
                     return res.status(400).json({'statuscode': 400, error: err});
                 }
             } else {
-                res.json({"message": "user was updated"});
+                res.status(200).json({"statuscode": 200,"message": "user was updated"});
             }
         });
     } 

@@ -9,7 +9,8 @@ module.exports = (temp_path, path) => {
   if(!isEmptyDir(temp_path)) {
     console.log("beginning compression");
     compress_images(
-      temp_path + '/*.{jpg,JPG,jpeg,JPEG,png,svg,gif}', 
+      // temp_path + '/*.{jpg,JPG,jpeg,JPEG,png,svg,gif}', 
+      temp_path,
       path,
       { compress_force: false, statistic: true, autoupdate: true },
       false,

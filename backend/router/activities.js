@@ -6,16 +6,10 @@ const adminCheck = require('../middleware/adminCheck');
 const userCheck = require('../middleware/userCheck');
 
 // Route GET all activities + form
-router.get('/', (req, res)=> {
+router.get('/', userCheck, adminCheck, (req, res)=> {
     con.query('SELECT * FROM activities', (err, activities)=> {
         if(err) return res.status(400).json({"statuscode": 400, error: err});
-        return res.json({
-            activities:activities,
-            user: req.user, 
-            admin: req.admin, 
-            username: req.user.username,
-            moment: require('moment')
-        });
+        return res.status(200).json({"statuscode": 200, activities: activities});
     });
 });
 
@@ -26,13 +20,7 @@ router.get('/me', userCheck, (req, res)=>{
         if(err) return res.status(400).json({"statuscode": 400, error: err});
         con.query('SELECT * FROM activities WHERE group_id = ?', req.user.group_id, (err, activities)=>{
             if(err) return res.status(400).json({"statuscode": 400, error: err});
-            return res.json({
-                activities:activities,
-                // user: req.user, 
-                // admin: req.admin, 
-                // username: req.user.username,
-                // moment: require('moment')
-            });
+            return res.status(200).json({"statuscode": 200, activities:activities});
         }); 
     });
 });

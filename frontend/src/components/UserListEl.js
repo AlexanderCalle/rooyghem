@@ -2,9 +2,8 @@ import React from 'react';
 import '../style/backoffice.css';
 
 const UserListEl = (props) => {
-    const updateLink = "/backoffice/users/" + props.user.user_id + "/update";
-    const deleteLink = "/backoffice/users/" + props.user.user_id + "/delete";    
-    
+    const updateLink = "/backoffice/users/update/" + props.user.user_id;
+    const deleteLink = "/backoffice/users/delete/" + props.user.user_id;
 
     return (
         <div class="interfaceinfo">

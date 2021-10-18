@@ -1,21 +1,20 @@
-import React from 'react';
-import BackofficeMenu from '../components/BackofficeMenu'
-import Navbar from '../components/Navbar'
-import UsersForm from '../components/UsersForm';
+import React, {useState, useEffect} from 'react';
+import Navbar from '../components/Navbar';
+import BackofficeMenu from '../components/BackofficeMenu';
+import '../style/backoffice.css'
+import CreateUsersForm from '../components/CreateUsersForm';
 
-const BackofficeUsersCreatePage = () => {
+function BackofficeUsersCreate() {
 
     return (
         <>
             <Navbar />
             <main className="container" id="backofficecontainer">
                 <BackofficeMenu />
-                <div id="backofficecreation">
-                    <UsersForm />
-                </div>
+                <CreateUsersForm />
             </main>
         </>
-    );
+    )
 }
 
-export default BackofficeUsersCreatePage;
+export default BackofficeUsersCreate;
