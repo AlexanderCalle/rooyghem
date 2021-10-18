@@ -62,7 +62,7 @@ function BackofficeNewsfeed() {
                                 <p>{newsfeed.title}</p>
                                 <div class="buttons">
                                     <a href={"/backoffice/newsfeed/update/" + newsfeed.feed_id}>bewerk</a>
-                                    <a onClick={() => deleteFeed(newsfeed.feed_id)}>delete</a>
+                                    <a href={"/backoffice/newsfeed/delete/" + newsfeed.feed_id}>delete</a>
                                 </div>
                              
                             </div>

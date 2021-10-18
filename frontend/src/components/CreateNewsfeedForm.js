@@ -10,6 +10,15 @@ const CreateNewsfeedForm = (props) => {
     const [endPublication, setEndPublication] = useState(isUpdateForm ? props.newsfeed.end_publication.split('T')[0]: "");
     const [image, setImage] = useState(null);
 
+    var header = "";
+    if (props.readOnly) {
+        header = "Nieuwtje verwijderen?";
+    } else if (props.newsfeed) {
+        header = "Update nieuwtje";
+    } else {
+        header = "Maak nieuwtje";
+    }
+
     const makeFormData = () => {
         const formData = new FormData();
         
@@ -72,7 +81,7 @@ const CreateNewsfeedForm = (props) => {
 
     return(
         <div id="creationform">
-            <h1>Maak nieuwtje</h1>
+            <h1>{header}</h1>
             <form onSubmit={isUpdateForm? update : create}>
                 <fieldset disabled={props.readOnly? true: false}>
                     <label for="title">Titel </label>
@@ -95,7 +104,7 @@ const CreateNewsfeedForm = (props) => {
                     }}placeholder="Pad..." />
                     <br />
                     {props.readOnly? <></>:
-                        <button type="submit">Maak nieuwtje</button>}
+                        <button type="submit">{props.newsfeed? "Update nieuwtje" : "Maak nieuwtje"}</button>}
                 </fieldset>
             </form>
         </div>
