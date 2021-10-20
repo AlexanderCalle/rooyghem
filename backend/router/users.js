@@ -271,7 +271,7 @@ router.put('/single/:id', authCheck, adminCheck, upload.single('image'), userFor
 });
 
 // DELTE SINGLE USER
-router.get('/delete/single/:id', authCheck, adminCheck,(req, res)=> {
+router.delete('/delete/single/:id', authCheck, adminCheck,(req, res)=> {
     con.query('DELETE FROM users WHERE user_id = ?', req.params.id, (err, user)=>{
         if(err) return res.status(400).json({'statuscode': 400, error: err});
         return res.json({"message": "user was deleted"});

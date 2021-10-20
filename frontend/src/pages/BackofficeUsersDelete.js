@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {useParams} from 'react-router-dom';
 import BackofficeMenu from '../components/BackofficeMenu'
 import Navbar from '../components/Navbar'
-import UsersForm from '../components/UsersForm';
+import CreateUsersForm from '../components/CreateUsersForm';
 
 const BackofficeUsersDelete = () => {
     const params = useParams();
@@ -27,8 +27,17 @@ const BackofficeUsersDelete = () => {
     }
 
     const deleteUser = async () => {
-        const response = await fetch('http://localhost:2000/users/delete/single/' + userInfo.user_id, {'credentials': 'include'});
-        window.location = "/backoffice/users";
+        const requestOptions = {
+            method: 'DELETE',
+            credentials: 'include'
+        };
+        
+        fetch('http://localhost:2000/users/delete/single/' + userInfo.user_id, requestOptions)
+        .then(response => {
+            if (response.ok) {
+                window.location = "/backoffice/users";
+            }
+        });
     };
 
     return(
@@ -37,7 +46,7 @@ const BackofficeUsersDelete = () => {
             <main className="container" id="backofficecontainer">
                 <BackofficeMenu />
                 <div id="backofficecreation">
-                    <UsersForm user={userInfo} readOnly={true}/>
+                    <CreateUsersForm userInfo={userInfo} readOnly={true}/>
                     <button onClick={deleteUser}>Verwijder gebruiker</button>
                 </div>
             </main>

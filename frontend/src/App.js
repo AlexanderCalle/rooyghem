@@ -19,8 +19,6 @@ import BackofficeNewsfeedCreate from './pages/BackofficeNewsfeedCreate';
 import BackofficeNewsfeedUpdate from './pages/BackofficeNewsfeedUpdate';
 import BackofficeNewsfeedDelete from './pages/BackofficeNewsfeedDelete';
 import BackofficeUsersPage from './pages/BackofficeUsers';
-import BackofficeUsersCreatePage from './pages/BackofficeUsersCreate.js';
-import BackofficeUsersUpdatePage from './pages/BackofficeUsersUpdate.js';
 import BackofficeUsersDelete from './pages/BackofficeUsersDelete';
 import BackofficeActivityDelete from './pages/BackofficeDeleteActivity';
 import BackofficeUsersCreate from './pages/BackofficeUsersCreate';

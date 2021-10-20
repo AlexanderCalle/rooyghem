@@ -15,7 +15,6 @@ function BackofficeUsersUpdate() {
             const res = await fetch('http://localhost:2000/users/single/' + params.user_id, {'credentials': 'include'});
             const json = await res.json();
             setUserInfo(json.user);
-            console.log(json.user);
         }
 
         fetchData();
@@ -32,7 +31,7 @@ function BackofficeUsersUpdate() {
         </>
         )
     }
-
+    console.log(userInfo);
     return (
         <>
             <Navbar />
