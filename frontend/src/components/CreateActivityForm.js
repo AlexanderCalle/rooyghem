@@ -19,6 +19,7 @@ const CreateActivityForm = (props) => {
     if (props.readOnly) {
         header = "Activiteit verwijderen?";
     } else if (props.activity) {
+        console.log(props.activity);
         header = "Update activiteit";
     } else {
         header = "Nieuwe activiteit";
@@ -27,7 +28,7 @@ const CreateActivityForm = (props) => {
     // fetch group data
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch('http://localhost:2000/groups/');
+            const res = await fetch('http://localhost:2000/groups/', {'credentials': 'include'});
             const json = await res.json();
             setGroups(json.groups);
         }
@@ -35,33 +36,36 @@ const CreateActivityForm = (props) => {
         fetchData();
     }, [setGroups]);
 
-    
-    if(!groups) {
-        return(
-        <> 
-            <p>Aan het laden...</p>
-        </>
-        );
-    }
-
-    // callbacks for create, update and delete
-    const makeActivityObj = () => {
+     // callbacks for create, update and delete
+     const makeFormData = () => {
+        // const formData = new FormData();
+        
+        // formData.append("title", title);
+        // formData.append("startTime", startTime);
+        // formData.append("endTime", endTime);
+        // formData.append("meetingpoint", meetingpoint);
+        // formData.append("description", description);
+        // formData.append("startPublication", startPublication);
+        // formData.append("endPublication", endPublication);
+        // formData.append("group_id", groupId);
+        
+        // return formData;
         return {
-            title,
-            startTime,
-            endTime,
-            meetingpoint,
-            description,
-            startPublication,
-            endPublication,
-            groupId
+            "title": title,
+            "startTime": startTime,
+            "endTime": endTime,
+            "meetingpoint": meetingpoint,
+            "description": description,
+            "startPublication": startPublication,
+            "endPublication": endPublication,
+            "group_id": groupId
         }
     }
 
-    const create = async e => {
+    const create = async (e) => {
         e.preventDefault();
-        const data_act = makeActivityObj();
-
+        const data_act = makeFormData();
+        console.log(JSON.stringify(data_act));
         const requestOptions = {
             method: 'POST',
             credentials: 'include',
@@ -76,14 +80,16 @@ const CreateActivityForm = (props) => {
                     window.location = '/backoffice/activities';
                 } else if(data.statusCode === 401) {
                     console.log(data.error);
+                } else {
+                    console.log(data.error);
                 }
             })
     }
 
-    const update = async e => {
+    const update = async (e) => {
         e.preventDefault();
-        const data_act = makeActivityObj()
-
+        const data_act = makeFormData();
+        console.log(JSON.stringify(data_act));
         const requestOptions = {
             method: 'PUT',
             credentials: 'include',
@@ -102,6 +108,15 @@ const CreateActivityForm = (props) => {
                     console.log(data.error);
                 }
             })
+    }
+
+    
+    if(!groups) {
+        return(
+        <> 
+            <p>Aan het laden...</p>
+        </>
+        );
     }
 
     return(
@@ -131,7 +146,7 @@ const CreateActivityForm = (props) => {
                 <input id="end_publication" value={endPublication} onChange={(e) => setEndPublication(e.target.value)} type="date" name="end_publication"/>
                 <br/>
                 <label for="bannen">Ban </label><br/>
-                <select id="bannen" onChange={(e) => setGroupId(e.target.value)} name="group_name" value={groupId}>
+                <select id="bannen" onChange={(e) => setGroupId(e.target.value)} name="group_id" value={groupId}>
                     {groups.map(function(group) {
                         return (<option value={group.group_id}>{group.name} </option>)
                     })}

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import '../style/backoffice.css'
+// import '../style/backoffice.css'
 
 const CreateUsersForm = (props) => {
 
@@ -24,7 +24,7 @@ const CreateUsersForm = (props) => {
     // fetch group data
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch('http://localhost:2000/users/groups/', {'credentials': 'include'});
+            const res = await fetch('http://localhost:2000/groups/', {'credentials': 'include'});
             const json = await res.json();
             setGroups(json.groups);
         }
