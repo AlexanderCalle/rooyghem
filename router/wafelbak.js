@@ -13,13 +13,14 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 // Route GET form page
 // page to order
 router.get('/', (req, res) => {
-    con.query('SELECT name FROM `groups`', (err, groups) => {
-        if (err) return res.render('badrequest', { error: err })
-        res.render('wafelbak_order', {
-            groups: groups,
-            username: req.user.username
-        });
-    })
+    // con.query('SELECT name FROM `groups`', (err, groups) => {
+    //     if (err) return res.render('badrequest', { error: err })
+    //     res.render('wafelbak_order', {
+    //         groups: groups,
+    //         username: req.user.username
+    //     });
+    // })
+    res.send("Deze pagina niet gevonden");
 });
 
 // Route POST order
