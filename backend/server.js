@@ -188,6 +188,9 @@ app.use('/profile', userCheck, authCheck, profile);
 const albums = require('./router/albums');
 app.use('/albums', albums);
 
+const wafelbak = require('./router/wafelbak');
+app.use('/wafelbak', userCheck, wafelbak);
+
 app.listen(port, ()=> {
     console.log('Server running on port ' + port);
 });

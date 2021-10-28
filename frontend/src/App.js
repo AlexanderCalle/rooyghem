@@ -26,6 +26,8 @@ import BackofficeUsersUpdate from './pages/BackofficeUsersUpdate';
 import BackofficeAllActivities from './pages/BackofficeAllActivities';
 import BackofficeAllVk from './pages/BackofficeAllVk';
 import BackofficeAllVkUpdate from './pages/BackofficeAllVkUpdate';
+import BackofficeWafelbakPage from './pages/BackofficeWafelbak';
+import WafelbakOrderPage from './pages/WafelbakOrderPage';
 
 function App() {
   return (
@@ -37,6 +39,7 @@ function App() {
           <Route exact path="/contact" component={Contact} />
           <Route exact path="/groups/:group_name/info" component={Group}/>
           <Route exact path="/users/login" component={Login}/>
+          <Route exact path="/wafelbak" component={WafelbakOrderPage} />
           <PrivateRoute exact path="/backoffice" component={BackofficePage}/>
           <PrivateRoute exact path="/backoffice/activities" component ={BackofficeActivities}/>
           <PrivateRoute exact path="/backoffice/activities/create" component ={BackofficeCreateAct}/>
@@ -56,6 +59,7 @@ function App() {
           <AdminRoute exact path="/backoffice/activities/allactivities" component={BackofficeAllActivities} />
           <AdminRoute exact path="/backoffice/vk/allvk" component={BackofficeAllVk} />
           <AdminRoute exact path="/backoffice/vk/allvk/update/:group_id" component={BackofficeAllVkUpdate} />
+          <AdminRoute exact path="/backoffice/wafelbak/orders" component={BackofficeWafelbakPage} />
         </Switch>
       </body>
     </Router>
