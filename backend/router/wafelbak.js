@@ -35,6 +35,8 @@ router.post('/order', (req, res) => {
         pick_up_moment: req.body.pick_up_moment
     }
 
+    console.log(order);
+
     let moment;
 
     switch (order.pick_up_moment) {
@@ -69,16 +71,18 @@ router.post('/order', (req, res) => {
             'Vele Ksa Groeten'
     }
 
-    sgMail.send(msg).then(() => {
-        con.query('INSERT INTO orders SET ?', order, (err, order) => {
-            if (err) return res.render('badrequest', { error: err });
-            res.render('succes_order', {
-                username: req.user.username
-            })
-        })
-    }).catch(error => {
-        console.log(error);
-        res.render('badrequest', { error: error });
+    // sgMail.send(msg).then(() => {
+    //     con.query('INSERT INTO orders SET ?', order, (err, order) => {
+    //         if (err) return res.status(404).json({'error': err})
+    //         return res.status(200).json({'message': 'order was placed'})
+    //     })
+    // }).catch(error => {
+    //     console.log(error);
+    //     res.status(500).json({'error': error})
+    // })
+    con.query('INSERT INTO orders SET ?', order, (err, order) => {
+        if (err) return res.status(404).json({'error': err})
+        return res.status(200).json({'message': 'order was placed'})
     })
 
 });

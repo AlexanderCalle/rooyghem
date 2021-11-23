@@ -11,7 +11,7 @@ const BackofficeWafelbakPage = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch('http://localhost:2000/orders/', {'credentials': 'include'});
+            const res = await fetch('http://localhost:2000/wafelbak/orders/', {'credentials': 'include'});
             const json = await res.json();
 
             if(res.error) {
