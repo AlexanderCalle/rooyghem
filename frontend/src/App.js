@@ -31,6 +31,7 @@ import WafelbakOrderPage from './pages/WafelbakOrderPage';
 import GroupList from './pages/GroupsList';
 import BackofficeCreateAlbum from './pages/BackofficeCreateAlbum';
 import BackofficeAlbums from './pages/BackofficeAlbums';
+import BackofficeAlbumPhoto from './pages/BackofficeAlbumPhoto';
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
           {/* Backoffice Albums */}
           <PrivateRoute exact path="/backoffice/albums" component={BackofficeAlbums} />
           <PrivateRoute exact path="/backoffice/albums/create" component={BackofficeCreateAlbum} />
+          <PrivateRoute exact path="/backoffice/albums/album/:album_id" component={BackofficeAlbumPhoto} />
           {/* Backoffice VK */}
           <PrivateRoute exact path="/backoffice/vk" component={BackofficeVkPage} />
           {/* Backoffice Profile */}

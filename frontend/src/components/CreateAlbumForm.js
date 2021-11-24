@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import "../style/message.css";
 
 const CreateAlbumForm = () => {
@@ -13,7 +14,21 @@ const CreateAlbumForm = () => {
     const submitForm = (e) => {
         e.preventDefault();
         if (title && activityStart && activityEnd) {
-            // TODO: make request
+
+            const data = {
+                name: title,
+                description: description,
+                activity_start: activityStart,
+                activity_end: activityEnd,
+                group_id: group_id,
+            }
+
+            axios.post('http://localhost:2000/albums/create', data)
+                .then(response => {
+                    if (response.status === 201) {
+                        window.location.href = '/backoffice/albums/album/' + response.data.album_id;
+                    }
+                })
         } else {
             setMessage("Vul alles in!")
         }
@@ -29,16 +44,16 @@ const CreateAlbumForm = () => {
 
             <form onSubmit={e => submitForm(e)}>
                 <label for="title">Naam Album</label> <br />
-                <input id="title" type="text" name="name" placeholder="Naam album..." />
+                <input id="title" type="text" name="name" value={title} onChange={e => setTitle(e.target.value)} placeholder="Naam album..." />
                 <br />
                 <label for="description">Beschrijving </label><br />
-                <input id="description" type="text" name="description" placeholder="Beschrijving..." />
+                <input id="description" type="text" name="description" value={description} onChange={e => setDescription(e.target.value)} placeholder="Beschrijving..." />
                 <br />
                 <label for="start_time">Start activiteit </label> <br />
-                <input id="activity_start" type="date" name="activity_start" />
+                <input id="activity_start" type="date" value={activityStart} onChange={e => setActivityStart(e.target.value)} name="activity_start" />
                 <br />
                 <label for="end_time">Einde activiteit </label><br />
-                <input id="activity_end" type="date" name="activity_end" />
+                <input id="activity_end" type="date" value={activityEnd} onChange={e => setActivityEnd(e.target.value)} name="activity_end" />
                 <br />
                 <button type="submit">Maak album</button>
             </form>

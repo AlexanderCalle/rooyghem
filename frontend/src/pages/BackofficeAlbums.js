@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import AlbumListEl from '../components/AlbumListEl';
 import BackofficeMenu from '../components/BackofficeMenu';
 import Footer from '../components/Footer';
@@ -7,6 +8,20 @@ import Navbar from '../components/Navbar';
 const BackofficeAlbums = () => {
 
     const [albums, setAlbums] = useState([]);
+    const { group_id } = JSON.parse(localStorage.getItem('tokens'));
+
+    useEffect(() => {
+        console.log(group_id);
+        axios.get('http://localhost:2000/albums/groups/' + group_id)
+            .then((response) => {
+                if (response.status === 200) {
+                    setAlbums(response.data.albums);
+                    console.log(response.data.albums);
+                } else {
+                    console.log("no Success response");
+                }
+            })
+    }, [group_id]);
 
     return (
         <>
