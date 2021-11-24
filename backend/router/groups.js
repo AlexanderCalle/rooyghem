@@ -3,13 +3,13 @@ const router = express.Router();
 const con = require('../connect');
 const path = require('path');
 
-router.get('/', (req, res)=>{
-    con.query('SELECT * FROM `groups` WHERE group_id <= 6', (err, groups)=> {
-        if(err) return res.status(400).json({"statuscode": 400, error: err});
+router.get('/', (req, res) => {
+    con.query('SELECT * FROM `groups` WHERE group_id <= 6', (err, groups) => {
+        if (err) return res.status(400).json({ "statuscode": 400, error: err });
         groups.forEach(group => {
             group.logo = '/groups/' + group.name + '/logo';
         })
-        return res.json({
+        return res.status(200).json({
             groups: groups
         });
     })
@@ -17,36 +17,36 @@ router.get('/', (req, res)=>{
 
 router.get('/:group_name/logo', (req, res) => {
     con.query('SELECT logo FROM `groups` WHERE name = ?', req.params.group_name, (err, logo_path) => {
-        if(err) return res.status(400).json({"statuscode": 400, error: err});
-        if(logo_path[0] == null) return res.status(404).json({"statuscode": 404, "error": "Group not found"});
+        if (err) return res.status(400).json({ "statuscode": 400, error: err });
+        if (logo_path[0] == null) return res.status(404).json({ "statuscode": 404, "error": "Group not found" });
         console.log(logo_path[0].logo);
         res.sendFile(path.join(__dirname, '..', logo_path[0].logo));
     });
 });
 
-router.get('/:group_name/info', (req, res)=> {
-    con.query('SELECT * FROM `groups` WHERE name = ?', req.params.group_name, (err, group)=> {
-        
-        if(err) return res.status(400).json({"statuscode": 400, error: err});
+router.get('/:group_name/info', (req, res) => {
+    con.query('SELECT * FROM `groups` WHERE name = ?', req.params.group_name, (err, group) => {
 
-        if (group.length === 0) return res.status(404).json({"statuscode": 404, error: "Group not found"});
+        if (err) return res.status(400).json({ "statuscode": 400, error: err });
+
+        if (group.length === 0) return res.status(404).json({ "statuscode": 404, error: "Group not found" });
         group[0].logo = req.protocol + '://' + req.headers.host + '/groups/' + req.params.group_name + '/logo';
         group[0].contact = req.params.group_name + '@ksarooyghem.be';
         con.query('SELECT * FROM locations WHERE location_id = ?', group[0].location_id, (err, location) => {
-            if(err) return res.status(400).json({"statuscode": 400, error: err});
+            if (err) return res.status(400).json({ "statuscode": 400, error: err });
             location[0].picture = '/locations/' + location[0].location_id + '/picture';
-            con.query('SELECT * FROM activities WHERE group_id = ? AND end_publication > ?', [group[0].group_id, new Date()], (err, activities)=> {
-                if(err) return res.status(400).json({"statuscode": 400, error: err});
-                con.query('SELECT user_id, firstname, lastname, email, is_banleader FROM users WHERE group_id = ? ORDER BY is_banleader DESC, lastname ASC', group[0].group_id, (err, leaders) =>{
-                    if(err) return res.status(400).json({"statuscode": 400, error: err});
+            con.query('SELECT * FROM activities WHERE group_id = ? AND end_publication > ?', [group[0].group_id, new Date()], (err, activities) => {
+                if (err) return res.status(400).json({ "statuscode": 400, error: err });
+                con.query('SELECT user_id, firstname, lastname, email, is_banleader FROM users WHERE group_id = ? ORDER BY is_banleader DESC, lastname ASC', group[0].group_id, (err, leaders) => {
+                    if (err) return res.status(400).json({ "statuscode": 400, error: err });
                     leaders.forEach(leader => {
                         leader.picture = req.protocol + '://' + req.headers.host + '/users/single/' + leader.user_id + '/picture';
                     });
                     con.query('SELECT * FROM albums WHERE group_id = ? AND checked = 1 ORDER BY activity_end DESC', group[0].group_id, (err, albums) => {
-                        if(err) return res.status(400).json({"statuscode": 400, error: err});
-                        if(albums[0] != null){
+                        if (err) return res.status(400).json({ "statuscode": 400, error: err });
+                        if (albums[0] != null) {
 
-                            const sortedAlbums = albums.sort((a,b) => {
+                            const sortedAlbums = albums.sort((a, b) => {
                                 return new Date(a.end_date) - new Date(b.end_date);
                             });
 
@@ -55,26 +55,26 @@ router.get('/:group_name/info', (req, res)=> {
                                 const date = new Date(dateString);
                                 const month = date.getMonth() + 1;
 
-                                if(month >= 1 && month <= 8){
+                                if (month >= 1 && month <= 8) {
                                     const year = parseInt(date.getFullYear()) - 1 + " - " + date.getFullYear();
-                                    
-                                    if(!groups[year]){
+
+                                    if (!groups[year]) {
                                         groups[year] = [];
                                     }
 
                                     groups[year].push(album);
                                 }
 
-                                if(month >= 9 && month <= 12){                                
+                                if (month >= 9 && month <= 12) {
                                     const year = date.getFullYear() + " - " + (parseInt(date.getFullYear()) + 1).toString();
 
-                                    if(!groups[year]){
+                                    if (!groups[year]) {
                                         groups[year] = [];
                                     }
 
                                     groups[year].push(album);
                                 }
-                            
+
                                 return groups;
                             }, {})
 
@@ -88,9 +88,9 @@ router.get('/:group_name/info', (req, res)=> {
 
                             return res.json({
                                 group: group[0],
-                                location: location[0], 
-                                leaders: leaders, 
-                                activities: activities, 
+                                location: location[0],
+                                leaders: leaders,
+                                activities: activities,
                                 username: req.user.username,
                                 albums: groupedAlbums,
                                 moment: require('moment')
@@ -98,9 +98,9 @@ router.get('/:group_name/info', (req, res)=> {
                         } else {
                             return res.json({
                                 group: group[0],
-                                location: location[0], 
-                                leaders: leaders, 
-                                activities: activities, 
+                                location: location[0],
+                                leaders: leaders,
+                                activities: activities,
                                 username: req.user.username,
                                 albums: null,
                                 moment: require('moment')
@@ -114,12 +114,12 @@ router.get('/:group_name/info', (req, res)=> {
     });
 });
 
-router.get('/:group_name/info/activities', (req,res)=> {
-    con.query('SELECT * FROM `groups` WHERE name = ?', req.params.group_name, (err, groups)=> {
-        if(err) return res.status(400).json({"statuscode": 400, error: err});
-        if(groups[0] == null) return res.status(404).json({"statuscode": 404, error: "Group not found"});
-        con.query('SELECT * FROM activities WHERE group_id = ?', groups[0].group_id, (err, activities)=> {
-            if(err) return res.status(400).json({"statuscode": 400, error: err});
+router.get('/:group_name/info/activities', (req, res) => {
+    con.query('SELECT * FROM `groups` WHERE name = ?', req.params.group_name, (err, groups) => {
+        if (err) return res.status(400).json({ "statuscode": 400, error: err });
+        if (groups[0] == null) return res.status(404).json({ "statuscode": 404, error: "Group not found" });
+        con.query('SELECT * FROM activities WHERE group_id = ?', groups[0].group_id, (err, activities) => {
+            if (err) return res.status(400).json({ "statuscode": 400, error: err });
             let events = [];
             activities.forEach(activity => {
                 events.push({
@@ -130,7 +130,7 @@ router.get('/:group_name/info/activities', (req,res)=> {
                     meetingpoint: activity.meetingpoint
                 });
             });
-            res.json({"activities": events})
+            res.json({ "activities": events })
         });
     });
 });

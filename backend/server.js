@@ -24,7 +24,7 @@ app.use(morgan('dev'));
 
 //middelware
 app.use(cors({
-    origin:'http://localhost:3000',
+    origin: 'http://localhost:3000',
     credentials: true
 }));
 app.use('/public', express.static(path.join(__dirname, "public")));
@@ -36,13 +36,13 @@ app.use(cookieParser());
 app.use(helmet());
 
 // BodyParser middleware
-app.use(bodyParser.json({limit: "50mb"}));
+app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: false, parameterLimit: 100000 }));
 
-app.get('/', userCheck, (req, res)=> {
+app.get('/', userCheck, (req, res) => {
     const date = new Date();
     con.query('SELECT * FROM newsfeeds WHERE end_publication > ? AND start_publication <= ? ORDER BY start_publication', [date, date], (err, newsfeeds) => {
-        if(err) return res.status(404).json({"statuscode": 404, "error": err});
+        if (err) return res.status(404).json({ "statuscode": 404, "error": err });
         return res.status(200).json({
             newsfeeds: newsfeeds,
             moment: moment,
@@ -52,18 +52,18 @@ app.get('/', userCheck, (req, res)=> {
     });
 });
 
-app.get('/contact', userCheck, (req, res)=> {
-    con.query('SELECT firstname, lastname, email, user_id, phone FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
-        if(err) return res.status(400).json({"statuscode": 400, "error": err});
+app.get('/contact', userCheck, (req, res) => {
+    con.query('SELECT firstname, lastname, email, user_id, phone FROM users WHERE bondsteam = "bondsleider"', (err, users) => {
+        if (err) return res.status(400).json({ "statuscode": 400, "error": err });
         users.forEach(user => {
             user.picture = '/users/single/' + user.user_id + '/picture';
         })
-        return res.json({bondsleiders: users, username: req.user.username});
+        return res.json({ bondsleiders: users, username: req.user.username });
     });
 });
 
-app.post('/contact', userCheck, (req, res)=> {
-    if(req.body.naam != '' && req.body.onderwerp != '' && req.body.bericht != ''){
+app.post('/contact', userCheck, (req, res) => {
+    if (req.body.naam != '' && req.body.onderwerp != '' && req.body.bericht != '') {
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
         const msg = {
@@ -71,22 +71,22 @@ app.post('/contact', userCheck, (req, res)=> {
             from: 'ksarooyghemwebteam@gmail.com',
             subject: req.body.onderwerp,
             text: 'Hallo , \n\n' +
-            'Vraag van: ' + req.body.naam + ', email: ' + req.body.email + ' \n\n' +
-            req.body.bericht
+                'Vraag van: ' + req.body.naam + ', email: ' + req.body.email + ' \n\n' +
+                req.body.bericht
         }
-        
-        sgMail.send(msg).then(()=> {
-            con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
-                return res.json({message: 'Vraag werd verstuurd'});
+
+        sgMail.send(msg).then(() => {
+            con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users) => {
+                return res.json({ message: 'Vraag werd verstuurd' });
             });
-        }).catch((err)=> {
-            con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
-                return res.status(500).json({"statuscode": 500, error: err});
+        }).catch((err) => {
+            con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users) => {
+                return res.status(500).json({ "statuscode": 500, error: err });
             });
         });
     } else {
-        con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users)=> {
-            return res.status(400).json({'statuscode': 400, error: 'Gelieve alle velden in te vullen'});
+        con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users) => {
+            return res.status(400).json({ 'statuscode': 400, error: 'Gelieve alle velden in te vullen' });
         });
     }
 });
@@ -99,18 +99,18 @@ app.post('/contact', userCheck, (req, res)=> {
 //     return res.json({username: req.user.username});
 // });
 
-app.post('/forgot', userCheck, (req, res)=> {
+app.post('/forgot', userCheck, (req, res) => {
     let token;
 
     crypto.randomBytes(20, (err, buf) => {
         token = buf.toString('hex');
     });
 
-    con.query('SELECT * FROM users WHERE email = ?', req.body.email, (err, users)=> {
-        if(err) return res.status(400).json({"statuscode": 400, error: err});
-        if(!users[0]) return res.status(404).json({"statuscode": 404, error: 'Er bestaat geen gebruiker met deze email!', username: ''});
-        Date.prototype.addHours = function(h) {
-            this.setTime(this.getTime() + (h*60*60*1000));
+    con.query('SELECT * FROM users WHERE email = ?', req.body.email, (err, users) => {
+        if (err) return res.status(400).json({ "statuscode": 400, error: err });
+        if (!users[0]) return res.status(404).json({ "statuscode": 404, error: 'Er bestaat geen gebruiker met deze email!', username: '' });
+        Date.prototype.addHours = function (h) {
+            this.setTime(this.getTime() + (h * 60 * 60 * 1000));
             return this;
         }
         var date = new Date().addHours(2).toJSON().slice(0, 19);
@@ -118,8 +118,8 @@ app.post('/forgot', userCheck, (req, res)=> {
             resetPasswordToken: token,
             resetPasswordExpired: date
         }
-        con.query('UPDATE users SET ? WHERE email = ?', [data ,req.body.email], (err, user)=> {
-            if(err) return res.status(500).json({"statuscode": 500, error: err, username: ''});
+        con.query('UPDATE users SET ? WHERE email = ?', [data, req.body.email], (err, user) => {
+            if (err) return res.status(500).json({ "statuscode": 500, error: err, username: '' });
 
             sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -127,21 +127,21 @@ app.post('/forgot', userCheck, (req, res)=> {
                 to: req.body.email,
                 from: 'ksarooyghemwebteam@gmail.com',
                 subject: 'Wachtwoord resetten',
-                text: 'Hallo ' + req.body.email +', \n\n U hebt dit ontvangen omdat u gevraagd heeft om uw wachtwoord te herstellen, voor verdere instructies druk op de link hieronder\n\n' +
-                'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-                'Als u dit niet gevraagd heb negeer dan deze mail.\n'
+                text: 'Hallo ' + req.body.email + ', \n\n U hebt dit ontvangen omdat u gevraagd heeft om uw wachtwoord te herstellen, voor verdere instructies druk op de link hieronder\n\n' +
+                    'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+                    'Als u dit niet gevraagd heb negeer dan deze mail.\n'
             }
-            
-            sgMail.send(msg).then(()=> {
-                return res.json({message: 'Email werd verzonden', username: ''});
-            }).catch((err)=> {
-                return res.status(500).json({"statuscode": 500, error: err});
+
+            sgMail.send(msg).then(() => {
+                return res.json({ message: 'Email werd verzonden', username: '' });
+            }).catch((err) => {
+                return res.status(500).json({ "statuscode": 500, error: err });
             });
         });
     });
-}); 
+});
 
-app.get('/sitemap', function(_, res) {
+app.get('/sitemap', function (_, res) {
     console.log(__dirname);
     res.contentType('application/xml');
     res.sendFile(path.join(__dirname, "sitemap.xml"));
@@ -191,6 +191,6 @@ app.use('/albums', albums);
 const wafelbak = require('./router/wafelbak');
 app.use('/wafelbak', userCheck, wafelbak);
 
-app.listen(port, ()=> {
+app.listen(port, () => {
     console.log('Server running on port ' + port);
 });

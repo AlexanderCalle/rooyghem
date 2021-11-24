@@ -28,6 +28,7 @@ import BackofficeAllVk from './pages/BackofficeAllVk';
 import BackofficeAllVkUpdate from './pages/BackofficeAllVkUpdate';
 import BackofficeWafelbakPage from './pages/BackofficeWafelbak';
 import WafelbakOrderPage from './pages/WafelbakOrderPage';
+import GroupList from './pages/GroupsList';
 
 function App() {
   return (
@@ -37,12 +38,13 @@ function App() {
           <Route exact path="/" component={HomePage} />
           <Route exact path="/overons" component={AboutUs} />
           <Route exact path="/contact" component={Contact} />
-          <Route exact path="/groups/:group_name/info" component={Group}/>
-          <Route exact path="/users/login" component={Login}/>
+          <Route exact path="/groups/:group_name/info" component={Group} />
+          <Route exact path="/groups" component={GroupList} />
+          <Route exact path="/users/login" component={Login} />
           <Route exact path="/wafelbak" component={WafelbakOrderPage} />
-          <PrivateRoute exact path="/backoffice" component={BackofficePage}/>
-          <PrivateRoute exact path="/backoffice/activities" component ={BackofficeActivities}/>
-          <PrivateRoute exact path="/backoffice/activities/create" component ={BackofficeCreateAct}/>
+          <PrivateRoute exact path="/backoffice" component={BackofficePage} />
+          <PrivateRoute exact path="/backoffice/activities" component={BackofficeActivities} />
+          <PrivateRoute exact path="/backoffice/activities/create" component={BackofficeCreateAct} />
           <PrivateRoute path="/backoffice/activities/delete/:activity_id" component={BackofficeActivityDelete} />
           <PrivateRoute path="/backoffice/activities/update/:activity_id" component={BackofficeUpdateAct} />
           <PrivateRoute exact path="/backoffice/vk" component={BackofficeVkPage} />
