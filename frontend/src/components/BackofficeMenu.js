@@ -7,7 +7,7 @@ const BackofficeMenu = () => {
 
     const adminOptions = () => {
         if (isAdmin) {
-            return(
+            return (
                 <>
                     <a href="/backoffice/newsfeed">Nieuwtjes</a>
                     <a href="/backoffice/wafelbak/orders">Wafelbak bestellingen</a>
@@ -23,16 +23,17 @@ const BackofficeMenu = () => {
 
     const logout = async () => {
         const result = await Auth.logout();
-        if(result) {
+        if (result) {
             window.location.reload();
         }
     }
 
-    return(
+    return (
         <div id="backofficenavbar">
             <a href="/backoffice/activities">Activiteiten</a>
+            <a href="/backoffice/albums">Albums</a>
             <a href="/backoffice/vk">Verhalend Kader</a>
-            <a href="/backoffice/profile">Mijn Profiel</a>  
+            <a href="/backoffice/profile">Mijn Profiel</a>
             {adminOptions()}
             <button onClick={logout}>Logout</button>
         </div>
