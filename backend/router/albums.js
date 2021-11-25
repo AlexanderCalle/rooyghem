@@ -164,7 +164,7 @@ router.put('/update/:id', (req, res) => {
     });
 });
 
-router.get('/delete/:id', (req, res) => {
+router.delete('/delete/:id', (req, res) => {
     con.query('SELECT * FROM pictures WHERE album_id = ?', req.params.id, async (err, pictures) => {
         if (err) return res.status(400).json({ "statuscode": 400, error: err });
         await pictures.forEach((picture) => {
@@ -240,7 +240,7 @@ router.delete('/album/:album_id/pic/delete/:pictures_id', (req, res) => {
         fs.unlinkSync('.' + pic[0].path);
         con.query('DELETE FROM pictures WHERE pictures_id = ?', req.params.pictures_id, (err, pic) => {
             if (err) return res.status(400).json({ "statuscode": 400, error: err });
-            return res.json({ "message": "pictures succesfully deleted from album" });
+            return res.status(200).json({ "message": "pictures succesfully deleted from album" });
         });
     });
 });
@@ -251,9 +251,20 @@ router.get('/checker', (req, res) => {
     con.query('SELECT * FROM albums WHERE checked = 0', (err, albums) => {
         if (err) return res.status(400).json({ "statuscode": 400, error: err });
         return res.status(200).json({
-            admin: req.admin,
-            user: req.user,
             albums: albums
+        });
+    });
+});
+
+router.get('/check/:id', (req, res) => {
+    con.query('SELECT * FROM albums WHERE album_id = ?', req.params.id, (err, album) => {
+        if (err) return res.status(400).json({ "statuscode": 400, error: err });
+        con.query('SELECT * FROM pictures WHERE album_id = ?', req.params.id, (err, pictures) => {
+            if (err) return res.status(400).json({ "statuscode": 400, error: err });
+            res.status(200).send({
+                album: album[0],
+                pictures: pictures,
+            })
         });
     });
 });
@@ -261,16 +272,20 @@ router.get('/checker', (req, res) => {
 router.post('/check/:id/checked', (req, res) => {
     con.query('SELECT * FROM albums WHERE album_id = ?', req.params.id, (err, album) => {
         if (err) return res.status(400).json({ "statuscode": 400, error: err });
+
         const update_data = {
             checked: true,
-            approved_by: req.user.id,
+            approved_by: req.body.user_id,
             approved_on: moment(Date.now()).format('YYYY-MM-DD')
         }
+
         con.query('UPDATE albums SET ? WHERE album_id = ?', [update_data, req.params.id], (err, result) => {
             if (err) return res.status(400).json({ "statuscode": 400, error: err });
             return res.status(200).json({ "message": "Album was succesfully checked" });
         });
     });
 });
+
+
 
 module.exports = router;

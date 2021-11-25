@@ -10,6 +10,7 @@ const BackofficeMenu = () => {
             return (
                 <>
                     <a href="/backoffice/newsfeed">Nieuwtjes</a>
+                    <a href="/backoffice/albums/checker">Albums Controle</a>
                     <a href="/backoffice/wafelbak/orders">Wafelbak bestellingen</a>
                     <a href="/backoffice/users">Gebruikers</a>
                     <a href="/backoffice/activities/allactivities">Alle activiteiten</a>

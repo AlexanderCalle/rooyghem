@@ -32,6 +32,8 @@ import GroupList from './pages/GroupsList';
 import BackofficeCreateAlbum from './pages/BackofficeCreateAlbum';
 import BackofficeAlbums from './pages/BackofficeAlbums';
 import BackofficeAlbumPhoto from './pages/BackofficeAlbumPhoto';
+import BackofficeAlbumChecker from './pages/BackofficeAlbumChecker';
+import BackofficePhotoCheck from './pages/BackofficePhotoCheck';
 
 function App() {
   return (
@@ -68,6 +70,9 @@ function App() {
           <AdminRoute exact path="/backoffice/newsfeed/create" component={BackofficeNewsfeedCreate} />
           <AdminRoute path="/backoffice/newsfeed/update/:newsfeed_id" component={BackofficeNewsfeedUpdate} />
           <AdminRoute path="/backoffice/newsfeed/delete/:newsfeed_id" component={BackofficeNewsfeedDelete} />
+          {/* Backoffice Albums Checker (Admin) */}
+          <AdminRoute exact path="/backoffice/albums/checker" component={BackofficeAlbumChecker} />
+          <AdminRoute exact path="/backoffice/albums/check/:album_id" component={BackofficePhotoCheck} />
           {/* Backoffice Users (Admin) */}
           <AdminRoute exact path="/backoffice/users" component={BackofficeUsersPage} />
           <AdminRoute exact path="/backoffice/users/create" component={BackofficeUsersCreate} />
