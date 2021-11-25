@@ -189,74 +189,51 @@ router.get('/delete/:id', (req, res) => {
     });
 });
 
-// router.get('/album/:id/add', (req, res) => {
-//     con.query('SELECT * FROM albums WHERE album_id = ?', req.params.id, (err, album)=> {
-//         if (err) return res.status(400).json({"statuscode": 400, error: err});
-//         res.json({
-//             user: req.user,
-//             admin: req.admin,
-//             album: album[0]
-//         });
-//     });
-// });
+let ws;
+function writeStream(path) {
+    // console.log(path);
+    ws = fs.createWriteStream(path)
+}
+
+router.post('/pic/UploadChunks', (req, res) => {
+    let size = 0;
+    req.on('data', function (data) {
+        size += data.length;
+        ws.write(data)
+    })
+    req.on('end', function () {
+        res.status(201).send("uploaded!")
+    })
+})
+
+router.get('/pic/openStream/:albumName/:filename', async (req, res) => {
+    let path = `./public/images/albums/${req.params.albumName}/${req.params.filename}`
+    await writeStream(path);
+    res.status(200).send(req.params.filename)
+});
+
 
 router.post('/album/:id/add', (req, res) => {
+    ws.end();
     con.query('SELECT * FROM albums WHERE album_id = ?', req.params.id, async (err, album) => {
         if (err) return res.status(400).json({ "statuscode": 400, error: err });
-
-        fs.mkdirSync(process.env.TEMP_PATH + '/' + album[0].name + album[0].album_id);
-
-        const storage = multer.diskStorage({
-            destination: (req, file, cb) => {
-                cb(null, process.env.TEMP_PATH + '/' + album[0].name + album[0].album_id + '/')
-            },
-            filename: (req, file, cb) => {
-                cb(null, Date.now() + file.originalname.replace(/\s/g, ''));
-            }
-        });
-
-        const upload = multer({ storage: storage }).array('pic');
-
-        function uploadFile() {
-            return new Promise((resolve, reject) => {
-                upload(req, res, (err) => {
-                    if (err) {
-                        console.log(err); // Pass errors to Express.
-                        reject(`Error: Something went wrong!`);
-                    } else if (req.files == undefined) {
-                        resolve();
-                    } else if (!err && req.files.length > 0) {
-                        console.log('uploaded file');
-                        resolve();
-                    }
-                });
-            });
+        const pic_destination_site = process.env.ALBUMS_PATH_SITE + '/' + album[0].name + album[0].album_id + '/'
+        const file = req.body.body.file;
+        const pic_data = {
+            name: file,
+            album_id: album[0].album_id,
+            path: pic_destination_site + file,
+            upload_date: moment(Date.now()).format('YYYY-MM-DD')
         }
 
-        uploadFile().then(() => {
-            const pic_destination = process.env.ALBUMS_PATH + '/' + album[0].name + album[0].album_id + '/'
-            const pic_temp = process.env.TEMP_PATH + album[0].name + album[0].album_id
-            compression(pic_temp, pic_destination);
-            req.files.forEach(function (file) {
-                const pic_destination_site = process.env.ALBUMS_PATH_SITE + '/' + album[0].name + album[0].album_id + '/'
-                const pic_data = {
-                    name: file.filename,
-                    album_id: album[0].album_id,
-                    path: pic_destination_site + file.filename,
-                    upload_date: moment(Date.now()).format('YYYY-MM-DD')
-                }
-
-                con.query('INSERT INTO pictures SET ?', pic_data, (err, pic) => {
-                    if (err) return res.status(400).json({ "statuscode": 400, error: err });
-                    console.log('succes');
-                });
-            });
-            return res.json({ "message": "Pictures were added to album" });
-        })
+        con.query('INSERT INTO pictures SET ?', pic_data, (err, pic) => {
+            if (err) return res.status(400).json({ "statuscode": 400, error: err });
+            res.status(200).send('succes');
+        });
     });
 });
 
-router.get('/album/:album_id/pic/delete/:pictures_id', (req, res) => {
+router.delete('/album/:album_id/pic/delete/:pictures_id', (req, res) => {
     con.query('SELECT * FROM pictures WHERE pictures_id = ?', req.params.pictures_id, (err, pic) => {
         if (err) return res.status(400).json({ "statuscode": 400, error: err });
         if (pic[0] == null) return res.status(404).json({ "statuscode": 404, "error": "Album not found" });
@@ -273,7 +250,7 @@ router.get('/album/:album_id/pic/delete/:pictures_id', (req, res) => {
 router.get('/checker', (req, res) => {
     con.query('SELECT * FROM albums WHERE checked = 0', (err, albums) => {
         if (err) return res.status(400).json({ "statuscode": 400, error: err });
-        return res.json({
+        return res.status(200).json({
             admin: req.admin,
             user: req.user,
             albums: albums
@@ -281,47 +258,19 @@ router.get('/checker', (req, res) => {
     });
 });
 
-// router.get('/check/:id', (req, res)=> {
-//     con.query('SELECT * FROM albums WHERE album_id = ?', req.params.id, (err, album)=> {
-//         if (err) return res.status(400).json({"statuscode": 400, error: err});
-//         con.query('SELECT * FROM pictures WHERE album_id = ?', req.params.id, (err, pictures)=> {
-//             if (err) return res.status(400).json({"statuscode": 400, error: err});
-//             res.render('pictures_check', {
-//                 user: req.user,
-//                 admin: req.admin,
-//                 album: album[0],
-//                 pictures: pictures,
-//             })
-//         });
-//     });
-// });
-
-router.get('/check/:id/checked', (req, res) => {
+router.post('/check/:id/checked', (req, res) => {
     con.query('SELECT * FROM albums WHERE album_id = ?', req.params.id, (err, album) => {
         if (err) return res.status(400).json({ "statuscode": 400, error: err });
-
         const update_data = {
             checked: true,
             approved_by: req.user.id,
             approved_on: moment(Date.now()).format('YYYY-MM-DD')
         }
-
         con.query('UPDATE albums SET ? WHERE album_id = ?', [update_data, req.params.id], (err, result) => {
             if (err) return res.status(400).json({ "statuscode": 400, error: err });
-            return res.json({ "message": "Album was succesfully checked" });
+            return res.status(200).json({ "message": "Album was succesfully checked" });
         });
     });
 });
-
-// router.get('/album/:album_id/pic/delete/checker/:pictures_id', (req, res)=> {
-//     con.query('SELECT * FROM pictures WHERE pictures_id = ?', req.params.pictures_id, (err, pic)=> {
-//         if (err) return res.status(400).json({"statuscode": 400, error: err});
-//         fs.unlinkSync('.' + pic[0].path);
-//         con.query('DELETE FROM pictures WHERE pictures_id = ?', req.params.pictures_id, (err, pic)=>{
-//             if(err) return res.status(400).json({"statuscode": 400, error: err});
-//             return res.json({"message": "Pictures succesfully deleted"});
-//         });
-//     });
-// });
 
 module.exports = router;

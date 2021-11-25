@@ -4,12 +4,14 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import BackofficeMenu from '../components/BackofficeMenu';
 import axios from 'axios';
+import ModalAddPhotos from '../components/ModalAddPhotos';
 
 const BackofficeAlbumPhoto = () => {
 
     const { album_id } = useParams();
     const [album, setAlbum] = useState();
     const [pictures, setPictures] = useState([]);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         axios.get('http://localhost:2000/albums/album/' + album_id)
@@ -22,7 +24,20 @@ const BackofficeAlbumPhoto = () => {
             }).catch((error) => {
                 console.log(error);
             })
-    }, [album_id])
+    }, [album_id]);
+
+    const deletePic = (album_id, pic_id) => {
+        axios.delete(`http://localhost:2000/albums/album/${album_id}/pic/delete/${pic_id}`)
+            .then(response => {
+                if (response.status === 200) {
+                    const tempPics = pictures;
+                    console.log(tempPics);
+                    setPictures(tempPics.filter(pic => pic !== "http://localhost:2000/albums/pictures/" + pic_id));
+                }
+            }).catch(err => {
+                console.log(err);
+            })
+    }
 
     if (!album) return "Loading..."
 
@@ -32,21 +47,24 @@ const BackofficeAlbumPhoto = () => {
             <main class="container" id="backofficecontainer">
                 <BackofficeMenu />
                 <div class="interfacePhoto">
-                    <h2>Fotos in {album.name}</h2>
+                    <h2 className="font-bold text-xl">Fotos in {album.name}</h2>
                     <div class="infoPhoto">
                         {pictures.map(pic => (
                             <div class="interfaceinfoPhoto">
                                 <img src={pic} width="150" height="auto" />
                                 <br />
-                                {/* TODO: delete button */}
-                                <a href="/albums/album/<%= album.album_id %>/pic/delete/<%= pic.pictures_id %>">delete </a>
+                                <a onClick={() => deletePic(album_id, pic.split('/')[pic.split('/').length - 1])}>delete </a>
                             </div>
                         ))}
                     </div>
-                    <a class="addLink" href="/albums/album/<%= album.album_id %>/add">Voeg Foto('s) toe</a>
+                    <a class="addLink" onClick={() => setShowModal(!showModal)}>Voeg Foto('s) toe</a>
                 </div>
             </main>
             <Footer />
+
+            {showModal && (
+                <ModalAddPhotos album={album} showModal={showModal} setShowModal={setShowModal} />
+            )}
         </>
     )
 }
