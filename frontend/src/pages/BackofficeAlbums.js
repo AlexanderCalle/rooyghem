@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AlbumListEl from '../components/AlbumListEl';
 import BackofficeMenu from '../components/BackofficeMenu';
-import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 
 const BackofficeAlbums = () => {
@@ -38,7 +37,6 @@ const BackofficeAlbums = () => {
                     <a class="addLink" href="/backoffice/albums/create">Nieuw album</a>
                 </div>
             </main>
-            <Footer />
         </>
     )
 }

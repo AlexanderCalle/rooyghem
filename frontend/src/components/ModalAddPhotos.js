@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ProgressBar from './ProgressBar';
 import ProgressRing from './CircleProgress';
 import axios from 'axios';
+import '../style/modalAddPhotos.css'
 
 let chunkSize = 1024 * 1024;
 
@@ -200,21 +201,21 @@ const ModalAddPhotos = (props) => {
     }
 
     return (
-        <div className="fixed z-20 inset-0 overflow-y-auto">
-            <div className="block items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-                    <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+        <div className="containerModal">
+            <div className="container">
+                <div className="backContainer" aria-hidden="true">
+                    <div className="back"></div>
                 </div>
-                <span className="inline-block align-middle h-screen" aria-hidden="true">&#8203;</span>
-                <div className="inline-block rounded-xl text-left overflow-hidden bg-white shadow-xl border-2 border-yellow-500 transform align-middle sm:max-w-md sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                    <div className="pb-2 sm:pb-4">
-                        <div className="flex flex-col w-full">
-                            <div className="flex flex-row justify-center items-center h-11 bg-white rounded-t-lg ">
-                                <a onClick={() => setShowModal(false)} className="absolute right-2 text-yellow-500 cursor-pointer focus:outline-none">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                <span className="containerSpan" aria-hidden="true">&#8203;</span>
+                <div className="containerAdd" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                    <div className="paddingAdd">
+                        <div className="flexAdd">
+                            <div className="topAddSection">
+                                <a onClick={() => setShowModal(false)}>
+                                    <svg fill="none" stroke="#f98d1e" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                                 </a>
                             </div>
-                            <div className="mt-4 px-4">
+                            <div className="middleAddSection">
                                 <>
                                     {progress > 0 && (
                                         <div>
@@ -222,7 +223,7 @@ const ModalAddPhotos = (props) => {
                                                 filename={filename}
                                                 progress={progress}
                                             />
-                                            <div className="mt-4 flex flex-row justify-between">
+                                            <div className="ring">
                                                 <p>Completed: {fileOnSelected}/{files == null ? "0" : files.length}</p>
                                                 <ProgressRing
                                                     strokeWidth="3"
@@ -233,11 +234,11 @@ const ModalAddPhotos = (props) => {
                                         </div>
                                     )}
                                     {progress === 0 && (
-                                        <label className="w-full h-10 flex flex-row items-center space-x-4 px-4 py-6 bg-yellow-100 border border-yellow-500 text-yellow-500 rounded-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-yellow-500 hover:text-yellow-200">
-                                            <svg className="w-6 h-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <label className="inputSection">
+                                            <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                                 <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
                                             </svg>
-                                            <span className="text-base leading-normal">{
+                                            <span>{
                                                 fileUploading != null ? fileUploading : 'Select File(s)'
                                             }</span>
                                             <input type='file' className="hidden" onChange={handleChange} multiple accept="image/*" />
@@ -247,13 +248,13 @@ const ModalAddPhotos = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <div className="bottomAddSection">
                         {!fileOnSelected && (
                             <>
-                                <button type="button" onClick={() => firstGetFileContext()} className="sm:w-28 w-full inline-flex justify-center rounded-lg px-6 py-2 font-medium focus:outline-none sm:ml-3 text-sm">
+                                <button type="button" onClick={() => firstGetFileContext()} className="btnAdd">
                                     Add
                                 </button>
-                                <a type="button" onClick={() => setShowModal(false)} className="mt-3 sm:mt-0 sm:w-28 inline-flex justify-center pt-5 font-medium  focus:outline-none sm:ml-3 text-sm">Cancel</a>
+                                <a type="button" onClick={() => setShowModal(false)} className="btnCancel">Cancel</a>
                             </>
                         )}
                     </div>

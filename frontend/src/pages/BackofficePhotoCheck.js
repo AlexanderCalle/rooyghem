@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import BackofficeMenu from '../components/BackofficeMenu';
 
@@ -67,7 +66,6 @@ const BackofficePhotoCheck = () => {
                     <a class="addLink" onClick={approveAlbum} >Goedkeuren</a>
                 </div>
             </main>
-            <Footer />
         </>
     )
 

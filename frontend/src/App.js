@@ -34,6 +34,8 @@ import BackofficeAlbums from './pages/BackofficeAlbums';
 import BackofficeAlbumPhoto from './pages/BackofficeAlbumPhoto';
 import BackofficeAlbumChecker from './pages/BackofficeAlbumChecker';
 import BackofficePhotoCheck from './pages/BackofficePhotoCheck';
+import BackofficeAlbumUpdate from './pages/BackofficeAlbumUpdate';
+import AlbumPhotos from './pages/AlbumPhotos';
 
 function App() {
   return (
@@ -48,6 +50,7 @@ function App() {
           <Route exact path="/groups" component={GroupList} />
           <Route exact path="/users/login" component={Login} />
           <Route exact path="/wafelbak" component={WafelbakOrderPage} />
+          <Route exact path="/albums/groups/:group_name/:album_id" component={AlbumPhotos} />
           {/* Backoffice */}
           <PrivateRoute exact path="/backoffice" component={BackofficePage} />
           {/* Backoffice Activities */}
@@ -58,6 +61,7 @@ function App() {
           {/* Backoffice Albums */}
           <PrivateRoute exact path="/backoffice/albums" component={BackofficeAlbums} />
           <PrivateRoute exact path="/backoffice/albums/create" component={BackofficeCreateAlbum} />
+          <PrivateRoute exact path="/backoffice/albums/album/update/:album_id" component={BackofficeAlbumUpdate} />
           <PrivateRoute exact path="/backoffice/albums/album/:album_id" component={BackofficeAlbumPhoto} />
           {/* Backoffice VK */}
           <PrivateRoute exact path="/backoffice/vk" component={BackofficeVkPage} />

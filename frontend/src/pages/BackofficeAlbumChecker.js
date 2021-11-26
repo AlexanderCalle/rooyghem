@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import BackofficeMenu from '../components/BackofficeMenu';
-import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 
 const BackofficeAlbumChecker = () => {
@@ -41,7 +40,6 @@ const BackofficeAlbumChecker = () => {
                     </div>
                 </div>
             </main>
-            <Footer />
         </>
     )
 }

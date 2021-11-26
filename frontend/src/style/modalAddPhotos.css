@@ -1,0 +1,197 @@
+*, ::before, ::after{--tw-shadow: 0 0 #0000;}
+
+.containerModal {
+    position: fixed;
+    inset: 0;
+    overflow-y: auto;
+}
+
+.containerModal .container {
+    display: block;
+    align-items: end;
+    justify-items: center;
+    min-height: 100vh;
+    min-width: 100%;
+    text-align: center;
+}
+
+.containerModal .backContainer {
+    position: fixed;
+    inset: 0;
+    transition-property: opacity;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+
+.containerModal .backContainer .back {
+    position: absolute;
+    inset: 0;
+    background-color: #6B7280;
+    opacity: .75;
+}
+
+.containerModal .container .containerSpan {
+    display: inline-block;
+    align-items: center;
+    vertical-align: middle;
+    height: 100vh;
+}
+
+.containerModal .container .containerAdd {
+    display: inline-block;
+    border-radius: 0.75rem;
+    text-align: right;
+    overflow: hidden; background-color: #fff;
+    --tw-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    border-width: 2px;
+    border-color: #f98d1e;
+    transform: scaleX(1) scaleY(1);
+    vertical-align: middle;
+    max-width: 32rem;
+    width: 100%;
+}
+
+.containerAdd .paddingAdd {
+    padding-bottom: .5rem;
+}
+
+.containerAdd .flexAdd {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.containerAdd .topAddSection {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 2.75rem;
+    background-color: #fff;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+.containerAdd .topAddSection a {
+    position: absolute;
+    right: .5rem;
+    color: #f98d1e;
+    cursor: pointer;
+}
+
+.containerAdd .topAddSection a:focus {
+    outline: none;
+}
+
+.containerAdd .topAddSection svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.containerAdd .middleAddSection {
+    margin-top: 1rem;
+    padding: 0 1rem 0 1rem;
+}
+
+.containerAdd .middleAddSection .ring {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.containerAdd .middleAddSection .ring:focus {
+    outline: none
+}
+
+.containerAdd .middleAddSection .inputSection {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 2.5rem;
+    align-items: center;
+    padding: 1.5rem 1rem 1.5rem 1rem;
+    background-color: #ffebd6;
+    color: #f98d1e;
+    border-radius: 0.5rem;
+    letter-spacing: 0.025em;
+    border-width: 1px;
+    border-color: #f98d1e;
+    cursor: pointer;
+}
+
+.containerAdd .middleAddSection .inputSection:hover {
+    background-color: #f98d1e;
+    color: #ffebd6;
+}
+
+.containerAdd .middleAddSection .inputSection svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.containerAdd .middleAddSection .inputSection span {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    margin-left: 1rem;
+}
+
+.containerAdd .bottomAddSection {
+    background-color: #fff;
+    padding: .75rem 1rem .75rem 1rem;
+}
+
+.containerAdd .bottomAddSection .btnAdd {
+    display: inline-flex;
+    justify-content: center;
+    border-radius: .75rem;
+    padding: .5rem .75rem .5rem .75rem;
+}
+
+.containerAdd .bottomAddSection .btnAdd:focus {
+    outline: none
+}
+
+.bottomAddSection .btnCancel {
+    margin-top: .75rem;
+    display: inline-flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-weight: 500;
+    padding: 0 1rem 0 1rem;
+    cursor: pointer;
+}
+
+@media (min-width: 640) {
+    .containerModal .container {
+        display: block;
+        padding: 0;
+    }
+
+    .containerModal .container .containerAdd {
+        max-width: 28rem;
+        width: 100%;
+    }
+
+    .containerAdd .paddingAdd {
+        padding-bottom: 1rem;
+    }
+    
+    .containerAdd .bottomAddSection {
+        display: flex;
+        flex-direction: row-reverse;
+        padding: .75rem 1.5rem .75rem 1.5rem;
+    }
+
+    .containerAdd .bottomAddSection .btnAdd {
+        width: 7rem;
+        margin-left: .75rem;
+    }
+
+    .bottomAddSection .btnCancel {
+        margin-left: .75rem;
+        margin-top: 0;
+        width: 7rem;
+    }
+}

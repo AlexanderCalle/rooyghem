@@ -34,34 +34,55 @@ router.get('/', (req, res) => {
 });
 
 // Get albums of group
-router.get('/groups/:group_id', (req, res) => {
-    con.query('SELECT * FROM albums WHERE group_id = ? AND checked = 1', req.params.group_id, (err, albums) => {
-        if (err) return res.status(400).json({ "statuscode": 400, "error": err });
-        if (albums.length == 0) return res.status(404).json({ "statuscode": 404, "error": "Group not found" });
-        const responseData = {
-            albums: []
-        };
-        albums.forEach(album => {
-            a = {
-                album_id: album.album_id,
-                name: album.name,
-                group_id: album.group_id,
-                description: album.description,
-                activity_start: album.activity_start,
-                activity_end: album.activity_end,
-                creation_date: album.creation_date,
-                picture_urls: []
-            };
-            con.query('SELECT pictures_id FROM pictures WHERE album_id = ?', album.album_id, (err, ids) => {
-                if (err) return res.status(400).json({ "statuscode": 400, "error": err });
-                ids.forEach(id => {
-                    a.picture_urls.push('/albums/pictures/' + id.pictures_id);
-                });
+router.get('/groups/:group_name', (req, res) => {
+
+    con.query('SELECT group_id FROM groups WHERE name = ?', req.params.group_name, (err, group_id) => {
+        if (err) return res.status(400).json({ "statuscode": 400, error: err })
+        con.query('SELECT * FROM albums WHERE group_id = ? AND checked = 1', group_id[0], (err, albums) => {
+            if (err) return res.status(400).json({ "statuscode": 400, "error": err });
+            if (albums.length == 0) return res.status(404).json({ "statuscode": 404, "error": "Group not found" });
+            const sortedAlbums = albums.sort((a, b) => {
+                return new Date(a.end_date) - new Date(b.end_date);
             });
-            responseData.albums.push(a);
-        });
-        res.status(200).send(responseData);
+
+            const groups = albums.reduce((groups, album) => {
+                const dateString = album.activity_end.toString();
+                const date = new Date(dateString);
+                const month = date.getMonth() + 1;
+
+                if (month >= 1 && month <= 8) {
+                    const year = parseInt(date.getFullYear()) - 1 + " - " + date.getFullYear();
+
+                    if (!groups[year]) {
+                        groups[year] = [];
+                    }
+
+                    groups[year].push(album);
+                }
+
+                if (month >= 9 && month <= 12) {
+                    const year = date.getFullYear() + " - " + (parseInt(date.getFullYear()) + 1).toString();
+
+                    if (!groups[year]) {
+                        groups[year] = [];
+                    }
+
+                    groups[year].push(album);
+                }
+
+                return groups;
+            }, {})
+
+            const groupedAlbums = Object.keys(groups).map((date) => {
+                return {
+                    date,
+                    albums: groups[date]
+                };
+            });
+            res.status(200).send(groupedAlbums);
+        })
     })
+
 });
 
 router.get('/album/:id', (req, res) => {
@@ -114,23 +135,20 @@ router.post('/create', (req, res) => {
     });
 });
 
-// router.get('/update/:id', (req, res)=> {
-//     con.query('SELECT * FROM albums WHERE album_id = ?', req.params.id, (err, album) => {
-//         if(err) return res.status(400).json({"statuscode": 400, error: err});
-//         res.render('album_update', {
-//             user: req.user,
-//             admin: req.admin,
-//             album: album[0],
-//             moment: require('moment')
-//         });
-//     });
-// });
+router.get('/:id', (req, res) => {
+    con.query('SELECT * FROM albums WHERE album_id = ?', req.params.id, (err, album) => {
+        if (err) return res.status(400).json({ "statuscode": 400, error: err });
+        res.status(200).send({
+            album: album[0],
+        });
+    });
+});
 
 router.put('/update/:id', (req, res) => {
     con.query('SELECT name FROM albums WHERE album_id = ?', req.params.id, (err, album) => {
         if (err) return res.render('badrequest', { error: err });
 
-        data = req.body;
+        data = req.body.album;
 
         var dirOld = process.env.ALBUMS_PATH + '/' + album[0].name + req.params.id + '/'
         var dirNew = process.env.ALBUMS_PATH + '/' + data.name + req.params.id + '/'
@@ -140,7 +158,6 @@ router.put('/update/:id', (req, res) => {
             con.query('SELECT * FROM pictures WHERE album_id = ?', req.params.id, (err, pictures) => {
                 if (err) return res.status(400).json({ "statuscode": 400, error: err });
                 pictures.forEach((picture) => {
-                    console.log(picture.pictures_id);
                     const newPicDest = process.env.ALBUMS_PATH_SITE + '/' + data.name + req.params.id + '/' + picture.name;
                     con.query('UPDATE pictures SET path = ? WHERE pictures_id = ?', [newPicDest, picture.pictures_id], (err, res) => {
                         if (err) return res.status(400).json({ "statuscode": 400, error: err });
@@ -151,14 +168,17 @@ router.put('/update/:id', (req, res) => {
 
         album_data = {
             name: data.name,
-            group_id: req.user.group_id,
+            group_id: req.body.group_id,
             description: data.description,
             activity_start: data.activity_start,
             activity_end: data.activity_end,
         }
 
         con.query('UPDATE albums SET ? WHERE album_id = ?', [album_data, req.params.id], (err, album) => {
-            if (err) return res.status(400).json({ "statuscode": 400, error: err });
+            if (err) {
+                console.log(err);
+                return res.status(400).json({ "statuscode": 400, error: err });
+            }
             return res.json({ "message": "Album updated succesfully" });
         });
     });

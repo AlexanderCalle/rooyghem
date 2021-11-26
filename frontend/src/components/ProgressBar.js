@@ -1,27 +1,28 @@
 import React from 'react';
+import '../style/progressbar.css'
 
 const ProgressBar = ({ filename, progress }) => {
     return (
-        <div className="w-full h-16 border-b ">
+        <div className="containerBar">
             <div>
-                <div className="relative pt-2">
-                    <div className="flex mb-2 items-center justify-between">
+                <div className="subContainer">
+                    <div className="top">
                         <div>
-                            <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-yellow-600 bg-yellow-200">
+                            <span className="filenames">
                                 {filename}
                             </span>
                         </div>
-                        <div className="flex flex-row items-center space-x-2 text-right">
-                            <span className="text-xs font-semibold inline-block text-yellow-600">
+                        <div className="procentage">
+                            <span >
                                 {progress > 0 && progress + '%'}
                             </span>
                             <a>
-                                <svg class="w-6 h-6" fill="none" stroke="#F59E0B" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg fill="none" stroke="#F59E0B" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </a>
                         </div>
                     </div>
-                    <div className="overflow-hidden h-2 text-xs flex rounded bg-yellow-200">
-                        <div style={{ width: progress + '%' }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-yellow-500 shim-blue"></div>
+                    <div className="bar">
+                        <div style={{ width: progress + '%' }}></div>
                     </div>
                 </div>
             </div>

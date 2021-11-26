@@ -125,12 +125,11 @@ button:hover{
 }
 
 .interface .info {
-	height: auto;
 	width: 100%;
 	padding: 10px;
-	/* overflow: auto; */
-	/* display: grid; */
-	/* grid-template-columns: repeat(auto-fit, minmax(150px, 2fr)) */
+	display: contents;
+	/* display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 2fr)) */
 }
 
 .interface .info a {
@@ -195,6 +194,7 @@ a{
 }
 
 .interfaceinfoPhoto {
+	width: 100%;
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;

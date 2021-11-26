@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import BackofficeMenu from '../components/BackofficeMenu';
 import axios from 'axios';
 import ModalAddPhotos from '../components/ModalAddPhotos';
@@ -60,7 +59,6 @@ const BackofficeAlbumPhoto = () => {
                     <a class="addLink" onClick={() => setShowModal(!showModal)}>Voeg Foto('s) toe</a>
                 </div>
             </main>
-            <Footer />
 
             {showModal && (
                 <ModalAddPhotos album={album} showModal={showModal} setShowModal={setShowModal} />
