@@ -241,7 +241,7 @@ const ModalAddPhotos = (props) => {
                                             <span>{
                                                 fileUploading != null ? fileUploading : 'Select File(s)'
                                             }</span>
-                                            <input type='file' className="hidden" onChange={handleChange} multiple accept="image/*" />
+                                            <input id="fileUpload" type='file' hidden="true" onChange={handleChange} multiple accept="image/*" />
                                         </label>
                                     )}
                                 </>

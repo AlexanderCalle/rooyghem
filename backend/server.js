@@ -58,7 +58,7 @@ app.get('/contact', userCheck, (req, res) => {
         users.forEach(user => {
             user.picture = '/users/single/' + user.user_id + '/picture';
         })
-        return res.json({ bondsleiders: users, username: req.user.username });
+        return res.status(200).json({ "bondsleiders": users });
     });
 });
 

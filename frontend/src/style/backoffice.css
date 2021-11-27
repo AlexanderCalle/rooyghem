@@ -87,7 +87,7 @@ fieldset {
 	margin-top: 20px;
 }
 
-#backofficecreation input{
+#backofficecreation input:not([id="fileUpload"]){
 	max-width: 100%;
 	width: 100%;
 	margin-top: 5px;
@@ -176,21 +176,29 @@ button:hover{
 	position: relative;
 	border: 1px solid #f98d1e;
 	border-radius: 20px;
-	height: auto;
+	/* height: auto; */
 	width: 100%;
 	max-height: 400px;
 	padding: 10px;
+	display: grid;
+	grid-template-rows: min-content 1fr min-content;
 }
 
 .interface h2 {
 	margin-left: 10px;
 }
 
-.interface .info {
+.interface .info::-webkit-scrollbar {
+    display: none;
+}
+
+.interface .info{
+	display: block;
 	height: 260px;
 	width: 100%;
-	padding: 10px;
-	overflow: auto;
+	overflow-y: auto;
+	-ms-overflow-style: none;
+  	scrollbar-width: none;
 }
 
 .interfacePhoto {
@@ -230,6 +238,7 @@ button:hover{
 	margin-right: auto;
 	margin-left: auto;
 	width: 100%;
+
 }
 
 .info button{
@@ -273,8 +282,8 @@ button:hover{
 	display: flex;
 	justify-content: flex-end;
 	align-content: flex-end;
-	position: relative;
-	/* margin-top: 10px; */
+	margin-bottom: 10px;
+	margin-right: 10px;
 }
 
 .interfaceinfoPhoto {

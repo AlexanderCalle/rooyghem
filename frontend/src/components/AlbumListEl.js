@@ -20,7 +20,7 @@ const AlbumListEl = (props) => {
         <div class="interfaceinfo">
             <div class="interfaceinfo-inner">
                 <img src={"http://localhost:2000/public/images/album1.svg"} width="30" height="auto" />
-                <p><a href={"/backoffice/albums/album/" + props.album.album_id}>{props.album.name}</a></p>
+                <p><a href={"/backoffice/albums/album/" + props.album.album_id}>{props.album.name}</a> ({props.album.checked === 1 ? "checked" : "nog niet gechecked"})</p>
                 <div class="albumButtons">
                     <a href={"/backoffice/albums/album/update/" + props.album.album_id}>bewerk</a>
                     <a onClick={() => deleteAlbum(props.album.album_id)}>delete </a>

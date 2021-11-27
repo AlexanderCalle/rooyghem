@@ -1,10 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import Auth from '../middleware/auth';
+import React, { useEffect, useState } from 'react';
 import BackofficeMenu from '../components/BackofficeMenu';
 import Navbar from '../components/Navbar';
 import ActivityListEl from '../components/ActivityListEl';
 import '../style/backoffice.css';
-import Cookies from 'js-cookie';
 
 const BackofficeActivitiesPage = () => {
     const user = JSON.parse(localStorage.getItem('tokens'));
@@ -14,9 +12,9 @@ const BackofficeActivitiesPage = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch('http://localhost:2000/activities/me', {'credentials': 'include'});
+            const res = await fetch('http://localhost:2000/activities/me', { 'credentials': 'include' });
             const json = await res.json();
-            if(res.statusCode === 401) {
+            if (res.statusCode === 401) {
                 setMessage("Authorazation mislukt probeer opnieuw in te loggen");
             }
             setActivities(json.activities);
@@ -25,27 +23,27 @@ const BackofficeActivitiesPage = () => {
         fetchData();
     }, [setActivities]);
 
-    if(!activities) {
-        return(
-        <> 
+    if (!activities) {
+        return (
+            <>
+                <Navbar />
+                <main class="container" id="backofficecontainer">
+                    <BackofficeMenu />
+                    {message ? <p>{message}</p> : <p>Aan het laden...</p>}
+                </main>
+            </>
+        );
+    }
+    return (
+        <>
             <Navbar />
             <main class="container" id="backofficecontainer">
                 <BackofficeMenu />
-                {message ? <p>{message}</p> : <p>Aan het laden...</p>}
-            </main>
-        </>
-        );
-    }
-    return(
-        <>
-            <Navbar/>
-            <main class="container" id="backofficecontainer">
-                <BackofficeMenu/>
                 <div class="interface">
                     <h2>Activiteiten</h2>
-                    <div class="info">
+                    <div className="info">
                         {activities.map(activity => (
-                            <ActivityListEl activity={activity}/>
+                            <ActivityListEl activity={activity} />
                         ))}
                     </div>
                     <a href="/backoffice/activities/create" class="addLink">Nieuwe activiteit</a>

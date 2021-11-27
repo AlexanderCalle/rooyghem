@@ -9,6 +9,20 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import styled from '@emotion/styled';
+
+export const StyleWrapper = styled.div`
+    .fc-button.fc-prev-button, .fc-button.fc-next-button, .fc-button.fc-button-primary{
+        background: #f98d1e;
+        border-color: #f98d1e;
+        width:  auto;
+        padding: 5px 5px 5px 5px
+    }
+
+    .fc-button.fc-prev-button, .fc-button.fc-next-button, .fc-button.fc-button-primary:focus{
+        outline: none;
+    }
+`
 
 const GroupPage = () => {
     const params = useParams();
@@ -58,16 +72,18 @@ const GroupPage = () => {
                             <ReactQuill value={groupInfo.story} readOnly={true} theme="bubble" />
                         </div>
                     </div>
-                    <FullCalendar
-                        plugins={[dayGridPlugin]}
-                        themeSystem={"darkly"}
-                        height={500}
-                        locale="nl"
-                        initialView="dayGridMonth"
-                        dayMaxEventRows={2}
-                        events={activities}
-                        eventColor="#f98d1e"
-                    />
+                    <StyleWrapper>
+                        <FullCalendar
+                            plugins={[dayGridPlugin]}
+                            themeSystem={"darkly"}
+                            height={500}
+                            locale="nl"
+                            initialView="dayGridMonth"
+                            dayMaxEventRows={2}
+                            events={activities}
+                            eventColor="#f98d1e"
+                        />
+                    </StyleWrapper>
                 </div>
                 <div class="albums">
                     <h2>Albums</h2>
@@ -101,7 +117,7 @@ const GroupPage = () => {
                 </div>
                 <div class="groupleaders">
                     <div id="groupleaders-title">
-                        <h3>Leiders</h3>
+                        <h2>Leiders</h2>
                     </div>
                     <div id="groupleaders-content">
                         {leaderInfo.map(leader => (

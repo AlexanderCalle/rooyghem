@@ -10,7 +10,7 @@
 .info {
 	display: grid;
     grid-template-columns: 250px repeat(auto-fit, minmax(350px, 1fr));
-	grid-gap: 30px;
+	grid-gap: 20px;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -24,7 +24,12 @@
 }
 
 #groupinfo {
-	margin-right: 20%;
+	border: 1px solid #f98d1e;
+	padding: 10px;
+	border-radius: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
 }
 
 #groupinfo img {
@@ -46,6 +51,9 @@
 }
 
 #groupleaders-content {
+	border: 1px solid #f98d1e;
+	border-radius: 20px;
+	padding: 10px;
 	grid-area: content;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -110,6 +118,9 @@ button:hover{
 
 /* Albums */
 
+.interface::-webkit-scrollbar {
+    display: none;
+}
 .interface {
 	border: 1px solid #f98d1e;
 	border-radius: 20px;
@@ -118,6 +129,8 @@ button:hover{
 	max-height: 400px;
 	padding: 10px;
 	overflow-y: auto;
+	-ms-overflow-style: none;
+  	scrollbar-width: none;
 }
 
 .interface h2, .interface h3 {

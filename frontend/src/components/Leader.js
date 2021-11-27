@@ -6,14 +6,14 @@ const LeaderOverview = (props) => {
         banleadertext = "(Banleider)";
     }
     return (
-        <div class="leader">
+        <div class="leader" style={{ margin: '10px' }}>
             <img src={props.picture} alt height="150px" />
             <p>
-                {props.firstname} {props.lastname} <br/>
-                {props.contact} <br/>
+                {props.firstname} {props.lastname} <br />
+                {props.contact} <br />
                 {banleadertext}
             </p>
-        </div>    
+        </div>
     )
 }
 

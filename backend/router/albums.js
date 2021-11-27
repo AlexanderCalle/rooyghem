@@ -9,20 +9,6 @@ const path = require('path');
 const authCheck = require('../middleware/authCheck');
 const adminCheck = require('../middleware/adminCheck');
 
-// Multer middleware Save images
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, process.env.TEMP_PATH)
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + file.originalname.replace(/\s/g, ''));
-        console.log(file);
-    }
-});
-
-
-const upload = multer({ storage: storage });
-
 // Get all albums
 router.get('/', (req, res) => {
     con.query('SELECT * FROM albums WHERE checked = 1', (err, albums) => {
@@ -33,56 +19,59 @@ router.get('/', (req, res) => {
     });
 });
 
-// Get albums of group
-router.get('/groups/:group_name', (req, res) => {
-
-    con.query('SELECT group_id FROM groups WHERE name = ?', req.params.group_name, (err, group_id) => {
-        if (err) return res.status(400).json({ "statuscode": 400, error: err })
-        con.query('SELECT * FROM albums WHERE group_id = ? AND checked = 1', group_id[0], (err, albums) => {
-            if (err) return res.status(400).json({ "statuscode": 400, "error": err });
-            if (albums.length == 0) return res.status(404).json({ "statuscode": 404, "error": "Group not found" });
-            const sortedAlbums = albums.sort((a, b) => {
-                return new Date(a.end_date) - new Date(b.end_date);
-            });
-
-            const groups = albums.reduce((groups, album) => {
-                const dateString = album.activity_end.toString();
-                const date = new Date(dateString);
-                const month = date.getMonth() + 1;
-
-                if (month >= 1 && month <= 8) {
-                    const year = parseInt(date.getFullYear()) - 1 + " - " + date.getFullYear();
-
-                    if (!groups[year]) {
-                        groups[year] = [];
-                    }
-
-                    groups[year].push(album);
-                }
-
-                if (month >= 9 && month <= 12) {
-                    const year = date.getFullYear() + " - " + (parseInt(date.getFullYear()) + 1).toString();
-
-                    if (!groups[year]) {
-                        groups[year] = [];
-                    }
-
-                    groups[year].push(album);
-                }
-
-                return groups;
-            }, {})
-
-            const groupedAlbums = Object.keys(groups).map((date) => {
-                return {
-                    date,
-                    albums: groups[date]
-                };
-            });
-            res.status(200).send(groupedAlbums);
-        })
+router.get('/groups/albums/:group_id', (req, res) => {
+    con.query('SELECT * FROM albums WHERE group_id = ?', req.params.group_id, (err, albums) => {
+        if (err) return res.status(400).json({ "statuscode": 400, error: err });
+        if (albums.length == 0) return res.status(404).json({ "statuscode": 404, "error": "Group not found" });
+        return res.status(200).json({ albums: albums })
     })
+})
 
+// Get albums of group
+router.get('/groups/:group_id', (req, res) => {
+    con.query('SELECT * FROM albums WHERE group_id = ? AND checked = 1', req.params.group_id, (err, albums) => {
+        if (err) return res.status(400).json({ "statuscode": 400, "error": err });
+        if (albums.length == 0) return res.status(404).json({ "statuscode": 404, "error": "Group not found" });
+        const sortedAlbums = albums.sort((a, b) => {
+            return new Date(a.end_date) - new Date(b.end_date);
+        });
+
+        const groups = albums.reduce((groups, album) => {
+            const dateString = album.activity_end.toString();
+            const date = new Date(dateString);
+            const month = date.getMonth() + 1;
+
+            if (month >= 1 && month <= 8) {
+                const year = parseInt(date.getFullYear()) - 1 + " - " + date.getFullYear();
+
+                if (!groups[year]) {
+                    groups[year] = [];
+                }
+
+                groups[year].push(album);
+            }
+
+            if (month >= 9 && month <= 12) {
+                const year = date.getFullYear() + " - " + (parseInt(date.getFullYear()) + 1).toString();
+
+                if (!groups[year]) {
+                    groups[year] = [];
+                }
+
+                groups[year].push(album);
+            }
+
+            return groups;
+        }, {})
+
+        const groupedAlbums = Object.keys(groups).map((date) => {
+            return {
+                date,
+                albums: groups[date]
+            };
+        });
+        res.status(200).send(groupedAlbums);
+    })
 });
 
 router.get('/album/:id', (req, res) => {

@@ -10,17 +10,25 @@ const BackofficeAlbums = () => {
     const { group_id } = JSON.parse(localStorage.getItem('tokens'));
 
     useEffect(() => {
-        console.log(group_id);
-        axios.get('http://localhost:2000/albums/groups/' + group_id)
+        axios.get('http://localhost:2000/albums/groups/albums/' + group_id, { withCredentials: true })
             .then((response) => {
                 if (response.status === 200) {
                     setAlbums(response.data.albums);
-                    console.log(response.data.albums);
+                    console.log(response.data);
                 } else {
                     console.log("no Success response");
                 }
             })
     }, [group_id]);
+
+    if (!albums) return (
+        <>
+            <Navbar />
+            <main class="container" id="backofficecontainer">
+                Loading...
+            </main>
+        </>
+    )
 
     return (
         <>
