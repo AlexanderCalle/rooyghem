@@ -6,7 +6,9 @@ import '../style/group.css';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.bubble.css'
+import 'react-quill/dist/quill.bubble.css';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
 
 const GroupPage = () => {
     const params = useParams();
@@ -14,6 +16,7 @@ const GroupPage = () => {
     const [locationInfo, setLocationInfo] = useState(null);
     const [leaderInfo, setLeaderInfo] = useState(null);
     const [albums, setAlbums] = useState();
+    const [activities, setActivities] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,11 +30,17 @@ const GroupPage = () => {
             const res = await fetch('http://localhost:2000/albums/groups/' + params.group_name)
             const json = await res.json();
             setAlbums(json);
-            console.log(json);
+        }
+        const fetchDataEvents = async () => {
+            const res = await fetch('http://localhost:2000/groups/' + params.group_name + '/info/activities');
+            const json = await res.json();
+            setActivities(json.activities);
+            console.log(json.activities);
         }
 
         fetchData();
         fetchDataAlbums();
+        fetchDataEvents();
     }, [params.group_name, setGroupInfo, setLocationInfo, setLeaderInfo]);
 
     if (!groupInfo || !locationInfo || !leaderInfo) {
@@ -49,6 +58,16 @@ const GroupPage = () => {
                             <ReactQuill value={groupInfo.story} readOnly={true} theme="bubble" />
                         </div>
                     </div>
+                    <FullCalendar
+                        plugins={[dayGridPlugin]}
+                        themeSystem={"darkly"}
+                        height={500}
+                        locale="nl"
+                        initialView="dayGridMonth"
+                        dayMaxEventRows={2}
+                        events={activities}
+                        eventColor="#f98d1e"
+                    />
                 </div>
                 <div class="albums">
                     <h2>Albums</h2>

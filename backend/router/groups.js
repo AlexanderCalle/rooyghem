@@ -127,10 +127,9 @@ router.get('/:group_name/info/activities', (req, res) => {
                     title: activity.title,
                     start: activity.start_date,
                     end: activity.end_date,
-                    meetingpoint: activity.meetingpoint
                 });
             });
-            res.json({ "activities": events })
+            res.status(200).json({ "activities": events })
         });
     });
 });
