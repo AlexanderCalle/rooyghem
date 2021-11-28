@@ -42,8 +42,13 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: false, parameterLimit: 
 app.get('/', userCheck, (req, res) => {
     const date = new Date();
     con.query('SELECT * FROM newsfeeds WHERE end_publication > ? AND start_publication <= ? ORDER BY start_publication', [date, date], (err, newsfeeds) => {
+<<<<<<< HEAD:backend/server.js
         if (err) return res.status(404).json({ "statuscode": 404, "error": err });
         return res.status(200).json({
+=======
+        if (err) return res.render('badrequest', { error: err });
+        res.render('index', {
+>>>>>>> develop:server.js
             newsfeeds: newsfeeds,
             moment: moment,
             username: req.user.username
@@ -53,12 +58,17 @@ app.get('/', userCheck, (req, res) => {
 });
 
 app.get('/contact', userCheck, (req, res) => {
+<<<<<<< HEAD:backend/server.js
     con.query('SELECT firstname, lastname, email, user_id, phone FROM users WHERE bondsteam = "bondsleider"', (err, users) => {
         if (err) return res.status(400).json({ "statuscode": 400, "error": err });
         users.forEach(user => {
             user.picture = '/users/single/' + user.user_id + '/picture';
         })
         return res.status(200).json({ "bondsleiders": users });
+=======
+    con.query('SELECT firstname, lastname, email, path_pic, phone FROM users WHERE bondsteam = "bondsleider"', (err, users) => {
+        res.render('contact', { bondsleiders: users, username: req.user.username });
+>>>>>>> develop:server.js
     });
 });
 
@@ -67,7 +77,11 @@ app.post('/contact', userCheck, (req, res) => {
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
         const msg = {
+<<<<<<< HEAD:backend/server.js
             to: 'joris.deckmyn3@gmail.com',
+=======
+            to: 'joris.deckmyn@ksarooyghem.be',
+>>>>>>> develop:server.js
             from: 'ksarooyghemwebteam@gmail.com',
             subject: req.body.onderwerp,
             text: 'Hallo , \n\n' +
@@ -77,20 +91,33 @@ app.post('/contact', userCheck, (req, res) => {
 
         sgMail.send(msg).then(() => {
             con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users) => {
+<<<<<<< HEAD:backend/server.js
                 return res.json({ message: 'Vraag werd verstuurd' });
             });
         }).catch((err) => {
             con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users) => {
                 return res.status(500).json({ "statuscode": 500, error: err });
+=======
+                res.render('contact', { bondsleiders: users, username: req.user.username, succesError: 'Vraag werd verstuurd' });
+            });
+        }).catch((err) => {
+            con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users) => {
+                res.render('contact', { bondsleiders: users, username: req.user.username, error: err });
+>>>>>>> develop:server.js
             });
         });
     } else {
         con.query('SELECT * FROM users WHERE bondsteam = "bondsleider"', (err, users) => {
+<<<<<<< HEAD:backend/server.js
             return res.status(400).json({ 'statuscode': 400, error: 'Gelieve alle velden in te vullen' });
+=======
+            res.render('contact', { bondsleiders: users, username: req.user.username, error: 'Gelieve alle velden in te vullen' });
+>>>>>>> develop:server.js
         });
     }
 });
 
+<<<<<<< HEAD:backend/server.js
 // app.get('/overons', userCheck, (req, res)=> {
 //     return res.json({username: req.user.username});
 // });
@@ -100,6 +127,17 @@ app.post('/contact', userCheck, (req, res) => {
 // });
 
 app.post('/forgot', userCheck, (req, res) => {
+=======
+app.get('/overons', userCheck, (req, res) => {
+    res.render('over_ons', { username: req.user.username });
+});
+
+app.get('/forgot', userCheck, (req, res) => {
+    res.render('forgot', { username: req.user.username });
+});
+
+app.post('/forgot', (req, res) => {
+>>>>>>> develop:server.js
     let token;
 
     crypto.randomBytes(20, (err, buf) => {
@@ -107,8 +145,13 @@ app.post('/forgot', userCheck, (req, res) => {
     });
 
     con.query('SELECT * FROM users WHERE email = ?', req.body.email, (err, users) => {
+<<<<<<< HEAD:backend/server.js
         if (err) return res.status(400).json({ "statuscode": 400, error: err });
         if (!users[0]) return res.status(404).json({ "statuscode": 404, error: 'Er bestaat geen gebruiker met deze email!', username: '' });
+=======
+        if (err) return res.render('badrequest', { error: err });
+        if (!users[0]) return res.render('forgot', { error: 'Er bestaat geen gebruiker met deze email!', username: '' });
+>>>>>>> develop:server.js
         Date.prototype.addHours = function (h) {
             this.setTime(this.getTime() + (h * 60 * 60 * 1000));
             return this;
@@ -119,7 +162,11 @@ app.post('/forgot', userCheck, (req, res) => {
             resetPasswordExpired: date
         }
         con.query('UPDATE users SET ? WHERE email = ?', [data, req.body.email], (err, user) => {
+<<<<<<< HEAD:backend/server.js
             if (err) return res.status(500).json({ "statuscode": 500, error: err, username: '' });
+=======
+            if (err) return res.render('badrequest', { error: err, username: '' });
+>>>>>>> develop:server.js
 
             sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -133,9 +180,15 @@ app.post('/forgot', userCheck, (req, res) => {
             }
 
             sgMail.send(msg).then(() => {
+<<<<<<< HEAD:backend/server.js
                 return res.json({ message: 'Email werd verzonden', username: '' });
             }).catch((err) => {
                 return res.status(500).json({ "statuscode": 500, error: err });
+=======
+                res.render('forgot', { succesError: 'Email werd verzonden', username: '' });
+            }).catch((err) => {
+                res.render('forgot', { error: err, username: '' });
+>>>>>>> develop:server.js
             });
         });
     });
@@ -184,12 +237,18 @@ app.use('/reset', userCheck, reset);
 const profile = require('./router/profile');
 app.use('/profile', userCheck, authCheck, profile);
 
+<<<<<<< HEAD:backend/server.js
 // Route Albums
 const albums = require('./router/albums');
 app.use('/albums', albums);
 
 const wafelbak = require('./router/wafelbak');
 app.use('/wafelbak', userCheck, wafelbak);
+=======
+const wafelbak = require('./router/wafelbak');
+app.use('/wafelbak', userCheck, wafelbak);
+
+>>>>>>> develop:server.js
 
 app.listen(port, () => {
     console.log('Server running on port ' + port);

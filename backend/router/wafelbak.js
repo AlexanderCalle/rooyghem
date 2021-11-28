@@ -13,14 +13,13 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 // Route GET form page
 // page to order
 router.get('/', (req, res) => {
-    // con.query('SELECT name FROM `groups`', (err, groups) => {
-    //     if (err) return res.render('badrequest', { error: err })
-    //     res.render('wafelbak_order', {
-    //         groups: groups,
-    //         username: req.user.username
-    //     });
-    // })
-    res.send("Deze pagina niet gevonden");
+    con.query('SELECT name FROM `groups`', (err, groups) => {
+        if (err) return res.render('badrequest', { error: err })
+        res.render('wafelbak_order', {
+            groups: groups,
+            username: req.user.username
+        });
+    })
 });
 
 // Route POST order
@@ -34,8 +33,6 @@ router.post('/order', (req, res) => {
         email: req.body.email,
         pick_up_moment: req.body.pick_up_moment
     }
-
-    console.log(order);
 
     let moment;
 
@@ -71,18 +68,16 @@ router.post('/order', (req, res) => {
             'Vele Ksa Groeten'
     }
 
-    // sgMail.send(msg).then(() => {
-    //     con.query('INSERT INTO orders SET ?', order, (err, order) => {
-    //         if (err) return res.status(404).json({'error': err})
-    //         return res.status(200).json({'message': 'order was placed'})
-    //     })
-    // }).catch(error => {
-    //     console.log(error);
-    //     res.status(500).json({'error': error})
-    // })
-    con.query('INSERT INTO orders SET ?', order, (err, order) => {
-        if (err) return res.status(404).json({'error': err})
-        return res.status(200).json({'message': 'order was placed'})
+    sgMail.send(msg).then(() => {
+        con.query('INSERT INTO orders SET ?', order, (err, order) => {
+            if (err) return res.render('badrequest', { error: err });
+            res.render('succes_order', {
+                username: req.user.username
+            })
+        })
+    }).catch(error => {
+        console.log(error);
+        res.render('badrequest', { error: error });
     })
 
 });
@@ -91,15 +86,17 @@ router.post('/order', (req, res) => {
 // only the orders that are from this year
 router.get('/orders', userCheck, authCheck, adminCheck, (req, res) => {
     con.query('SELECT * FROM `orders` WHERE YEAR(order_date) = YEAR(CURRENT_DATE())', (err, orders) => {
-        if (err) return res.status(400).json({error: err});
+        if (err) return res.render('badrequest', { error: err });
         var total_nr = 0;
         orders.forEach(order => {
             total_nr += order.total_amount;
         });
-
-        return res.json({
+        res.render("all_orders", {
             orders: orders,
-            total_orders: total_nr
+            total_nr: total_nr,
+            user: req.user,
+            admin: req.admin,
+            username: req.user.username
         });
     })
 });

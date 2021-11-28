@@ -1,3 +1,7 @@
+<head>
+    <script src="/public/js/link.js"></script>
+</head>
+
 <main class="container" id="backofficecontainer">
     <%- include('./particals/back_office.ejs') %>
     <div id="backofficecreation">
@@ -19,8 +23,13 @@
                 <label for="meetingpoint">Plaats </label>
                 <input id="meetingpoint" type="text" name="meetingpoint" value="<%= activity.meetingpoint %>" placeholder="Plaats...">
                 <br>
-                <label for="description">Beschrijving </label>
-                <input id="description" type="text" name="description" value="<%= activity.description %>" placeholder="Beschrijving...">
+                <label for="feedDescription">Beschrijving </label><br>
+                <button type='button' id="link" style="width: 50px">Link</button>
+                <button type='button' id="vet" style="width: 50px">Vet</button>
+                <button type='button' id="cursief" style="width: 50px">Cursief</button>
+                <br>
+                <br>
+                <input id="feedDescription" type="text" name="description" value="<%= activity.description %>" placeholder="Beschrijving...">
                 <br>
                 <label for="start_publication">Start publicatie </label>
                 <input id="start_publication" type="date" name="start_publication" value="<%= moment(activity.start_publication).format('YYYY-MM-DD')%>">
