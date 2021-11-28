@@ -34,7 +34,7 @@ const GroupPage = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/groups/` + params.group_name + '/info');
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/groups/` + params.group_name + '/info');
             const json = await res.json();
             setGroupInfo(json.group);
             setLocationInfo(json.location);
