@@ -1,8 +1,0 @@
-File from: [./public/images/temp/1628700509887139643035_865199350982399_3293386521250373331_n.png]
-
-File to: [./public/images/albums/Kamp Kabouters Schoonaerde (2021)1/1628700509887139643035_865199350982399_3293386521250373331_n.png]
-
-Compression algorithm: [pngcrush]
-
-Description: Error: Command failed: /var/www/dev.ksarooyghem.be/rooyghem/node_modules/pngcrush-bin/vendor/pngcrush --quality=20-50 ./public/images/temp/1628700509887139643035_865199350982399_3293386521250373331_n.png ./public/images/albums/Kamp Kabouters Schoonaerde (2021)1/1628700509887139643035_865199350982399_3293386521250373331_n.png
-/var/www/dev.ksarooyghem.be/rooyghem/node_modules/pngcrush-bin/vendor/pngcrush: 1: /var/www/dev.ksarooyghem.be/rooyghem/node_modules/pngcrush-bin/vendor/pngcrush: Syntax error: "(" unexpected

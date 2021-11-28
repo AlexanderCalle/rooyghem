@@ -13,7 +13,7 @@ const BackofficeAlbumPhoto = () => {
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_BACKEND_HOST}/albums/album/` + album_id)
+        axios.get(`${process.env.REACT_APP_BACKEND_HOST}/albums/album/` + album_id)
             .then((response) => {
                 if (response.status === 200) {
                     setAlbum(response.data.album);
@@ -26,7 +26,7 @@ const BackofficeAlbumPhoto = () => {
     }, [album_id]);
 
     const deletePic = (album_id, pic_id) => {
-        axios.delete(`http://${process.env.REACT_APP_BACKEND_HOST}/albums/album/${album_id}/pic/delete/${pic_id}`)
+        axios.delete(`${process.env.REACT_APP_BACKEND_HOST}/albums/album/${album_id}/pic/delete/${pic_id}`)
             .then(response => {
                 if (response.status === 200) {
                     const tempPics = pictures;

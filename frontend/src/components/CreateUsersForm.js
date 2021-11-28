@@ -21,7 +21,7 @@ const CreateUsersForm = (props) => {
     // fetch group data
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/groups/`, { 'credentials': 'include' });
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/groups/`, { 'credentials': 'include' });
             const json = await res.json();
             setGroups(json.groups);
         }
@@ -58,7 +58,7 @@ const CreateUsersForm = (props) => {
             body: formData
         }
 
-        fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/users/create`, requestOptions)
+        fetch(`${process.env.REACT_APP_BACKEND_HOST}/users/create`, requestOptions)
             .then(response => response.json())
             .then(data => {
                 if (data.statuscode === 200) {
@@ -80,7 +80,7 @@ const CreateUsersForm = (props) => {
             body: formData
         }
 
-        fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/users/single/` + props.userInfo.user_id, requestOptions)
+        fetch(`${process.env.REACT_APP_BACKEND_HOST}/users/single/` + props.userInfo.user_id, requestOptions)
             .then(response => response.json())
             .then(data => {
                 if (data.statuscode === 200) {

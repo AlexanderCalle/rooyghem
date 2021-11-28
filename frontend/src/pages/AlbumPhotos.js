@@ -16,7 +16,7 @@ const AlbumPhotos = () => {
     const [imageShow, setImageShow] = useState();
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_BACKEND_HOST}/albums/album/${album_id}`)
+        axios.get(`${process.env.REACT_APP_BACKEND_HOST}/albums/album/${album_id}`)
             .then(response => {
                 if (response.status === 200) {
                     console.log("data");

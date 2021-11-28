@@ -12,7 +12,7 @@ const BackofficeAlbumUpdate = () => {
     const [message, setMessage] = useState(null);
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_BACKEND_HOST}/albums/${album_id}`)
+        axios.get(`${process.env.REACT_APP_BACKEND_HOST}/albums/${album_id}`)
             .then(response => {
                 if (response.status === 200) {
 
@@ -32,7 +32,7 @@ const BackofficeAlbumUpdate = () => {
         const token = JSON.parse(localStorage.getItem('tokens'));
 
         if (album.name && album.activity_start && album.activity_end) {
-            axios.put(`http://${process.env.REACT_APP_BACKEND_HOST}/albums/update/${album_id}`, {
+            axios.put(`${process.env.REACT_APP_BACKEND_HOST}/albums/update/${album_id}`, {
                 album: album,
                 group_id: token.group_id
             })

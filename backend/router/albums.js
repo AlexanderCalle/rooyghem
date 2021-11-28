@@ -131,7 +131,7 @@ router.get('/album/:id', (req, res) => {
             if (err) return res.status(400).json({ "statuscode": 400, error: err });
             const pictureUrls = [];
             pictures.forEach(picture => {
-                pictureUrls.push(`http://${BACKEND_HOST}/albums/pictures/` + picture.pictures_id);
+                pictureUrls.push(`${BACKEND_HOST}/albums/pictures/` + picture.pictures_id);
             });
             return res.status(200).json({
                 album: album[0],

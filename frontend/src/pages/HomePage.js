@@ -10,7 +10,7 @@ const HomePage = () => {
     const [newsfeeds, setNewsFeeds] = useState([]);
     console.log("Homepage");
     useEffect(() => {
-        fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/newsfeeds`).then((res) => res.json())
+        fetch(`${process.env.REACT_APP_BACKEND_HOST}/newsfeeds`).then((res) => res.json())
             .then(result => {
                 setNewsFeeds(result.newsfeeds);
             })

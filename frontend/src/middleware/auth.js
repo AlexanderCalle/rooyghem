@@ -43,7 +43,7 @@ class Auth {
             body: JSON.stringify(credentials)
         }
 
-        return fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/users/login`, requestOptions)
+        return fetch(`${process.env.REACT_APP_BACKEND_HOST}/users/login`, requestOptions)
             .then(response => response.json())
             .then(data => {
                 if (data.statuscode === 200) {

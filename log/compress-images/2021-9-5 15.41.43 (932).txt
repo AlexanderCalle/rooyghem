@@ -1,7 +1,0 @@
-File from: [./public/images/temp/1633441303927testwafelbak.jpg/*.{jpg,JPG,jpeg,JPEG,png,svg,gif}]
-
-File to: [-]
-
-Compression algorithm: [-]
-
-Description:  Directory is empty!: 

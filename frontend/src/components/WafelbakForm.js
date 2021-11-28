@@ -22,7 +22,7 @@ const WafelbakForm = () => {
             body: formData
         }
 
-        fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/wafelbak/order`, requestOptions)
+        fetch(`${process.env.REACT_APP_BACKEND_HOST}/wafelbak/order`, requestOptions)
             .then(response => {
                 if (response.ok) {
                     console.log("response ok!");
@@ -64,7 +64,7 @@ const WafelbakForm = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/groups/`, { 'credentials': 'include' });
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/groups/`, { 'credentials': 'include' });
             const json = await res.json();
             setGroups(json.groups);
         };

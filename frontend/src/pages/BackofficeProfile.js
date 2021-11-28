@@ -10,7 +10,7 @@ function BackofficeProfile() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/profile/` + user_id, { 'credentials': 'include' })
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/profile/` + user_id, { 'credentials': 'include' })
             const json = await res.json();
             console.log(json.statuscode);
             if (json.statuscode === 200) {

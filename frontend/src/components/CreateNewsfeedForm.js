@@ -43,7 +43,7 @@ const CreateNewsfeedForm = (props) => {
             body: formData
         }
 
-        fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/newsfeeds/create`, requestOptions)
+        fetch(`${process.env.REACT_APP_BACKEND_HOST}/newsfeeds/create`, requestOptions)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
@@ -67,7 +67,7 @@ const CreateNewsfeedForm = (props) => {
             body: formData
         }
 
-        fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/newsfeeds/update/` + props.newsfeed.feed_id, requestOptions)
+        fetch(`${process.env.REACT_APP_BACKEND_HOST}/newsfeeds/update/` + props.newsfeed.feed_id, requestOptions)
             .then(response => response.json())
             .then(data => {
                 console.log(data);

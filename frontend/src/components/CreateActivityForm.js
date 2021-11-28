@@ -28,7 +28,7 @@ const CreateActivityForm = (props) => {
     // fetch group data
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/groups/`, { 'credentials': 'include' });
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/groups/`, { 'credentials': 'include' });
             const json = await res.json();
             setGroups(json.groups);
         }
@@ -73,7 +73,7 @@ const CreateActivityForm = (props) => {
             body: JSON.stringify(data_act)
         }
 
-        fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/activities/create`, requestOptions)
+        fetch(`${process.env.REACT_APP_BACKEND_HOST}/activities/create`, requestOptions)
             .then(response => response.json())
             .then(data => {
                 if (data.statusCode === 200) {
@@ -97,7 +97,7 @@ const CreateActivityForm = (props) => {
             body: JSON.stringify(data_act)
         }
 
-        fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/activities/update/` + props.activity.activity_id, requestOptions)
+        fetch(`${process.env.REACT_APP_BACKEND_HOST}/activities/update/` + props.activity.activity_id, requestOptions)
             .then(response => response.json())
             .then(data => {
                 if (data.statusCode === 200) {

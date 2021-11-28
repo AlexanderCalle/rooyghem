@@ -50,7 +50,7 @@ const ModalAddPhotos = (props) => {
 
         setFullFileName(tempFileName);
 
-        axios.get(`http://${process.env.REACT_APP_BACKEND_HOST}/albums/pic/openStream/${album.name + album.album_id}/${tempFileName}`, {
+        axios.get(`${process.env.REACT_APP_BACKEND_HOST}/albums/pic/openStream/${album.name + album.album_id}/${tempFileName}`, {
             cancelToken: source.token
         })
             .then(async response => {
@@ -78,7 +78,7 @@ const ModalAddPhotos = (props) => {
 
         setFullFileName(tempFileName);
 
-        axios.get(`http://${process.env.REACT_APP_BACKEND_HOST}/albums/pic/openStream/${album.name + album.album_id}/${tempFileName}`, {
+        axios.get(`${process.env.REACT_APP_BACKEND_HOST}/albums/pic/openStream/${album.name + album.album_id}/${tempFileName}`, {
             cancelToken: source.token
         })
             .then(async response => {
@@ -123,7 +123,7 @@ const ModalAddPhotos = (props) => {
     const uploadChunk = async (chunk) => {
 
         try {
-            const response = await axios.post(`http://${process.env.REACT_APP_BACKEND_HOST}/albums/pic/UploadChunks`, chunk, {
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/albums/pic/UploadChunks`, chunk, {
                 headers: {
                     'Content-Type': 'application/octet-stream',
                 },
@@ -167,7 +167,7 @@ const ModalAddPhotos = (props) => {
             numb = fileOnSelected;
         }
 
-        const response = await axios.post(`http://${process.env.REACT_APP_BACKEND_HOST}/albums/album/${album.album_id}/add`, {
+        const response = await axios.post(`${process.env.REACT_APP_BACKEND_HOST}/albums/album/${album.album_id}/add`, {
             cancelToken: source.token,
             body: {
                 file: fullFileName

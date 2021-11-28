@@ -41,13 +41,13 @@ const GroupPage = () => {
             setLeaderInfo(json.leaders);
         }
         const fetchDataAlbums = async () => {
-            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/albums/groups/` + params.group_name)
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/albums/groups/` + params.group_name)
             const json = await res.json();
             setAlbums(json);
             console.log(json);
         }
         const fetchDataEvents = async () => {
-            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/groups/` + params.group_name + '/info/activities');
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/groups/` + params.group_name + '/info/activities');
             const json = await res.json();
             setActivities(json.activities);
             console.log(json.activities);
@@ -100,7 +100,7 @@ const GroupPage = () => {
                                                     <a href={`/albums/groups/${params.group_name}/${album.album_id}`}>
                                                         <div class="interfaceinfo">
                                                             <div class="interfaceinfo-inner">
-                                                                <img src={`http://${process.env.REACT_APP_BACKEND_HOST}/public/images/album1.svg`} width="50" height="auto" />
+                                                                <img src={`${process.env.REACT_APP_BACKEND_HOST}/public/images/album1.svg`} width="50" height="auto" />
                                                                 <p>{album.name}</p>
                                                             </div>
                                                         </div>

@@ -1,8 +1,0 @@
-File from: [./public/images/temp/1628700302837IMG_1577.jpg]
-
-File to: [./public/images/albums/Kamp Kabouters Schoonaerde (2021)1/1628700302837IMG_1577.jpg]
-
-Compression algorithm: [mozjpeg]
-
-Description: Error: Command failed: /var/www/dev.ksarooyghem.be/rooyghem/node_modules/mozjpeg/vendor/cjpeg -quality 60 -outfile ./public/images/albums/Kamp Kabouters Schoonaerde (2021)1/1628700302837IMG_1577.jpg ./public/images/temp/1628700302837IMG_1577.jpg
-/var/www/dev.ksarooyghem.be/rooyghem/node_modules/mozjpeg/vendor/cjpeg: 1: /var/www/dev.ksarooyghem.be/rooyghem/node_modules/mozjpeg/vendor/cjpeg: Syntax error: "(" unexpected

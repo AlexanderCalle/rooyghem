@@ -11,7 +11,7 @@ const BackofficeVkPage = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/vk`, { 'credentials': 'include' });
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/vk`, { 'credentials': 'include' });
             const json = await res.json();
             if (res.statusCode === 401) {
                 setMessage("Authorisatie mislukt, probeer opnieuw in te loggen");
@@ -36,7 +36,7 @@ const BackofficeVkPage = () => {
             body: JSON.stringify(data)
         };
 
-        fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/vk`, requestOptions)
+        fetch(`${process.env.REACT_APP_BACKEND_HOST}/vk`, requestOptions)
             .then(response => response.json())
             .then(data => {
                 if (data.statuscode === 200) {

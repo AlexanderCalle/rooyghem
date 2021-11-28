@@ -12,7 +12,7 @@ function BackofficeUsersUpdate() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/users/single/` + params.user_id, { 'credentials': 'include' });
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/users/single/` + params.user_id, { 'credentials': 'include' });
             const json = await res.json();
             setUserInfo(json.user);
         }

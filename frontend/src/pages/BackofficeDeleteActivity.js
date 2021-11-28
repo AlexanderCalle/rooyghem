@@ -12,7 +12,7 @@ const BackofficeActivityDelete = (props) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/activities/` + params.activity_id);
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/activities/` + params.activity_id);
             const json = await res.json();
             setActivityInfo(json.activity);
         };
@@ -25,7 +25,7 @@ const BackofficeActivityDelete = (props) => {
     }
 
     const deleteActivity = async () => {
-        const response = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/activities/delete/` + activityInfo.activity_id, { 'credentials': 'include' });
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/activities/delete/` + activityInfo.activity_id, { 'credentials': 'include' });
         window.location = '/backoffice/activities';
     };
     console.log(activityInfo);

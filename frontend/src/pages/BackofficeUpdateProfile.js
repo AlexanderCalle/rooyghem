@@ -9,7 +9,7 @@ function BackofficeUpdateProfile() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/profile/` + user_id, { 'credentials': 'include' })
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/profile/` + user_id, { 'credentials': 'include' })
             const json = await res.json();
 
             if (json.statuscode === 200) {
@@ -38,7 +38,7 @@ function BackofficeUpdateProfile() {
             body: JSON.stringify(data_body)
         }
 
-        fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/profile/update/` + user_id, requestOptions)
+        fetch(`${process.env.REACT_APP_BACKEND_HOST}/profile/update/` + user_id, requestOptions)
             .then(response => response.json())
             .then(data => {
                 if (data.statuscode === 200) { window.location = "/backoffice/profile" }

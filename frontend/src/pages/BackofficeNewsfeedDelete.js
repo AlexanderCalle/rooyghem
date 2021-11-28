@@ -10,7 +10,7 @@ const BackofficeNewsfeedCreate = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/newsfeeds/` + params.newsfeed_id);
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/newsfeeds/` + params.newsfeed_id);
             const json = await res.json();
             setNewsfeedInfo(json.newsfeed);
         };
@@ -33,7 +33,7 @@ const BackofficeNewsfeedCreate = () => {
             credentials: 'include',
         }
 
-        fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/newsfeeds/delete/` + params.newsfeed_id, requestOptions)
+        fetch(`${process.env.REACT_APP_BACKEND_HOST}/newsfeeds/delete/` + params.newsfeed_id, requestOptions)
             .then(response => response.json())
             .then(data => {
                 if (data.statuscode === 200) {

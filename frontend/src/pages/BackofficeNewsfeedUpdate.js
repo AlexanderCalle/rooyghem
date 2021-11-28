@@ -10,7 +10,7 @@ const BackofficeNewsfeedUpdate = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/newsfeeds/` + params.newsfeed_id);
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/newsfeeds/` + params.newsfeed_id);
             const json = await res.json();
             setNewsfeedInfo(json.newsfeed);
         };

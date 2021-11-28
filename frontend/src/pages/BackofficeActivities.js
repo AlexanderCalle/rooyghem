@@ -12,7 +12,7 @@ const BackofficeActivitiesPage = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/activities/me`, { 'credentials': 'include' });
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/activities/me`, { 'credentials': 'include' });
             const json = await res.json();
             if (res.statusCode === 401) {
                 setMessage("Authorazation mislukt probeer opnieuw in te loggen");

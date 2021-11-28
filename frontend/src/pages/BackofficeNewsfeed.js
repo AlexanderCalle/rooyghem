@@ -8,7 +8,7 @@ function BackofficeNewsfeed() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/newsfeeds/backoffice`, { 'credentials': 'include' });
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/newsfeeds/backoffice`, { 'credentials': 'include' });
             const json = await res.json();
 
             if (json.statuscode === 200) {

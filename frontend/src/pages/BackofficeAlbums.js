@@ -10,7 +10,7 @@ const BackofficeAlbums = () => {
     const { group_id } = JSON.parse(localStorage.getItem('tokens'));
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_BACKEND_HOST}/albums/groups/albums/` + group_id, { withCredentials: true })
+        axios.get(`${process.env.REACT_APP_BACKEND_HOST}/albums/groups/albums/` + group_id, { withCredentials: true })
             .then((response) => {
                 if (response.status === 200) {
                     setAlbums(response.data.albums);

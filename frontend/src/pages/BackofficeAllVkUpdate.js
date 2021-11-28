@@ -13,7 +13,7 @@ const BackofficeAllVkUpdate = () => {
     const [message, setMessage] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/vk/allvk/` + group_id, { 'credentials': 'include' });
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/vk/allvk/` + group_id, { 'credentials': 'include' });
             const json = await res.json();
             if (res.statusCode === 401) {
                 setMessage("Authorisatie mislukt, probeer opnieuw in te loggen");
@@ -38,7 +38,7 @@ const BackofficeAllVkUpdate = () => {
             body: JSON.stringify(data)
         };
 
-        fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/vk/allvk/` + group_id, requestOptions)
+        fetch(`${process.env.REACT_APP_BACKEND_HOST}/vk/allvk/` + group_id, requestOptions)
             .then(response => response.json())
             .then(data => {
                 if (data.statuscode === 200) {
