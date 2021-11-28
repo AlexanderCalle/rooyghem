@@ -43,8 +43,11 @@ const GroupPage = () => {
         const fetchDataAlbums = async () => {
             const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/albums/groups/` + params.group_name)
             const json = await res.json();
-            setAlbums(json);
-            console.log(json);
+            if (json.message) {
+                setAlbums(null)
+            } else {
+                setAlbums(json)
+            }
         }
         const fetchDataEvents = async () => {
             const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/groups/` + params.group_name + '/info/activities');
@@ -58,7 +61,7 @@ const GroupPage = () => {
         fetchDataEvents();
     }, [params.group_name, setGroupInfo, setLocationInfo, setLeaderInfo]);
 
-    if (!groupInfo || !locationInfo || !leaderInfo || !albums) {
+    if (!groupInfo || !locationInfo || !leaderInfo) {
         return (<div>Aan het laden...</div>);
     }
     return (
