@@ -35,11 +35,11 @@ const Navbar = () => {
                         </ul>
                     </li>
                     <li><a class="reference" href="/overons">Over ons</a></li>
-                    <li><a class="reference" href="/wafelbak">Wafelbak bestellen</a></li>
+                    {/* <li><a class="reference" href="/wafelbak">Wafelbak bestellen</a></li> */}
                     <li><a class="reference" href="/contact">Contact</a></li>
                     <li><a class="reference" href="/users/login">Login</a></li>
                 </ul>
-                
+
                 {user && <p>{user.username}</p>}
 
             </nav>
