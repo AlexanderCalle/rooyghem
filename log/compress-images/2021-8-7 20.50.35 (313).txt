@@ -1,0 +1,7 @@
+File from: [./public/images/temp/1631040635119AspirantenKamp.jpeg/*.{jpg,JPG,jpeg,JPEG,png,svg,gif}]
+
+File to: [-]
+
+Compression algorithm: [-]
+
+Description:  Directory is empty!: 
