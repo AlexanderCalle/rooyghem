@@ -43,7 +43,7 @@ const GroupPage = () => {
         const fetchDataAlbums = async () => {
             const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/albums/groups/` + params.group_name)
             const json = await res.json();
-            if (json.message) {
+            if (json.error) {
                 setAlbums(null)
             } else {
                 setAlbums(json)
@@ -93,7 +93,7 @@ const GroupPage = () => {
                     <h2>Albums</h2>
                     <div class="interface">
                         {
-                            albums ? (
+			    albums !== null ? (
                                 <>
                                     {albums.map(groupedAlbum => (
                                         <>

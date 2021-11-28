@@ -39,7 +39,10 @@ const CreateNewsfeedForm = (props) => {
         const requestOptions = {
             method: 'POST',
             credentials: 'include',
-
+	    headers: {
+      		'Content-Type': 'application/json'
+      		// 'Content-Type': 'application/x-www-form-urlencoded',
+    	    },
             body: formData
         }
 

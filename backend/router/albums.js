@@ -305,12 +305,13 @@ router.delete('/album/:album_id/pic/delete/:pictures_id', (req, res) => {
 
 // Checker routes
 
-router.get('/checker', (req, res) => {
-    con.query('SELECT * FROM albums WHERE checked = 0', (err, albums) => {
-        if (err) return res.status(400).json({ "statuscode": 400, error: err });
-        return res.status(200).json({
-            albums: albums
-        });
+router.get('/checker/all', (req, res) => {
+    con.query('SELECT * FROM albums WHERE checked ="0"', (err, albums) => {
+	if (err) return res.status(400).json({ "statuscode": 400, error: err });
+        console.log(albums);
+	res.status(200).json({
+	    	albums:albums
+	    });
     });
 });
 
