@@ -9,7 +9,7 @@ const Contact = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch("http://localhost:2000/contact");
+            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/contact`);
             const json = await res.json();
             setBondsleiders(json.bondsleiders);
             console.log(json.bondsleiders);

@@ -1,19 +1,19 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import BackofficeMenu from '../components/BackofficeMenu';
 import Navbar from '../components/Navbar';
 import '../style/backoffice.css';
 
 function BackofficeProfile() {
 
-    const {user_id} = JSON.parse(localStorage.getItem('tokens'));
+    const { user_id } = JSON.parse(localStorage.getItem('tokens'));
     const [user, setUser] = useState(null)
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch('http://localhost:2000/profile/' + user_id, {'credentials': 'include'})
+            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/profile/` + user_id, { 'credentials': 'include' })
             const json = await res.json();
             console.log(json.statuscode);
-            if(json.statuscode === 200) {
+            if (json.statuscode === 200) {
                 setUser(json.user);
             }
         }
@@ -21,7 +21,7 @@ function BackofficeProfile() {
         fetchData();
     }, [user_id, setUser]);
 
-    if(!user) {
+    if (!user) {
         return (
             <>
                 <Navbar />
@@ -31,7 +31,7 @@ function BackofficeProfile() {
                 </main>
             </>
         )
-    } 
+    }
     return (
         <>
             <Navbar />
@@ -45,7 +45,7 @@ function BackofficeProfile() {
                         <p>{user.email}</p>
                         <h3>Telefoonnummer: </h3>
                         <p>{user.phone}</p>
-                        <button onClick={() => window.location = "/backoffice/profile/update"}>Gegevens veranderen?</button> <br/> <br/>
+                        <button onClick={() => window.location = "/backoffice/profile/update"}>Gegevens veranderen?</button> <br /> <br />
                         <a href="/forgot">Wachtwoord veranderen?</a>
                     </div>
                 </div>

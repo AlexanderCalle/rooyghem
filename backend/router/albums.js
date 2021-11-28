@@ -29,49 +29,98 @@ router.get('/groups/albums/:group_id', (req, res) => {
 
 // Get albums of group
 router.get('/groups/:group_id', (req, res) => {
-    con.query('SELECT * FROM albums WHERE group_id = ? AND checked = 1', req.params.group_id, (err, albums) => {
-        if (err) return res.status(400).json({ "statuscode": 400, "error": err });
-        if (albums.length == 0) return res.status(404).json({ "statuscode": 404, "error": "Group not found" });
-        const sortedAlbums = albums.sort((a, b) => {
-            return new Date(a.end_date) - new Date(b.end_date);
-        });
+    if (isNaN(req.params.group_id)) {
+        con.query('SELECT group_id FROM groups WHERE name = ?', req.params.group_id, (err, groups) => {
+            if (err) return res.status(400).json({ "statuscode": 400, error: err });
+            con.query('SELECT * FROM albums WHERE group_id = ? AND checked = 1', groups[0], (err, albums) => {
+                if (err) return res.status(400).json({ "statuscode": 400, "error": err });
+                if (albums.length == 0) return res.status(404).json({ "statuscode": 404, "error": "Group not found" });
+                const sortedAlbums = albums.sort((a, b) => {
+                    return new Date(a.end_date) - new Date(b.end_date);
+                });
 
-        const groups = albums.reduce((groups, album) => {
-            const dateString = album.activity_end.toString();
-            const date = new Date(dateString);
-            const month = date.getMonth() + 1;
+                const groups = albums.reduce((groups, album) => {
+                    const dateString = album.activity_end.toString();
+                    const date = new Date(dateString);
+                    const month = date.getMonth() + 1;
 
-            if (month >= 1 && month <= 8) {
-                const year = parseInt(date.getFullYear()) - 1 + " - " + date.getFullYear();
+                    if (month >= 1 && month <= 8) {
+                        const year = parseInt(date.getFullYear()) - 1 + " - " + date.getFullYear();
 
-                if (!groups[year]) {
-                    groups[year] = [];
+                        if (!groups[year]) {
+                            groups[year] = [];
+                        }
+
+                        groups[year].push(album);
+                    }
+
+                    if (month >= 9 && month <= 12) {
+                        const year = date.getFullYear() + " - " + (parseInt(date.getFullYear()) + 1).toString();
+
+                        if (!groups[year]) {
+                            groups[year] = [];
+                        }
+
+                        groups[year].push(album);
+                    }
+
+                    return groups;
+                }, {})
+
+                const groupedAlbums = Object.keys(groups).map((date) => {
+                    return {
+                        date,
+                        albums: groups[date]
+                    };
+                });
+                return res.status(200).send(groupedAlbums);
+            })
+        })
+    } else {
+        con.query('SELECT * FROM albums WHERE group_id = ? AND checked = 1', req.params.group_id, (err, albums) => {
+            if (err) return res.status(400).json({ "statuscode": 400, "error": err });
+            if (albums.length == 0) return res.status(404).json({ "statuscode": 404, "error": "Group not found" });
+            const sortedAlbums = albums.sort((a, b) => {
+                return new Date(a.end_date) - new Date(b.end_date);
+            });
+
+            const groups = albums.reduce((groups, album) => {
+                const dateString = album.activity_end.toString();
+                const date = new Date(dateString);
+                const month = date.getMonth() + 1;
+
+                if (month >= 1 && month <= 8) {
+                    const year = parseInt(date.getFullYear()) - 1 + " - " + date.getFullYear();
+
+                    if (!groups[year]) {
+                        groups[year] = [];
+                    }
+
+                    groups[year].push(album);
                 }
 
-                groups[year].push(album);
-            }
+                if (month >= 9 && month <= 12) {
+                    const year = date.getFullYear() + " - " + (parseInt(date.getFullYear()) + 1).toString();
 
-            if (month >= 9 && month <= 12) {
-                const year = date.getFullYear() + " - " + (parseInt(date.getFullYear()) + 1).toString();
+                    if (!groups[year]) {
+                        groups[year] = [];
+                    }
 
-                if (!groups[year]) {
-                    groups[year] = [];
+                    groups[year].push(album);
                 }
 
-                groups[year].push(album);
-            }
+                return groups;
+            }, {})
 
-            return groups;
-        }, {})
-
-        const groupedAlbums = Object.keys(groups).map((date) => {
-            return {
-                date,
-                albums: groups[date]
-            };
-        });
-        res.status(200).send(groupedAlbums);
-    })
+            const groupedAlbums = Object.keys(groups).map((date) => {
+                return {
+                    date,
+                    albums: groups[date]
+                };
+            });
+            return res.status(200).send(groupedAlbums);
+        })
+    }
 });
 
 router.get('/album/:id', (req, res) => {
@@ -82,7 +131,7 @@ router.get('/album/:id', (req, res) => {
             if (err) return res.status(400).json({ "statuscode": 400, error: err });
             const pictureUrls = [];
             pictures.forEach(picture => {
-                pictureUrls.push('http://localhost:2000/albums/pictures/' + picture.pictures_id);
+                pictureUrls.push(`http://${BACKEND_HOST}/albums/pictures/` + picture.pictures_id);
             });
             return res.status(200).json({
                 album: album[0],

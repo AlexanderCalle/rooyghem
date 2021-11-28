@@ -1,10 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 // import '../style/backoffice.css'
 
 const CreateUsersForm = (props) => {
 
     const isUpdateForm = props.userInfo !== undefined;
-
 
     const [groups, setGroups] = useState(null);
     const [firstname, setFirstname] = useState(isUpdateForm ? props.userInfo.firstname : "");
@@ -19,12 +18,10 @@ const CreateUsersForm = (props) => {
     const [groupId, setGroupId] = useState(isUpdateForm ? props.userInfo.group_id : 1);
     const [isBanleader, setIsBanleader] = useState(isUpdateForm ? props.userInfo.is_banleader : 0);
 
-    console.log(groupId);
-
     // fetch group data
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch('http://localhost:2000/groups/', {'credentials': 'include'});
+            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/groups/`, { 'credentials': 'include' });
             const json = await res.json();
             setGroups(json.groups);
         }
@@ -34,7 +31,7 @@ const CreateUsersForm = (props) => {
 
     const makeFormData = () => {
         const formData = new FormData();
-        
+
         formData.append("firstname", firstname);
         formData.append("lastname", lastname);
         formData.append("email", email);
@@ -52,7 +49,7 @@ const CreateUsersForm = (props) => {
 
     const create = (e) => {
         e.preventDefault();
-        
+
         const formData = makeFormData();
 
         const requestOptions = {
@@ -61,10 +58,10 @@ const CreateUsersForm = (props) => {
             body: formData
         }
 
-        fetch("http://localhost:2000/users/create", requestOptions)
+        fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/users/create`, requestOptions)
             .then(response => response.json())
             .then(data => {
-                if(data.statuscode === 200) {
+                if (data.statuscode === 200) {
                     window.location = "/backoffice/users"
                 } else {
                     console.log(data.error);
@@ -83,10 +80,10 @@ const CreateUsersForm = (props) => {
             body: formData
         }
 
-        fetch('http://localhost:2000/users/single/' + props.userInfo.user_id, requestOptions)
+        fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/users/single/` + props.userInfo.user_id, requestOptions)
             .then(response => response.json())
             .then(data => {
-                if(data.statuscode === 200) {
+                if (data.statuscode === 200) {
                     window.location = "/backoffice/users"
                 } else {
                     console.log(data.error);
@@ -94,7 +91,7 @@ const CreateUsersForm = (props) => {
             })
     }
 
-    if(!groups) {
+    if (!groups) {
         return (
             <p>Aan het laden...</p>
         )
@@ -114,8 +111,8 @@ const CreateUsersForm = (props) => {
         <div id="backofficecreation">
             <div id="creationform">
                 <h1>{header}</h1>
-                <form onSubmit={isUpdateForm ? update :  create}>
-                    <fieldset disabled={props.readOnly? true:false}>
+                <form onSubmit={isUpdateForm ? update : create}>
+                    <fieldset disabled={props.readOnly ? true : false}>
                         <label for="firstname">Voornaam </label>
                         <input id="firstname" value={firstname} onChange={e => setFirstname(e.target.value)} type="text" name="firstname" placeholder="Voornaam..." />
                         <br />
@@ -126,14 +123,14 @@ const CreateUsersForm = (props) => {
                         <input id="email" value={email} onChange={e => setEmail(e.target.value)} type="email" name="email" placeholder="Email..." />
                         <br />
                         <label for="username">Gebruikersnaam </label>
-                        <input  type="text" value={username} onChange={e => setUsername(e.target.value)} name="username" placeholder="Gebruikersnaam..." />
+                        <input type="text" value={username} onChange={e => setUsername(e.target.value)} name="username" placeholder="Gebruikersnaam..." />
                         <br />
                         {!isUpdateForm && (
-                        <>
-                            <label for="password">Wachtwoord </label>
-                            <input id="password" value={password} onChange={e => setPassword(e.target.value)} type="password" name="password" placeholder="Wachtwoord..." />
-                            <br />
-                        </>
+                            <>
+                                <label for="password">Wachtwoord </label>
+                                <input id="password" value={password} onChange={e => setPassword(e.target.value)} type="password" name="password" placeholder="Wachtwoord..." />
+                                <br />
+                            </>
                         )}
                         <label for="phone">Telefoonnummer </label>
                         <input id="phone" value={phone} onChange={e => setPhone(e.target.value)} type="text" name="phone" placeholder="Telefoonnummer..." />
@@ -169,12 +166,12 @@ const CreateUsersForm = (props) => {
                         </select>
                         <br />
                         <label for="picture_path">Foto van gebruiker</label>
-                        <input  type="file" onChange={e => {
+                        <input type="file" onChange={e => {
                             const file = e.target.files[0];
                             setImage(file);
                         }} name="image" placeholder="Leiders foto..." />
                         <br />
-                        {props.readOnly? <></>:
+                        {props.readOnly ? <></> :
                             <button type="submit">{isUpdateForm ? 'Update' : 'Maak'} gebruiker</button>
                         }
                     </fieldset>

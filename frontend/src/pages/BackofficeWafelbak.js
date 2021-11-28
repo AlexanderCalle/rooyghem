@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import BackofficeMenu from '../components/BackofficeMenu';
 import Navbar from '../components/Navbar';
 import OrderListEl from '../components/OrderListEl';
@@ -11,10 +11,10 @@ const BackofficeWafelbakPage = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch('http://localhost:2000/wafelbak/orders/', {'credentials': 'include'});
+            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/wafelbak/orders/`, { 'credentials': 'include' });
             const json = await res.json();
 
-            if(res.error) {
+            if (res.error) {
                 setMessage("Er was een fout: " + json.error);
             } else {
                 setOrders(json.orders);
@@ -25,8 +25,8 @@ const BackofficeWafelbakPage = () => {
         fetchData();
     }, [setOrders, setNrOrders, setMessage]);
 
-    if(!orders) {
-        return(
+    if (!orders) {
+        return (
             <>
                 <Navbar />
                 <main class="container" id="backofficecontainer">

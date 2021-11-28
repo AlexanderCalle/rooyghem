@@ -7,7 +7,7 @@ const GroupList = () => {
     const [groups, setGroups] = useState([]);
 
     useEffect(async () => {
-        const res = await fetch('http://localhost:2000/groups/', { 'credentials': 'include' });
+        const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/groups/`, { 'credentials': 'include' });
         const json = await res.json();
         setGroups(json.groups);
         console.log(json);

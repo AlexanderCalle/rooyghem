@@ -38,6 +38,7 @@ import BackofficeAlbumUpdate from './pages/BackofficeAlbumUpdate';
 import AlbumPhotos from './pages/AlbumPhotos';
 
 function App() {
+
   return (
     <Router>
       <body>

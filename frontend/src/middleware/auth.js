@@ -10,10 +10,10 @@ class Auth {
     }
 
     isValidToken() {
-        if(Cookies.get('auth') !== undefined && localStorage.getItem('tokens')) {
+        if (Cookies.get('auth') !== undefined && localStorage.getItem('tokens')) {
             return true;
         } else {
-            if(Cookies.get('auth') === undefined && localStorage.getItem('tokens') !== null){
+            if (Cookies.get('auth') === undefined && localStorage.getItem('tokens') !== null) {
                 localStorage.removeItem('tokens')
             }
             return false;
@@ -21,8 +21,8 @@ class Auth {
     }
 
     isAdmin() {
-        const {is_admin} = JSON.parse(localStorage.getItem('token'));
-        if(is_admin) return true;
+        const { is_admin } = JSON.parse(localStorage.getItem('token'));
+        if (is_admin) return true;
         return false;
     }
 
@@ -39,21 +39,21 @@ class Auth {
     async login(credentials) {
         const requestOptions = {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(credentials)
         }
-        
-        return fetch('http://localhost:2000/users/login', requestOptions)
-        .then(response => response.json())
-        .then(data => {
-            if (data.statuscode === 200) {
-                this.user = data.user;
-                Cookies.set('auth', data.token, { expires: 1 });
-                localStorage.setItem("tokens", JSON.stringify(this.user));
-            } else {
-                console.log("Login failed");
-            }
-        });
+
+        return fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/users/login`, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                if (data.statuscode === 200) {
+                    this.user = data.user;
+                    Cookies.set('auth', data.token, { expires: 1 });
+                    localStorage.setItem("tokens", JSON.stringify(this.user));
+                } else {
+                    console.log("Login failed");
+                }
+            });
     }
 }
 

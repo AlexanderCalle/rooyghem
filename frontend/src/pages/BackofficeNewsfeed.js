@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import '../style/backoffice.css'
 import BackofficeMenu from '../components/BackofficeMenu';
 import Navbar from '../components/Navbar';
@@ -8,10 +8,10 @@ function BackofficeNewsfeed() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch('http://localhost:2000/newsfeeds/backoffice', {'credentials': 'include'});
+            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/newsfeeds/backoffice`, { 'credentials': 'include' });
             const json = await res.json();
 
-            if(json.statuscode === 200) {
+            if (json.statuscode === 200) {
                 setNewsFeeds(json.newsfeeds);
             } else {
                 console.log(json.error);
@@ -21,30 +21,30 @@ function BackofficeNewsfeed() {
         fetchData();
     }, [setNewsFeeds]);
 
-    const deleteFeed = (id) => {
-        const requestOptions = {
-            method: 'DELETE',
-            credentials: 'include',
-        }
-        fetch('http://localhost:2000/newsfeeds/delete/' + id, requestOptions)
-            .then(response => response.json())
-            .then(data => {
-                if(data.statuscode === 200) {
-                    window.location.reload();
-                } else {
-                    console.log(data.error);
-                }
-            })
-    }
+    // const deleteFeed = (id) => {
+    //     const requestOptions = {
+    //         method: 'DELETE',
+    //         credentials: 'include',
+    //     }
+    //     fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/newsfeeds/delete/` + id, requestOptions)
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             if (data.statuscode === 200) {
+    //                 window.location.reload();
+    //             } else {
+    //                 console.log(data.error);
+    //             }
+    //         })
+    // }
 
-    if(!newsfeeds) {
+    if (!newsfeeds) {
         return (
             <>
-            <Navbar />
-            <main className='container' id="backofficecontainer">
-                <BackofficeMenu />
-                <p>Aan het laden...</p>
-            </main>
+                <Navbar />
+                <main className='container' id="backofficecontainer">
+                    <BackofficeMenu />
+                    <p>Aan het laden...</p>
+                </main>
             </>
         )
     }
@@ -64,7 +64,7 @@ function BackofficeNewsfeed() {
                                     <a href={"/backoffice/newsfeed/update/" + newsfeed.feed_id}>bewerk</a>
                                     <a href={"/backoffice/newsfeed/delete/" + newsfeed.feed_id}>delete</a>
                                 </div>
-                             
+
                             </div>
                         ))}
                     </div>

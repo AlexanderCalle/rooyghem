@@ -9,7 +9,7 @@ const BackofficeAlbumChecker = () => {
     const [message, setMessage] = useState();
 
     useEffect(() => {
-        axios.get('http://localhost:2000/albums/checker', { withCredentials: true })
+        axios.get(`http://${process.env.REACT_APP_BACKEND_HOST}/albums/checker`, { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     setAlbums(response.data.albums);
@@ -43,7 +43,7 @@ const BackofficeAlbumChecker = () => {
                                     <a href={"/backoffice/albums/check/" + album.album_id}>
                                         <div class="interfaceinfo">
                                             <div class="interfaceinfo-inner">
-                                                <img src={"http://localhost:2000/public/images/album1.svg"} width="30" height="auto" />
+                                                <img src={`http://${process.env.REACT_APP_BACKEND_HOST}/public/images/album1.svg`} width="30" height="auto" />
                                                 <p>{album.name}</p>
                                             </div>
                                         </div>

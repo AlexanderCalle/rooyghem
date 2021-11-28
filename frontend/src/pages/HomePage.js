@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import '../style/index.css';
@@ -10,7 +10,7 @@ const HomePage = () => {
     const [newsfeeds, setNewsFeeds] = useState([]);
     console.log("Homepage");
     useEffect(() => {
-        fetch('http://localhost:2000/newsfeeds').then((res) => res.json())
+        fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/newsfeeds`).then((res) => res.json())
             .then(result => {
                 setNewsFeeds(result.newsfeeds);
             })
@@ -22,9 +22,9 @@ const HomePage = () => {
             <main class="container" id="index-container">
                 <h2>Niet te missen!</h2>
                 <section class="news">
-                {newsfeeds.map(feed => (
-                    <Newsfeed feed={feed} />
-                ))}   
+                    {newsfeeds.map(feed => (
+                        <Newsfeed feed={feed} />
+                    ))}
                 </section>
             </main>
             <Footer />

@@ -12,7 +12,7 @@ const BackofficePhotoCheck = () => {
     const [pictures, setPictures] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:2000/albums/check/' + album_id)
+        axios.get(`http://${process.env.REACT_APP_BACKEND_HOST}/albums/check/${album_id}`)
             .then(response => {
                 if (response.status === 200) {
                     setAlbum(response.data.album);
@@ -22,7 +22,7 @@ const BackofficePhotoCheck = () => {
     }, [album_id]);
 
     const deletePic = (pic_id) => {
-        axios.delete(`http://localhost:2000/albums/album/${album_id}/pic/delete/${pic_id}`)
+        axios.delete(`http://${process.env.REACT_APP_BACKEND_HOST}/albums/album/${album_id}/pic/delete/${pic_id}`)
             .then(response => {
                 if (response.status === 200) {
                     const tempPics = pictures;
@@ -38,7 +38,7 @@ const BackofficePhotoCheck = () => {
 
         const token = JSON.parse(localStorage.getItem('tokens'));
 
-        axios.post(`http://localhost:2000/albums/check/${album_id}/checked`, {
+        axios.post(`http://${process.env.REACT_APP_BACKEND_HOST}/albums/check/${album_id}/checked`, {
             user_id: token.user_id,
         }).then(response => {
             if (response.status === 200) {
@@ -57,7 +57,7 @@ const BackofficePhotoCheck = () => {
                     <div class="infoPhoto">
                         {pictures.map(pic => (
                             <div class="interfaceinfoPhoto">
-                                <img src={'http://localhost:2000/albums/pictures/' + pic.pictures_id} width="150" height="auto" />
+                                <img src={`http://${process.env.REACT_APP_BACKEND_HOST}/albums/pictures/${pic.pictures_id}`} width="150" height="auto" />
                                 <br />
                                 <a onClick={() => deletePic(pic.pictures_id)}>delete</a>
                             </div>

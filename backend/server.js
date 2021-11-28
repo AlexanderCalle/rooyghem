@@ -24,7 +24,7 @@ app.use(morgan('dev'));
 
 //middelware
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'http://localhost:3001'],
     credentials: true
 }));
 app.use('/public', express.static(path.join(__dirname, "public")));

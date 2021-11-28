@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import BackofficeMenu from '../components/BackofficeMenu';
 import Navbar from '../components/Navbar';
 import ActivityListEl from '../components/ActivityListEl';
@@ -10,7 +10,7 @@ function BackofficeAllActivities() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch('http://localhost:2000/activities/', {'credentials': 'include'});
+            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/activities/`, { 'credentials': 'include' });
             const json = await res.json();
             setActivities(json.activities);
         }
@@ -18,15 +18,15 @@ function BackofficeAllActivities() {
         fetchData();
     }, [setActivities]);
 
-    if(!activities) {
+    if (!activities) {
         return (
             <>
-            <Navbar />
-            <main className="container" id="backofficecontainer">
-                <BackofficeMenu />
-                <p>Aan het laden...</p>
-            </main>
-        </>
+                <Navbar />
+                <main className="container" id="backofficecontainer">
+                    <BackofficeMenu />
+                    <p>Aan het laden...</p>
+                </main>
+            </>
         )
     }
 

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import BackofficeMenu from '../components/BackofficeMenu';
 import Navbar from '../components/Navbar';
 import '../style/backoffice.css'
@@ -10,7 +10,7 @@ const BackofficeAllVk = () => {
     // fetch group data
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch('http://localhost:2000/groups/');
+            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/groups/`);
             const json = await res.json();
             setGroups(json.groups);
             console.log(json.groups);
@@ -19,15 +19,15 @@ const BackofficeAllVk = () => {
         fetchData();
     }, [setGroups]);
 
-    if(!groups) {
+    if (!groups) {
         return (
             <>
-            <Navbar />
-            <main id="container" id="backofficecontainer">
-                <BackofficeMenu />
-                <p>Aan het laden...</p>
-            </main>
-        </>
+                <Navbar />
+                <main id="container" id="backofficecontainer">
+                    <BackofficeMenu />
+                    <p>Aan het laden...</p>
+                </main>
+            </>
         )
     }
 

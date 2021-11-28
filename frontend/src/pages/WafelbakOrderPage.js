@@ -20,7 +20,7 @@ const WafelbakOrderPage = () => {
                     <WafelbakForm />
                 </div>
                 <div id="wafelbakphoto">
-                    <img src="http://localhost:2000/public/images/wafelbak.jpg" alt="Wafelbak" />
+                    <img src={`http://${process.env.REACT_APP_BACKEND_HOST}/public/images/wafelbak.jpg`} alt="Wafelbak" />
                 </div>
             </main>
             <Footer />

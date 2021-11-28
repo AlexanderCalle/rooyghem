@@ -34,19 +34,20 @@ const GroupPage = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch('http://localhost:2000/groups/' + params.group_name + '/info');
+            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/groups/` + params.group_name + '/info');
             const json = await res.json();
             setGroupInfo(json.group);
             setLocationInfo(json.location);
             setLeaderInfo(json.leaders);
         }
         const fetchDataAlbums = async () => {
-            const res = await fetch('http://localhost:2000/albums/groups/' + params.group_name)
+            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/albums/groups/` + params.group_name)
             const json = await res.json();
             setAlbums(json);
+            console.log(json);
         }
         const fetchDataEvents = async () => {
-            const res = await fetch('http://localhost:2000/groups/' + params.group_name + '/info/activities');
+            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/groups/` + params.group_name + '/info/activities');
             const json = await res.json();
             setActivities(json.activities);
             console.log(json.activities);
@@ -57,7 +58,7 @@ const GroupPage = () => {
         fetchDataEvents();
     }, [params.group_name, setGroupInfo, setLocationInfo, setLeaderInfo]);
 
-    if (!groupInfo || !locationInfo || !leaderInfo) {
+    if (!groupInfo || !locationInfo || !leaderInfo || !albums) {
         return (<div>Aan het laden...</div>);
     }
     return (
@@ -99,7 +100,7 @@ const GroupPage = () => {
                                                     <a href={`/albums/groups/${params.group_name}/${album.album_id}`}>
                                                         <div class="interfaceinfo">
                                                             <div class="interfaceinfo-inner">
-                                                                <img src="http://localhost:2000/public/images/album1.svg" width="50" height="auto" />
+                                                                <img src={`http://${process.env.REACT_APP_BACKEND_HOST}/public/images/album1.svg`} width="50" height="auto" />
                                                                 <p>{album.name}</p>
                                                             </div>
                                                         </div>

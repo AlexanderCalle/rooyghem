@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react'
-import {useParams} from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom';
 import BackofficeMenu from '../components/BackofficeMenu'
 import Navbar from '../components/Navbar'
 import CreateUsersForm from '../components/CreateUsersForm';
@@ -10,7 +10,7 @@ const BackofficeUsersDelete = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch('http://localhost:2000/users/single/' + params.user_id, {credentials: 'include'});
+            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/users/single/` + params.user_id, { credentials: 'include' });
             const json = await res.json();
             setUserInfo(json.user);
         };
@@ -18,10 +18,10 @@ const BackofficeUsersDelete = () => {
         fetchData();
     }, [setUserInfo, params.user_id])
 
-    if(!userInfo) {
-        return(
+    if (!userInfo) {
+        return (
             <>
-            <p>Aan het laden...</p>
+                <p>Aan het laden...</p>
             </>
         )
     }
@@ -31,22 +31,22 @@ const BackofficeUsersDelete = () => {
             method: 'DELETE',
             credentials: 'include'
         };
-        
-        fetch('http://localhost:2000/users/delete/single/' + userInfo.user_id, requestOptions)
-        .then(response => {
-            if (response.ok) {
-                window.location = "/backoffice/users";
-            }
-        });
+
+        fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/users/delete/single/` + userInfo.user_id, requestOptions)
+            .then(response => {
+                if (response.ok) {
+                    window.location = "/backoffice/users";
+                }
+            });
     };
 
-    return(
+    return (
         <>
             <Navbar />
             <main className="container" id="backofficecontainer">
                 <BackofficeMenu />
                 <div id="backofficecreation">
-                    <CreateUsersForm userInfo={userInfo} readOnly={true}/>
+                    <CreateUsersForm userInfo={userInfo} readOnly={true} />
                     <button onClick={deleteUser}>Verwijder gebruiker</button>
                 </div>
             </main>

@@ -23,7 +23,7 @@ const CreateAlbumForm = () => {
                 group_id: group_id,
             }
 
-            axios.post('http://localhost:2000/albums/create', data)
+            axios.post(`http://${process.env.REACT_APP_BACKEND_HOST}/albums/create`, data)
                 .then(response => {
                     if (response.status === 201) {
                         window.location.href = '/backoffice/albums/album/' + response.data.album_id;

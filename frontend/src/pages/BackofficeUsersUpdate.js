@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import BackofficeMenu from '../components/BackofficeMenu';
 import '../style/backoffice.css'
@@ -12,7 +12,7 @@ function BackofficeUsersUpdate() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch('http://localhost:2000/users/single/' + params.user_id, {'credentials': 'include'});
+            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/users/single/` + params.user_id, { 'credentials': 'include' });
             const json = await res.json();
             setUserInfo(json.user);
         }
@@ -20,15 +20,15 @@ function BackofficeUsersUpdate() {
         fetchData();
     }, [setUserInfo, params.user_id]);
 
-    if(!userInfo) {
-        return(
+    if (!userInfo) {
+        return (
             <>
-            <Navbar />
-            <main className="container" id="backofficecontainer">
-                <BackofficeMenu />
-                <p>Aan het laden...</p>
-            </main>
-        </>
+                <Navbar />
+                <main className="container" id="backofficecontainer">
+                    <BackofficeMenu />
+                    <p>Aan het laden...</p>
+                </main>
+            </>
         )
     }
     console.log(userInfo);

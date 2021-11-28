@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import BackofficeMenu from '../components/BackofficeMenu';
 import Navbar from '../components/Navbar';
 import UserListEl from '../components/UserListEl'
@@ -10,10 +10,10 @@ const BackofficeUsersPage = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch('http://localhost:2000/users/', {'credentials': 'include'});
+            const res = await fetch(`http://${process.env.REACT_APP_BACKEND_HOST}/users/`, { 'credentials': 'include' });
             const json = await res.json();
 
-            if(res.error) {
+            if (res.error) {
                 setMessage("Er was een fout: " + json.error);
             } else {
                 setUsers(json.users);
@@ -23,15 +23,15 @@ const BackofficeUsersPage = () => {
         fetchData();
     }, [setUsers, setMessage]);
 
-    if(!users) {
-        return(
-        <> 
-            <Navbar />
-            <main class="container" id="backofficecontainer">
-                <BackofficeMenu />
-                {message ? <p>{message}</p> : <p>Aan het laden...</p>}
-            </main>
-        </>
+    if (!users) {
+        return (
+            <>
+                <Navbar />
+                <main class="container" id="backofficecontainer">
+                    <BackofficeMenu />
+                    {message ? <p>{message}</p> : <p>Aan het laden...</p>}
+                </main>
+            </>
         );
     }
 
