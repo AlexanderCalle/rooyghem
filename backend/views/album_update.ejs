@@ -1,0 +1,29 @@
+<main class="container" id="backofficecontainer">
+
+    <%- include("./particals/back_office.ejs") %>
+
+    <div id="backofficecreation">
+        
+        <div id="creationform">
+            <h1>Album maken</h1>
+            <%- include('./particals/messages.ejs') %>
+
+            <form action="/albums/update/<%= album.album_id %>?_method=PUT" method="POST">
+                <label for="title">Naam Album</label> </label> <br>
+                <input id="title" type="text" name="name" value="<%= album.name %>" placeholder="Naam album...">
+                <br>
+                <label for="description">Beschrijving </label><br>
+                <input id="description" type="text" name="description" value="<%= album.description %>" placeholder="Beschrijving...">
+                <br>
+                <label for="start_time">Start activiteit </label> <br>
+                <input id="activity_start" type="date" value="<%= moment(album.activity_start).format('YYYY-MM-DD')%>" name="activity_start">
+                <br>
+                <label for="end_time">Einde activiteit </label><br>
+                <input id="activity_end" type="date" value="<%= moment(album.activity_end).format('YYYY-MM-DD')%>" name="activity_end">
+                <br>
+                <button type="submit">Maak album</button>
+            </form>
+        </div>
+    </div>
+            
+</main>

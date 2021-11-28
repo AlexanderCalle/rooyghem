@@ -1,0 +1,342 @@
+#backofficecontainer {
+	max-width: 100%;
+	margin-top: 10px;
+    padding: 10px;
+	display: grid;
+	grid-template-columns: 200px 1fr;
+}
+
+fieldset {
+	border: none;
+}
+
+@media only screen and (max-width: 700px) {
+    #backofficecontainer {
+	  max-width: 100%;
+	  display: grid;
+	  grid-template-columns: repeat(1, 1fr);
+	}
+	#backofficenavbar{
+		display: block;
+		margin-left: 0;
+	}
+	#backofficecreation{
+		display: flex;
+		max-width: 80%;
+		margin-left: 0;
+		padding: 0px;
+	}
+	#creationform {
+		display: inline-block;
+		width: 300px;
+		margin-left: 10px;
+	}
+	.vkForm {
+		display: block;
+		width: 100%;
+		left: 10px;
+	}
+	#backofficecreation form{
+		width: 100%;
+	}
+	#backofficecreation input{
+		width: 100%;
+	}
+
+	#creationData{
+		margin-left: 10px;
+		width: 350px;
+	}
+}
+
+#backofficenavbar{
+	width: min-content;
+	padding: 10px;
+}
+
+#backofficenavbar a {
+	text-decoration: none;
+	display: block;
+	margin: 10px;
+	margin-bottom: 20px;
+	color: #f98d1e;
+}
+
+#backofficenavbar a:hover {
+	color: #bbc3d7;
+}
+
+#backofficecreation{
+	margin-left: 0;
+	width: 80%;
+	display: grid;
+	grid-gap: 30px;
+	grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+}
+#creationData{
+	margin: 0;
+	width: 80%;
+	display: inline-block;
+}
+
+#backofficecreation form{
+	width: 100%;
+}
+
+#backofficecreation label{
+	margin-top: 20px;
+}
+
+#backofficecreation input:not([id="fileUpload"]){
+	max-width: 100%;
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	padding: 10px;
+	border-radius: 10px;
+	outline: none;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+}
+#backofficecreation select{
+	max-width: 100%;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	padding: 10px;
+	border-radius: 10px;
+	outline: none;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+	padding-right: 5px;
+}
+
+ button{
+	margin-top: 20px;
+	padding: 10px;
+	width: 30%;
+	min-width: 100px;
+	border-radius: 10px;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+	transition: 0.5s;
+}
+
+button:hover{
+	background-color: #f98d1e;
+	transition: 0.5s;
+	color: white;
+}
+
+#backofficecreation .delete-btn{
+	margin-left: 20px;
+	padding: 2px;
+	width: 50px;
+	border-radius: 10px;
+	border: solid 1px #f95c1e;
+	background-color: #fcb69b;
+	transition: 0.5s;
+}
+
+#backofficecreation .delete-btn:hover{
+	background-color: #f95c1e;
+	transition: 0.5s;
+	color: white;
+}
+
+.vkForm {
+	margin-left: 0;
+	width: 80%;
+}
+
+#backofficecreation textarea{
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	padding: 10px;
+	border-radius: 10px;
+	outline: none;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+}
+
+#backofficecreation a{
+	text-decoration: none;
+	color: #f98d1e;
+}
+
+#backofficecreation a:hover{
+	color: #bbc3d7;
+}
+
+#backofficecreation input[type='checkbox']{
+	width: 16px;
+}
+
+.interface {
+	position: relative;
+	border: 1px solid #f98d1e;
+	border-radius: 20px;
+	/* height: auto; */
+	width: 100%;
+	max-height: 400px;
+	padding: 10px;
+	display: grid;
+	grid-template-rows: min-content 1fr min-content;
+}
+
+.interface h2 {
+	margin-left: 10px;
+}
+
+.interface .info::-webkit-scrollbar {
+    display: none;
+}
+
+.interface .info{
+	display: block;
+	height: 260px;
+	width: 100%;
+	overflow-y: auto;
+	-ms-overflow-style: none;
+  	scrollbar-width: none;
+}
+
+.interfacePhoto {
+	position: relative;
+	border: 1px solid #f98d1e;
+	border-radius: 20px;
+	height: auto;
+	width: auto;
+	max-height: 500px;
+	padding: 10px;
+}
+
+.interfacePhoto h2 {
+	margin-left: 10px;
+}
+
+.interfacePhoto .infoPhoto {
+	max-height: 360px;
+	width: auto;
+	padding: 10px;
+	overflow-y: auto;
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+ a{
+	text-decoration: none;
+	color: #f98d1e;
+}
+
+ a:hover{
+	color: #bbc3d7;
+}
+
+.info {
+	margin-right: auto;
+	margin-left: auto;
+	width: 100%;
+
+}
+
+.info button{
+	margin-top: 20px;
+	padding: 10px;
+	width: 60%;
+	min-width: 100px;
+	border-radius: 10px;
+	border: solid 1px #f98d1e;
+	background-color: #ffebd6;
+	transition: 0.5s;
+}
+
+.info button:hover{
+	background-color: #f98d1e;
+	transition: 0.5s;
+	color: white;
+}
+
+.interfaceinfo {
+	padding-left: 20px;
+	padding: 5px;
+	border: 1px solid #f98d1e;
+	border-radius: 10px;
+	margin-top: 10px;
+	width: 100%;
+}
+
+.interfacePhoto .infoPhoto {
+	height: auto;
+	width: auto;
+	padding: 10px;
+	overflow: auto;
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+	margin-bottom: 10px;
+}
+
+.addLink {
+	display: flex;
+	justify-content: flex-end;
+	align-content: flex-end;
+	margin-bottom: 10px;
+	margin-right: 10px;
+}
+
+.interfaceinfoPhoto {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	display: inline-block;
+	padding-left: 20px;
+	padding: 5px;
+	border: 1px solid #f98d1e;
+	border-radius: 10px;
+	margin-top: 10px;
+	width: auto;
+}
+
+.interfaceinfoPhoto img {
+	object-fit: contain;
+	width: 150px;
+	height: 150px;
+}
+
+.interfaceinfo .buttons {
+	float: right;
+	display: inline-block;
+	margin-top: -35px; 
+}
+
+.interfaceinfo .buttons a {
+	margin-right: 20px;
+}
+.interfaceinfo p {
+	margin-left: 20px;
+}
+
+.interfaceinfo-inner {
+	padding: 10px;
+	padding-bottom: 15px;
+}
+
+.interfaceinfo-inner img {
+	float: left;
+	display: inline-block;
+}
+
+.interfaceinfo-inner p {
+	display: inline-block;
+}
+
+.interfaceinfo-inner .albumButtons {
+	display: inline-block;
+	margin-top: 20px;	
+	float: right;
+}
+.interfaceinfo-inner .albumButtons a {
+	margin-right: 20px;	
+}
