@@ -46,7 +46,7 @@ function BackofficeProfile() {
                         <h3>Telefoonnummer: </h3>
                         <p>{user.phone}</p>
                         <button onClick={() => window.location = "/backoffice/profile/update"}>Gegevens veranderen?</button> <br /> <br />
-                        <a href="/forgot">Wachtwoord veranderen?</a>
+                        <a href="/users/forgot">Wachtwoord veranderen?</a>
                     </div>
                 </div>
             </main>

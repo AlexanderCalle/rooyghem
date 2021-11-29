@@ -27,7 +27,7 @@ router.post('/:token', (req, res) => {
 
                 con.query('UPDATE users SET ? WHERE resetPasswordToken = ?', [data, req.params.token], (err, user) => {
                     if (err) return res.status(400).json({ "statuscode": 400, error: err });
-                    return res.json({ "message": "Password was changed" });
+                    return res.status(200).json({ "message": "Password was changed" });
                 });
             });
         } else {

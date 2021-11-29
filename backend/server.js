@@ -24,7 +24,7 @@ app.use(morgan('dev'));
 
 //middelware
 app.use(cors({
-    origin: '*',
+    origin: ['http://localhost:3000', 'http://localhost:3001'],
     credentials: true
 }));
 app.use('/public', express.static(path.join(__dirname, "public")));
@@ -101,7 +101,7 @@ app.post('/contact', userCheck, (req, res) => {
 
 app.post('/forgot', userCheck, (req, res) => {
     let token;
-
+    console.log(req.body);
     crypto.randomBytes(20, (err, buf) => {
         token = buf.toString('hex');
     });
@@ -128,12 +128,12 @@ app.post('/forgot', userCheck, (req, res) => {
                 from: 'ksarooyghemwebteam@gmail.com',
                 subject: 'Wachtwoord resetten',
                 text: 'Hallo ' + req.body.email + ', \n\n U hebt dit ontvangen omdat u gevraagd heeft om uw wachtwoord te herstellen, voor verdere instructies druk op de link hieronder\n\n' +
-                    'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+                    process.env.REACT_HOST + '/users/reset/' + token + '\n\n' +
                     'Als u dit niet gevraagd heb negeer dan deze mail.\n'
             }
 
             sgMail.send(msg).then(() => {
-                return res.json({ message: 'Email werd verzonden', username: '' });
+                return res.status(200).json({ message: 'Email werd verzonden', username: '' });
             }).catch((err) => {
                 return res.status(500).json({ "statuscode": 500, error: err });
             });

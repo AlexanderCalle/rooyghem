@@ -36,6 +36,8 @@ import BackofficeAlbumChecker from './pages/BackofficeAlbumChecker';
 import BackofficePhotoCheck from './pages/BackofficePhotoCheck';
 import BackofficeAlbumUpdate from './pages/BackofficeAlbumUpdate';
 import AlbumPhotos from './pages/AlbumPhotos';
+import UsersForgot from './pages/UsersForgot';
+import UsersReset from './pages/UsersReset';
 
 function App() {
 
@@ -49,7 +51,10 @@ function App() {
           <Route exact path="/contact" component={Contact} />
           <Route exact path="/groups/:group_name/info" component={Group} />
           <Route exact path="/groups" component={GroupList} />
+          {/* User login/forgot */}
           <Route exact path="/users/login" component={Login} />
+          <Route exact path="/users/forgot" component={UsersForgot} />
+          <Route exact path="/users/reset/:token" component={UsersReset} />
           {/* <Route exact path="/wafelbak" component={WafelbakOrderPage} /> */}
           <Route exact path="/albums/groups/:group_name/:album_id" component={AlbumPhotos} />
           {/* Backoffice */}
