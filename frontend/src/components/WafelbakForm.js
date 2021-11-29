@@ -18,7 +18,7 @@ const WafelbakForm = () => {
     const create = (formData) => {
         const requestOptions = {
             method: 'POST',
-            credentials: 'include',
+            // credentials: 'include',
             body: formData
         }
 

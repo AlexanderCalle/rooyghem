@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -35,23 +36,21 @@ const CreateNewsfeedForm = (props) => {
 
         e.preventDefault();
         const formData = makeFormData();
-
-        const requestOptions = {
-            method: 'POST',
-            credentials: 'include',
-
-            body: formData
-        }
-
-        fetch(`${process.env.REACT_APP_BACKEND_HOST}/newsfeeds/create`, requestOptions)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                if (data.statuscode === 200) {
+        console.log(formData);
+        axios.post(`${process.env.REACT_APP_BACKEND_HOST}/newsfeeds/create`, formData, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then(response => {
+                if (response.status === 200) {
                     window.location = "/backoffice/newsfeed"
-                } else {
-                    console.log(data.error);
                 }
+            })
+            .catch(err => {
+                console.log(err);
+
             });
 
     }
@@ -63,7 +62,7 @@ const CreateNewsfeedForm = (props) => {
         const requestOptions = {
             method: 'PUT',
             credentials: 'include',
-
+            contentType: 'multipart/form-data',
             body: formData
         }
 
