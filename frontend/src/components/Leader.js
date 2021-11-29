@@ -7,7 +7,7 @@ const LeaderOverview = (props) => {
     }
     return (
         <div class="leader" style={{ margin: '10px' }}>
-            <img src={props.picture} alt height="150px" />
+            <img src={`${process.env.REACT_APP_BACKEND_HOST}${props.picture}`} alt height="150px" />
             <p>
                 {props.firstname} {props.lastname} <br />
                 {props.contact} <br />
