@@ -26,9 +26,9 @@ export const StyleWrapper = styled.div`
 
 const GroupPage = () => {
     const params = useParams();
-    const [groupInfo, setGroupInfo] = useState(null);
-    const [locationInfo, setLocationInfo] = useState(null);
-    const [leaderInfo, setLeaderInfo] = useState(null);
+    const [groupInfo, setGroupInfo] = useState();
+    const [locationInfo, setLocationInfo] = useState();
+    const [leaderInfo, setLeaderInfo] = useState();
     const [albums, setAlbums] = useState();
     const [activities, setActivities] = useState([]);
 
@@ -44,9 +44,10 @@ const GroupPage = () => {
             const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/albums/groups/` + params.group_name)
             const json = await res.json();
             if (json.error) {
-                setAlbums(null)
+                setAlbums([])
             } else {
                 setAlbums(json)
+		console.log(json)
             }
         }
         const fetchDataEvents = async () => {
@@ -61,7 +62,7 @@ const GroupPage = () => {
         fetchDataEvents();
     }, [params.group_name, setGroupInfo, setLocationInfo, setLeaderInfo]);
 
-    if (!groupInfo || !locationInfo || !leaderInfo) {
+    if (!groupInfo || !locationInfo || !leaderInfo || !albums) {
         return (<div>Aan het laden...</div>);
     }
     return (
@@ -93,7 +94,7 @@ const GroupPage = () => {
                     <h2>Albums</h2>
                     <div class="interface">
                         {
-			    albums !== null ? (
+			 albums.length !== 0 ? (
                                 <>
                                     {albums.map(groupedAlbum => (
                                         <>
