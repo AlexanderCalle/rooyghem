@@ -340,3 +340,22 @@ button:hover{
 .interfaceinfo-inner .albumButtons a {
 	margin-right: 20px;	
 }
+
+details {
+	cursor: pointer;
+}
+
+summary {
+	padding: 10px;
+}
+
+.summary-button {
+	float: right;
+}
+
+.orders-header {
+	padding: 0px 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}

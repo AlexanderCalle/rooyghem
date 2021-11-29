@@ -12,15 +12,15 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 // Route GET form page
 // page to order
-router.get('/', (req, res) => {
-    con.query('SELECT name FROM `groups`', (err, groups) => {
-        if (err) return res.render('badrequest', { error: err })
-        res.render('wafelbak_order', {
-            groups: groups,
-            username: req.user.username
-        });
-    })
-});
+// router.get('/', (req, res) => {
+//     con.query('SELECT name FROM `groups`', (err, groups) => {
+//         if (err) return res.render('badrequest', { error: err })
+//         res.render('wafelbak_order', {
+//             groups: groups,
+//             username: req.user.username
+//         });
+//     })
+// });
 
 // Route POST order
 router.post('/order', (req, res) => {
@@ -71,13 +71,11 @@ router.post('/order', (req, res) => {
     sgMail.send(msg).then(() => {
         con.query('INSERT INTO orders SET ?', order, (err, order) => {
             if (err) return res.render('badrequest', { error: err });
-            res.render('succes_order', {
-                username: req.user.username
-            })
+            res.status(200).send('succes_order')
         })
     }).catch(error => {
         console.log(error);
-        res.render('badrequest', { error: error });
+        res.status(500).send(err);
     })
 
 });
@@ -91,12 +89,9 @@ router.get('/orders', userCheck, authCheck, adminCheck, (req, res) => {
         orders.forEach(order => {
             total_nr += order.total_amount;
         });
-        res.render("all_orders", {
+        res.status(200).send({
             orders: orders,
-            total_nr: total_nr,
-            user: req.user,
-            admin: req.admin,
-            username: req.user.username
+            total_nr: total_nr
         });
     })
 });
@@ -105,7 +100,7 @@ router.get('/orders', userCheck, authCheck, adminCheck, (req, res) => {
 router.get('/order/delete/:id', userCheck, authCheck, adminCheck, (req, res) => {
     con.query('DELETE FROM `orders` WHERE order_id = ?', req.params.id, (err, orders) => {
         if (err) return res.render('badrequest', { error: err });
-        res.redirect('/wafelbak/orders')
+        res.status(200).send('succes')
     })
 });
 
