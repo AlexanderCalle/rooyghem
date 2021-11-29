@@ -40,7 +40,7 @@ router.get('/:group_name/info', (req, res) => {
                 con.query('SELECT user_id, firstname, lastname, email, is_banleader FROM users WHERE group_id = ? ORDER BY is_banleader DESC, lastname ASC', group[0].group_id, (err, leaders) => {
                     if (err) return res.status(400).json({ "statuscode": 400, error: err });
                     leaders.forEach(leader => {
-                        leader.picture = req.protocol + '://' + req.headers.host + '/users/single/' + leader.user_id + '/picture';
+                        leader.picture = process.env.BACKEND_HOST + '/users/single/' + leader.user_id + '/picture';
                     });
                     con.query('SELECT * FROM albums WHERE group_id = ? AND checked = 1 ORDER BY activity_end DESC', group[0].group_id, (err, albums) => {
                         if (err) return res.status(400).json({ "statuscode": 400, error: err });
