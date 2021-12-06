@@ -23,6 +23,7 @@ import BackofficeUsersDelete from './pages/BackofficeUsersDelete';
 import BackofficeActivityDelete from './pages/BackofficeDeleteActivity';
 import BackofficeUsersCreate from './pages/BackofficeUsersCreate';
 import BackofficeUsersUpdate from './pages/BackofficeUsersUpdate';
+import BackofficeAspirantenPage from './pages/BackofficeAspiranten';
 import BackofficeAllActivities from './pages/BackofficeAllActivities';
 import BackofficeAllVk from './pages/BackofficeAllVk';
 import BackofficeAllVkUpdate from './pages/BackofficeAllVkUpdate';
@@ -88,6 +89,8 @@ function App() {
           <AdminRoute exact path="/backoffice/users/create" component={BackofficeUsersCreate} />
           <AdminRoute exact path="/backoffice/users/update/:user_id" component={BackofficeUsersUpdate} />
           <AdminRoute exact path="/backoffice/users/delete/:user_id" component={BackofficeUsersDelete} />
+          {/* Backoffice Aspiranten (Admin + aspileiding) */}
+          <Route exact path="/backoffice/aspiranten" component={BackofficeAspirantenPage}/>
           {/* Backoffice All Activities (Admin) */}
           <AdminRoute exact path="/backoffice/activities/allactivities" component={BackofficeAllActivities} />
           {/* Backoffice All Vk (Admin) */}

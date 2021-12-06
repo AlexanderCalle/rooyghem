@@ -31,6 +31,7 @@ const GroupPage = () => {
     const [leaderInfo, setLeaderInfo] = useState();
     const [albums, setAlbums] = useState();
     const [activities, setActivities] = useState([]);
+    const [aspiranten, setAspiranten] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -39,9 +40,21 @@ const GroupPage = () => {
             setGroupInfo(json.group);
             setLocationInfo(json.location);
             setLeaderInfo(json.leaders);
+            if (json.albums) {
+                setAlbums(json.albums);
+            } else {
+                setAlbums([]);
+            }
+            setActivities(json.activities);
+            if(params.group_name == "aspiranten") {
+                const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/aspiranten/`);
+                const json = await res.json();
+                console.log(json);
+                setAspiranten(json.aspis);
+            }
         }
         const fetchDataAlbums = async () => {
-            const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/albums/groups/` + params.group_name)
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/albums/groups/albums/` + groupInfo.group_id);
             const json = await res.json();
             if (json.error) {
                 setAlbums([])
@@ -54,13 +67,12 @@ const GroupPage = () => {
             const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/groups/` + params.group_name + '/info/activities');
             const json = await res.json();
             setActivities(json.activities);
-            console.log(json.activities);
         }
 
         fetchData();
-        fetchDataAlbums();
-        fetchDataEvents();
-    }, [params.group_name, setGroupInfo, setLocationInfo, setLeaderInfo]);
+        // fetchDataAlbums();
+        // fetchDataEvents();
+    }, [params.group_name, setGroupInfo, setLocationInfo, setLeaderInfo, setAspiranten, groupInfo]);
 
     if (!groupInfo || !locationInfo || !leaderInfo || !albums) {
         return (<div>Aan het laden...</div>);
@@ -71,12 +83,27 @@ const GroupPage = () => {
             <main class="container" id="groupcontainer">
                 <div class="info">
                     <GroupOverview logo={groupInfo.logo} location_name={locationInfo.name} location_adress={locationInfo.adress} contact={groupInfo.contact} />
-                    <div id="groupstory">
+                    {params.group_name == 'aspiranten' ? (
+                            <>
+                                <div class="groupleaders">
+                                    <div id="groupleaders-title">
+                                        <h2>Aspiranten</h2>
+                                    </div>
+                                    <div id="groupleaders-content">
+                                        {aspiranten.map(aspi => (
+                                            <LeaderOverview picture={aspi.picture} firstname={aspi.firstname} lastname={aspi.lastname} />
+                                        ))}
+                                    </div>
+                                </div>
+                            </>
+                    ) : (<>
+                                            <div id="groupstory">
                         <h3>Verhalend Kader</h3>
                         <div id="vkDiv">
                             <ReactQuill value={groupInfo.story} readOnly={true} theme="bubble" />
                         </div>
                     </div>
+                    </>)}
                     <StyleWrapper>
                         <FullCalendar
                             plugins={[dayGridPlugin]}
