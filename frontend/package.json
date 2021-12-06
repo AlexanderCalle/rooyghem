@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.7.0",
     "@emotion/styled": "^11.6.0",
     "@fullcalendar/daygrid": "^5.10.1",
     "@fullcalendar/react": "^5.10.1",
