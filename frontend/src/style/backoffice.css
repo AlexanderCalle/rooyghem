@@ -69,6 +69,7 @@ fieldset {
 #backofficecreation{
 	margin-left: 0;
 	width: 80%;
+	height: fit-content;
 	display: grid;
 	grid-gap: 30px;
 	grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
