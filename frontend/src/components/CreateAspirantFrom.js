@@ -85,7 +85,7 @@ const CreateAspirantForm = (props) => {
                         }} name="image" placeholder="Foto van aspirant..."/>
                         <br/>
                         {props.readOnly ? <></> :
-                            <button type="submit">{isUpdateForm ? 'Update' : 'Maak'} gebruiker</button>
+                            <button type="submit">{isUpdateForm ? 'Update' : 'Maak'} aspirant</button>
                         }
                     </fieldset>
                 </form>

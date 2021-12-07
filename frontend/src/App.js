@@ -25,6 +25,7 @@ import BackofficeUsersCreate from './pages/BackofficeUsersCreate';
 import BackofficeUsersUpdate from './pages/BackofficeUsersUpdate';
 import BackofficeAspirantenPage from './pages/BackofficeAspiranten';
 import BackofficeAspirantenCreatePage from './pages/BackofficeAspirantenCreate';
+import BackofficeAspirantUpdate from './pages/BackofficeAspirantUpdate';
 import BackofficeAllActivities from './pages/BackofficeAllActivities';
 import BackofficeAllVk from './pages/BackofficeAllVk';
 import BackofficeAllVkUpdate from './pages/BackofficeAllVkUpdate';
@@ -40,6 +41,7 @@ import BackofficeAlbumUpdate from './pages/BackofficeAlbumUpdate';
 import AlbumPhotos from './pages/AlbumPhotos';
 import UsersForgot from './pages/UsersForgot';
 import UsersReset from './pages/UsersReset';
+import BackofficeAspirantDelete from './pages/BackofficeAspirantDelete';
 
 function App() {
 
@@ -92,7 +94,9 @@ function App() {
           <AdminRoute exact path="/backoffice/users/delete/:user_id" component={BackofficeUsersDelete} />
           {/* Backoffice Aspiranten (Admin + aspileiding) */}
           <Route exact path="/backoffice/aspiranten" component={BackofficeAspirantenPage}/>
-          <Route exact patyh="/backoffice/aspiranten/create" component={BackofficeAspirantenCreatePage}/>
+          <Route exact path="/backoffice/aspiranten/create" component={BackofficeAspirantenCreatePage}/>
+          <Route path="/backoffice/aspiranten/update/:aspi_id" component={BackofficeAspirantUpdate}/>
+          <Route path="/backoffice/aspiranten/delete/:aspi_id" component={BackofficeAspirantDelete}/>
           {/* Backoffice All Activities (Admin) */}
           <AdminRoute exact path="/backoffice/activities/allactivities" component={BackofficeAllActivities} />
           {/* Backoffice All Vk (Admin) */}

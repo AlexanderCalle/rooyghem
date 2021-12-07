@@ -89,10 +89,8 @@ router.put('/single/:id', authCheck, upload.single('image'), aspirantFormChecker
         lastname: data.lastname
     };
     if (req.file) {
-        con.query('SELECT path_pic FROM aspiranten WHERE aspi_id = ?', req.params.id, (err, path_pic) => {
-            if (err) return res.status(500).json({"error": 'Something went wrong with database: ' + err});
-            fs.unlinkSync('.' + path_pic[0]);
-        })
+        // TODO: remove old picture
+
         compression(process.env.TEMP_PATH + req.file.filename, process.env.ASPIRANT_PATH);
         aspi_data['path_pic'] = process.env.ASPIRANT_PATH + req.file.filename;
     }
@@ -111,7 +109,8 @@ router.delete('/delete/single/:id', authCheck, (req, res) => {
     }
     con.query('DELETE FROM aspiranten WHERE aspi_id = ?', req.params.id, (err, aspi) => {
         if(err) return res.status(500).json({"error": "Something went wrong with database: " + err});
-        fs.unlinkSync('.' + aspi[0].path_pic);
+        console.log(aspi);
+        //TODO: remove picture
         return res.json({"message": "Deletion succesfull"});
     })
 });

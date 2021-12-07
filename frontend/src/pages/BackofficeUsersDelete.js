@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import BackofficeMenu from '../components/BackofficeMenu'
-import Navbar from '../components/Navbar'
+import Navbar from '../components/Navbar';
 import CreateUsersForm from '../components/CreateUsersForm';
 
 const BackofficeUsersDelete = () => {
@@ -16,7 +16,7 @@ const BackofficeUsersDelete = () => {
         };
 
         fetchData();
-    }, [setUserInfo, params.user_id])
+    }, [setUserInfo, params.user_id]);
 
     if (!userInfo) {
         return (
