@@ -99,7 +99,6 @@ const CreateUsersForm = (props) => {
 
     var header = "";
     if (props.readOnly) {
-        console.log("Is read only");
         header = "Gebruiker verwijderen?"
     } else if (isUpdateForm) {
         header = "Update gebruiker";

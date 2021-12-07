@@ -1,9 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import '../style/backoffice.css';
 
 const UserListEl = (props) => {
-    const updateLink = "/backoffice/users/update/" + props.user.user_id;
-    const deleteLink = "/backoffice/users/delete/" + props.user.user_id;
+    const [updateLink, setUpdateLink] = useState(null);
+    const [deleteLink, setDeleteLink] = useState(null);
+    
+    if (props.isAspi && (!updateLink || !deleteLink)) {
+        setUpdateLink("/backoffice/aspiranten/update/" + props.user.aspi_id);
+        setDeleteLink("/backoffice/aspiranten/delete/" + props.user.aspi_id);
+    } else if (!updateLink || !deleteLink) {
+        setUpdateLink("/backoffice/users/update/" + props.user.user_id);
+        setDeleteLink("/backoffice/users/delete/" + props.user.user_id);
+    }
 
     return (
         <div class="interfaceinfo">

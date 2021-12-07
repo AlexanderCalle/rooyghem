@@ -9,7 +9,7 @@ const adminCheck = require('../middleware/adminCheck');
 const logginCheck = require('../middleware/logginCheck');
 require('dotenv').config();
 const multer = require('multer');
-const userFormChecker = require('../middleware/userFormChecker');
+const aspirantFormChecker = require('../middleware/aspirantFormChecker');
 const fs = require('fs');
 const compression = require('../middleware/compression');
 const path = require('path');
@@ -53,5 +53,67 @@ router.get('/single/:id/picture', (req, res) => {
         res.sendFile(path.join(__dirname, '..', pic_path[0].path_pic));
     });
 })
+
+router.post('/create', authCheck, upload.single('image'), aspirantFormChecker, (req, res) => {
+    if (req.user.group_id != 6 && !req.admin) {
+        return res.status(403).json({"error": "User not authorized to add aspirant"});
+    }
+    
+    if (req.file) {
+        const generated_id = crypto.randomBytes(11).toString('hex');
+        compression(process.env.TEMP_PATH + req.file.filename, process.env.ASPIRANT_PATH);
+        const aspirant = {
+            aspi_id: generated_id,
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            path_pic: process.env.ASPIRANT_PATH + req.file.filename
+        }
+        con.query('INSERT INTO aspiranten SET ?', aspirant, (err, aspi) => {
+            console.log(err);
+            if (err) return res.status(500).json({"error": "Something went wrong with database: " + err});
+            return res.json({"message": "aspirant werd gemaakt"});
+        })
+    } else {
+        return res.status(422).json({"error": "Geen foto gevonden"});
+    }
+});
+
+router.put('/single/:id', authCheck, upload.single('image'), aspirantFormChecker, (req, res) => {
+    if (req.user.group_id != 6 && !req.admin) {
+        return res.status(403).json({"error": "User not authorized to update aspirant"});
+    }
+    
+    const data = req.body;
+    var aspi_data = {
+        firstname: data.firstname,
+        lastname: data.lastname
+    };
+    if (req.file) {
+        con.query('SELECT path_pic FROM aspiranten WHERE aspi_id = ?', req.params.id, (err, path_pic) => {
+            if (err) return res.status(500).json({"error": 'Something went wrong with database: ' + err});
+            fs.unlinkSync('.' + path_pic[0]);
+        })
+        compression(process.env.TEMP_PATH + req.file.filename, process.env.ASPIRANT_PATH);
+        aspi_data['path_pic'] = process.env.ASPIRANT_PATH + req.file.filename;
+    }
+
+    con.query('UPDATE aspiranten SET ? WHERE aspi_id = ?', [aspi_data, req.params.id], (err, aspi) => {
+        if (err) {
+            return res.status(500).json({"error": "Something went wrong with database: " + err});
+        }
+        return res.status(200).json({"message": "Aspirant was updated"});
+    });
+});
+
+router.delete('/delete/single/:id', authCheck, (req, res) => {
+    if (req.user.group_id != 6 && !req.admin) {
+        return res.status(403).json({"error": "User not authorized to delete aspirant"});
+    }
+    con.query('DELETE FROM aspiranten WHERE aspi_id = ?', req.params.id, (err, aspi) => {
+        if(err) return res.status(500).json({"error": "Something went wrong with database: " + err});
+        fs.unlinkSync('.' + aspi[0].path_pic);
+        return res.json({"message": "Deletion succesfull"});
+    })
+});
 
 module.exports = router;
