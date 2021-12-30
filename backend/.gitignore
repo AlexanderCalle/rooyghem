@@ -1,0 +1,4 @@
+public/images/*
+connect.js
+node_modules/*
+.env

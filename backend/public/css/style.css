@@ -1,0 +1,37 @@
+html {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	min-height: 100%;
+	max-width: 100%;
+	display: grid;
+	grid-template-columns: 100%;
+    grid-template-rows: min-content 1fr min-content;
+    grid-template-areas: "nav"
+                         "main"
+                         "footer";
+    font-family:ff-ernestine-pro, sans-serif;
+    color: #f98d1e;
+	margin: 0px;
+	padding: 0;
+    font-style: normal;
+    font-weight: 300;
+    background-color: #FFFAF4;
+}
+
+.container {
+	max-width: 100%;
+}
+
+main{
+	grid-area: main;
+	max-width: 100%;
+	margin-top: 30px;
+    padding: 10px;
+}

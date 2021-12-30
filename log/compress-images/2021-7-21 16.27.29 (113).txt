@@ -1,7 +1,0 @@
-File from: [./public/images/temp/Kamp Kabouters Schoonaerde (2021)7/*.{jpg,JPG,jpeg,JPEG,png,svg,gif}"]
-
-File to: [-]
-
-Compression algorithm: [-]
-
-Description:  Directory is empty!: 

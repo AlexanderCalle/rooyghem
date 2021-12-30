@@ -1,0 +1,25 @@
+<head>
+    <script src="/public/js/link.js"></script>
+</head>
+
+<main class="container" id="backofficecontainer">
+    <%- include("./particals/back_office.ejs") %>
+
+    <div id="backofficecreation">
+        <div>
+            <h1>Verhalend kader</h1>
+
+            <%- include('./particals/messages.ejs') %>
+
+            <form action="/vk/allvk/<%= group_id %>?_method=PUT" method="post">
+                <button type='button' id="link" style="width: 50px">Link</button>
+                <button type='button' id="vet" style="width: 50px">Vet</button>
+                <button type='button' id="cursief" style="width: 50px">Cursief</button>
+                <br>
+                <textarea id="feedDescription" name="story" cols="120" rows="10"><%= vk %></textarea>
+                <br>
+                <button type="submit">Post vk</button>
+            </form>
+        </div>
+    </div>
+</main>

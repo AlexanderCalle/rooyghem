@@ -1,0 +1,18 @@
+<main class="container" id="backofficecontainer">
+    <%- include('./particals/back_office.ejs') %>
+    <div class="interface">
+        <h2>Albums</h2>
+        <div class="info">
+            <% albums.forEach(function(album) { %>
+                <a href="/albums/check/<%= album.album_id %>">
+                    <div class="interfaceinfo">
+                        <div class="interfaceinfo-inner">
+                            <img src="/public/images/album1.svg" width="50" height="auto">
+                            <p><%= album.name %></p>
+                        </div>
+                    </div>
+                </a>
+            <% }) %>
+        </div>
+    </div>
+</main>

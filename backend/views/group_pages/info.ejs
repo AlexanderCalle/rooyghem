@@ -1,0 +1,60 @@
+<head>
+    <link rel="stylesheet" href="/public/css/group.css">
+    <!-- <link rel="stylesheet" href="/public/css/backoffice.css"> -->
+</head>
+
+<main class="container" id="groupcontainer">
+    <div class="info">
+        <div id="groupinfo">
+            <img src="<%= group.logo %>" alt="Logo <%= group.name %>" class="grouplogo">
+            <h3>Adres</h3>
+            <p>
+                <%= location.name %> <br>
+                <%= location.adress %>
+            </p>
+            <h3>Contact</h3>
+            <p>
+                <%= group.name %>@ksarooyghem.be
+            </p>
+        </div>
+        <% if(group.name != "Aspiranten") {%>
+            <div id="groupstory">
+                <h3>Verhalend Kader</h3>
+                <p id="vkDiv">
+                    <%- group.story -%>
+                </p>
+            </div>
+            <div id="calendar"></div>
+        <% } else {%> 
+            <div id="calendar" class="aspiCalendar"></div>
+        <% } %>
+
+    </div>
+    <br>
+
+    <div id="groupleaders">
+        <div id="groupleaders-title"><h3>Leiders</h3></div>
+        <div id="groupleaders-content">
+            <% leaders.forEach(function(leader){ %>
+                <% if(leader.is_banleader == 1 ){ %>
+                    <div class="leader">
+                        <img src="<%= leader.path_pic %>" alt="" height="150px">
+                        <p>
+                            <%= leader.firstname %> <%= leader.lastname %> <br>
+                            <%= leader.email %> <br>
+                            (Banleider)
+                        </p>
+                    </div>
+                <% } else { %>
+                    <div class="leader">
+                        <img src="<%= leader.path_pic %>" alt="" height="150px">
+                        <p>
+                            <%= leader.firstname %> <%= leader.lastname %> <br>
+                            <%= leader.email %>
+                        </p>
+                    </div>
+                <% } %>
+            <% }); %>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,69 @@
+.containerBar {
+    width: 100%;
+    height: 4rem;
+    border-bottom-width: 1px;
+}
+
+.containerBar .subContainer {
+    position: relative;
+    padding-top: .5rem;
+}
+
+.containerBar .subContainer .top {
+    display: flex;
+    margin-bottom: .5rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.containerBar .subContainer .top .filenames {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 600;
+    display: inline-block;
+    padding: .25rem .5rem .25rem .5rem;
+    border-radius: 9999px;
+    color: #f98d1e;
+    background-color: #ffebd6;
+}
+
+.containerBar .subContainer .top .procentage {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: right;
+}
+
+.containerBar .subContainer .top .procentage span {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 600;
+    display: inline-block;
+    text-align: right;
+}
+
+.containerBar .subContainer .top .procentage a {margin-left: .5rem;}
+
+.containerBar .subContainer .top .procentage a svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.containerBar .subContainer .bar {
+    overflow: hidden;
+    height: .5rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    display: flex;
+    border-radius: 0.25rem;
+    background-color: #ffebd6;
+}
+
+.containerBar .subContainer .bar div {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    white-space: nowrap;
+    color: #fff;
+    background-color: #f98d1e;
+}
