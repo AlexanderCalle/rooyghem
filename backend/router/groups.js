@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
     con.query('SELECT * FROM `groups` WHERE group_id <= 6', (err, groups) => {
         if (err) return res.status(400).json({ "statuscode": 400, error: err });
         groups.forEach(group => {
-            group.logo = '/groups/' + group.name + '/logo';
+            group.logo = req.protocol + '://' + req.headers.host + '/groups/' + group.name.toLowerCase() + '/logo'
         })
         return res.status(200).json({
             groups: groups

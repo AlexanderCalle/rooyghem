@@ -47,7 +47,7 @@ const GroupPage = () => {
                 setAlbums([])
             } else {
                 setAlbums(json)
-		console.log(json)
+                console.log(json)
             }
         }
         const fetchDataEvents = async () => {
@@ -94,7 +94,7 @@ const GroupPage = () => {
                     <h2>Albums</h2>
                     <div class="interface">
                         {
-			 albums.length !== 0 ? (
+                            albums.length !== 0 ? (
                                 <>
                                     {albums.map(groupedAlbum => (
                                         <>
