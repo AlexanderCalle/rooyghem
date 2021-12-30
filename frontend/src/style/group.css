@@ -1,6 +1,6 @@
 #groupcontainer {
-    margin-top: 10px;
-    padding: 20px;
+    gap: 10px;
+    padding: 10px;
 	display: grid;
 	grid-template-rows: repeat(auto-fit, minmax(min-content, 500px));
 }
@@ -63,7 +63,9 @@
 	grid-area: content;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-	overflow-y: scroll;
+	overflow-y: auto;
+	-ms-overflow-style: none;
+  	scrollbar-width: none;
 }
 
 .leader {

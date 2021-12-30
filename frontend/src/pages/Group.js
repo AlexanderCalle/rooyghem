@@ -51,7 +51,7 @@ const GroupPage = () => {
             } else {
                 setActivities([]);
             }
-            if(isAspiranten) {
+            if (isAspiranten) {
                 const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/aspiranten/`);
                 const json = await res.json();
                 setAspiranten(json.aspis);
@@ -72,25 +72,25 @@ const GroupPage = () => {
                 <div class="info">
                     <GroupOverview logo={groupInfo.logo} location_name={locationInfo.name} location_adress={locationInfo.adress} contact={groupInfo.contact} />
                     {params.group_name == 'aspiranten' ? (
-                            <>
-                                <div class="groupleaders">
-                                    <div id="groupleaders-title">
-                                        <h2>Aspiranten</h2>
-                                    </div>
-                                    <div id="groupleaders-content">
-                                        {aspiranten.map(aspi => (
-                                            <LeaderOverview picture={process.env.REACT_APP_BACKEND_HOST + aspi.picture} firstname={aspi.firstname} lastname={aspi.lastname} />
-                                        ))}
-                                    </div>
+                        <>
+                            <div id="groupleaders">
+                                <div id="groupleaders-title">
+                                    <h2>Aspiranten</h2>
                                 </div>
-                            </>
+                                <div id="groupleaders-content">
+                                    {aspiranten.map(aspi => (
+                                        <LeaderOverview picture={process.env.REACT_APP_BACKEND_HOST + aspi.picture} firstname={aspi.firstname} lastname={aspi.lastname} />
+                                    ))}
+                                </div>
+                            </div>
+                        </>
                     ) : (<>
                         <div id="groupstory">
-                        <h3>Verhalend Kader</h3>
-                        <div id="vkDiv">
-                            <ReactQuill value={groupInfo.story} readOnly={true} theme="bubble" />
+                            <h3>Verhalend Kader</h3>
+                            <div id="vkDiv">
+                                <ReactQuill value={groupInfo.story} readOnly={true} theme="bubble" />
+                            </div>
                         </div>
-                    </div>
                     </>)}
                     <StyleWrapper>
                         <FullCalendar
@@ -109,7 +109,7 @@ const GroupPage = () => {
                     <h2>Albums</h2>
                     <div class="interface">
                         {
-			 albums.length !== 0 ? (
+                            albums.length !== 0 ? (
                                 <>
                                     {albums.map(groupedAlbum => (
                                         <>
