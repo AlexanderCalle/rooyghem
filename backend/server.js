@@ -191,6 +191,9 @@ app.use('/albums', albums);
 const wafelbak = require('./router/wafelbak');
 app.use('/wafelbak', userCheck, wafelbak);
 
+const tokshop = require('./router/tokshop');
+app.use('/tokshop', tokshop);
+
 app.listen(port, () => {
     console.log('Server running on port ' + port);
 });
