@@ -55,7 +55,7 @@ const BackofficeTokshopItemsPage = () => {
 const TokshopItemListItem = (tokshopitem) => {
     const updateLink = "/backoffice/tokshop/items/update/" + tokshopitem.tokshopitem_id;
     const deleteLink = "/backoffice/tokshop/items/delete/" + tokshopitem.tokshopitem_id;
-
+    console.log(tokshopitem);
     return(
         <div class="interfaceinfo">
             <image src={tokshopitem.picture}/>

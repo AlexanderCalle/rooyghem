@@ -36,6 +36,9 @@ import BackofficeAlbumChecker from './pages/BackofficeAlbumChecker';
 import BackofficePhotoCheck from './pages/BackofficePhotoCheck';
 import BackofficeAlbumUpdate from './pages/BackofficeAlbumUpdate';
 import BackofficeTokshopItemsPage from './pages/BackofficeTokshopItems';
+import BackofficeCreateTokshopitemPage from './pages/BackofficeCreateTokshopItem';
+import BackofficeUpdateTokshopItemPage from './pages/BackofficeUpdateTokshopItem';
+import BackofficeDeleteTokshopItemPage from './pages/BackofficeDeleteTokshopItem';
 import AlbumPhotos from './pages/AlbumPhotos';
 import UsersForgot from './pages/UsersForgot';
 import UsersReset from './pages/UsersReset';
@@ -96,7 +99,11 @@ function App() {
           <AdminRoute exact path="/backoffice/vk/allvk/update/:group_id" component={BackofficeAllVkUpdate} />
           {/* Backoffice Wafelbak Orders (Admin) */}
           <AdminRoute exact path="/backoffice/wafelbak/orders" component={BackofficeWafelbakPage} />
+          {/*Backoffice tokshop items (Admin)*/}
           <AdminRoute exact path="/backoffice/tokshop/items" component={BackofficeTokshopItemsPage}/>
+          <AdminRoute exact path="/backoffice/tokshop/items/create" component={BackofficeCreateTokshopitemPage}/>
+          <AdminRoute path="/backoffice/tokshop/items/update/:item_id" component={BackofficeUpdateTokshopItemPage}/>
+          <AdminRoute path="/backoffice/tokshop/items/delete/:item_id" component={BackofficeDeleteTokshopItemPage}/>
         </Switch>
       </body>
     </Router>
