@@ -15,6 +15,7 @@ const BackofficeMenu = () => {
                     <a href="/backoffice/users">Gebruikers</a>
                     <a href="/backoffice/activities/allactivities">Alle activiteiten</a>
                     <a href="/backoffice/vk/allvk">Alle vk's</a>
+                    <a href="/backoffice/tokshop/items">Tokshop Items</a>
                 </>
             );
         } else {

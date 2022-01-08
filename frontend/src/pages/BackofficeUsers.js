@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import BackofficeMenu from '../components/BackofficeMenu';
 import Navbar from '../components/Navbar';
-import UserListEl from '../components/UserListEl'
+import UserListEl from '../components/UserListEl';
 import '../style/backoffice.css';
 
 const BackofficeUsersPage = () => {

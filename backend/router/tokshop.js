@@ -49,6 +49,7 @@ router.get('/items/:id/picture', (req, res) => {
         if (picture.length === 0) return res.status(404).json({"error": "Tokshopitem not found"});
         if (picture[0].picture_path === null) {
             // TODO: return default picture
+            res.sendFile(path.join(__dirname, '..', process.env.TOKSHOP_ITEMS_PATH_PIC + 'default.png'));
         } else {
             res.sendFile(path.join(__dirname, '..', picture[0].picture_path));
         }

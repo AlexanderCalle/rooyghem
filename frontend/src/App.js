@@ -35,6 +35,7 @@ import BackofficeAlbumPhoto from './pages/BackofficeAlbumPhoto';
 import BackofficeAlbumChecker from './pages/BackofficeAlbumChecker';
 import BackofficePhotoCheck from './pages/BackofficePhotoCheck';
 import BackofficeAlbumUpdate from './pages/BackofficeAlbumUpdate';
+import BackofficeTokshopItemsPage from './pages/BackofficeTokshopItems';
 import AlbumPhotos from './pages/AlbumPhotos';
 import UsersForgot from './pages/UsersForgot';
 import UsersReset from './pages/UsersReset';
@@ -95,6 +96,7 @@ function App() {
           <AdminRoute exact path="/backoffice/vk/allvk/update/:group_id" component={BackofficeAllVkUpdate} />
           {/* Backoffice Wafelbak Orders (Admin) */}
           <AdminRoute exact path="/backoffice/wafelbak/orders" component={BackofficeWafelbakPage} />
+          <AdminRoute exact path="/backoffice/tokshop/items" component={BackofficeTokshopItemsPage}/>
         </Switch>
       </body>
     </Router>
