@@ -1,3 +1,16 @@
+.imgdiv {
+    overflow: hidden;
+    text-align: center;
+}
+
+.imgdiv img {
+    display: block;
+    margin: auto;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+}
+
 #tokshoplist {
     display: grid;
     grid-template-columns: repeat(auto-fit, 350px);
@@ -6,65 +19,69 @@
     margin: 10px;
     padding: 20px;
     border-style: solid;
-    height: 500px;
+    height: 350px;
     max-height: 500px;
     overflow-y: scroll;
 }
 
 .tokshopitem {
     display: grid;
-    grid-template-rows: min-content, 1fr, min-content, min-content, min-content;
-    max-height: 300px;
-    height: 300px;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 3fr 1fr;
+    width: 100%;
+    max-width: 350px;
+    height: 150px;
+    max-height: 250px;
     border-style: solid;
-    padding: 10px;
+    padding: 5px 3px 3px 5px;
     text-align: center;
 }
 
 .tokshopitemimg {
-    overflow: hidden;
-    text-align: center;
-}
-
-.tokshopitemimg img {
-    height: 100%;
-    display: block;
-    margin: auto;
-}
-
-.tokshopitem h3 {
-    text-align: center;
+    grid-column: 1;
+    grid-row: 1/2;
 }
 
 .tokshopitemcontrol {
-    display: grid;
-    grid-template-columns: 1fr 80px 2fr 80px;
-}
-
-.tokshopitemcontrol p {
     display: flex;
+    flex-direction: row;
     justify-content: center;
-    align-items: center;
+    gap: 0.5em;
+    margin-top: auto;
+    height: 80%;
 }
 
 .tokshopitemcontrol button {
     display: block;
-    place-self: center center;
-    width: 100%;
-    min-width: 30px;
+    min-width: 20px;
+    min-height: 10px;
+    max-width: 30px;
+    max-height: 20px;
+    line-height: 3px;
     margin: 0;
+    padding: 0;
+}
+
+.tokshopitemcontrol p {
+    margin: auto 0;
+    padding: 0;
+    max-height: 100%;
+    height: 100%;
+    text-align: center;
 }
 
 #tokshopcontrol {
-    display: grid;
-    grid-template-columns: 5fr 1fr;
-}
-
-#tokshopcontrol p {
-    justify-content: center;
-    align-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+    height: min-content;
+    margin-left: 2em;
 }
 
 #tokshopcontrol button {
-    margin: 0;
+    padding: 0;
+    margin: auto 0;
+    width: min-content;
+    height: min-content;
+    min-height: 30px;
 }

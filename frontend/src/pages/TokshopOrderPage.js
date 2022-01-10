@@ -56,23 +56,25 @@ function TokshopOrderPage() {
                 {
                     Array.from(order).map(([itemInfo, amount]) => (
                         <div class="tokshopitem">
-                            <h3>{itemInfo.name}</h3>
-                            <div class="tokshopitemimg">
+                            <div class="imgdiv tokshopitemimg">
                                 <img src={itemInfo.picture}/>
                             </div>
-                            <p>{itemInfo.description}</p>
+                            <div class="tokshopiteminfo">
+                                <h3>{itemInfo.name}</h3>
+                                <p>{itemInfo.description}</p>
+                            </div>
+                            <h4>€{itemInfo.price}</h4>
                             <div class="tokshopitemcontrol">
-                                <p><b>€{itemInfo.price}</b></p>
-                                <button class="tokshopminbutton" onClick={() => changeAmount(itemInfo, false)} disabled={amount <= 0}>-</button>
-                                <p>{amount}</p>
-                                <button class="tokshopplusbutton" onClick={() => changeAmount(itemInfo, true)}>+</button>
+                                <button onClick={() => changeAmount(itemInfo, false)}>-</button>
+                                <p><b>{amount}</b></p>
+                                <button onClick={() => changeAmount(itemInfo, true)}>+</button>
                             </div>
                         </div>
                     ))
                 }
             </div>
             <div id="tokshopcontrol">
-                <p>Totale prijs: €{totalPrice}</p>
+                <p><b>Totale prijs: €{totalPrice}</b></p>
                 <button>Bestel</button>
             </div>
         </main>

@@ -4,10 +4,13 @@ const con = require('../connect');
 const adminCheck = require('../middleware/adminCheck');
 const authCheck = require('../middleware/authCheck');
 const tokshopItemFormChecker = require('../middleware/tokshopItemFormCheck');
+const tokshopOrderFormChecker = require('../middleware/tokshopOrderFormCheck');
 const compression = require('../middleware/compression');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
+const moment = require('moment');
+const crypto = require('crypto');
 
 require('dotenv').config();
 
@@ -23,6 +26,8 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
+
+// TOKSHOP/ITEMS
 
 router.get('/items', (req, res) => {
     con.query('SELECT tokshopitem_id, name, description, price FROM tokshopitems', (err, items) => {
@@ -62,7 +67,7 @@ router.post('/items', authCheck, adminCheck, upload.single('image'), tokshopItem
         compression(process.env.TEMP_PATH + req.file.filename, process.env.TOKSHOP_ITEMS_PATH_PIC);
         path_pic = process.env.TOKSHOP_ITEMS_PATH_PIC + req.file.filename
     }
-    console.log("Path of new picture: " + path_pic);
+
     const tokshopItem = {
         name: req.body.name,
         description: req.body.description,
@@ -121,5 +126,44 @@ router.delete('/items/:id', authCheck, adminCheck, (req, res) => {
         return res.status(204);
     });
 });
+
+// TOKSHOP/ORDERS
+
+router.get('orders', (req, res) => {});
+
+router.post('/orders', tokshopOrderFormChecker, (req, res) => {
+    console.log(req.body);
+    const data = req.body;
+    const orderId = crypto.randomBytes(11).toString('hex').slice(0, 256);
+    const order = {
+        tokshoporder_id: orderId,
+        email: data.email,
+        firstname: data.firstname,
+        lastname: data.lastname,
+        group_id: data.group_id,
+        ordered_on: moment().format('YYYY-MM-DD'),
+        payed_on: data.payed_reference ? moment().format('YYYY-MM-DD') : null,
+        payed_reference: data.payed_reference
+    };
+
+    var items = [];
+    items.forEach(item => {
+        const itemId = crypto.randomBytes(11).toString('hex').slice(0, 256);
+        items.push([itemId, orderId, item.tokshopitem_id, item.amount]);
+    });
+
+    con.query('INSERT INTO tokshoporders SET ?', order, (err, order) => {
+        if(err) return res.status(500).json({error: err});
+    });
+
+    con.query('INSERT INTO tokshoporderitems (tokshoporderitem_id, tokshoporder_id, tokshopitem_id, amount) VALUES ?', items, (err, result) => {
+        if(err) {
+            con.query('DELETE FROM tokshoporders WHERE tokshoporder_id = ?', orderId, (err, resp) => {});
+            return res.status(500).json({error: err});
+        }
+        return res.status(204);
+    })
+
+})
 
 module.exports = router;
