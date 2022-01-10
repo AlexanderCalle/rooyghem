@@ -62,6 +62,7 @@ router.post('/items', authCheck, adminCheck, upload.single('image'), tokshopItem
         compression(process.env.TEMP_PATH + req.file.filename, process.env.TOKSHOP_ITEMS_PATH_PIC);
         path_pic = process.env.TOKSHOP_ITEMS_PATH_PIC + req.file.filename
     }
+    console.log("Path of new picture: " + path_pic);
     const tokshopItem = {
         name: req.body.name,
         description: req.body.description,

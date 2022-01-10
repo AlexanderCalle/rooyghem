@@ -1,0 +1,70 @@
+#tokshoplist {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 350px);
+    column-gap: 2em;
+    row-gap: 1em;
+    margin: 10px;
+    padding: 20px;
+    border-style: solid;
+    height: 500px;
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.tokshopitem {
+    display: grid;
+    grid-template-rows: min-content, 1fr, min-content, min-content, min-content;
+    max-height: 300px;
+    height: 300px;
+    border-style: solid;
+    padding: 10px;
+    text-align: center;
+}
+
+.tokshopitemimg {
+    overflow: hidden;
+    text-align: center;
+}
+
+.tokshopitemimg img {
+    height: 100%;
+    display: block;
+    margin: auto;
+}
+
+.tokshopitem h3 {
+    text-align: center;
+}
+
+.tokshopitemcontrol {
+    display: grid;
+    grid-template-columns: 1fr 80px 2fr 80px;
+}
+
+.tokshopitemcontrol p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tokshopitemcontrol button {
+    display: block;
+    place-self: center center;
+    width: 100%;
+    min-width: 30px;
+    margin: 0;
+}
+
+#tokshopcontrol {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+}
+
+#tokshopcontrol p {
+    justify-content: center;
+    align-items: center;
+}
+
+#tokshopcontrol button {
+    margin: 0;
+}

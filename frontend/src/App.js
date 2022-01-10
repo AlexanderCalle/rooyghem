@@ -42,6 +42,7 @@ import BackofficeDeleteTokshopItemPage from './pages/BackofficeDeleteTokshopItem
 import AlbumPhotos from './pages/AlbumPhotos';
 import UsersForgot from './pages/UsersForgot';
 import UsersReset from './pages/UsersReset';
+import TokshopOrderPage from './pages/TokshopOrderPage';
 
 function App() {
 
@@ -104,6 +105,8 @@ function App() {
           <AdminRoute exact path="/backoffice/tokshop/items/create" component={BackofficeCreateTokshopitemPage}/>
           <AdminRoute path="/backoffice/tokshop/items/update/:item_id" component={BackofficeUpdateTokshopItemPage}/>
           <AdminRoute path="/backoffice/tokshop/items/delete/:item_id" component={BackofficeDeleteTokshopItemPage}/>
+          {/** Tokshop order page */}
+          <Route exact path = "/tokshop" component={TokshopOrderPage}/>
         </Switch>
       </body>
     </Router>

@@ -34,6 +34,7 @@ const Navbar = () => {
                             <li><a href="/groups/aspiranten/info">Aspiranten</a></li>
                         </ul>
                     </li>
+                    <li><a class="reference" href="/tokshop">Tokshop</a></li>
                     <li><a class="reference" href="/overons">Over ons</a></li>
                     {/* <li><a class="reference" href="/wafelbak">Wafelbak bestellen</a></li> */}
                     <li><a class="reference" href="/contact">Contact</a></li>
