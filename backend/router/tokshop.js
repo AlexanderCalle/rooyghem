@@ -132,7 +132,7 @@ router.delete('/items/:id', authCheck, adminCheck, (req, res) => {
 router.get('orders', (req, res) => {});
 
 router.post('/orders', tokshopOrderFormChecker, (req, res) => {
-    console.log(req.body);
+    console.log("In post orders");
     const data = req.body;
     const orderId = crypto.randomBytes(11).toString('hex').slice(0, 256);
     const order = {
@@ -147,22 +147,24 @@ router.post('/orders', tokshopOrderFormChecker, (req, res) => {
     };
 
     var items = [];
-    items.forEach(item => {
+    data.items.forEach(item => {
         const itemId = crypto.randomBytes(11).toString('hex').slice(0, 256);
         items.push([itemId, orderId, item.tokshopitem_id, item.amount]);
     });
 
     con.query('INSERT INTO tokshoporders SET ?', order, (err, order) => {
+        console.log("in first query cb");
         if(err) return res.status(500).json({error: err});
-    });
 
-    con.query('INSERT INTO tokshoporderitems (tokshoporderitem_id, tokshoporder_id, tokshopitem_id, amount) VALUES ?', items, (err, result) => {
-        if(err) {
-            con.query('DELETE FROM tokshoporders WHERE tokshoporder_id = ?', orderId, (err, resp) => {});
-            return res.status(500).json({error: err});
-        }
-        return res.status(204);
-    })
+        con.query('INSERT INTO tokshoporderitems (tokshoporderitem_id, tokshoporder_id, tokshopitem_id, amount) VALUES ?', items, (err, result) => {
+            console.log("in second query cb");
+            if(err) {
+                con.query('DELETE FROM tokshoporders WHERE tokshoporder_id = ?', orderId, (err, resp) => {});
+                return res.status(500).json({error: err});
+            }
+            return res.status(204);
+        })
+    });
 
 })
 

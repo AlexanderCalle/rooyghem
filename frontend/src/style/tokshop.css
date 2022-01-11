@@ -6,8 +6,8 @@
 .imgdiv img {
     display: block;
     margin: auto;
-    width: 100%;
-    height: auto;
+    width: auto;
+    height: 100%;
     max-width: 100%;
 }
 
@@ -79,9 +79,67 @@
 }
 
 #tokshopcontrol button {
-    padding: 0;
+    padding: 0 5px;
     margin: auto 0;
     width: min-content;
     height: min-content;
     min-height: 30px;
+    white-space: nowrap;
+}
+
+#tokshopcontainer form {
+    display: flex;
+    flex-direction: column;
+}
+
+#tokshopcontainer form div {
+    display: flex;
+    flex-direction: row;
+}
+
+#tokshopcontainer form div button {
+    margin: 10px;
+    padding: 0;
+    min-height: 40px;
+    /* height: auto; */
+}
+
+#finishorderview {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+#orderlist {
+    height: 100%;
+    border-style: solid;
+    display: grid;
+    grid-template-rows: 1fr min-content;
+    max-width: 100%;
+}
+
+#orderlist div {
+    height: 100%;
+}
+
+#orderlistitems {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.orderitem {
+    display: flex;
+    max-height: 100px;
+    width: 100%;
+    max-width: 100%;
+    gap: 1em;
+    text-align: center;
+    margin-top: 0.5em;
+    border-style: ridge;
+    margin-left: 0.5em;
+}
+
+#ordertotalpricediv {
+    text-align: right;
 }
