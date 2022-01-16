@@ -4,11 +4,15 @@
 }
 
 .imgdiv img {
-    display: block;
-    margin: auto;
-    width: auto;
+    /* display: block;
+    margin: auto; */
     height: 100%;
-    max-width: 100%;
+    object-fit: fill;
+}
+
+.b-line {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #f98b1ea1;
 }
 
 #tokshoplist {
@@ -16,30 +20,33 @@
     grid-template-columns: repeat(auto-fit, 350px);
     column-gap: 2em;
     row-gap: 1em;
-    margin: 10px;
+    margin: 10px ;
     padding: 20px;
-    border-style: solid;
-    height: 350px;
-    max-height: 500px;
-    overflow-y: scroll;
+    border-radius: 10px;
 }
 
 .tokshopitem {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    grid-template-rows: 3fr 1fr;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 100%;
-    max-width: 350px;
-    height: 150px;
-    max-height: 250px;
-    border-style: solid;
-    padding: 5px 3px 3px 5px;
+    max-width: 230px;
+    height: 280px;
+    max-height: 400px;
+    border: solid 1px #f98d1e;
+    border-radius: 10px;
+    padding: 5px;
     text-align: center;
 }
 
-.tokshopitemimg {
-    grid-column: 1;
-    grid-row: 1/2;
+.tokshopitem h4 {
+    margin: 5px;
+}
+
+.tokshopitembtn {
+    width: 100%;
+    height: 40px;
+    padding: 2px 0 0 2px;
 }
 
 .tokshopitemcontrol {
@@ -47,44 +54,64 @@
     flex-direction: row;
     justify-content: center;
     gap: 0.5em;
-    margin-top: auto;
+    /* margin-top: auto; */
     height: 80%;
+    align-items: flex-end;
 }
 
-.tokshopitemcontrol button {
+.tokshopitemcontrol .addminbtn{
     display: block;
     min-width: 20px;
     min-height: 10px;
     max-width: 30px;
     max-height: 20px;
     line-height: 3px;
-    margin: 0;
-    padding: 0;
+    /* margin: 0;
+    padding: 0; */
+}
+
+.tokshopitemcontrol div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .tokshopitemcontrol p {
-    margin: auto 0;
+    margin: 10px 10px;
     padding: 0;
     max-height: 100%;
     height: 100%;
     text-align: center;
+    align-self: flex-end;
 }
 
 #tokshopcontrol {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     gap: 2em;
     height: min-content;
+    margin-right: 2em;
+}
+
+#tokshopcontrol h2 {
     margin-left: 2em;
 }
 
 #tokshopcontrol button {
-    padding: 0 5px;
+    padding: 3px 5px;
     margin: auto 0;
     width: min-content;
     height: min-content;
     min-height: 30px;
     white-space: nowrap;
+}
+
+.tokshopcontroltotal {
+    display: flex;
+    flex-direction: row;
+    gap: .5em;
 }
 
 #tokshopcontainer form {
@@ -105,16 +132,19 @@
 }
 
 #finishorderview {
+    padding: 10px;
     display: grid;
     grid-template-columns: 1fr 2fr;
+    gap: 1em;
 }
 
 #orderlist {
     height: 100%;
-    border-style: solid;
+    border: solid 1px #f98d1e;
     display: grid;
     grid-template-rows: 1fr min-content;
     max-width: 100%;
+    border-radius: 10px;
 }
 
 #orderlist div {
@@ -124,8 +154,15 @@
 #orderlistitems {
     display: flex;
     flex-direction: column;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    padding: .5em;
+}
+
+#orderlistitems::-webkit-scrollbar {
+    display: hidden;
 }
 
 .orderitem {
@@ -134,12 +171,24 @@
     width: 100%;
     max-width: 100%;
     gap: 1em;
-    text-align: center;
-    margin-top: 0.5em;
-    border-style: ridge;
-    margin-left: 0.5em;
+    /* text-align: center; */
+    padding-block: 5px;
+    border-bottom: 1px solid #f98b1ea1;
+}
+
+.orderiteminfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.orderiteminfoprice {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5em;
 }
 
 #ordertotalpricediv {
     text-align: right;
+    margin-right: 10%;
 }
