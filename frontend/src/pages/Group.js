@@ -42,11 +42,11 @@ const GroupPage = () => {
             if (json.error) {
                 setAlbums([])
             } else {
-                if(json.albums == null) {
+                if(json.albums === null) {
                     setAlbums([])
                 }
                 setAlbums(json.albums)
-                console.log(json.albums)
+                console.log(albums)
             }
         }
        // const fetchDataAlbums = async () => {
@@ -71,7 +71,7 @@ const GroupPage = () => {
         fetchDataEvents();
     }, [params.group_name, setGroupInfo, setLocationInfo, setLeaderInfo]);
 
-    if (!groupInfo || !locationInfo || !leaderInfo || !albums) {
+    if (!groupInfo || !locationInfo || !leaderInfo) {
         return (<div>Aan het laden...</div>);
     }
     return (
