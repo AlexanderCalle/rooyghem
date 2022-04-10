@@ -39,17 +39,22 @@ const GroupPage = () => {
             setGroupInfo(json.group);
             setLocationInfo(json.location);
             setLeaderInfo(json.leaders);
-        }
-        const fetchDataAlbums = async () => {
-            const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/albums/groups/` + params.group_name)
-            const json = await res.json();
             if (json.error) {
                 setAlbums([])
             } else {
-                setAlbums(json)
-                console.log(json)
+                setAlbums(json.albums)
             }
         }
+       // const fetchDataAlbums = async () => {
+           // const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/albums/groups/` + params.group_name)
+          //  const json = await res.json();
+           // if (json.error) {
+            //    setAlbums([])
+            //} else {
+                //setAlbums(json)
+                //console.log(json)
+            //}
+        //}
         const fetchDataEvents = async () => {
             const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/groups/` + params.group_name + '/info/activities');
             const json = await res.json();
