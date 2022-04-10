@@ -63,7 +63,7 @@ const GroupPage = () => {
         }
 
         fetchData();
-        fetchDataAlbums();
+        //fetchDataAlbums();
         fetchDataEvents();
     }, [params.group_name, setGroupInfo, setLocationInfo, setLeaderInfo]);
 
