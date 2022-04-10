@@ -43,6 +43,7 @@ const GroupPage = () => {
                 setAlbums([])
             } else {
                 setAlbums(json.albums)
+                console.log(json.albums)
             }
         }
        // const fetchDataAlbums = async () => {
