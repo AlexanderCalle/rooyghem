@@ -42,7 +42,7 @@ const GroupPage = () => {
             if (json.error) {
                 setAlbums([])
             } else {
-                if(json.albums === null) {
+                if(json.albums == null) {
                     setAlbums([])
                 }
                 setAlbums(json.albums)
