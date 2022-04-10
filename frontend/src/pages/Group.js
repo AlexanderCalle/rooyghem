@@ -41,10 +41,10 @@ const GroupPage = () => {
             setLeaderInfo(json.leaders);
             if (json.error) {
                 setAlbums([])
-            } else {
-                if(json.albums == null) {
-                    setAlbums([])
-                }
+            } else if(json.albums == null) {
+                setAlbums([])
+            }
+            else {
                 setAlbums(json.albums)
                 console.log(albums)
             }
