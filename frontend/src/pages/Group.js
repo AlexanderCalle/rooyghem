@@ -29,7 +29,7 @@ const GroupPage = () => {
     const [groupInfo, setGroupInfo] = useState();
     const [locationInfo, setLocationInfo] = useState();
     const [leaderInfo, setLeaderInfo] = useState();
-    const [albums, setAlbums] = useState();
+    const [albums, setAlbums] = useState([]);
     const [activities, setActivities] = useState([]);
 
     useEffect(() => {
