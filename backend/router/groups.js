@@ -30,7 +30,7 @@ router.get('/:group_name/info', (req, res) => {
         if (err) return res.status(400).json({ "statuscode": 400, error: err });
 
         if (group.length === 0) return res.status(404).json({ "statuscode": 404, error: "Group not found" });
-        group[0].logo = req.protocol + '://' + req.headers.host + '/groups/' + req.params.group_name + '/logo';
+        group[0].logo = req.protocol + '://' + req.headers.host + '/api/groups/' + req.params.group_name + '/logo';
         group[0].contact = req.params.group_name + '@ksarooyghem.be';
         con.query('SELECT * FROM locations WHERE location_id = ?', group[0].location_id, (err, location) => {
             if (err) return res.status(400).json({ "statuscode": 400, error: err });
