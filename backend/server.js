@@ -16,7 +16,7 @@ const adminCheck = require('./middleware/adminCheck');
 const userCheck = require('./middleware/userCheck');
 const sgMail = require('@sendgrid/mail');
 const app = express();
-const port = 3000 || procces.env.PORT;
+const port = 3030 || procces.env.PORT;
 
 // Server Logs middelware
 app.use(morgan('dev'));
@@ -24,7 +24,7 @@ app.use(morgan('dev'));
 
 //middelware
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://localhost:3001'],
+	origin: ['http://localhost:3000', 'http://localhost:3001', 'https://ksarooyghem.be'],
     credentials: true
 }));
 app.use('/public', express.static(path.join(__dirname, "public")));
