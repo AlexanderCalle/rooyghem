@@ -10,6 +10,8 @@ class Auth {
     }
 
     isValidToken() {
+	    // todo: do not read cookie
+	//return true;
         if (Cookies.get('auth') !== undefined && localStorage.getItem('tokens')) {
             return true;
         } else {

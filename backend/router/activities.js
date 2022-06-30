@@ -14,6 +14,7 @@ router.get('/', userCheck, adminCheck, (req, res)=> {
 });
 
 router.get('/me', userCheck, (req, res)=>{
+    console.log("Cookies:");
     console.log(JSON.stringify(req.cookies));
     if(req.user.group_id == undefined) return res.status(401).json({"statusCode": 401, "error": "Log in before consulting this endpoint"});
     con.query('SELECT * FROM `groups` WHERE group_id = ?', req.user.group_id, (err, groups)=>{

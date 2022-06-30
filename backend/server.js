@@ -25,7 +25,7 @@ app.use(morgan('dev'));
 //middelware
 app.use(cors({
 	origin: ['http://localhost:3000', 'http://localhost:3001', 'https://ksarooyghem.be'],
-    credentials: true
+	credentials: true
 }));
 app.use('/public', express.static(path.join(__dirname, "public")));
 app.use(expressLayouts);
@@ -34,6 +34,11 @@ app.set('views', 'views');
 app.use(methodOverride('_method'));
 app.use(cookieParser());
 app.use(helmet());
+
+app.use(function(req, res, next) {
+	res.header('Acces-Control-Allow-Credentials', true)
+	next()
+});
 
 // BodyParser middleware
 app.use(bodyParser.json({ limit: "50mb" }));

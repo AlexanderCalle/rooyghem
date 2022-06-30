@@ -6,7 +6,8 @@ import '../style/backoffice.css';
 
 const BackofficeActivitiesPage = () => {
     const user = JSON.parse(localStorage.getItem('tokens'));
-
+    console.log("User: ");
+    console.log(user);
     const [activities, setActivities] = useState(null);
     const [message, setMessage] = useState(null);
 

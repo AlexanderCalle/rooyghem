@@ -163,7 +163,13 @@ router.post('/login', (req, res)=>{
                     }
                     const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '1d' });
 
-                    return res.cookie('auth', token).json({"statuscode": 200, "message": "login succesfull", "user": payload, "token": token});
+                    return res.cookie('auth', token, {
+		    	maxAge: 24*60*60,
+			expires: new Date(Date.now() +24*60*60),
+			secure: true,
+			//httpOnly: true,
+			sameSite: 'lax'
+		    }).json({"statuscode": 200, "message": "login succesfull", "user": payload, "token": token});
                 } else {
                     return res.status(401).json({error: 'Password klopt niet', username: req.user.username});
                 }
