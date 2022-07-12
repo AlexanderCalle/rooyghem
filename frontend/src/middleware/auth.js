@@ -12,6 +12,7 @@ class Auth {
     isValidToken() {
 	    // todo: do not read cookie
 	//return true;
+    // return localStorage.getItem('tokens') !== undefined;
         if (Cookies.get('auth') !== undefined && localStorage.getItem('tokens')) {
             return true;
         } else {
@@ -29,8 +30,8 @@ class Auth {
     }
 
     logout() {
-        Cookies.remove('auth');
         localStorage.removeItem('tokens');
+        Cookies.remove('auth');
         return true;
     }
 
@@ -50,7 +51,7 @@ class Auth {
             .then(data => {
                 if (data.statuscode === 200) {
                     this.user = data.user;
-                    Cookies.set('auth', data.token, { expires: 1 });
+                    Cookies.set('auth', data.token, { expires: 1});
                     localStorage.setItem("tokens", JSON.stringify(this.user));
                 } else {
                     console.log("Login failed");
