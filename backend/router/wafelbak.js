@@ -32,8 +32,10 @@ router.post('/order', (req, res) => {
         phone: req.body.phone,
         email: req.body.email,
         pick_up_moment: req.body.pick_up_moment
-    }
-
+    };
+    console.log(req.body)
+    console.log("Email order: " + order.email);
+    console.log("Order: " + order);
     let moment;
 
     switch (order.pick_up_moment) {
@@ -75,7 +77,7 @@ router.post('/order', (req, res) => {
         })
     }).catch(error => {
         console.log(error);
-        res.status(500).send(err);
+        res.status(500).send(error);
     })
 
 });

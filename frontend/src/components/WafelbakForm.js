@@ -9,22 +9,22 @@ const WafelbakForm = () => {
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [selectedGroup, setSelectedGroup] = useState("");
+    const [selectedGroup, setSelectedGroup] = useState("Kabouters");
     const [totalAmount, setTotalAmount] = useState(1);
     const [email, setEmail] = useState("");
-    const [pickUpMoment, setPickUpMoment] = useState("");
+    const [pickUpMoment, setPickUpMoment] = useState("donderdag");
     const [phone, setPhone] = useState("");
 
     const create = (formData) => {
         const requestOptions = {
             method: 'POST',
-            // credentials: 'include',
-            body: formData
-        }
-
+	    headers: { 'Content-Type': 'application/json' },
+	    body: JSON.stringify(formData)
+	}
+	console.log(formData)
         fetch(`${process.env.REACT_APP_BACKEND_HOST}/wafelbak/order`, requestOptions)
             .then(response => {
-                if (response.ok) {
+                if (response.status === 200) {
                     console.log("response ok!");
                     window.location = "/";
                 } else {
@@ -36,16 +36,28 @@ const WafelbakForm = () => {
 
     const postForm = () => {
         // console.log("Recpatcha resolved: " + recaptchaRef.current.callbacks.getResponse());
-        const formData = new FormData();
+        
+	console.log("Email: " + email);
 
-        formData.append("firstname", firstName);
-        formData.append("lastname", lastName);
-        formData.append("group", selectedGroup);
-        formData.append("total_amount", totalAmount);
-        formData.append("phone", phone);
-        formData.append("email", email);
-        formData.append("pick_up_moment", pickUpMoment);
+	//const formData = new FormData();
 
+        //formData.append("firstname", firstName);
+        //formData.append("lastname", lastName);
+        //formData.append("group", selectedGroup);
+        //formData.append("total_amount", totalAmount);
+        //formData.append("phone", phone);
+        //formData.append("email", email);
+        //formData.append("pick_up_moment", pickUpMoment);
+
+	const formData = {
+	    	"firstname": firstName,
+	    	"lastname": lastName,
+		"group": selectedGroup,
+		"total_amount": totalAmount,
+		"phone": phone,
+		"email": email,
+		"pick_up_moment": pickUpMoment
+	}
         create(formData);
     };
 
@@ -53,7 +65,8 @@ const WafelbakForm = () => {
         console.log("Captcha value: " + value);
     }
 
-    const onSubmit = async () => {
+    const onSubmit = async (e) => {
+	    e.preventDefault();
         // alert("In onSubmit");
         // const token = await recaptchaRef.current.executeAsync();
         // alert("Token: " + token);
@@ -77,7 +90,7 @@ const WafelbakForm = () => {
     }
 
     return (
-        <form id="wafelbak_form" onSubmit={onSubmit}>
+        <form id="wafelbak_form" onSubmit={(e) => onSubmit(e)}>
             <input type="text" placeholder="Voornaam" name="firstname" onChange={e => setFirstName(e.target.value)} required />
             <input type="text" name="lastname" placeholder="Achternaam" onChange={e => setLastName(e.target.value)} required />
             <input type="number" name="total_amount" placeholder="Aantal pakketten..." onChange={e => setTotalAmount(e.target.value)} required />
