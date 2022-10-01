@@ -55,7 +55,7 @@ function App() {
           <Route exact path="/users/login" component={Login} />
           <Route exact path="/users/forgot" component={UsersForgot} />
           <Route exact path="/users/reset/:token" component={UsersReset} />
-          {/* <Route exact path="/wafelbak" component={WafelbakOrderPage} /> */}
+          <Route exact path="/wafelbak" component={WafelbakOrderPage} />
           <Route exact path="/albums/groups/:group_name/:album_id" component={AlbumPhotos} />
           {/* Backoffice */}
           <PrivateRoute exact path="/backoffice" component={BackofficePage} />

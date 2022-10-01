@@ -89,7 +89,8 @@ const WafelbakForm = () => {
                 ))}
                 <option>Geen groep</option>
             </select>
-            <select id="bannen" name="pick_up_moment" onChange={e => setPickUpMoment(e.target.value)}>
+
+            <select style={{ marginLeft: "5px" }} id="bannen" name="pick_up_moment" onChange={e => setPickUpMoment(e.target.value)}>
                 <option value="donderdag">Donderdag vanaf 19u</option>
                 <option value="vrijdag">Vrijdag vanaf 16u</option>
                 <option value="zaterdag">Zaterdag van 9u tot 12u</option>
@@ -102,7 +103,7 @@ const WafelbakForm = () => {
                 onChange={onChange}
                 size="invisible"
             />
-        </form>
+        </form >
     );
 }
 
