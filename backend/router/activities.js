@@ -56,7 +56,7 @@ router.post('/create', userCheck, (req, res)=>{
     }
 
     if(activity.title && activity.title != '') {
-        if (activity.group_id === req.user.group_id || req.admin) {
+        if (activity.group_id == req.user.group_id || req.admin) {
             con.query('INSERT INTO activities SET ?', activity, (err, activity)=> {
                 if(err) {
                     if(err.code = 'ER_TRUNCATED_WRONG_VALUE') {
@@ -106,7 +106,7 @@ router.put('/update/:id', authCheck,(req, res)=>{
     }
     console.log(updated_activity);
     if(updated_activity.title != '') {
-        if(updated_activity.group_id === req.user.group_id.toString() || req.admin) {
+        if(updated_activity.group_id == req.user.group_id || req.admin) {
             con.query(`UPDATE activities SET ? WHERE activity_id = ?`, [updated_activity, req.params.id], (err, activity)=>{
                 if(err) {
                     console.log(err);

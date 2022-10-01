@@ -3,3 +3,4 @@ log
 connect.js
 node_modules
 .env
+frontend/.env
