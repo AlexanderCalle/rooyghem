@@ -66,7 +66,7 @@ router.post('/order', (req, res) => {
             'Uw kunt deze afhalen op ' + moment + '. \n\n' +
             'Wij werken met een belonings systeem, in de onderstaande link zal je moeten invullen hoeveel pakketten u heeft besteld. \n' +
             'Hiervoor zal u een beloning kunnen ontvangen! \n' +
-            '\n\n' +
+            'https://forms.gle/fpFLGTun3bQQnWiv5\n\n' +
             'Vele Ksa Groeten'
     }
 
