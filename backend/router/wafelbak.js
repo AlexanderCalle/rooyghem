@@ -6,9 +6,6 @@ const adminCheck = require('../middleware/adminCheck');
 const userCheck = require('../middleware/userCheck');
 const excel = require('exceljs');
 const fs = require('fs');
-const sgMail = require('@sendgrid/mail')
-
-sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 // Route GET form page
 // page to order
@@ -21,6 +18,19 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 //         });
 //     })
 // });
+
+// Route GET order by id
+router.get('/:id', (req, res) => {
+    con.query('SELECT * FROM `orders` WHERE order_id = ?', req.params.id, (err, order) => {
+        if (err) return res.render('badrequest', { error: err });
+        res.status(200).json({
+            firstname: order[0].firstname,
+            lastname: order[0].lastname,
+            pick_up_moment: order[0].pick_up_moment,
+            total_amount: order[0].total_amount,
+        })
+    })
+})
 
 // Route POST order
 router.post('/order', (req, res) => {
@@ -56,30 +66,15 @@ router.post('/order', (req, res) => {
             break;
     }
 
-    const msg = {
-        to: order.email,
-        from: 'ksarooyghemwebteam@gmail.com',
-        subject: 'Bestelling wafels',
-        text: 'Beste ' + order.firstname + ' ' + order.lastname + ', \n\n' +
-            'Heel Ksa Rooyghem wil u bedanken voor uw bestelling! \n\n' +
-            'Uw bestelling van ' + order.total_amount + ' pakketten is met succes geplaatst \n\n' +
-            'Uw kunt deze afhalen op ' + moment + '. \n\n' +
-            'Wij werken met een belonings systeem, in de onderstaande link zal je moeten invullen hoeveel pakketten u heeft besteld. \n' +
-            'Hiervoor zal u een beloning kunnen ontvangen! \n' +
-            'https://forms.gle/fpFLGTun3bQQnWiv5\n\n' +
-            'Vele Ksa Groeten'
-    }
 
-    sgMail.send(msg).then(() => {
-        con.query('INSERT INTO orders SET ?', order, (err, order) => {
-            if (err) return res.render('badrequest', { error: err });
-            res.status(200).send('succes_order')
+
+    con.query('INSERT INTO orders SET ?', order, (err, order) => {
+        if (err) return res.render('badrequest', { error: err });
+        console.log(order.insertId);
+        res.status(200).send({
+            order_id: order.insertId
         })
-    }).catch(error => {
-        console.log(error);
-        res.status(500).send(error);
     })
-
 });
 
 // Route GET all current orders

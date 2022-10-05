@@ -28,6 +28,7 @@ import BackofficeAllVk from './pages/BackofficeAllVk';
 import BackofficeAllVkUpdate from './pages/BackofficeAllVkUpdate';
 import BackofficeWafelbakPage from './pages/BackofficeWafelbak';
 import WafelbakOrderPage from './pages/WafelbakOrderPage';
+import WafelbakRewardPage from './pages/WafelbakRewardPage';
 import GroupList from './pages/GroupsList';
 import BackofficeCreateAlbum from './pages/BackofficeCreateAlbum';
 import BackofficeAlbums from './pages/BackofficeAlbums';
@@ -56,6 +57,7 @@ function App() {
           <Route exact path="/users/forgot" component={UsersForgot} />
           <Route exact path="/users/reset/:token" component={UsersReset} />
           <Route exact path="/wafelbak" component={WafelbakOrderPage} />
+          <Route exact path="/wafelbak/:order_id" component={WafelbakRewardPage} />
           <Route exact path="/albums/groups/:group_name/:album_id" component={AlbumPhotos} />
           {/* Backoffice */}
           <PrivateRoute exact path="/backoffice" component={BackofficePage} />

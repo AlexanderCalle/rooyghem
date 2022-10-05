@@ -18,15 +18,17 @@ const WafelbakForm = () => {
     const create = (formData) => {
         const requestOptions = {
             method: 'POST',
-	    headers: { 'Content-Type': 'application/json' },
-	    body: JSON.stringify(formData)
-	}
-	console.log(formData)
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        }
+        console.log(formData)
         fetch(`${process.env.REACT_APP_BACKEND_HOST}/wafelbak/order`, requestOptions)
             .then(response => {
                 if (response.status === 200) {
-                    console.log("response ok!");
-                    window.location = "/";
+                    response.json().then(json => {
+                        console.log("response ok!");
+                        window.location = "/wafelbak/" + json.order_id
+                    })
                 } else {
                     // something went wrong
                     response.json().then(json => { console.log(json.error) });
@@ -36,10 +38,10 @@ const WafelbakForm = () => {
 
     const postForm = () => {
         // console.log("Recpatcha resolved: " + recaptchaRef.current.callbacks.getResponse());
-        
-	console.log("Email: " + email);
 
-	//const formData = new FormData();
+        console.log("Email: " + email);
+
+        //const formData = new FormData();
 
         //formData.append("firstname", firstName);
         //formData.append("lastname", lastName);
@@ -49,15 +51,15 @@ const WafelbakForm = () => {
         //formData.append("email", email);
         //formData.append("pick_up_moment", pickUpMoment);
 
-	const formData = {
-	    	"firstname": firstName,
-	    	"lastname": lastName,
-		"group": selectedGroup,
-		"total_amount": totalAmount,
-		"phone": phone,
-		"email": email,
-		"pick_up_moment": pickUpMoment
-	}
+        const formData = {
+            "firstname": firstName,
+            "lastname": lastName,
+            "group": selectedGroup,
+            "total_amount": totalAmount,
+            "phone": phone,
+            "email": email,
+            "pick_up_moment": pickUpMoment
+        }
         create(formData);
     };
 
@@ -66,7 +68,7 @@ const WafelbakForm = () => {
     }
 
     const onSubmit = async (e) => {
-	    e.preventDefault();
+        e.preventDefault();
         // alert("In onSubmit");
         // const token = await recaptchaRef.current.executeAsync();
         // alert("Token: " + token);
