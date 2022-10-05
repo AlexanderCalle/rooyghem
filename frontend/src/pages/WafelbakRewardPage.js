@@ -13,7 +13,7 @@ const WafelbakOrderPage = () => {
     const [totalAmount, setTotalAmount] = useState(0);
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_BACKEND_HOST}/wafelbak/${order_id}`).then((response) => response.json())
+        fetch(`${process.env.REACT_APP_BACKEND_HOST}/wafelbak/bestelling/${order_id}`).then((response) => response.json())
             .then(result => {
                 console.log(result);
                 setFirstname(result.firstname);

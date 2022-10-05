@@ -20,7 +20,7 @@ const fs = require('fs');
 // });
 
 // Route GET order by id
-router.get('/:id', (req, res) => {
+router.get('/bestelling/:id', (req, res) => {
     con.query('SELECT * FROM `orders` WHERE order_id = ?', req.params.id, (err, order) => {
         if (err) return res.render('badrequest', { error: err });
         res.status(200).json({
