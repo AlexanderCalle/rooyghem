@@ -6,6 +6,9 @@ const adminCheck = require('../middleware/adminCheck');
 const userCheck = require('../middleware/userCheck');
 const excel = require('exceljs');
 const fs = require('fs');
+const sgMail = require('@sendgrid/mail')
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 // Route GET form page
 // page to order
@@ -43,38 +46,52 @@ router.post('/order', (req, res) => {
         email: req.body.email,
         pick_up_moment: req.body.pick_up_moment
     };
-    console.log(req.body)
-    console.log("Email order: " + order.email);
-    console.log("Order: " + order);
     let moment;
 
     switch (order.pick_up_moment) {
 
         case 'donderdag':
-            moment = 'donderdag 28 oktober vanaf 19u'
+            moment = 'donderdag 27 oktober vanaf 19u'
             break;
 
         case 'vrijdag':
-            moment = 'vrijdag 29 oktober vanaf 16u'
+            moment = 'vrijdag 28 oktober vanaf 16u'
             break;
 
         case 'zaterdag':
-            moment = 'zaterdag 30 oktober van 9u tot 12u'
+            moment = 'zaterdag 29 oktober van 9u tot 12u'
             break;
 
         default:
             break;
     }
 
+    const msg = {
+        to: order.email,
+        from: 'webteam@ksarooyghem.be',
+        subject: 'Bestelling wafels',
+        text: 'Beste ' + order.firstname + ' ' + order.lastname + ', \n\n' +
+            'Heel Ksa Rooyghem wil u bedanken voor uw bestelling! \n\n' +
+            'Uw bestelling van ' + order.total_amount + ' pakketten is met succes geplaatst \n\n' +
+            'Uw kunt deze afhalen op ' + moment + '. \n\n' +
+            'Wij werken met een belonings systeem, in de onderstaande link zal je moeten invullen hoeveel pakketten u heeft besteld. \n' +
+            'Hiervoor zal u een beloning kunnen ontvangen! \n' +
+            'https://forms.gle/fpFLGTun3bQQnWiv5\n\n' +
+            'Vele Ksa Groeten'
+    }
 
-
-    con.query('INSERT INTO orders SET ?', order, (err, order) => {
-        if (err) return res.render('badrequest', { error: err });
-        console.log(order.insertId);
-        res.status(200).send({
-            order_id: order.insertId
+    sgMail.send(msg).then(() => {
+        con.query('INSERT INTO orders SET ?', order, (err, order) => {
+            if (err) return res.render('badrequest', { error: err });
+            res.status(200).send({
+                order_id: order.insertId
+            })
         })
+    }).catch(error => {
+        console.log(error);
+        res.status(500).send(error);
     })
+
 });
 
 // Route GET all current orders
