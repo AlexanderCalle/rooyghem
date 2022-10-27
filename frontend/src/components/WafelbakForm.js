@@ -92,33 +92,36 @@ const WafelbakForm = () => {
     }
 
     return (
-        <form id="wafelbak_form" onSubmit={(e) => onSubmit(e)}>
-            <input type="text" placeholder="Voornaam" name="firstname" onChange={e => setFirstName(e.target.value)} required />
-            <input type="text" name="lastname" placeholder="Achternaam" onChange={e => setLastName(e.target.value)} required />
-            <input type="number" name="total_amount" placeholder="Aantal pakketten..." onChange={e => setTotalAmount(e.target.value)} required />
-            <input type="text" name="phone" placeholder="Telefoonnummer..." onChange={e => setPhone(e.target.value)} required />
-            <input type="email" name="email" placeholder="Email..." onChange={e => setEmail(e.target.value)} required />
-            <select id="bannen" name="group" onChange={e => setSelectedGroup(e.target.value)}>
-                {groups.map((group) => (
-                    <option value={group.name}>{group.name}</option>
-                ))}
-                <option>Geen groep</option>
-            </select>
+        // <form id="wafelbak_form" onSubmit={(e) => onSubmit(e)}>
+        //     <input type="text" placeholder="Voornaam" name="firstname" onChange={e => setFirstName(e.target.value)} required />
+        //     <input type="text" name="lastname" placeholder="Achternaam" onChange={e => setLastName(e.target.value)} required />
+        //     <input type="number" name="total_amount" placeholder="Aantal pakketten..." onChange={e => setTotalAmount(e.target.value)} required />
+        //     <input type="text" name="phone" placeholder="Telefoonnummer..." onChange={e => setPhone(e.target.value)} required />
+        //     <input type="email" name="email" placeholder="Email..." onChange={e => setEmail(e.target.value)} required />
+        //     <select id="bannen" name="group" onChange={e => setSelectedGroup(e.target.value)}>
+        //         {groups.map((group) => (
+        //             <option value={group.name}>{group.name}</option>
+        //         ))}
+        //         <option>Geen groep</option>
+        //     </select>
 
-            <select style={{ marginLeft: "5px" }} id="bannen" name="pick_up_moment" onChange={e => setPickUpMoment(e.target.value)}>
-                <option value="donderdag">Donderdag vanaf 19u</option>
-                <option value="vrijdag">Vrijdag vanaf 16u</option>
-                <option value="zaterdag">Zaterdag van 9u tot 12u</option>
-            </select>
-            <br />
-            <button type="submit"> Bestel </button>
-            <ReCAPTCHA
-                ref={recaptchaRef}
-                sitekey="6Lda4E4cAAAAAEMITzaJKTyhPGHZuDuKK4kFuCOD"
-                onChange={onChange}
-                size="invisible"
-            />
-        </form >
+        //     <select style={{ marginLeft: "5px" }} id="bannen" name="pick_up_moment" onChange={e => setPickUpMoment(e.target.value)}>
+        //         <option value="donderdag">Donderdag vanaf 19u</option>
+        //         <option value="vrijdag">Vrijdag vanaf 16u</option>
+        //         <option value="zaterdag">Zaterdag van 9u tot 12u</option>
+        //     </select>
+        //     <br />
+        //     <button type="submit"> Bestel </button>
+        //     <ReCAPTCHA
+        //         ref={recaptchaRef}
+        //         sitekey="6Lda4E4cAAAAAEMITzaJKTyhPGHZuDuKK4kFuCOD"
+        //         onChange={onChange}
+        //         size="invisible"
+        //     />
+        // </form >
+        <div>
+            <p>Wafelbak bestellingen zijn gesloten, Hopelijk zien we jullie volgend jaar terug!</p>
+        </div>
     );
 }
 
