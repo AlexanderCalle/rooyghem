@@ -17,8 +17,8 @@ const Oudercomité = () => {
           lokalen. Naast de maandelijkse vergaderingen, kunnen de leden hun
           engagement via een werkgroepje verruimen. Zo is er de BBQ van de
           startdag, de organisatie van wafelbak, kookouder, of eens het gras
-          afrijden, … <br /> Alle ouders met kinderen in KSA Rooyghem zijn
-          welkom.
+          afrijden, het klusteam, … <br /> Alle ouders met kinderen in KSA
+          Rooyghem zijn welkom.
           <br />
           <br />
           Wie interesse heeft in meer info of zich reeds wil opgeven, kan dit
