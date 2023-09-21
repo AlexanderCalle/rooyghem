@@ -16,6 +16,8 @@ const AboutUs = () => {
             <p>De leden worden ingedeeld in verschillende groepen (bannen) naargelang hun leeftijd. Iedere ban houdt om de twee weken een activiteit in hun eigen lokaal, doorgaans op zaterdagmiddag van 14 uur tot 17 uur. Elke activiteit is ingekaderd in een bepaald verhaal en de lokalen zijn ingekleed in een tot de verbeelding sprekend decor.</p>
             <p>Naast de gewone activiteiten gaat iedere ban elk jaar ook op weekend en begin augustus op kamp, meestal in de Kempen of de Ardennen. De jongste bannen (kabouters, pagadders en jongknapen) gaan op heemkamp en de oudere bannen (knapen, jonghernieuwers en aspiranten) op tentenkamp. De kampen zijn ook steevast schitterend ingekleed in een bepaald thema. Deze zes (voor de jongsten) tot tien (voor de oudsten) dagen zijn steeds het hoogtepunt van het jaar voor alle KSA'ers.</p>
             <p>KSA Rooyghem beschikt over heel wat lokalen in Sint-Kruis en Male. De headquarters bevinden zich in de Engelendalelaan. Hier hebben ook de pagadders, jongknapen, aspiranten  en hernieuwers hun lokaal. Het lokaal van de kabouters bevindt zich in het Paalbos. De knapen en jonghernieuwers hun lokaal bevindt zich in de Brieversweg, naast de voetbalvelden van Jong Male.</p>
+	    <br/>
+	    <p>Mede dank aan Cera voor het sponseren van onze renovatie aan de lokalen van Male</p>
             <form action="/contact" method="get">
                 <button type="submit">Contact</button>
             </form>

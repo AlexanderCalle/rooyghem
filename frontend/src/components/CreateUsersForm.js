@@ -21,7 +21,7 @@ const CreateUsersForm = (props) => {
     // fetch group data
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/groups/`, { 'credentials': 'include' });
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/groups/allgroups`, { 'credentials': 'include' });
             const json = await res.json();
             setGroups(json.groups);
         }

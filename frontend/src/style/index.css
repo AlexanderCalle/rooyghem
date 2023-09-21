@@ -18,7 +18,8 @@
 
 .feedimg {
 	grid-area: img;
-	max-width: 150px;
+	max-height: 170px;
+	object-fit: contain;
 }
 
 .feedp {

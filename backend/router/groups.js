@@ -15,6 +15,18 @@ router.get('/', (req, res) => {
     })
 });
 
+router.get('/allgroups', (req, res) => {
+	con.query('SELECT * FROM `groups`', (err, groups) => {
+		if(err) return res.status(400).json({"statuscode": 400, error: err });
+		groups.forEach(group => {
+			groups.logo = req.protocol + '://' + req.headers.host + '/api/groups/' + group.name.toLowerCase() + '/logo'
+		})
+		return res.status(200).json({
+			groups: groups
+		});
+	});
+});
+
 router.get('/:group_name/logo', (req, res) => {
     con.query('SELECT logo FROM `groups` WHERE name = ?', req.params.group_name, (err, logo_path) => {
         if (err) return res.status(400).json({ "statuscode": 400, error: err });
